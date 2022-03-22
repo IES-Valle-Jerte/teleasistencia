@@ -7,7 +7,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_usuarios">Usuarios</string>
+    <string name="menu_persona">Persona</string>
+    <string name="menu_direccion">Dirección</string>
+    <string name="menu_grupos">Grupos</string>
+    <string name="menu_dispositivos_auxiliares_terminal">Dispositivos auxiliares en terminal</string>
+    <string name="menu_tipo_vivienda">Tipo vivienda</string>
+    <string name="menu_tipo_situacion">Tipo situación</string>
+    <string name="menu_historico_tipo_situacion">Histórico tipo situación</string>
 </resources>

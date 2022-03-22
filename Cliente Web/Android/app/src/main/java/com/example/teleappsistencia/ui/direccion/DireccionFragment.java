@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.slideshow;
+package com.example.teleappsistencia.ui.direccion;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.databinding.FragmentSlideshowBinding;
+import com.example.teleappsistencia.databinding.FragmentDireccionBinding;
 
-public class SlideshowFragment extends Fragment {
+public class DireccionFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
-    private FragmentSlideshowBinding binding;
+    private DireccionViewModel direccionViewModel;
+    private FragmentDireccionBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        direccionViewModel =
+                new ViewModelProvider(this).get(DireccionViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentDireccionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        direccionViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

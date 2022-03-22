@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.home;
+package com.example.teleappsistencia.ui.usuarios;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,29 +12,28 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.databinding.FragmentHomeBinding;
+import com.example.teleappsistencia.databinding.FragmentUsuariosBinding;
 
-public class HomeFragment extends Fragment {
+public class UsuariosFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private UsuariosViewModel usuariosViewModel;
+    private FragmentUsuariosBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        usuariosViewModel =
+                new ViewModelProvider(this).get(UsuariosViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentUsuariosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        /*final TextView textView = binding.textGallery;
+        usuariosViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 

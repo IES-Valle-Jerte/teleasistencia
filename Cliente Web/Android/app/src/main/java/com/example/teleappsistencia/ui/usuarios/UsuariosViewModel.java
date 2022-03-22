@@ -1,16 +1,16 @@
-package com.example.teleappsistencia.ui.slideshow;
+package com.example.teleappsistencia.ui.usuarios;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class UsuariosViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public UsuariosViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is Usuarios fragment");
     }
 
     public LiveData<String> getText() {

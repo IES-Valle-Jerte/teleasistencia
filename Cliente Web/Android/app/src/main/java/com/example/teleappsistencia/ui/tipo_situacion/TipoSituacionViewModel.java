@@ -1,16 +1,16 @@
-package com.example.teleappsistencia.ui.gallery;
+package com.example.teleappsistencia.ui.tipo_situacion;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class TipoSituacionViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public TipoSituacionViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is Tipo Situacion fragment");
     }
 
     public LiveData<String> getText() {

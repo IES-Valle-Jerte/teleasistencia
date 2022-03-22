@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.gallery;
+package com.example.teleappsistencia.ui.persona;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,29 +12,28 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.databinding.FragmentGalleryBinding;
+import com.example.teleappsistencia.databinding.FragmentPersonaBinding;
 
-public class GalleryFragment extends Fragment {
+public class PersonaFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
-    private FragmentGalleryBinding binding;
+    private PersonaViewModel personaViewModel;
+    private FragmentPersonaBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        personaViewModel =
+                new ViewModelProvider(this).get(PersonaViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentPersonaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        /*final TextView textView = binding.textHome;
+        personaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 
