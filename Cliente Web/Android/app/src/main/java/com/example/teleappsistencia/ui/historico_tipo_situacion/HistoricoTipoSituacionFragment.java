@@ -24,13 +24,6 @@ public class HistoricoTipoSituacionFragment extends Fragment {
         binding = FragmentHistoricoTipoSituacionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /*final TextView textView = binding.textGallery;
-        usuariosViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 

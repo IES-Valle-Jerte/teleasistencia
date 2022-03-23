@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_persona" />
 
     <fragment
+        android:id="@+id/nav_direccion"
+        android:name="com.example.teleappsistencia.ui.direccion.DireccionFragment"
+        android:label="@string/menu_direccion"
+        tools:layout="@layout/fragment_direccion" />
+
+    <fragment
         android:id="@+id/nav_grupos"
         android:name="com.example.teleappsistencia.ui.grupos.GruposFragment"
         android:label="@string/menu_grupos"
