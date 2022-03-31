@@ -36,8 +36,17 @@ android {
         main {
             res.srcDirs =
                     [
-                            'src/main/res/layout/login',
-                            'src/main/res/layout/menu',
+                            'src/main/res/layout/main_activity',
+                            'src/main/res/layout/login_activity',
+                            'src/main/res/layout/fragments',
+                            'src/main/res/layout/fragments/direccion',
+                            'src/main/res/layout/fragments/dispositivos_aux',
+                            'src/main/res/layout/fragments/grupos',
+                            'src/main/res/layout/fragments/historico_tipo_situacion',
+                            'src/main/res/layout/fragments/persona',
+                            'src/main/res/layout/fragments/tipo_situacion',
+                            'src/main/res/layout/fragments/tipo_vivienda',
+                            'src/main/res/layout/fragments/usuarios',
                             'src/main/res'
                     ]
         }
