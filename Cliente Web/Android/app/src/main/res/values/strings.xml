@@ -7,6 +7,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+
+    <!-- Nombres de los menus -->
     <string name="menu_usuarios">Usuarios</string>
     <string name="menu_persona">Persona</string>
     <string name="menu_direccion">Dirección</string>
@@ -16,6 +18,22 @@
     <string name="menu_tipo_situacion">Tipo situación</string>
     <string name="menu_historico_tipo_situacion">Histórico tipo situación</string>
 
+    <!-- Nombres de los submenus -->
     <string name="insertar">Insertar</string>
     <string name="listar">Listar</string>
+
+    <!-- *** TextViews *** -->
+
+    <!-- TextViews de la Activity Login -->
+    <string name="textview_usuario">Usuario: </string>
+    <string name="textview_password">Contraseña: </string>
+
+    <!-- Toast Activity Login -->
+    <string name="toast_activity_login">Nombre de usuario o contraseña incorrectos.</string>
+
+    <!-- *** Botones *** -->
+
+    <!-- Botones de la Activity Login -->
+    <string name="btn_iniciar_sesion">Iniciar sesión</string>
+
 </resources>

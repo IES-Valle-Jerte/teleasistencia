@@ -1,6 +1,7 @@
 package com.example.teleappsistencia;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,20 +23,36 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.teleappsistencia.clases.Token;
+import com.example.teleappsistencia.clases.UsuarioSistema;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ExpandableListAdapter expandableListAdapter;
-    ExpandableListView expandableListView;
-    List<MenuModel> headerList = new ArrayList<>();
-    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    private ExpandableListAdapter expandableListAdapter;
+    private ExpandableListView expandableListView;
+    private List<MenuModel> headerList = new ArrayList<>();
+    private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+
+    private Token token;
+
+    private APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        this.token = (Token) getIntent().getExtras().get("token");
+
+        // Cargo el servicio que se encarga de realizar las peticiones.
+        loadApiService();
+        // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
+        loadMenuHeader();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +89,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void loadApiService(){
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                //Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
+                .retryOnConnectionFailure(Boolean.FALSE)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://127.0.0.1:3333/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        this.apiService = retrofit.create(APIService.class);
+    }
+
+    private void loadMenuHeader(){
+        String username = getIntent().getExtras().getString("usuario");
+        Call<List<UsuarioSistema>> call = apiService.getUserByUsername(username);
+        call.enqueue(new Callback<List<UsuarioSistema>>() {
+            @Override
+            public void onResponse(Call<List<UsuarioSistema>> call, Response<List<UsuarioSistema>> response) {
+                if(response.isSuccessful()) {
+                    List<UsuarioSistema> usuariosList = response.body();
+                    UsuarioSistema usuarioSistema = usuariosList.get(0);
+                    TextView nombreUsuario = (TextView) findViewById(R.id.textView_nombre_usuario);
+                    TextView emailUsuario = (TextView) findViewById(R.id.textView_email_usuario);
+
+                    nombreUsuario.setText(usuarioSistema.getFirstName() + " " + usuarioSistema.getLastName());
+                    emailUsuario.setText(usuarioSistema.getEmail());
+                } else{
+                    System.out.println(response.raw());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UsuarioSistema>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override
