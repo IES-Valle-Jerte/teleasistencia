@@ -59,4 +59,14 @@ public class RecursoComunitario implements Serializable
         this.direccion = direccion;
     }
 
+    @Override
+    public String toString() {
+        return "RecursoComunitario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", tipoRecursoComunitario=" + tipoRecursoComunitario +
+                ", direccion=" + direccion +
+                '}';
+    }
 }

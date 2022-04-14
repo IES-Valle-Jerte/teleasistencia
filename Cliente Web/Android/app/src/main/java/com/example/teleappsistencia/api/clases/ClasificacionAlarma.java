@@ -35,4 +35,12 @@ public class ClasificacionAlarma {
         this.codigo = codigo;
     }
 
+    @Override
+    public String toString() {
+        return "ClasificacionAlarma{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", codigo='" + codigo + '\'' +
+                '}';
+    }
 }

@@ -3,7 +3,7 @@ package com.example.teleappsistencia.api.clases;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RolUsuario{
+public class GrupoUsuario {
 
     /**
      * Atributos de la clase
@@ -33,4 +33,11 @@ public class RolUsuario{
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "GrupoUsuario{" +
+                "pk=" + pk +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

@@ -55,4 +55,14 @@ public class CentroSanitario {
         this.direccion = direccion;
     }
 
+    @Override
+    public String toString() {
+        return "CentroSanitario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", tipoCentroSanitario=" + tipoCentroSanitario +
+                ", direccion=" + direccion +
+                '}';
+    }
 }

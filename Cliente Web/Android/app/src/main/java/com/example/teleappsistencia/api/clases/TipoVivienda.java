@@ -2,7 +2,7 @@ package com.example.teleappsistencia.api.clases;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TipoCentroSanitario {
+public class TipoVivienda {
 
     @SerializedName("id")
     private int id;
@@ -27,7 +27,7 @@ public class TipoCentroSanitario {
 
     @Override
     public String toString() {
-        return "TipoCentroSanitario{" +
+        return "TipoVivienda{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 '}';

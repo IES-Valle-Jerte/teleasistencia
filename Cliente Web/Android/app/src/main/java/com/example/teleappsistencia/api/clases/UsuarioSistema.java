@@ -32,7 +32,7 @@ public class UsuarioSistema implements Serializable
     @SerializedName("date_joined")
     private Date dateJoined;
     @SerializedName("groups")
-    private List<RolUsuario> groups = null;
+    private List<GrupoUsuario> groups = null;
 
     /**
      * Getters y setters
@@ -101,12 +101,26 @@ public class UsuarioSistema implements Serializable
         this.dateJoined = dateJoined;
     }
 
-    public List<RolUsuario> getGroups() {
+    public List<GrupoUsuario> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<RolUsuario> groups) {
+    public void setGroups(List<GrupoUsuario> groups) {
         this.groups = groups;
     }
 
+    @Override
+    public String toString() {
+        return "UsuarioSistema{" +
+                "pk=" + pk +
+                ", url='" + url + '\'' +
+                ", lastLogin='" + lastLogin + '\'' +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateJoined=" + dateJoined +
+                ", groups=" + groups +
+                '}';
+    }
 }

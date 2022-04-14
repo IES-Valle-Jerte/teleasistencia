@@ -25,4 +25,11 @@ public class TipoRecursoComunitario {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "TipoRecursoComunitario{" +
+                "pk=" + pk +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

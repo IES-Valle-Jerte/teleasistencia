@@ -52,4 +52,13 @@ public class PermisoUsuario{
         this.contentType = contentType;
     }
 
+    @Override
+    public String toString() {
+        return "PermisoUsuario{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", codename='" + codename + '\'' +
+                ", contentType=" + contentType +
+                '}';
+    }
 }

@@ -55,4 +55,14 @@ public class TipoAlarma {
         this.clasificacionAlarma = clasificacionAlarma;
     }
 
+    @Override
+    public String toString() {
+        return "TipoAlarma{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", codigo='" + codigo + '\'' +
+                ", esDispositivo=" + esDispositivo +
+                ", clasificacionAlarma=" + clasificacionAlarma +
+                '}';
+    }
 }

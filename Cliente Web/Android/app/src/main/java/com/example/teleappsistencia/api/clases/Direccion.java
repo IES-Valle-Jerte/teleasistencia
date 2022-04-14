@@ -55,6 +55,13 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
 
+    public Direccion(String localidad, String provincia, String direccion, String codigoPostal) {
+        this.localidad = localidad;
+        this.provincia = provincia;
+        this.direccion = direccion;
+        this.codigoPostal = codigoPostal;
+    }
+
     @Override
     public String toString() {
         return "Direccion{" +
