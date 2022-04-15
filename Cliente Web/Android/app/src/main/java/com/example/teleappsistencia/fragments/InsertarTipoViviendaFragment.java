@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.teleappsistencia.APIService;
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.clases.Tipo_vivienda;
 import com.google.gson.Gson;
@@ -119,7 +120,7 @@ public class InsertarTipoViviendaFragment extends Fragment {
 
             APIService apiService = retrofit.create(APIService.class);
 
-            Call<Tipo_vivienda> call = apiService.addTipoVivienda(editText_nombre_tipo_vivienda.getText().toString());
+            Call<Tipo_vivienda> call = apiService.addTipoVivienda(editText_nombre_tipo_vivienda.getText().toString(), "Bearer " + MainActivity.token.getAccess());
             call.enqueue(new Callback<Tipo_vivienda>() {
                 @Override
                 public void onResponse(Call<Tipo_vivienda> call, Response<Tipo_vivienda> response) {

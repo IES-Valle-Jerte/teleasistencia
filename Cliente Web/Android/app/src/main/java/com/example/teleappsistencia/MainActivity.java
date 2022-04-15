@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<MenuModel> headerList = new ArrayList<>();
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
-    private Token token;
+    public static Token token;
 
     private APIService apiService;
 

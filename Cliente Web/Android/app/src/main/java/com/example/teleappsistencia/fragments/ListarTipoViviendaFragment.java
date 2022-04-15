@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.teleappsistencia.APIService;
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.clases.Tipo_vivienda;
 import com.google.gson.Gson;
@@ -116,7 +117,7 @@ public class ListarTipoViviendaFragment extends Fragment {
 
         APIService apiService = retrofit.create(APIService.class);
 
-        Call<List<Tipo_vivienda>> call = apiService.getTipoVivienda();
+        Call<List<Tipo_vivienda>> call = apiService.getTipoVivienda("Bearer " + MainActivity.token.getAccess());
         call.enqueue(new Callback<List<Tipo_vivienda>>() {
             @Override
             public void onResponse(Call<List<Tipo_vivienda>> call, Response<List<Tipo_vivienda>> response) {

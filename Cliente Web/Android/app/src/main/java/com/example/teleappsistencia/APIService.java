@@ -26,14 +26,14 @@ public interface APIService {
 
 
     @GET("api-rest/tipo_vivienda")
-    public Call<List<Tipo_vivienda>> getTipoVivienda();
+    public Call<List<Tipo_vivienda>> getTipoVivienda(@Header("Authorization") String token);
 
     @GET("api-rest/tipo_vivienda/{id}")
-    public Call<Tipo_vivienda> getTipoViviendaById(@Path("id") String id);
+    public Call<Tipo_vivienda> getTipoViviendaById(@Path("id") String id, @Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("api-rest/tipo_vivienda")
-    public Call<Tipo_vivienda> addTipoVivienda(@Field("nombre") String nombre);
+    public Call<Tipo_vivienda> addTipoVivienda(@Field("nombre") String nombre, @Header("Authorization") String token);
 
     @GET("api-rest/users")
     Call<List<UsuarioSistema>> getUserByUsername(@Query("username") String username, @Header("Authorization") String token);
