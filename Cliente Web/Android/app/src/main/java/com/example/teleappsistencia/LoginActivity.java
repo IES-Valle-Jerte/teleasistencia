@@ -11,13 +11,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.teleappsistencia.clases.Tipo_vivienda;
 import com.example.teleappsistencia.clases.Token;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                 //Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
                 .retryOnConnectionFailure(Boolean.FALSE)
                 .build();
+
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://127.0.0.1:3333/")

@@ -25,18 +25,24 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.teleappsistencia.clases.Token;
 import com.example.teleappsistencia.clases.UsuarioSistema;
+import com.example.teleappsistencia.fragments.InsertarTipoViviendaFragment;
+import com.example.teleappsistencia.fragments.ListarTipoViviendaFragment;
+import com.example.teleappsistencia.ui.tipo_situacion.TipoSituacionFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -102,6 +108,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .retryOnConnectionFailure(Boolean.FALSE)
                 .build();
 
+        /*client.interceptors().add(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Request newRequest;
+
+                newRequest = request.newBuilder()
+                        .addHeader("Authorization", "Bearer " + token.getRefresh())
+                        .build();
+
+                return chain.proceed(newRequest);
+            }
+        });*/
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://127.0.0.1:3333/")
                 .client(client)
@@ -113,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadMenuHeader(){
         String username = getIntent().getExtras().getString("usuario");
-        Call<List<UsuarioSistema>> call = apiService.getUserByUsername(username);
+        Call<List<UsuarioSistema>> call = apiService.getUserByUsername(username, "Bearer " + token.getAccess());
         call.enqueue(new Callback<List<UsuarioSistema>>() {
             @Override
             public void onResponse(Call<List<UsuarioSistema>> call, Response<List<UsuarioSistema>> response) {
@@ -201,10 +221,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Usuarios.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_usuarios), true, true, R.layout.fragment_usuarios);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_usuarios), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_usuarios_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_usuarios_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -214,10 +234,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Personas.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_persona), true, true, R.layout.fragment_persona);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_persona), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_persona_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_persona_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -227,10 +247,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Dirección.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_direccion), true, true, R.layout.fragment_direccion);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_direccion), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_direccion_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_direccion_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -240,10 +260,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Grupos.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_grupos), true, true, R.layout.fragment_grupos);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_grupos), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_grupos_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_grupos_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -253,10 +273,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Dispositivos Auxiliares.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_dispositivos_auxiliares_terminal), true, true, R.layout.fragment_dispositivos_auxiliares);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_dispositivos_auxiliares_terminal), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_dispositivos_auxiliares_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_dispositivos_auxiliares_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -266,10 +286,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Tipo Vivienda.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_vivienda), true, true, R.layout.fragment_tipo_vivienda);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_vivienda), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_tipo_vivienda_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_tipo_vivienda_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarTipoViviendaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarTipoViviendaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -279,10 +299,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Tipo Situación.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_situacion), true, true, R.layout.fragment_tipo_situacion);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_situacion), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_tipo_situacion_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_tipo_situacion_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -292,10 +312,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Menu Histórico Tipo Situación.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_historico_tipo_situacion), true, true, R.layout.fragment_historico_tipo_situacion);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_historico_tipo_situacion), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, R.layout.fragment_historico_tipo_situacion_insertar));
-        childModelsList.add(new MenuModel(childNames[1], false, false, R.layout.fragment_historico_tipo_situacion_mostrar));
+        childModelsList.add(new MenuModel(childNames[0], false, false, null));
+        childModelsList.add(new MenuModel(childNames[1], false, false, null));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -337,10 +357,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
-                    Fragment fragment = new Fragment(model.getLayout());
 
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, fragment)
+                            .replace(R.id.main_fragment, model.getFragment())
                             .addToBackStack(null)
                             .commit();
                 }

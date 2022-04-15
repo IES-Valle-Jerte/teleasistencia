@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -30,6 +31,13 @@ public interface APIService {
     @GET("api-rest/tipo_vivienda/{id}")
     public Call<Tipo_vivienda> getTipoViviendaById(@Path("id") String id);
 
+    @FormUrlEncoded
+    @POST("api-rest/tipo_vivienda")
+    public Call<Tipo_vivienda> addTipoVivienda(@Field("nombre") String nombre);
+
     @GET("api-rest/users")
-    Call<List<UsuarioSistema>> getUserByUsername(@Query("username") String username);
+    Call<List<UsuarioSistema>> getUserByUsername(@Query("username") String username, @Header("Authorization") String token);
+
+    //@POST(apiURL)
+    //void methodName(@Header("Authorization") String token, @Header(HeadersContract.HEADER_CLIENT_ID) String token, @Body TypedInput body, Callback<String> callback);
 }

@@ -1,18 +1,20 @@
 package com.example.teleappsistencia;
 
+import androidx.fragment.app.Fragment;
+
 public class MenuModel {
 
     private String menuName;
     private boolean hasChildren;
     private boolean isGroup;
-    private int layout;
+    private Fragment fragment;
 
-    public MenuModel(String menuName, boolean isGroup, boolean hasChildren, int layout) {
+    public MenuModel(String menuName, boolean isGroup, boolean hasChildren, Fragment fragment) {
 
         this.menuName = menuName;
         this.isGroup = isGroup;
         this.hasChildren = hasChildren;
-        this.layout = layout;
+        this.fragment = fragment;
     }
 
     public String getMenuName() {
@@ -39,11 +41,11 @@ public class MenuModel {
         isGroup = group;
     }
 
-    public int getLayout() {
-        return layout;
+    public Fragment getFragment() {
+        return fragment;
     }
 
-    public void setLayout(int layout) {
-        this.layout = layout;
+    public void setFragment(Fragment fragment) {
+        this.fragment = fragment;
     }
 }

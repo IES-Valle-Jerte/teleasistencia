@@ -3,14 +3,13 @@ package com.example.teleappsistencia.clases;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Tipo_vivienda {
+import java.io.Serializable;
 
-    //@Expose
-    //@SerializedName("password")
+public class Tipo_vivienda implements Serializable {
+
+    @SerializedName("id")
     private int id;
-
-    //@Expose
-    //@SerializedName("password")
+    @SerializedName("nombre")
     private String nombre;
 
     public Tipo_vivienda(int id, String nombre) {
