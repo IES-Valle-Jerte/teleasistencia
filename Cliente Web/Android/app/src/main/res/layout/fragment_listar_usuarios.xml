@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.tipo_vivienda.ListarTipoViviendaFragment" >
+    tools:context=".fragments.usuarios.ListarUsuariosFragment">
 
     <TextView
-        android:id="@+id/textView_listar_tipo_vivienda"
+        android:id="@+id/textView_listar_usuarios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UsuarioSistema implements Serializable
+public class Usuario implements Serializable
 {
 
     private final static long serialVersionUID = 2592565805411682085L;
@@ -32,7 +32,7 @@ public class UsuarioSistema implements Serializable
     @SerializedName("date_joined")
     private Date dateJoined;
     @SerializedName("groups")
-    private List<GrupoUsuario> groups = null;
+    private List<Grupo> groups = null;
 
     /**
      * Getters y setters
@@ -101,11 +101,11 @@ public class UsuarioSistema implements Serializable
         this.dateJoined = dateJoined;
     }
 
-    public List<GrupoUsuario> getGroups() {
+    public List<Grupo> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<GrupoUsuario> groups) {
+    public void setGroups(List<Grupo> groups) {
         this.groups = groups;
     }
 

@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.fragments;
+package com.example.teleappsistencia.fragments.historico_tipo_situacion;
 
 import android.os.Bundle;
 
@@ -7,15 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.teleappsistencia.APIService;
 import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.clases.Tipo_vivienda;
+import com.example.teleappsistencia.clases.HistoricoTipoSituacion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,10 +29,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ListarTipoViviendaFragment#newInstance} factory method to
+ * Use the {@link ListarHistoricoTipoSituacionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListarTipoViviendaFragment extends Fragment {
+public class ListarHistoricoTipoSituacionFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,12 +43,9 @@ public class ListarTipoViviendaFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextView textView_listar_tipo_vivienda;
+    private TextView textView_listar_historico_tipo_situacion;
 
-    private static List<Tipo_vivienda> listaTiposViviendas;
-    public static boolean listaActualizada = false;
-
-    public ListarTipoViviendaFragment() {
+    public ListarHistoricoTipoSituacionFragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +55,11 @@ public class ListarTipoViviendaFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListarTipoViviendaFragment.
+     * @return A new instance of fragment ListarHistoricoTipoSituacionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListarTipoViviendaFragment newInstance(String param1, String param2) {
-        ListarTipoViviendaFragment fragment = new ListarTipoViviendaFragment();
+    public static ListarHistoricoTipoSituacionFragment newInstance(String param1, String param2) {
+        ListarHistoricoTipoSituacionFragment fragment = new ListarHistoricoTipoSituacionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,20 +79,15 @@ public class ListarTipoViviendaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_listar_historico_tipo_situacion, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_listar_tipo_vivienda, container, false);
+        this.textView_listar_historico_tipo_situacion = (TextView) view.findViewById(R.id.textView_listar_historico_tipo_situacion);
 
-        this.textView_listar_tipo_vivienda = (TextView) view.findViewById(R.id.textView_listar_tipo_vivienda);
-        if((listaTiposViviendas == null) || (!listaActualizada)) {
-            listarTipoVivienda();
-        } else{
-            this.textView_listar_tipo_vivienda.setText(listaTiposViviendas.toString());
-        }
-        // Inflate the layout for this fragment
+        listarHistoricoTipoSituacion();
         return view;
     }
 
-    private void listarTipoVivienda() {
+    private void listarHistoricoTipoSituacion() {
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
@@ -110,32 +100,29 @@ public class ListarTipoViviendaFragment extends Fragment {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://127.0.0.1:3333/")
+                .baseUrl(getResources().getString(R.string.api_base_url))
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         APIService apiService = retrofit.create(APIService.class);
 
-        Call<List<Tipo_vivienda>> call = apiService.getTipoVivienda("Bearer " + MainActivity.token.getAccess());
-        call.enqueue(new Callback<List<Tipo_vivienda>>() {
+        Call<List<HistoricoTipoSituacion>> call = apiService.getHistoricoTipoSituacion("Bearer " + MainActivity.token.getAccess());
+        call.enqueue(new Callback<List<HistoricoTipoSituacion>>() {
             @Override
-            public void onResponse(Call<List<Tipo_vivienda>> call, Response<List<Tipo_vivienda>> response) {
+            public void onResponse(Call<List<HistoricoTipoSituacion>> call, Response<List<HistoricoTipoSituacion>> response) {
                 if (response.isSuccessful()) {
-                    listaTiposViviendas = response.body();
-                    listaActualizada = true;
-                    textView_listar_tipo_vivienda.setText(listaTiposViviendas.toString());
+                    textView_listar_historico_tipo_situacion.setText(response.body().toString());
                 } else {
-                    Toast.makeText(getContext(), "Error al listar los tipos de vivienda. Código de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error al listar los historicos tipos de situación. Código de error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Tipo_vivienda>> call, Throwable t) {
+            public void onFailure(Call<List<HistoricoTipoSituacion>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
         });
-
     }
 }

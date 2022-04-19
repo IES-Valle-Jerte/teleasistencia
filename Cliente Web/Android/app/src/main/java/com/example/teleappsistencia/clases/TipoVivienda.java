@@ -5,19 +5,23 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Tipo_vivienda implements Serializable {
+public class TipoVivienda implements Serializable {
 
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
     private String nombre;
 
-    public Tipo_vivienda(int id, String nombre) {
+    public TipoVivienda(String nombre){
+        this.nombre = nombre;
+    }
+
+    public TipoVivienda(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Tipo_vivienda(){
+    public TipoVivienda(){
         this.id = 0;
         this.nombre = "";
     }

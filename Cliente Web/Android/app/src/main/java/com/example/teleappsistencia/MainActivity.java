@@ -1,16 +1,9 @@
 package com.example.teleappsistencia;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -19,30 +12,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.teleappsistencia.clases.Token;
-import com.example.teleappsistencia.clases.UsuarioSistema;
-import com.example.teleappsistencia.fragments.InsertarTipoViviendaFragment;
-import com.example.teleappsistencia.fragments.ListarTipoViviendaFragment;
-import com.example.teleappsistencia.ui.tipo_situacion.TipoSituacionFragment;
+import com.example.teleappsistencia.clases.Usuario;
+import com.example.teleappsistencia.fragments.direccion.InsertarDireccionFragment;
+import com.example.teleappsistencia.fragments.direccion.ListarDireccionFragment;
+import com.example.teleappsistencia.fragments.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.fragments.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.fragments.grupos.InsertarGruposFragment;
+import com.example.teleappsistencia.fragments.grupos.ListarGruposFragment;
+import com.example.teleappsistencia.fragments.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.persona.InsertarPersonaFragment;
+import com.example.teleappsistencia.fragments.persona.ListarPersonaFragment;
+import com.example.teleappsistencia.fragments.tipo_situacion.InsertarTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.tipo_situacion.ListarTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.tipo_vivienda.InsertarTipoViviendaFragment;
+import com.example.teleappsistencia.fragments.tipo_vivienda.ListarTipoViviendaFragment;
+import com.example.teleappsistencia.fragments.usuarios.InsertarUsuariosFragment;
+import com.example.teleappsistencia.fragments.usuarios.ListarUsuariosFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,22 +108,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .retryOnConnectionFailure(Boolean.FALSE)
                 .build();
 
-        /*client.interceptors().add(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                Request newRequest;
-
-                newRequest = request.newBuilder()
-                        .addHeader("Authorization", "Bearer " + token.getRefresh())
-                        .build();
-
-                return chain.proceed(newRequest);
-            }
-        });*/
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://127.0.0.1:3333/")
+                .baseUrl(getResources().getString(R.string.api_base_url))
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -133,25 +119,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadMenuHeader(){
         String username = getIntent().getExtras().getString("usuario");
-        Call<List<UsuarioSistema>> call = apiService.getUserByUsername(username, "Bearer " + token.getAccess());
-        call.enqueue(new Callback<List<UsuarioSistema>>() {
+        Call<List<Usuario>> call = apiService.getUserByUsername(username, "Bearer " + token.getAccess());
+        call.enqueue(new Callback<List<Usuario>>() {
             @Override
-            public void onResponse(Call<List<UsuarioSistema>> call, Response<List<UsuarioSistema>> response) {
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 if(response.isSuccessful()) {
-                    List<UsuarioSistema> usuariosList = response.body();
-                    UsuarioSistema usuarioSistema = usuariosList.get(0);
+                    List<Usuario> usuariosList = response.body();
+                    Usuario usuario = usuariosList.get(0);
                     TextView nombreUsuario = (TextView) findViewById(R.id.textView_nombre_usuario);
                     TextView emailUsuario = (TextView) findViewById(R.id.textView_email_usuario);
 
-                    nombreUsuario.setText(usuarioSistema.getFirstName() + " " + usuarioSistema.getLastName());
-                    emailUsuario.setText(usuarioSistema.getEmail());
+                    nombreUsuario.setText(usuario.getFirstName() + " " + usuario.getLastName());
+                    emailUsuario.setText(usuario.getEmail());
                 } else{
                     System.out.println(response.raw());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<UsuarioSistema>> call, Throwable t) {
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -189,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         /* Handle navigation view item clicks here.
@@ -223,8 +208,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_usuarios), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarUsuariosFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarUsuariosFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -236,8 +221,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_persona), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPersonaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarPersonaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -249,8 +234,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_direccion), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarDireccionFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarDireccionFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -262,8 +247,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_grupos), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarGruposFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarGruposFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -275,8 +260,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_dispositivos_auxiliares_terminal), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarDispositivosAuxiliaresFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarDispositivosAuxiliaresFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -301,8 +286,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_situacion), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarTipoSituacionFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarTipoSituacionFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -314,8 +299,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_historico_tipo_situacion), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, null));
-        childModelsList.add(new MenuModel(childNames[1], false, false, null));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarHistoricoTipoSituacionFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarHistoricoTipoSituacionFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);

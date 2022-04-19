@@ -3,26 +3,19 @@ package com.example.teleappsistencia;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.teleappsistencia.clases.Tipo_vivienda;
 import com.example.teleappsistencia.clases.Token;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,55 +58,13 @@ public class LoginActivity extends AppCompatActivity {
                 .retryOnConnectionFailure(Boolean.FALSE)
                 .build();
 
-
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://127.0.0.1:3333/")
+                .baseUrl(getResources().getString(R.string.api_base_url))
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         APIService apiService = retrofit.create(APIService.class);
-
-        /*Call<UsuarioSistema> call = apiService.getUserByPK(1);
-        call.enqueue(new Callback<UsuarioSistema>() {
-            @Override
-            public void onResponse(Call<UsuarioSistema> call, Response<UsuarioSistema> response) {
-                if (response.isSuccessful()) {
-                    UsuarioSistema usuarioSistema = response.body();
-                    System.out.println(usuarioSistema);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UsuarioSistema> call, Throwable t) {
-                t.printStackTrace();
-                System.out.println(t.getMessage());
-            }
-        });*/
-
-        /*Call<List<Tipo_vivienda>> call = apiService.getTipoVivienda();
-        call.enqueue(new Callback<List<Tipo_vivienda>>() {
-            @Override
-            public void onResponse(Call<List<Tipo_vivienda>> call, Response<List<Tipo_vivienda>> response) {
-                if (response.isSuccessful()) {
-                    List<Tipo_vivienda> tipoViviendaList = response.body();
-                    for (Tipo_vivienda tipo_vivienda : tipoViviendaList) {
-                        System.out.println("\n" + tipo_vivienda + "\n");
-                    }
-                } else {
-                    System.out.println(response.message());
-                    System.out.println(response.body());
-                    System.out.println(response.raw());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Tipo_vivienda>> call, Throwable t) {
-                t.printStackTrace();
-                System.out.println(t.getMessage());
-            }
-        });*/
 
         Call < Token > call = apiService.getToken(this.editText_usuario.getText().toString(), this.editText_password.getText().toString());
         call.enqueue(new Callback<Token>() {

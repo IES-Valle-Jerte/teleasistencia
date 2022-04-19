@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.fragments;
+package com.example.teleappsistencia.fragments.tipo_vivienda;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.teleappsistencia.APIService;
 import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.clases.Tipo_vivienda;
+import com.example.teleappsistencia.clases.TipoVivienda;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -99,7 +99,6 @@ public class InsertarTipoViviendaFragment extends Fragment {
     }
 
     private void insertarTipoVivienda(){
-
         if(!editText_nombre_tipo_vivienda.getText().toString().trim().equalsIgnoreCase("")) {
 
             Gson gson = new GsonBuilder()
@@ -120,12 +119,12 @@ public class InsertarTipoViviendaFragment extends Fragment {
 
             APIService apiService = retrofit.create(APIService.class);
 
-            Call<Tipo_vivienda> call = apiService.addTipoVivienda(editText_nombre_tipo_vivienda.getText().toString(), "Bearer " + MainActivity.token.getAccess());
-            call.enqueue(new Callback<Tipo_vivienda>() {
+            Call<TipoVivienda> call = apiService.addTipoVivienda(editText_nombre_tipo_vivienda.getText().toString(), "Bearer " + MainActivity.token.getAccess());
+            call.enqueue(new Callback<TipoVivienda>() {
                 @Override
-                public void onResponse(Call<Tipo_vivienda> call, Response<Tipo_vivienda> response) {
+                public void onResponse(Call<TipoVivienda> call, Response<TipoVivienda> response) {
                     if (response.isSuccessful()) {
-                        Tipo_vivienda tipo_vivienda = response.body();
+                        TipoVivienda tipo_vivienda = response.body();
                         System.out.println(tipo_vivienda);
                         ListarTipoViviendaFragment.listaActualizada = false;
                         Toast.makeText(getContext(), "Se ha añadido un nuevo tipo de vivienda.", Toast.LENGTH_SHORT).show();
@@ -135,7 +134,7 @@ public class InsertarTipoViviendaFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Tipo_vivienda> call, Throwable t) {
+                public void onFailure(Call<TipoVivienda> call, Throwable t) {
                     t.printStackTrace();
                     System.out.println(t.getMessage());
                 }

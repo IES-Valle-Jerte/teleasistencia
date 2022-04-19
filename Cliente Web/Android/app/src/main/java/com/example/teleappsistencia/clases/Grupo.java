@@ -3,7 +3,7 @@ package com.example.teleappsistencia.clases;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GrupoUsuario {
+public class Grupo {
 
     /**
      * Atributos de la clase
