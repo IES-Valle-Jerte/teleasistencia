@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule, Title} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { AnimationTriggerMetadata } from '@angular/animations';
+import { ɵWebAnimationsStyleNormalizer } from '@angular/animations/browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -60,7 +63,18 @@ import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-logi
 import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
+<<<<<<< Updated upstream
 import {InterceptorService} from "./interceptors/interceptor.service";
+=======
+import { AgendaComponent } from './componentes/agenda/agenda.component';
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CommonModule } from '@angular/common';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { TipoAgendaComponent } from './componentes/agenda/tipo-agenda/tipo-agenda.component';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -109,13 +123,19 @@ import {InterceptorService} from "./interceptors/interceptor.service";
     PantallaLoginComponent,
     HeaderComponent,
     FooterComponent,
-    BotonesLoginComponent
+    BotonesLoginComponent,
+    AgendaComponent,
+    TipoAgendaComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModalModule,
+    CommonModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [
     CargaUserService,

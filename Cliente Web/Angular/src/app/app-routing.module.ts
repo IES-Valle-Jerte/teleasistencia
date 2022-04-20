@@ -53,6 +53,7 @@ import {DetallesRecursoComunitarioResolveService} from './servicios/detalles-rec
 import {NuevoRecursoComunitarioComponent} from './componentes/nuevo-recurso-comunitario/nuevo-recurso-comunitario.component';
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {LoginGuard} from './servicios/login.guard';
+import {AgendaComponent} from "./componentes/agenda/agenda.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -262,6 +263,14 @@ const routes: Routes = [
   {
     path: 'personas/nueva',
     component: NuevaPersonaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      direcciones: ListaDireccionesResolveService
+    }
+  },
+  {
+    path: 'agenda',
+    component: AgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
       direcciones: ListaDireccionesResolveService
