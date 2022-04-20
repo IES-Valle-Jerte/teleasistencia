@@ -63,19 +63,14 @@ import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-logi
 import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
-<<<<<<< Updated upstream
-import {InterceptorService} from "./interceptors/interceptor.service";
-=======
 import { AgendaComponent } from './componentes/agenda/agenda.component';
-
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TipoAgendaComponent } from './componentes/agenda/tipo-agenda/tipo-agenda.component';
->>>>>>> Stashed changes
-
+import {InterceptorService} from "./interceptors/interceptor.service";
 @NgModule({
   declarations: [
     AppComponent,
