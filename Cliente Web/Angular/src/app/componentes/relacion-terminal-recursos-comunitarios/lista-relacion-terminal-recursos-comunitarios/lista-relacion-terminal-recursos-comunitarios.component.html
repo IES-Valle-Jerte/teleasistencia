@@ -1,0 +1,31 @@
+<main class="text-center row p-0 m-0 justify-content-center">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Relacion de terminales con Recursos comunitarios</li>
+      </ol>
+    </nav>
+    <h1 class="component-title">Relacion de terminales con Recursos comunitarios</h1>
+    <div class="table-responsive m-2">
+      <table class="table table-hover text-center">
+        <thead>
+        <tr class="table-purple">
+          <th scope="col">Número de terminal</th>
+          <th scope="col">Modo de acceso a la vivienda</th>
+          <th scope="col">Barreras arquitectonicas</th>
+          <th scope="col">Nombre de recurso comunitario</th>
+          <th scope="col">Telefono de recurso comunitario</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let relacionRecurso of relacionRecursos"
+            app-item-relacion-terminal-recursos-comunitarios [relacionRecurso]="relacionRecurso">
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

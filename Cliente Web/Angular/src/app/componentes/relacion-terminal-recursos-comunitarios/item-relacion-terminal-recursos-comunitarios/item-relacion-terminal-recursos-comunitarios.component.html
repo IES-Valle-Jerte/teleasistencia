@@ -1,0 +1,11 @@
+<td>{{ relacionRecurso.id_terminal.id }}</td>
+<td>{{ relacionRecurso.id_terminal.modo_acceso_vivienda }}</td>
+<td>{{ relacionRecurso.id_terminal.barreras_arquitectonicas }}</td>
+<td>{{ relacionRecurso.id_recurso_comunitario.nombre }}</td>
+<td>{{ relacionRecurso.id_recurso_comunitario.telefono }}</td>
+<td>{{relacionRecurso.id}}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/relacion_terminal_recurso_comunitario/modificar', relacionRecurso.id]">
+    Modificar datos
+  </button>
+</td>

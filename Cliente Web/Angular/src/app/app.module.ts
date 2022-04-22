@@ -60,6 +60,13 @@ import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-logi
 import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
+import { ListaRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component';
+import { ItemRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios.component';
+import { NuevaRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/nueva-relacion-terminal-recursos-comunitarios/nueva-relacion-terminal-recursos-comunitarios.component';
+import { ModificarRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios.component';
+import {
+  CargaRelacionTerminalRecursosComunitariosService
+} from "./servicios/carga-relacion-terminal-recursos-comunitarios.service";
 
 @NgModule({
   declarations: [
@@ -108,7 +115,11 @@ import {BotonesLoginComponent} from './componentes/botones-login/botones-login.c
     PantallaLoginComponent,
     HeaderComponent,
     FooterComponent,
-    BotonesLoginComponent
+    BotonesLoginComponent,
+    ListaRelacionTerminalRecursosComunitariosComponent,
+    ItemRelacionTerminalRecursosComunitariosComponent,
+    NuevaRelacionTerminalRecursosComunitariosComponent,
+    ModificarRelacionTerminalRecursosComunitariosComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +138,7 @@ import {BotonesLoginComponent} from './componentes/botones-login/botones-login.c
     CargaCentroSanitarioService,
     CargaRecursoComunitarioService,
     CargaPersonaService,
+    CargaRelacionTerminalRecursosComunitariosService,
     Title
   ],
   bootstrap: [AppComponent]

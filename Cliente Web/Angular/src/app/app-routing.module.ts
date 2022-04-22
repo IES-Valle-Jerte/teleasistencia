@@ -53,6 +53,16 @@ import {DetallesRecursoComunitarioResolveService} from './servicios/detalles-rec
 import {NuevoRecursoComunitarioComponent} from './componentes/nuevo-recurso-comunitario/nuevo-recurso-comunitario.component';
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {LoginGuard} from './servicios/login.guard';
+import {ListaRelacionTerminalRecursosComunitariosResolveService} from "./servicios/lista-relacion-terminal-recursos-comunitarios-resolve.service";
+import {
+  ListaRelacionTerminalRecursosComunitariosComponent
+} from "./componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component";
+import {
+  ModificarRelacionTerminalRecursosComunitariosResolveService
+} from "./servicios/modificar-relacion-terminal-recursos-comunitarios-resolve.service";
+import {
+  ModificarRelacionTerminalRecursosComunitariosComponent
+} from "./componentes/relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -265,6 +275,23 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       direcciones: ListaDireccionesResolveService
+    }
+  },
+  {
+    path: 'relacion_terminal_recurso_comunitario',
+    component: ListaRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_terminal_recursos_comunitarios: ListaRelacionTerminalRecursosComunitariosResolveService
+    }
+  },
+  {
+    path: 'relacion_terminal_recurso_comunitario/modificar/:id',
+    component: ModificarRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      modificar_relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService
+
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},
