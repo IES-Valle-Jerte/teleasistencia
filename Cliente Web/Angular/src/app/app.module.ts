@@ -7,7 +7,7 @@ import {ListaUsersComponent} from './componentes/lista-users/lista-users.compone
 import {ItemUserComponent} from './componentes/item-user/item-user.component';
 import {DetallesUserComponent} from './componentes/detalles-user/detalles-user.component';
 import {NuevoUserComponent} from './componentes/nuevo-user/nuevo-user.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './componentes/home/home.component';
 import {CargaUserService} from './servicios/carga-user.service';
@@ -67,6 +67,8 @@ import { ModificarRelacionTerminalRecursosComunitariosComponent } from './compon
 import {
   CargaRelacionTerminalRecursosComunitariosService
 } from "./servicios/carga-relacion-terminal-recursos-comunitarios.service";
+import {InterceptorService} from "./interceptors/interceptor.service";
+
 
 @NgModule({
   declarations: [
@@ -139,7 +141,12 @@ import {
     CargaRecursoComunitarioService,
     CargaPersonaService,
     CargaRelacionTerminalRecursosComunitariosService,
-    Title
+    Title,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:InterceptorService,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })
