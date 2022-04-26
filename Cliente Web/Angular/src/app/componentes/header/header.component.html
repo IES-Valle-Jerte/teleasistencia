@@ -115,8 +115,12 @@
             Agenda
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownAgenda">
-            <li><a class="dropdown-item" [routerLink]="['/agenda']">Agenda Principal</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/agenda']">Histórico de agenda</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/agenda']">Consultar agenda</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/tipo_agenda']">Consultar tipos de agenda</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/tipo_agenda/nueva']">Crear tipo agenda</a></li>
           </ul>
         </li>
 

@@ -69,8 +69,11 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { TipoAgendaComponent } from './componentes/agenda/tipo-agenda/tipo-agenda.component';
+import { TipoAgendaComponent } from './componentes/tipo-agenda/tipo-agenda.component';
 import {InterceptorService} from "./interceptors/interceptor.service";
+import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component';
+import { ItemTipoAgendaComponent } from './componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component';
+import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -120,7 +123,10 @@ import {InterceptorService} from "./interceptors/interceptor.service";
     FooterComponent,
     BotonesLoginComponent,
     AgendaComponent,
-    TipoAgendaComponent
+    TipoAgendaComponent,
+    NuevoTipoAgendaComponent,
+    ItemTipoAgendaComponent,
+    DetallesTipoAgendaComponent
   ],
   imports: [
     BrowserModule,

@@ -54,6 +54,13 @@ import {NuevoRecursoComunitarioComponent} from './componentes/nuevo-recurso-comu
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {LoginGuard} from './servicios/login.guard';
 import {AgendaComponent} from "./componentes/agenda/agenda.component";
+import {TipoAgendaComponent} from "./componentes/tipo-agenda/tipo-agenda.component";
+import {NuevoTipoAgendaComponent} from "./componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component";
+import {ListaTiposAgendaResolveService} from "./servicios/lista-tipo-agenda-resolve.service";
+import {
+  DetallesTipoAgendaComponent
+} from "./componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component";
+import {DetallesTipoAgendaResolveService} from "./servicios/detalles-tipo-agenda-resolve.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -274,6 +281,28 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       direcciones: ListaDireccionesResolveService
+    }
+  },
+  {
+    path: 'tipo_agenda',
+    component: TipoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      direcciones: ListaDireccionesResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService
+    }
+  },
+  {
+    path: 'tipo_agenda/nueva',
+    component: NuevoTipoAgendaComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'tipo_agenda/modificar/:id',
+    component: DetallesTipoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      tipo_agenda: DetallesTipoAgendaResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},
