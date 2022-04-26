@@ -75,6 +75,8 @@ import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-ti
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
+import {BorrarTipoAgendaComponent} from "./componentes/tipo-agenda/borrar-tipo-agenda/borrar-tipo-agenda.component";
+import {BorrarTipoAgendaService} from "./servicios/borrar-tipo-agenda.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -317,7 +319,18 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       tipo_agenda: DetallesTipoAgendaResolveService
-    },
+    }
+  },
+  {
+    path: 'tipo_agenda/borrado/:id',
+    component: BorrarTipoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      tipo_agenda: BorrarTipoAgendaService,
+      tipos_agenda: ListaTiposAgendaResolveService
+    }
+  },
+  {
     path: 'viviendas',
     component: ListaTiposViviendaComponent,
     canActivate: [LoginGuard],

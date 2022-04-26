@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 import {ITipoAgenda} from "../interfaces/i-tipo-agenda";
+import {ITipoVivienda} from "../interfaces/i-tipo-vivienda";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class CargaTipoAgendaService {
 
   nuevoTipoAgenda(tipoAgenda: ITipoAgenda): Observable<ITipoAgenda> {
     return this.http.post<ITipoAgenda>(this.URL_SERVER_TIPOS_AGENDAS, tipoAgenda);
+  }
+
+  borrarTipoAgenda(idTipoAgenda: number) {
+    return this.http.delete<ITipoVivienda>(this.URL_SERVER_TIPOS_AGENDAS + '/' + idTipoAgenda);
   }
 }

@@ -88,6 +88,7 @@ import {InterceptorService} from "./interceptors/interceptor.service";
 import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component';
 import { ItemTipoAgendaComponent } from './componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component';
 import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
+import { BorrarTipoAgendaComponent } from './componentes/tipo-agenda/borrar-tipo-agenda/borrar-tipo-agenda.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,7 +141,7 @@ import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-
     TipoAgendaComponent,
     NuevoTipoAgendaComponent,
     ItemTipoAgendaComponent,
-    DetallesTipoAgendaComponent
+    DetallesTipoAgendaComponent,
     FiltroBusquedaPipe,
     ListaTiposViviendaComponent,
     ListaTiposSituacionComponent,
@@ -152,6 +153,7 @@ import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-
     ModificarTipoSituacionComponent,
     BorrarTipoViviendaComponent,
     BorrarTipoSituacionComponent,
+    BorrarTipoAgendaComponent,
   ],
   imports: [
     BrowserModule,
@@ -161,7 +163,7 @@ import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-
     NgbModalModule,
     CommonModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     NgxPaginationModule,
   ],
   providers: [
