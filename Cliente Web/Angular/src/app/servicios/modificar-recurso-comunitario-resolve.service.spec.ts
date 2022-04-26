@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DetallesRecursoComunitarioResolveService } from './detalles-recurso-comunitario-resolve.service';
+import { ModificarRecursoComunitarioResolveService } from './modificar-recurso-comunitario-resolve.service';
 
 describe('DetallesRecursoComunitarioResolveService', () => {
-  let service: DetallesRecursoComunitarioResolveService;
+  let service: ModificarRecursoComunitarioResolveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetallesRecursoComunitarioResolveService);
+    service = TestBed.inject(ModificarRecursoComunitarioResolveService);
   });
 
   it('should be created', () => {

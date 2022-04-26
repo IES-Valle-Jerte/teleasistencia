@@ -8,7 +8,7 @@ import {catchError} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class DetallesRecursoComunitarioResolveService implements Resolve<IRecursoComunitario> {
+export class ModificarRecursoComunitarioResolveService implements Resolve<IRecursoComunitario> {
 
   constructor(private cargaRecursoComunitario: CargaRecursoComunitarioService, private router: Router) {
   }

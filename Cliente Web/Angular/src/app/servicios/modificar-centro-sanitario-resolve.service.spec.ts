@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DetallesCentroSanitarioResolveService } from './detalles-centro-sanitario-resolve.service';
+import { ModificarCentroSanitarioResolveService } from './modificar-centro-sanitario-resolve.service';
 
 describe('DetallesCentroSanitarioResolveService', () => {
-  let service: DetallesCentroSanitarioResolveService;
+  let service: ModificarCentroSanitarioResolveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetallesCentroSanitarioResolveService);
+    service = TestBed.inject(ModificarCentroSanitarioResolveService);
   });
 
   it('should be created', () => {

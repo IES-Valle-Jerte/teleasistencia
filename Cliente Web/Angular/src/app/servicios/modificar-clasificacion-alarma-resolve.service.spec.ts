@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DetallesClasificacionAlarmaResolveService } from './detalles-clasificacion-alarma-resolve.service';
+import { ModificarClasificacionAlarmaResolveService } from './modificar-clasificacion-alarma-resolve.service';
 
 describe('DetallesClasificacionAlarmaResolveService', () => {
-  let service: DetallesClasificacionAlarmaResolveService;
+  let service: ModificarClasificacionAlarmaResolveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetallesClasificacionAlarmaResolveService);
+    service = TestBed.inject(ModificarClasificacionAlarmaResolveService);
   });
 
   it('should be created', () => {

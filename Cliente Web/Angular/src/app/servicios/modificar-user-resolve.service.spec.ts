@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DetallesUserResolveService } from './detalles-user-resolve.service';
+import { ModificarUserResolveService } from './modificar-user-resolve.service';
 
 describe('DetallesUserResolveService', () => {
-  let service: DetallesUserResolveService;
+  let service: ModificarUserResolveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetallesUserResolveService);
+    service = TestBed.inject(ModificarUserResolveService);
   });
 
   it('should be created', () => {

@@ -9,7 +9,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class DetallesTipoRecursoComunitarioResolveService implements Resolve<ITipoRecursoComunitario> {
+export class ModificarTipoRecursoComunitarioResolveService implements Resolve<ITipoRecursoComunitario> {
 
   constructor(private cargaTiposRecursosComunitarios: CargaTipoRecursoComunitarioService, private router: Router) {
   }

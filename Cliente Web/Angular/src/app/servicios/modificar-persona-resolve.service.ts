@@ -9,7 +9,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class DetallesPersonaResolveService implements Resolve<IPersona> {
+export class ModificarPersonaResolveService implements Resolve<IPersona> {
 
   constructor(private cargaPersonas: CargaPersonaService, private router: Router) {
   }
