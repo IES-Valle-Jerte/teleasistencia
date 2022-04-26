@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {IRelacionTerminalRecursoComunitarios} from "../../../interfaces/i-relacion-terminal-recurso-comunitarios";
 import {CargaRelacionTerminalRecursosComunitariosService} from '../../../servicios/carga-relacion-terminal-recursos-comunitarios.service';
-import {IIdTerminal} from "../../../interfaces/i-id-terminal";
-import {IIdRecursoComunitario} from "../../../interfaces/i-id-recurso-comunitario";
+import {ITerminal} from "../../../interfaces/i-terminal";
+import {IRecursoComunitario} from "../../../interfaces/i-recurso-comunitario";
 
 
 @Component({
@@ -15,8 +15,8 @@ import {IIdRecursoComunitario} from "../../../interfaces/i-id-recurso-comunitari
 export class ModificarRelacionTerminalRecursosComunitariosComponent implements OnInit {
   public modificar_relacion_terminal_recursos_comunitarios: IRelacionTerminalRecursoComunitarios;
   public idRelacion: number;
-  public relacion_terminal: IIdTerminal;
-  public relacion_recurso_comunitario: IIdRecursoComunitario;
+  public relacion_terminal: ITerminal;
+  public relacion_recurso_comunitario: IRecursoComunitario;
 
 
   constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private cargaRelacionTerminalRecursosComunitarios: CargaRelacionTerminalRecursosComunitariosService) { }
