@@ -67,6 +67,20 @@ import { ModificarRelacionTerminalRecursosComunitariosComponent } from './compon
 import {
   CargaRelacionTerminalRecursosComunitariosService
 } from "./servicios/carga-relacion-terminal-recursos-comunitarios.service";
+import {NgxPaginationModule} from 'ngx-pagination';
+import {OrdenacionTablasService} from "./servicios/ordenacion-tablas.service";
+import { FiltroBusquedaPipe } from './pipes/filtro-busqueda.pipe';
+import { ListaTiposViviendaComponent } from './componentes/tipo-vivienda/lista-tipos-vivienda/lista-tipos-vivienda.component';
+import { ListaTiposSituacionComponent } from './componentes/tipo-situacion/lista-tipos-situacion/lista-tipos-situacion.component';
+import { ItemTipoViviendaComponent } from './componentes/tipo-vivienda/item-tipo-vivienda/item-tipo-vivienda.component';
+import { CrearViviendaComponent } from './componentes/tipo-vivienda/crear-tipo-vivienda/crear-vivienda.component';
+import { ModificarTipoViviendaComponent } from './componentes/tipo-vivienda/modificar-tipo-vivienda/modificar-tipo-vivienda.component';
+import {CargaViviendaService} from "./servicios/carga-vivienda.service";
+import { ItemTipoSituacionComponent } from './componentes/tipo-situacion/item-tipo-situacion/item-tipo-situacion.component';
+import { CrearTipoSituacionComponent } from './componentes/tipo-situacion/crear-tipo-situacion/crear-tipo-situacion.component';
+import { ModificarTipoSituacionComponent } from './componentes/tipo-situacion/modificar-tipo-situacion/modificar-tipo-situacion.component';
+import { BorrarTipoViviendaComponent } from './componentes/tipo-vivienda/borrar-tipo-vivienda/borrar-tipo-vivienda.component';
+import { BorrarTipoSituacionComponent } from './componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component';
 import {InterceptorService} from "./interceptors/interceptor.service";
 
 
@@ -121,13 +135,25 @@ import {InterceptorService} from "./interceptors/interceptor.service";
     ListaRelacionTerminalRecursosComunitariosComponent,
     ItemRelacionTerminalRecursosComunitariosComponent,
     CrearRelacionTerminalRecursosComunitariosComponent,
-    ModificarRelacionTerminalRecursosComunitariosComponent
+    ModificarRelacionTerminalRecursosComunitariosComponent,
+    FiltroBusquedaPipe,
+    ListaTiposViviendaComponent,
+    ListaTiposSituacionComponent,
+    ItemTipoViviendaComponent,
+    CrearViviendaComponent,
+    ModificarTipoViviendaComponent,
+    ItemTipoSituacionComponent,
+    CrearTipoSituacionComponent,
+    ModificarTipoSituacionComponent,
+    BorrarTipoViviendaComponent,
+    BorrarTipoSituacionComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule,
   ],
   providers: [
     CargaUserService,
@@ -141,6 +167,7 @@ import {InterceptorService} from "./interceptors/interceptor.service";
     CargaRecursoComunitarioService,
     CargaPersonaService,
     CargaRelacionTerminalRecursosComunitariosService,
+    CargaViviendaService,
     Title,
     {
       provide:HTTP_INTERCEPTORS,
