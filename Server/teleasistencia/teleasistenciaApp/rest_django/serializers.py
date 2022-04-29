@@ -99,7 +99,7 @@ class Relacion_Terminal_Recurso_Comunitario_Serializer(serializers.ModelSerializ
     class Meta:
         model = Relacion_Terminal_Recurso_Comunitario
         fields = '__all__'
-        depth = 1
+        depth = 3
 
 
 class Terminal_Serializer(serializers.ModelSerializer):

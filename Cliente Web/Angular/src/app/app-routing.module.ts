@@ -304,7 +304,7 @@ const routes: Routes = [
     component: ModificarRelacionTerminalRecursosComunitariosComponent,
     canActivate: [LoginGuard],
     resolve: {
-      modificar_relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService
+      relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService
 
     }
   },
