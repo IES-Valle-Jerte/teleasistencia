@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DetallesTipoSituacionService } from './detalles-tipo-situacion.service';
+import { ModificarTipoSituacionService } from './modificar-tipo-situacion.service';
 
 describe('DetallesTipoSituacionService', () => {
-  let service: DetallesTipoSituacionService;
+  let service: ModificarTipoSituacionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetallesTipoSituacionService);
+    service = TestBed.inject(ModificarTipoSituacionService);
   });
 
   it('should be created', () => {

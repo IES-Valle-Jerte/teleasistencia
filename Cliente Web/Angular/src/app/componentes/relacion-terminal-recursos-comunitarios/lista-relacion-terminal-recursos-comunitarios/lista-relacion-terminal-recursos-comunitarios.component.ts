@@ -10,7 +10,6 @@ import {Title} from '@angular/platform-browser';
 })
 export class ListaRelacionTerminalRecursosComunitariosComponent implements OnInit {
   public relacionRecursos: IRelacionTerminalRecursoComunitarios[];
-
   constructor(private route: ActivatedRoute, private titleService: Title) { }
 
   ngOnInit(): void {

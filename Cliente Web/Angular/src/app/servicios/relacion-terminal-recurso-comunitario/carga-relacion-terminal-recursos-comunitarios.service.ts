@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IRelacionTerminalRecursoComunitarios} from "../interfaces/i-relacion-terminal-recurso-comunitarios";
-import {environment} from "../../environments/environment";
+import {IRelacionTerminalRecursoComunitarios} from "../../interfaces/i-relacion-terminal-recurso-comunitarios";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class CargaRelacionTerminalRecursosComunitariosService {
     return this.http.put<IRelacionTerminalRecursoComunitarios>(this.URL_SERVER_RELACION_TERMINAL_RECURSOS_COMUNITARIOS+'/'+ relacionRecurso.id, relacionRecurso);
   }
   nuevaRelacionRecurso(relacionRecurso:IRelacionTerminalRecursoComunitarios): Observable<IRelacionTerminalRecursoComunitarios> {
-    return this.http.post<IRelacionTerminalRecursoComunitarios> (this.URL_SERVER_RELACION_TERMINAL_RECURSOS_COMUNITARIOS, relacionRecurso)
+    return this.http.post<IRelacionTerminalRecursoComunitarios> (this.URL_SERVER_RELACION_TERMINAL_RECURSOS_COMUNITARIOS, relacionRecurso);
   }
 }
 

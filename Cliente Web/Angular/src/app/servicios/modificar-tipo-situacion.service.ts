@@ -8,7 +8,7 @@ import {catchError} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class DetallesTipoSituacionService implements Resolve<ITipoSituacion>{
+export class ModificarTipoSituacionService implements Resolve<ITipoSituacion>{
 
   constructor(private router: Router, private cargaSituacion: CargaTipoSituacionService) { }
 

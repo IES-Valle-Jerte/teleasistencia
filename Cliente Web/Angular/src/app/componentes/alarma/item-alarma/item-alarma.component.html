@@ -1,1 +1,11 @@
-<p>item-alarma works!</p>
+<td>{{ alarma.estado_alarma }}</td>
+<td>{{ alarma.fecha_registro | date }}</td>
+<td>{{ alarma.observaciones }}</td>
+<td>{{ alarma.resumen }}</td>
+<td>{{ alarma.id_tipo_alarma.nombre }}</td>
+<td>{{ alarma.id_paciente_ucr.numero_expediente }}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/alarmas']">
+    Modificar datos
+  </button>
+</td>

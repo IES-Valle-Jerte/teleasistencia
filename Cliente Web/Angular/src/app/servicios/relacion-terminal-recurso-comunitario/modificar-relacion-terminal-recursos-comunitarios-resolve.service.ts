@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {IRelacionTerminalRecursoComunitarios} from "../interfaces/i-relacion-terminal-recurso-comunitarios";
+import {IRelacionTerminalRecursoComunitarios} from "../../interfaces/i-relacion-terminal-recurso-comunitarios";
 import {CargaRelacionTerminalRecursosComunitariosService} from "./carga-relacion-terminal-recursos-comunitarios.service";
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DetallesViviendaResolveService } from './detalles-vivienda-resolve.service';
+import { ModificarViviendaResolveService } from './modificar-vivienda-resolve.service';
 
 describe('DetallesViviendaResolveService', () => {
-  let service: DetallesViviendaResolveService;
+  let service: ModificarViviendaResolveService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetallesViviendaResolveService);
+    service = TestBed.inject(ModificarViviendaResolveService);
   });
 
   it('should be created', () => {

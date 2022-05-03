@@ -53,13 +53,13 @@ import {ModificarRecursoComunitarioResolveService} from './servicios/modificar-r
 import {CrearRecursoComunitarioComponent} from './componentes/recurso-comunitario/crear-recurso-comunitario/crear-recurso-comunitario.component';
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {LoginGuard} from './servicios/login.guard';
-import {ListaRelacionTerminalRecursosComunitariosResolveService} from "./servicios/lista-relacion-terminal-recursos-comunitarios-resolve.service";
+import {ListaRelacionTerminalRecursosComunitariosResolveService} from "./servicios/relacion-terminal-recurso-comunitario/lista-relacion-terminal-recursos-comunitarios-resolve.service";
 import {
   ListaRelacionTerminalRecursosComunitariosComponent
 } from "./componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component";
 import {
   ModificarRelacionTerminalRecursosComunitariosResolveService
-} from "./servicios/modificar-relacion-terminal-recursos-comunitarios-resolve.service";
+} from "./servicios/relacion-terminal-recurso-comunitario/modificar-relacion-terminal-recursos-comunitarios-resolve.service";
 import {
   ModificarRelacionTerminalRecursosComunitariosComponent
 } from "./componentes/relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios.component";
@@ -68,15 +68,22 @@ import {ListaViviendasResolveService} from "./servicios/lista-viviendas-resolve.
 import {CrearViviendaComponent} from "./componentes/tipo-vivienda/crear-tipo-vivienda/crear-vivienda.component";
 import {ModificarTipoViviendaComponent} from "./componentes/tipo-vivienda/modificar-tipo-vivienda/modificar-tipo-vivienda.component";
 import {ListaTiposSituacionComponent} from "./componentes/tipo-situacion/lista-tipos-situacion/lista-tipos-situacion.component";
-import {DetallesViviendaResolveService} from "./servicios/detalles-vivienda-resolve.service";
+import {ModificarViviendaResolveService} from "./servicios/modificar-vivienda-resolve.service";
 import {ListaSituacionesService} from "./servicios/lista-situaciones.service";
 import {CrearTipoSituacionComponent} from "./componentes/tipo-situacion/crear-tipo-situacion/crear-tipo-situacion.component";
 import {ModificarTipoSituacionComponent} from "./componentes/tipo-situacion/modificar-tipo-situacion/modificar-tipo-situacion.component";
-import {DetallesTipoSituacionService} from "./servicios/detalles-tipo-situacion.service";
+import {ModificarTipoSituacionService} from "./servicios/modificar-tipo-situacion.service";
 import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-tipo-vivienda/borrar-tipo-vivienda.component";
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
+import {
+  CrearRelacionTerminalRecursosComunitariosComponent
+} from "./componentes/relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios.component";
+import {ListaAlarmasResolveService} from "./servicios/alarmas/lista-alarmas-resolve.service";
+import {ListaAlarmasComponent} from "./componentes/alarma/lista-alarmas/lista-alarmas.component";
+import {ModificarAlarmaComponent} from "./componentes/alarma/modificar-alarma/modificar-alarma.component";
+import {ModificarAlarmaResolveService} from "./servicios/alarmas/modificar-alarma-resolve.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -292,23 +299,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'relacion_terminal_recurso_comunitario',
-    component: ListaRelacionTerminalRecursosComunitariosComponent,
-    canActivate: [LoginGuard],
-    resolve: {
-      relacion_terminal_recursos_comunitarios: ListaRelacionTerminalRecursosComunitariosResolveService
-    }
-  },
-  {
-    path: 'relacion_terminal_recurso_comunitario/modificar/:id',
-    component: ModificarRelacionTerminalRecursosComunitariosComponent,
-    canActivate: [LoginGuard],
-    resolve: {
-      relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService
-
-    }
-  },
-  {
     path: 'viviendas',
     component: ListaTiposViviendaComponent,
     canActivate: [LoginGuard],
@@ -329,7 +319,7 @@ const routes: Routes = [
     component: ModificarTipoViviendaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      tipo_vivienda: DetallesViviendaResolveService,
+      tipo_vivienda: ModificarViviendaResolveService,
       clasificaciones_viviendas: ListaViviendasResolveService
     }
   },
@@ -371,7 +361,7 @@ const routes: Routes = [
     component: ModificarTipoSituacionComponent,
     canActivate: [LoginGuard],
     resolve: {
-      tipos_situaciones: DetallesTipoSituacionService,
+      tipos_situaciones: ModificarTipoSituacionService,
       clasificaciones_situaciones: ListaSituacionesService
     }
   },
@@ -390,6 +380,47 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       user: ModificarUserResolveService
+    }
+  },
+  {
+    path: 'relacion_terminal_recurso_comunitario',
+    component: ListaRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_terminal_recursos_comunitarios: ListaRelacionTerminalRecursosComunitariosResolveService
+    }
+  },
+  {
+    path: 'relacion_terminal_recurso_comunitario/modificar/:id',
+    component: ModificarRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService
+
+    }
+  },
+  {
+    path: 'relacion_terminal_recurso_comunitario/nueva',
+    component: CrearRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      clasificaciones_alarmas: ListaRelacionTerminalRecursosComunitariosResolveService
+    }
+  },
+  {
+    path: 'alarmas',
+    component: ListaAlarmasComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarmas: ListaAlarmasResolveService
+    }
+  },
+  {
+    path: 'alarmas/modificar/:id',
+    component: ModificarAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarmas: ModificarAlarmaResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},

@@ -66,7 +66,8 @@ import { CrearRelacionTerminalRecursosComunitariosComponent } from './componente
 import { ModificarRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios.component';
 import {
   CargaRelacionTerminalRecursosComunitariosService
-} from "./servicios/carga-relacion-terminal-recursos-comunitarios.service";
+} from "./servicios/relacion-terminal-recurso-comunitario/carga-relacion-terminal-recursos-comunitarios.service";
+
 import {NgxPaginationModule} from 'ngx-pagination';
 import {OrdenacionTablasService} from "./servicios/ordenacion-tablas.service";
 import { FiltroBusquedaPipe } from './pipes/filtro-busqueda.pipe';
@@ -86,6 +87,7 @@ import { ListaAlarmasComponent } from './componentes/alarma/lista-alarmas/lista-
 import { CrearAlarmaComponent } from './componentes/alarma/crear-alarma/crear-alarma.component';
 import { ModificarAlarmaComponent } from './componentes/alarma/modificar-alarma/modificar-alarma.component';
 import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarma.component';
+
 
 
 @NgModule({
@@ -155,6 +157,7 @@ import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarm
     CrearAlarmaComponent,
     ModificarAlarmaComponent,
     ItemAlarmaComponent,
+    CrearRelacionTerminalRecursosComunitariosComponent,
   ],
   imports: [
     BrowserModule,

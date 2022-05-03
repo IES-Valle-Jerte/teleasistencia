@@ -8,7 +8,7 @@ import {ITipoVivienda} from "../interfaces/i-tipo-vivienda";
 @Injectable({
   providedIn: 'root'
 })
-export class DetallesViviendaResolveService implements Resolve<ITipoVivienda>{
+export class ModificarViviendaResolveService implements Resolve<ITipoVivienda>{
 
   constructor(private cargaViviendas: CargaViviendaService, private router: Router) { }
 
