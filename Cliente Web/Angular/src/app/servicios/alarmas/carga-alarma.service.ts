@@ -7,7 +7,7 @@ import {IAlarma} from "../../interfaces/i-alarma";
 @Injectable({
   providedIn: 'root'
 })
-export class CargarAlarmasService {
+export class CargaAlarmaService {
   private urlBase = environment.urlBase;
   private URL_SERVER_ALARMA = this.urlBase + 'alarma';
   constructor(private http: HttpClient) {  }
@@ -15,12 +15,15 @@ export class CargarAlarmasService {
     getAlarmas(): Observable<IAlarma[]> {
       return this.http.get<IAlarma[]>(this.URL_SERVER_ALARMA);
     }
+
     getAlarma(idAlarma: number): Observable<IAlarma> {
-    return this.http.get<IAlarma>(this.URL_SERVER_ALARMA+ '/' + idAlarma);
+      return this.http.get<IAlarma>(this.URL_SERVER_ALARMA+ '/' + idAlarma);
     }
+
     modificarAlarma(alarma: IAlarma): Observable<IAlarma> {
       return this.http.put<IAlarma>(this.URL_SERVER_ALARMA+ '/' + alarma, alarma);
     }
+
     nuevaAlarma(alarma: IAlarma): Observable<IAlarma> {
       return this.http.post<IAlarma> (this.URL_SERVER_ALARMA, alarma);
     }

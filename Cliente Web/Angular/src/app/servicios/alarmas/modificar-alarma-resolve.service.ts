@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {IAlarma} from "../../interfaces/i-alarma";
-import {CargarAlarmasService} from "./cargar-alarmas.service";
+import {CargaAlarmaService} from "./carga-alarma.service";
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
@@ -10,7 +10,7 @@ import {catchError} from "rxjs/operators";
 })
 export class ModificarAlarmaResolveService implements Resolve<IAlarma> {
 
-  constructor(private cargarAlarma: CargarAlarmasService, private router: Router) { }
+  constructor(private cargarAlarma: CargaAlarmaService, private router: Router) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IAlarma> {
     return this.cargarAlarma.getAlarma(route.params['id']).pipe(

@@ -3,14 +3,14 @@ import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@ang
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {IAlarma} from "../../interfaces/i-alarma";
-import {CargarAlarmasService} from "./cargar-alarmas.service";
+import {CargaAlarmaService} from "./carga-alarma.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListaAlarmasResolveService implements Resolve<IAlarma> {
 
-  constructor(private cargarAlarmas: CargarAlarmasService, private router: Router) { }
+  constructor(private cargarAlarmas: CargaAlarmaService, private router: Router) { }
 
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IAlarma> {

@@ -87,6 +87,13 @@ import { ListaAlarmasComponent } from './componentes/alarma/lista-alarmas/lista-
 import { CrearAlarmaComponent } from './componentes/alarma/crear-alarma/crear-alarma.component';
 import { ModificarAlarmaComponent } from './componentes/alarma/modificar-alarma/modificar-alarma.component';
 import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarma.component';
+import { ListaTerminalComponent } from './componentes/terminal/lista-terminal/lista-terminal.component';
+import { ItemTerminalComponent } from './componentes/terminal/item-terminal/item-terminal.component';
+import { CrearTerminalComponent } from './componentes/terminal/crear-terminal/crear-terminal.component';
+import { ModificarTerminalComponent } from './componentes/terminal/modificar-terminal/modificar-terminal.component';
+import {CargarTerminalesService} from "./servicios/terminal/cargar-terminales.service";
+import {CargaAlarmaService} from "./servicios/alarmas/carga-alarma.service";
+import {CargaPacienteService} from "./servicios/paciente/carga-paciente.service";
 
 
 
@@ -142,6 +149,7 @@ import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarm
     ItemRelacionTerminalRecursosComunitariosComponent,
     CrearRelacionTerminalRecursosComunitariosComponent,
     ModificarRelacionTerminalRecursosComunitariosComponent,
+    CrearRelacionTerminalRecursosComunitariosComponent,
     FiltroBusquedaPipe,
     ListaTiposViviendaComponent,
     ListaTiposSituacionComponent,
@@ -157,7 +165,10 @@ import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarm
     CrearAlarmaComponent,
     ModificarAlarmaComponent,
     ItemAlarmaComponent,
-    CrearRelacionTerminalRecursosComunitariosComponent,
+    ListaTerminalComponent,
+    ItemTerminalComponent,
+    CrearTerminalComponent,
+    ModificarTerminalComponent,
   ],
   imports: [
     BrowserModule,
@@ -179,6 +190,9 @@ import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarm
     CargaPersonaService,
     CargaRelacionTerminalRecursosComunitariosService,
     CargaViviendaService,
+    CargaAlarmaService,
+    CargaPacienteService,
+    CargarTerminalesService,
     Title,
     {
       provide:HTTP_INTERCEPTORS,
