@@ -23,7 +23,7 @@ export class CargaDispositivosAuxiliaresTerminalService {
   }
 
   modificarDispositivoAuxiliarTerminal(dispositivosAuxiliaresTerminal: IDispositivosAuxiliaresTerminal): Observable<IDispositivosAuxiliaresTerminal> {
-    return this.http.put<IDispositivosAuxiliaresTerminal>(this.URL_SERVER_DISPOSITIVOS_AUXILIARES_TERMINAL+ '/' + dispositivosAuxiliaresTerminal, dispositivosAuxiliaresTerminal);
+    return this.http.put<IDispositivosAuxiliaresTerminal>(this.URL_SERVER_DISPOSITIVOS_AUXILIARES_TERMINAL+ '/' + dispositivosAuxiliaresTerminal.id, dispositivosAuxiliaresTerminal);
   }
 
   nuevoDispositivoAuxiliarTerminal(dispositivosAuxiliaresTerminal: IDispositivosAuxiliaresTerminal): Observable<IDispositivosAuxiliaresTerminal> {

@@ -10,54 +10,24 @@
     <h1 class="component-title" >Modificar relacion de terminales con recursos comunitarios {{idRelacion}}</h1>
     <form #modificarRelacionForm="ngForm">
       <div class="form-group mb-3">
+        <div class="form-group mb-3">
+          <label for="relacion_terminal" class="form-label">Nombre</label>
+          <select class="form-select" id="relacion_terminal" name="relacion_terminal"
+                  [(ngModel)]="relacion_terminal_recursos_comunitarios.id_terminal" required>
+            <option class="relacion_terminal_option" *ngFor="let relacion_terminal of relaciones_terminales; let i = index"
+                    [value]="relacion_terminal.id">{{ relacion_terminal_recursos_comunitarios.id_terminal.id === relacion_terminal.id? optionSelected1(i):"" }}{{ relacion_terminal.numero_terminal }}</option>
+          </select>
+        </div>
 
-        <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" name="nombre" id="nombre" class="form-control"
-               required maxlength="200" pattern="^[\w'\-,.][^0-9_!¡?÷?¿(\)\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"
-               [(ngModel)]="relacion_terminal_persona.nombre"
-               #nombre="ngModel">
-        <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-secondary" role="alert">
-          <div *ngIf="nombre.errors?.required; else elseBlock">
-            El nombre es obligatorio
-          </div>
-          <ng-template #elseBlock>
-            Introduzca un nombre válido
-          </ng-template>
+        <div class="form-group mb-3">
+          <label for="relacion_recurso" class="form-label">Recurso Comunitario</label>
+          <select class="form-select" id="relacion_recurso" name="relacion_recurso"
+                  [(ngModel)]="relacion_terminal_recursos_comunitarios.id_recurso_comunitario" required>
+            <option class="relacion_recurso_option" *ngFor="let relacion_recurso_comunitario of relaciones_recursos_comunitarios; let i = index"
+                    [value]="relacion_recurso_comunitario.id">{{ relacion_terminal_recursos_comunitarios.id_recurso_comunitario.id === relacion_recurso_comunitario.id? optionSelected2(i):"" }}{{ relacion_recurso_comunitario.nombre }}</option>
+          </select>
         </div>
       </div>
-
-      <div class="form-group mb-3">
-        <label for="apellidos" class="form-label">Apellidos</label>
-        <input type="text" name="apellidos" id="apellidos" class="form-control"
-               required maxlength="200" pattern="^[\w'\-,.][^0-9_!¡?÷?¿(\)\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"
-               [(ngModel)]="relacion_terminal_persona.apellidos" #apellidos="ngModel">
-        <div *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)" class="alert alert-secondary"
-             role="alert">
-          <div *ngIf="apellidos.errors?.required; else elseBlock">
-            Los apellidos son obligatorios
-          </div>
-          <ng-template #elseBlock>
-            Introduzca unos apellidos válidos
-          </ng-template>
-        </div>
-      </div>
-      <div class="form-group mb-3">
-        <label for="apellidos" class="form-label">Recurso Comunitario</label>
-        <input type="text" name="recursoComunitario" id="recursoComunitario" class="form-control"
-               required maxlength="200" pattern="^[\w'\-,.][^0-9_!¡?÷?¿(\)\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"
-               [(ngModel)]="relacion_recurso_comunitario.nombre" #recursoComunitario="ngModel">
-        <div *ngIf="recursoComunitario.invalid && (recursoComunitario.dirty || recursoComunitario.touched)" class="alert alert-secondary"
-             role="alert">
-          <div *ngIf="recursoComunitario.errors?.required; else elseBlock">
-            El Recurso comunitario son obligatorios
-          </div>
-          <ng-template #elseBlock>
-            Introduzca un Recurso comunitario válidos
-          </ng-template>
-        </div>
-      </div>
-
-
 
       <button type="submit" class="btn btn-outline-success m-1" (click)="modificarRelacion()"
               [disabled]="!modificarRelacionForm.form.valid">

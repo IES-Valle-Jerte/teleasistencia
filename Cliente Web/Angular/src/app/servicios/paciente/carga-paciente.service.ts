@@ -21,7 +21,7 @@ export class CargaPacienteService {
   }
 
   modificarPaciente(paciente: IPaciente): Observable<IPaciente> {
-    return this.http.put<IPaciente>(this.URL_SERVER_PACIENTE + '/' + paciente, paciente)
+    return this.http.put<IPaciente>(this.URL_SERVER_PACIENTE + '/' + paciente.id, paciente)
   }
 
   nuevoPaciente(paciente: IPaciente): Observable<IPaciente> {

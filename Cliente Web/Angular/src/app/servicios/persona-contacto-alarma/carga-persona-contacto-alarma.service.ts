@@ -22,7 +22,7 @@ export class CargaPersonaContactoAlarmaService {
   }
 
   modificarPersonaContactoAlarma(personaContactoAlarma: IPersonaContactoAlarma): Observable<IPersonaContactoAlarma> {
-    return this.http.put<IPersonaContactoAlarma>(this.URL_SERVER_PERSONA_CONTACTO_ALARMA+ '/' + personaContactoAlarma, personaContactoAlarma);
+    return this.http.put<IPersonaContactoAlarma>(this.URL_SERVER_PERSONA_CONTACTO_ALARMA+ '/' + personaContactoAlarma.id, personaContactoAlarma);
   }
 
   nuevaPersonaContactoAlarma(personaContactoAlarma: IPersonaContactoAlarma): Observable<IPersonaContactoAlarma> {

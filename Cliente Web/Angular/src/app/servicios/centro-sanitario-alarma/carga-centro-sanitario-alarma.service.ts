@@ -22,7 +22,7 @@ export class CargaCentroSanitarioAlarmaService {
   }
 
   modificarCentroSanitarioAlarma(centroSanitarioAlarma: ICentroSanitarioAlarma): Observable<ICentroSanitarioAlarma> {
-    return this.http.put<ICentroSanitarioAlarma>(this.URL_SERVER_CENTRO_SANITARIO_ALARMA+ '/' + centroSanitarioAlarma, centroSanitarioAlarma);
+    return this.http.put<ICentroSanitarioAlarma>(this.URL_SERVER_CENTRO_SANITARIO_ALARMA+ '/' + centroSanitarioAlarma.id, centroSanitarioAlarma);
   }
 
   nuevoCentroSanitarioAlarma(centroSanitarioAlarma: ICentroSanitarioAlarma): Observable<ICentroSanitarioAlarma> {

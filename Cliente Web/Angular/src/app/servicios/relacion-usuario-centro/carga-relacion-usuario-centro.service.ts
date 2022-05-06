@@ -23,7 +23,7 @@ export class CargaRelacionUsuarioCentroService {
   }
 
   modificarRelacionUsuarioCentro(relacionUsuarioCentro: IRelacionUsuarioCentro): Observable<IRelacionUsuarioCentro> {
-    return this.http.put<IRelacionUsuarioCentro>(this.URL_SERVER_RELACION_USUARIO_CENTRO+ '/' + relacionUsuarioCentro , relacionUsuarioCentro);
+    return this.http.put<IRelacionUsuarioCentro>(this.URL_SERVER_RELACION_USUARIO_CENTRO+ '/' + relacionUsuarioCentro.id, relacionUsuarioCentro);
   }
 
   nuevaRelacionUsuarioCentro(relacionUsuarioCentro: IRelacionUsuarioCentro): Observable<IRelacionUsuarioCentro> {

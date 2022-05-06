@@ -21,7 +21,7 @@ export class CargaRecursosComunitariosAlarmaService {
   }
 
   modificarRecursosComunitariosAlarma(recursosComunitariosAlarma: IRecursosComunitariosAlarma): Observable<IRecursosComunitariosAlarma> {
-    return this.http.put<IRecursosComunitariosAlarma>(this.URL_SERVER_RECURSOS_COMUNITARIOS_ALARMA+ '/' + recursosComunitariosAlarma, recursosComunitariosAlarma);
+    return this.http.put<IRecursosComunitariosAlarma>(this.URL_SERVER_RECURSOS_COMUNITARIOS_ALARMA+ '/' + recursosComunitariosAlarma.id, recursosComunitariosAlarma);
   }
 
   nuevaRecursosComunitariosAlarma(recursosComunitariosAlarma: IRecursosComunitariosAlarma): Observable<IRecursosComunitariosAlarma> {

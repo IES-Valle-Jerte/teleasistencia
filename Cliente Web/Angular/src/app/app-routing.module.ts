@@ -84,6 +84,9 @@ import {ListaAlarmasResolveService} from "./servicios/alarmas/lista-alarmas-reso
 import {ListaAlarmasComponent} from "./componentes/alarma/lista-alarmas/lista-alarmas.component";
 import {ModificarAlarmaComponent} from "./componentes/alarma/modificar-alarma/modificar-alarma.component";
 import {ModificarAlarmaResolveService} from "./servicios/alarmas/modificar-alarma-resolve.service";
+import {IRecursoComunitario} from "./interfaces/i-recurso-comunitario";
+import {IPersona} from "./interfaces/i-persona";
+import {ListaTerminalesResolveService} from "./servicios/terminal/lista-terminales-resolve.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -395,8 +398,9 @@ const routes: Routes = [
     component: ModificarRelacionTerminalRecursosComunitariosComponent,
     canActivate: [LoginGuard],
     resolve: {
-      relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService
-
+      relacion_terminal_recursos_comunitarios: ModificarRelacionTerminalRecursosComunitariosResolveService,
+      relaciones_recursos_comunitarios: ListaRecursosComunitariosResolveService,
+      relaciones_terminales: ListaTerminalesResolveService,
     }
   },
   {
