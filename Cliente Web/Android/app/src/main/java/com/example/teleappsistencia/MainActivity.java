@@ -15,22 +15,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.teleappsistencia.clases.Token;
 import com.example.teleappsistencia.clases.Usuario;
-import com.example.teleappsistencia.fragments.direccion.InsertarDireccionFragment;
-import com.example.teleappsistencia.fragments.direccion.ListarDireccionFragment;
-import com.example.teleappsistencia.fragments.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
-import com.example.teleappsistencia.fragments.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
-import com.example.teleappsistencia.fragments.grupos.InsertarGruposFragment;
-import com.example.teleappsistencia.fragments.grupos.ListarGruposFragment;
-import com.example.teleappsistencia.fragments.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.persona.InsertarPersonaFragment;
-import com.example.teleappsistencia.fragments.persona.ListarPersonaFragment;
-import com.example.teleappsistencia.fragments.tipo_situacion.InsertarTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.tipo_situacion.ListarTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.tipo_vivienda.InsertarTipoViviendaFragment;
-import com.example.teleappsistencia.fragments.tipo_vivienda.ListarTipoViviendaFragment;
-import com.example.teleappsistencia.fragments.usuarios.InsertarUsuariosFragment;
-import com.example.teleappsistencia.fragments.usuarios.ListarUsuariosFragment;
+import com.example.teleappsistencia.fragments.api.direccion.InsertarDireccionFragment;
+import com.example.teleappsistencia.fragments.api.direccion.ListarDireccionFragment;
+import com.example.teleappsistencia.fragments.api.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.fragments.api.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.fragments.api.grupos.InsertarGruposFragment;
+import com.example.teleappsistencia.fragments.api.grupos.ListarGruposFragment;
+import com.example.teleappsistencia.fragments.api.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.api.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.api.persona.InsertarPersonaFragment;
+import com.example.teleappsistencia.fragments.api.persona.ListarPersonaFragment;
+import com.example.teleappsistencia.fragments.api.tipo_situacion.InsertarTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.api.tipo_situacion.ListarTipoSituacionFragment;
+import com.example.teleappsistencia.fragments.api.tipo_vivienda.InsertarTipoViviendaFragment;
+import com.example.teleappsistencia.fragments.api.tipo_vivienda.ListarTipoViviendaFragment;
+import com.example.teleappsistencia.fragments.api.usuarios.InsertarUsuariosFragment;
+import com.example.teleappsistencia.fragments.api.usuarios.ListarUsuariosFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     TextView emailUsuario = (TextView) findViewById(R.id.textView_email_usuario);
 
                     nombreUsuario.setText(usuario.getFirstName() + " " + usuario.getLastName());
-                    emailUsuario.setText(usuario.getEmail());
+                    emailUsuario.setText((String) usuario.getEmail());
                 } else{
                     System.out.println(response.raw());
                 }
@@ -348,7 +348,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .addToBackStack(null)
                             .commit();
                 }
-
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
                 return false;
             }
         });

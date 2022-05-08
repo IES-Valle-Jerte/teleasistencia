@@ -12,19 +12,24 @@ public class TipoVivienda implements Serializable {
     @SerializedName("nombre")
     private String nombre;
 
-    public TipoVivienda(String nombre){
-        this.nombre = nombre;
-    }
-
+    /**
+     * Constructor para mostrar un TipoVivienda.
+     * @param id
+     * @param nombre
+     */
     public TipoVivienda(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public TipoVivienda(){
-        this.id = 0;
-        this.nombre = "";
+    /**
+     * CDonstructor para modificar o insertar un nuevo TipoVivienda.
+     * @param nombre
+     */
+    public TipoVivienda(String nombre){
+        this.nombre = nombre;
     }
+
 
     public int getId() {
         return id;
