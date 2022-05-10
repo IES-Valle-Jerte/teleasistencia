@@ -13,41 +13,34 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.teleappsistencia.clases.Token;
-import com.example.teleappsistencia.clases.Usuario;
-import com.example.teleappsistencia.fragments.api.direccion.InsertarDireccionFragment;
-import com.example.teleappsistencia.fragments.api.direccion.ListarDireccionFragment;
-import com.example.teleappsistencia.fragments.api.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
-import com.example.teleappsistencia.fragments.api.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
-import com.example.teleappsistencia.fragments.api.grupos.InsertarGruposFragment;
-import com.example.teleappsistencia.fragments.api.grupos.ListarGruposFragment;
-import com.example.teleappsistencia.fragments.api.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.api.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.api.persona.InsertarPersonaFragment;
-import com.example.teleappsistencia.fragments.api.persona.ListarPersonaFragment;
-import com.example.teleappsistencia.fragments.api.tipo_situacion.InsertarTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.api.tipo_situacion.ListarTipoSituacionFragment;
-import com.example.teleappsistencia.fragments.api.tipo_vivienda.InsertarTipoViviendaFragment;
-import com.example.teleappsistencia.fragments.api.tipo_vivienda.ListarTipoViviendaFragment;
-import com.example.teleappsistencia.fragments.api.usuarios.InsertarUsuariosFragment;
-import com.example.teleappsistencia.fragments.api.usuarios.ListarUsuariosFragment;
+import com.example.teleappsistencia.ui.clases.Usuario;
+import com.example.teleappsistencia.ui.fragments.api.direccion.InsertarDireccionFragment;
+import com.example.teleappsistencia.ui.fragments.api.direccion.ListarDireccionFragment;
+import com.example.teleappsistencia.ui.fragments.api.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.ui.fragments.api.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.ui.fragments.api.grupos.InsertarGruposFragment;
+import com.example.teleappsistencia.ui.fragments.api.grupos.ListarGruposFragment;
+import com.example.teleappsistencia.ui.fragments.api.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.ui.fragments.api.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.ui.fragments.api.persona.InsertarPersonaFragment;
+import com.example.teleappsistencia.ui.fragments.api.persona.ListarPersonaFragment;
+import com.example.teleappsistencia.ui.fragments.api.tipo_situacion.InsertarTipoSituacionFragment;
+import com.example.teleappsistencia.ui.fragments.api.tipo_situacion.ListarTipoSituacionFragment;
+import com.example.teleappsistencia.ui.fragments.api.tipo_vivienda.InsertarTipoViviendaFragment;
+import com.example.teleappsistencia.ui.fragments.api.tipo_vivienda.ListarTipoViviendaFragment;
+import com.example.teleappsistencia.ui.fragments.api.usuarios.InsertarUsuariosFragment;
+import com.example.teleappsistencia.ui.fragments.api.usuarios.ListarUsuariosFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -55,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ExpandableListView expandableListView;
     private List<MenuModel> headerList = new ArrayList<>();
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-
-    public static Token token;
 
     private APIService apiService;
 
@@ -67,10 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.token = (Token) getIntent().getExtras().get("token");
-
         // Cargo el servicio que se encarga de realizar las peticiones.
-        loadApiService();
+        apiService = Utils.inicializarApiService(getBaseContext());
         // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
         loadMenuHeader();
 
@@ -97,29 +86,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void loadApiService(){
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                //Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
-                .retryOnConnectionFailure(Boolean.FALSE)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getResources().getString(R.string.api_base_url))
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        this.apiService = retrofit.create(APIService.class);
-    }
-
     private void loadMenuHeader(){
         String username = getIntent().getExtras().getString("usuario");
-        Call<List<Usuario>> call = apiService.getUserByUsername(username, "Bearer " + token.getAccess());
+        Call<List<Usuario>> call = apiService.getUserByUsername(username, "Bearer " + Utils.getToken().getAccess());
         call.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.api.tipo_vivienda.ListarTipoViviendaFragment" >
+    tools:context=".ui.fragments.api.tipo_vivienda.ListarTipoViviendaFragment" >
 
     <TextView
         android:id="@+id/textView_listar_tipo_vivienda"

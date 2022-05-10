@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".fragments.api.usuarios.InsertarUsuariosFragment">
+    tools:context=".ui.fragments.api.usuarios.InsertarUsuariosFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
+        android:layout_weight="15"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -28,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="65"
+        android:layout_weight="70"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -38,15 +38,29 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="@string/nombre_usuario"
+            android:hint="@string/nombreUsuario"
             android:inputType="textPersonName"
             android:padding="10dp"
             android:textColorHint="@color/black"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             tools:layout_editor_absoluteY="179dp" />
+
+        <TextView
+            android:id="@+id/textView_error_nombreUsuario_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/fondo_bordes_textviews"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/textview_nombre_usuario_obligatorio" />
 
         <EditText
             android:id="@+id/editText_password_usuario"
@@ -54,15 +68,29 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/white"
             android:ems="10"
-            android:hint="@string/password_usuario"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColorHint="@color/black"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             tools:layout_editor_absoluteY="179dp" />
+
+        <TextView
+            android:id="@+id/textView_error_password_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/fondo_bordes_textviews"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/textview_password_obligatoria" />
 
         <EditText
             android:id="@+id/editText_nombre_usuario"
@@ -70,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/white"
             android:ems="10"
             android:hint="@string/nombre"
@@ -80,13 +108,27 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             tools:layout_editor_absoluteY="179dp" />
 
+        <TextView
+            android:id="@+id/textView_error_nombre_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/fondo_bordes_textviews"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/textview_nombre_obligatorio" />
+
         <EditText
             android:id="@+id/editText_apellidos_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/white"
             android:ems="10"
             android:hint="@string/apellidos"
@@ -96,6 +138,19 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             tools:layout_editor_absoluteY="179dp" />
 
+        <TextView
+            android:id="@+id/textView_error_apellidos_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/fondo_bordes_textviews"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/textview_apellidos_obligatorios" />
 
         <EditText
             android:id="@+id/editText_email_usuario"
@@ -103,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/white"
             android:ems="10"
             android:hint="@string/email"
@@ -113,17 +168,31 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             tools:layout_editor_absoluteY="179dp" />
 
-        <Spinner
-            android:id="@+id/spinner_grupos_usuario"
-            android:background="@color/white"
+        <TextView
+            android:id="@+id/textView_error_email_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="45dp"
-            android:padding="10dp"
-            android:spinnerMode="dialog"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/fondo_bordes_textviews"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/textview_email_obligatorio" />
+
+        <Spinner
+            android:id="@+id/spinner_grupos_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/white"
+            android:minHeight="45dp"
+            android:padding="10dp"
+            android:spinnerMode="dialog" />
 
     </LinearLayout>
 

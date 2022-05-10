@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".fragments.api.grupos.InsertarGruposFragment">
+    tools:context=".ui.fragments.api.grupos.InsertarGruposFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,6 +46,20 @@
             android:textColorHint="@color/black"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             tools:layout_editor_absoluteY="179dp" />
+
+        <TextView
+            android:id="@+id/textView_error_nombre_grupo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/fondo_bordes_textviews"
+            android:gravity="center"
+            android:minHeight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:text="@string/textview_nombre_obligatorio" />
     </LinearLayout>
 
     <LinearLayout

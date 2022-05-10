@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.teleappsistencia.clases.Token;
+import com.example.teleappsistencia.ui.clases.Token;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,13 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textView_error_usuario;
     private TextView textView_error_password;
 
-    private Token token;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.token = null;
         this.btn_iniciar_sesion = (Button) findViewById(R.id.btn_iniciar_sesion);
         this.editText_usuario = (EditText) findViewById(R.id.editText_usuario);
         this.editText_password = (EditText) findViewById(R.id.editText_password);
@@ -45,19 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         this.btn_iniciar_sesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean usuarioValido, passwordValido;
-                if (validarNombreUsuario(editText_usuario.getText().toString())) {
-                    usuarioValido = true;
-                } else {
-                    usuarioValido = false;
-                }
-                if (validarPassword(editText_password.getText().toString())) {
-                    passwordValido = true;
-                } else {
-                    passwordValido = false;
-                }
-
-                if((usuarioValido) && (passwordValido)){
+                if(validarCredenciales()){
                     peticionToken();
                 }
             }
@@ -94,6 +79,23 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
+    }
+
+    /**
+     * Método que valida el nombre del usuario y la contraseña.
+     * @return Devuelve true si los dos son válidos, de lo contrario devuelve false.
+     */
+    private boolean validarCredenciales() {
+        boolean validNombreUsuario, validPassword;
+
+        validNombreUsuario = validarNombreUsuario(editText_usuario.getText().toString());
+        validPassword = validarPassword(editText_password.getText().toString());
+
+        if((validNombreUsuario) && (validPassword)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -151,10 +153,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
-                    token = response.body();
-                    System.out.println("\n" + token + "\n");
+                    Utils.setToken(response.body());
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    intent.putExtra("token", token);
                     intent.putExtra("usuario", editText_usuario.getText().toString());
                     startActivity(intent);
                 } else {

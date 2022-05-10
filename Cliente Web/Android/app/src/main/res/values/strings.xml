@@ -9,6 +9,7 @@
 
     <!-- API -->
     <string name="api_base_url">http://127.0.0.1:3333/</string>
+    <string name="bearer">Bearer </string>
 
     <!-- Nombres de los menus -->
     <string name="menu_usuarios">Usuarios</string>
@@ -28,18 +29,80 @@
     <!-- *** TextViews *** -->
 
     <!-- TextViews de uso general -->
+    <string name="espacio_en_blanco" />
+    <string name="nombreUsuario">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
     <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="email">Email</string>
 
-    <!-- TextViews de insertar y modificar tipos de vivienda -->
+
+    <!-- TextViews de datos obligatorios -->
+    <string name="textview_nombre_usuario_obligatorio">El nombre de usuario es obligatorio.</string>
+    <string name="textview_password_obligatoria">La contraseña es obligatoria.</string>
+    <string name="textview_nombre_obligatorio">El nombre es obligatorio</string>
+    <string name="textview_apellidos_obligatorios">Los apellidos son obligatorios</string>
+    <string name="textview_email_obligatorio">El email es obligatorio</string>
+    <string name="textview_fecha_obligatoria">La fecha es obligatoria</string>
+
+    <!-- TextViews de condiciones no cumplidas -->
+    <string name="textview_longitud_minima_nombre_usuario">El nombre de usuario debe tener al menos 4 caracteres.</string>
+
+    <!-- TextViews de insertar y modificar TipoVivienda -->
     <string name="titulo_insertar_tipoVivienda">Crear nuevo tipo de vivienda</string>
+    <string name="titulo_modificar_tipoVivienda">Modificar datos tipo vivienda</string>
+
+
+    <!-- TextViews de insertar y modificar TipoSituacion -->
+    <string name="titulo_insertar_tipoSituacion">Crear nuevo tipo de situación</string>
+    <string name="titulo_modificar_tipoSituacion">Modificar datos tipo situacion</string>
+
+
+    <!-- TextViews de insertar y modificar Usuarios -->
+    <string name="titulo_insertar_usuarios">Crear nuevo usuario</string>
+    <string name="titulo_modificar_usuarios">Modificar datos usuario</string>
+    <string name="grupos_usuarios">Grupos</string>
+
+
+    <!-- TextViews de insertar y modificar Persona -->
+    <string name="titulo_insertar_personas">Crear nueva persona</string>
+    <string name="dni_persona">DNI</string>
+    <string name="fechaNacimiento_persona">Fecha de nacimiento</string>
+    <string name="telefonoFijo_persona">Teléfono fijo</string>
+    <string name="telefonoMovil_persona">Teléfono móvil</string>
+    <string name="titulo_modificar_personas">Modificar datos persona</string>
+
+
+    <!-- TextViews de insertar y modificar HistoricoTipoSituacion -->
+    <string name="fecha_historicoTipoSituacion">Fecha</string>
+    <string name="titulo_insertar_historicoTipoSituacion">Crear nuevo histórico tipo de situación</string>
+    <string name="titulo_modificar_historicoTipoSituacion">Modificar datos histórica tipo de situación</string>
+    <string name="terminal_historicoTipoSituacion">Terminal</string>
+    <string name="tipoSituacion_historicoTipoSituacion">Terminal</string>
+
+
+    <!-- TextViews de insertar y modificar Grupos -->
+    <string name="titulo_insertar_grupo">Crear nuevo grupo</string>
+    <string name="titulo_modificar_grupo">Modificar datos grupo</string>
+
+
+    <!-- TextViews de insertar y modificar DispositivosAuxiliares -->
+    <string name="titulo_insertar_dispositivosAux">Crear nuevo dispositivo auxiliar en terminal</string>
+    <string name="titulo_modificar_dispositivosAux">Modificar datos dispositivos auxiliares en terminal</string>
+
+
+    <!-- TextViews de insertar y modificar Direccion -->
+    <string name="titulo_insertar_direccion">Crear nueva dirección</string>
+    <string name="localidad_direccion">Localidad</string>
+    <string name="provincia_direccion">Provincia</string>
+    <string name="direccion_direccion">Dirección</string>
+    <string name="codigoPostal_direccion">Código postal</string>
+    <string name="titulo_modificar_direccion">Modificar datos dirección</string>
+
 
     <!-- TextViews de la Activity Login -->
     <string name="textview_iniciar_sesion">Iniciar sesión</string>
-    <string name="textview_nombre_usuario">Nombre de usuario</string>
-    <string name="textview_password">Contraseña</string>
-    <string name="textview_nombre_usuario_obligatorio">El nombre de usuario es obligatorio.</string>
-    <string name="textview_password_obligatoria">La contraseña es obligatoria.</string>
-    <string name="textview_longitud_minima_nombre_usuario">El nombre de usuario debe tener al menos 4 caracteres.</string>
+
 
 
     <!-- *** Botones *** -->
@@ -55,36 +118,18 @@
     <!-- Toast Activity Login -->
     <string name="toast_activity_login">Nombre de usuario o contraseña incorrectos.</string>
 
+    <!-- ID de los fragments de modificar -->
+    <string name="id">ID</string>
 
-    <string name="titulo_insertar_tipoSituacion">Crear nuevo tipo de situación</string>
-    <string name="titulo_insertar_usuarios">Crear nuevo usuario</string>
-    <string name="nombre_usuario">Nombre del usuario</string>
-    <string name="password_usuario">Contraseña</string>
-    <string name="apellidos">Apellidos</string>
-    <string name="email">Email</string>
-    <string name="titulo_insertar_personas">Crear nueva persona</string>
-    <string name="dni_persona">DNI</string>
-    <string name="fechaNacimiento_persona">Fecha de nacimiento</string>
-    <string name="telefonoFijo_persona">Teléfono fijo</string>
-    <string name="telefonoMovil_persona">Teléfono móvil</string>
-    <string name="fecha_historicoTipoSituacion">Fecha</string>
-    <string name="titulo_insertar_historicoTipoSituacion">Crear nuevo histórico tipo de situación</string>
-    <string name="titulo_insertar_grupo">Crear nuevo grupo</string>
-    <string name="titulo_insertar_direccion">Crear nueva dirección</string>
-    <string name="localidad_direccion">Localidad</string>
-    <string name="provincia_direccion">Provincia</string>
-    <string name="direccion_direccion">Dirección</string>
-    <string name="codigoPostal_direccion">Código postal</string>
-    <string name="titulo_insertar_dispositivosAux">Crear nuevo dispositivo auxiliar en terminal</string>
-    <string name="titulo_modificar_usuarios">Modificar datos usuario</string>
-    <string name="titulo_modificar_tipoVivienda">Modificar datos tipo vivienda</string>
-    <string name="titulo_modificar_tipoSituacion">Modificar datos tipo situacion</string>
-    <string name="titulo_modificar_personas">Modificar datos persona</string>
-    <string name="titulo_modificar_historicoTipoSituacion">Modificar datos histórica tipo de situación</string>
-    <string name="titulo_modificar_grupo">Modificar datos grupo</string>
-    <string name="titulo_modificar_dispositivosAux">Modificar datos dispositivos auxiliares en terminal</string>
-    <string name="titulo_modificar_direccion">Modificar datos dirección</string>
+    <!-- Tag del dialogo (datePicker) de las fechas -->
+    <string name="tag_date_picker">datePicker</string>
+    <string name="textview_localidad_obligatoria">La localidad es obligatoria</string>
+    <string name="textview_provincia_obligatoria">La provincia es obligatoria</string>
+    <string name="textview_direccion_obligatoria">La dirección es obligatoria</string>
+    <string name="textview_codigoPostal_obligatoria">El código postal es obligatorio</string>
+    <string name="textview_dni_obligatorio">El DNI es obligatorio</string>
+    <string name="textview_fechaNacimiento_obligatorio">La fecha de nacimiento es obligatoria</string>
+    <string name="textview_telefonoFijo_obligatorio">El teléfono fijo es obligatorio</string>
+    <string name="textview_telefonoMovil_obligatorio">El teléfono móvil es obligatorio</string>
 
-    <string name="terminal_historicoTipoSituacion">Terminal</string>
-    <string name="tipoSituacion_historicoTipoSituacion">Terminal</string>
 </resources>
