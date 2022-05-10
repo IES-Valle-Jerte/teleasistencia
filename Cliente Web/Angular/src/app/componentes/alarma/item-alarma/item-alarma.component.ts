@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IAlarma} from "../../../interfaces/i-alarma";
+import { Component, Input, OnInit } from '@angular/core';
+import { Alarma } from "../../../clases/alarma";
 
 
 @Component({
@@ -8,7 +8,7 @@ import {IAlarma} from "../../../interfaces/i-alarma";
   styleUrls: ['./item-alarma.component.scss']
 })
 export class ItemAlarmaComponent implements OnInit {
-  @Input() public alarma: IAlarma;
+  @Input() public alarma: Alarma;
   constructor() { }
 
   ngOnInit(): void {

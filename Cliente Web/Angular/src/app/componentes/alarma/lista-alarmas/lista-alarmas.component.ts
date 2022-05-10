@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {IAlarma} from "../../../interfaces/i-alarma";
-import {ActivatedRoute} from '@angular/router';
-import {Title} from '@angular/platform-browser';
+import { Alarma } from "../../../clases/alarma";
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lista-alarmas',
@@ -9,7 +9,7 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./lista-alarmas.component.scss']
 })
 export class ListaAlarmasComponent implements OnInit {
-  public alarmas : IAlarma[];
+  public alarmas : Alarma[];
   constructor(private route: ActivatedRoute, private titleService: Title) { }
 
   ngOnInit(): void {

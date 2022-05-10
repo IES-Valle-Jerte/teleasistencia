@@ -408,7 +408,9 @@ const routes: Routes = [
     component: CrearRelacionTerminalRecursosComunitariosComponent,
     canActivate: [LoginGuard],
     resolve: {
-      clasificaciones_alarmas: ListaRelacionTerminalRecursosComunitariosResolveService
+      relacion_terminal_recursos_comunitarios: ListaRelacionTerminalRecursosComunitariosResolveService,
+      relaciones_recursos_comunitarios: ListaRecursosComunitariosResolveService,
+      relaciones_terminales: ListaTerminalesResolveService,
     }
   },
   {
@@ -424,7 +426,8 @@ const routes: Routes = [
     component: ModificarAlarmaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      alarmas: ModificarAlarmaResolveService
+      alarma: ModificarAlarmaResolveService,
+      teleoperadores: ListaUsersResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IRelacionTerminalRecursoComunitarios} from "../../../interfaces/i-relacion-terminal-recurso-comunitarios";
-
+import { RelacionTerminalRecursoComunitarios} from "../../../clases/relacion-terminal-recurso-comunitarios";
 
 @Component({
   selector: 'app-item-relacion-terminal-recursos-comunitarios, [app-item-relacion-terminal-recursos-comunitarios]',
@@ -8,7 +7,7 @@ import {IRelacionTerminalRecursoComunitarios} from "../../../interfaces/i-relaci
   styleUrls: ['./item-relacion-terminal-recursos-comunitarios.component.scss']
 })
 export class ItemRelacionTerminalRecursosComunitariosComponent implements OnInit {
-  @Input() public relacionRecurso: IRelacionTerminalRecursoComunitarios;
+  @Input() public relacionRecurso: RelacionTerminalRecursoComunitarios;
   constructor() { }
 
   ngOnInit(): void {

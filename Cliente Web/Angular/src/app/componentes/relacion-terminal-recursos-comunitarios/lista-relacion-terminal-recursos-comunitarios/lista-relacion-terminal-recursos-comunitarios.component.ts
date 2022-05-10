@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {IRelacionTerminalRecursoComunitarios} from "../../../interfaces/i-relacion-terminal-recurso-comunitarios";
+import { RelacionTerminalRecursoComunitarios} from "../../../clases/relacion-terminal-recurso-comunitarios";
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 
@@ -9,7 +9,7 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./lista-relacion-terminal-recursos-comunitarios.component.scss']
 })
 export class ListaRelacionTerminalRecursosComunitariosComponent implements OnInit {
-  public relacionRecursos: IRelacionTerminalRecursoComunitarios[];
+  public relacionRecursos: RelacionTerminalRecursoComunitarios[];
   constructor(private route: ActivatedRoute, private titleService: Title) { }
 
   ngOnInit(): void {
