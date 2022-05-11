@@ -18,8 +18,6 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
   public idRelacion: number;
   public relaciones_recursos_comunitarios: RecursoComunitario[];
   public relaciones_terminales: Terminal[];
-  public terminal_seleccionado: Terminal;
-
 
 
 
@@ -30,7 +28,6 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
     this.idRelacion = this.route.snapshot.params['id'];
     this.relaciones_terminales = this.route.snapshot.data['relaciones_terminales']
     this.relaciones_recursos_comunitarios = this.route.snapshot.data['relaciones_recursos_comunitarios']
-    this.funcionTerminal()
     this.titleService.setTitle('Modificar relacion de recurso ' + this.idRelacion);
   }
 
@@ -52,16 +49,6 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
         console.log(error);
       }
     );
-  }
-
-  funcionTerminal() {
-    for (let terminal of this.relaciones_terminales) {
-      if (terminal.id ==  this.relacion_terminal_recursos_comunitarios.id_terminal.id) {
-        this.terminal_seleccionado = terminal
-        break;
-      }
-    }
-
   }
 
 
