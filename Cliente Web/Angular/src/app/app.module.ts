@@ -94,8 +94,7 @@ import { ModificarTerminalComponent } from './componentes/terminal/modificar-ter
 import {CargarTerminalesService} from "./servicios/terminal/cargar-terminales.service";
 import {CargaAlarmaService} from "./servicios/alarmas/carga-alarma.service";
 import {CargaPacienteService} from "./servicios/paciente/carga-paciente.service";
-
-
+import { BorrarRelacionTerminalRecursosComunitariosComponent } from "./componentes/relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios.component";
 
 @NgModule({
   declarations: [
@@ -169,6 +168,7 @@ import {CargaPacienteService} from "./servicios/paciente/carga-paciente.service"
     ItemTerminalComponent,
     CrearTerminalComponent,
     ModificarTerminalComponent,
+    BorrarRelacionTerminalRecursosComunitariosComponent,
   ],
   imports: [
     BrowserModule,

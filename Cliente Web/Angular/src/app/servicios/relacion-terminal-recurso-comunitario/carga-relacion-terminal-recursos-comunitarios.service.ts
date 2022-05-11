@@ -25,5 +25,8 @@ export class CargaRelacionTerminalRecursosComunitariosService {
   nuevaRelacionRecurso(relacionRecurso:IRelacionTerminalRecursoComunitarios): Observable<IRelacionTerminalRecursoComunitarios> {
     return this.http.post<IRelacionTerminalRecursoComunitarios> (this.URL_SERVER_RELACION_TERMINAL_RECURSOS_COMUNITARIOS, relacionRecurso);
   }
+  borrarRelacionRecurso(relacionRecurso: IRelacionTerminalRecursoComunitarios): Observable<IRelacionTerminalRecursoComunitarios> {
+    return this.http.delete<IRelacionTerminalRecursoComunitarios>(this.URL_SERVER_RELACION_TERMINAL_RECURSOS_COMUNITARIOS + '/' + relacionRecurso.id)
+  }
 }
 

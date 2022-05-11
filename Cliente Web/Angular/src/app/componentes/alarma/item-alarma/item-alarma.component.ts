@@ -13,5 +13,10 @@ export class ItemAlarmaComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  obtenerNombre(): string {
+    if (this.alarma.id_teleoperador != null)
+      return this.alarma.id_teleoperador.first_name
+    else
+      return ""
+  }
 }

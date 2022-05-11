@@ -87,6 +87,9 @@ import {ModificarAlarmaResolveService} from "./servicios/alarmas/modificar-alarm
 import {IRecursoComunitario} from "./interfaces/i-recurso-comunitario";
 import {IPersona} from "./interfaces/i-persona";
 import {ListaTerminalesResolveService} from "./servicios/terminal/lista-terminales-resolve.service";
+import {
+  BorrarRelacionTerminalRecursosComunitariosComponent
+} from "./componentes/relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -411,6 +414,15 @@ const routes: Routes = [
       relacion_terminal_recursos_comunitarios: ListaRelacionTerminalRecursosComunitariosResolveService,
       relaciones_recursos_comunitarios: ListaRecursosComunitariosResolveService,
       relaciones_terminales: ListaTerminalesResolveService,
+    }
+  },
+  {
+    path: 'relacion_terminal_recurso_comunitario/borrado/:id',
+    component: BorrarRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      tipos_situaciones: BorrarTipoSituacionService,
+      clasificaciones_situaciones: ListaSituacionesService
     }
   },
   {
