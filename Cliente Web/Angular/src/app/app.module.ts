@@ -75,6 +75,9 @@ import { ModificarTipoSituacionComponent } from './componentes/tipo-situacion/mo
 import { BorrarTipoViviendaComponent } from './componentes/tipo-vivienda/borrar-tipo-vivienda/borrar-tipo-vivienda.component';
 import { BorrarTipoSituacionComponent } from './componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component';
 import {InterceptorService} from "./interceptors/interceptor.service";
+import { ItemCopiaSeguridadComponent } from './componentes/copia-seguridad/item-copia-seguridad/item-copia-seguridad.component';
+import { ListaCopiaSeguridadComponent } from './componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component';
+import { CrearCopiaSeguridadComponent } from './componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +138,9 @@ import {InterceptorService} from "./interceptors/interceptor.service";
     ModificarTipoSituacionComponent,
     BorrarTipoViviendaComponent,
     BorrarTipoSituacionComponent,
+    ItemCopiaSeguridadComponent,
+    ListaCopiaSeguridadComponent,
+    CrearCopiaSeguridadComponent,
   ],
   imports: [
     BrowserModule,
