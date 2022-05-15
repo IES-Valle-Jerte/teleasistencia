@@ -249,3 +249,8 @@ class Relacion_Usuario_Centro(models.Model):
     def __str__(self):
         return self.id_paciente.id_persona.nombre+" - "+self.id_centro_sanitario.nombre+" - "+self.persona_contacto+" - "+self.distancia+" - "+self.tiempo+" - "+self.observaciones
 
+class Gestion_Base_Datos(models.Model):
+    ubicacion_copia = models.CharField(max_length=200, default='teleasistencia/Server/teleasistencia')
+    fecha_copia = models.DateField(null=False, default=now)
+    def __str__(self):
+        return self.ubicacion_copia+" - "+self.fecha_copia
