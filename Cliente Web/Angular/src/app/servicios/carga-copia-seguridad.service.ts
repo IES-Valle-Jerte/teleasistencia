@@ -23,11 +23,15 @@ export class CargaCopiaSeguridadService {
   }
 
   restaurarCopia(): Observable<ICopiaSeguridad>{
-    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'restore')
+    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'/restore')
+  }
+
+  restaurarCopiaConID(copia: ICopiaSeguridad): Observable<ICopiaSeguridad>{
+    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'/r'+copia.id)
   }
 
   borrarCopia(copia: ICopiaSeguridad): Observable<ICopiaSeguridad>{
-    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+copia.id)
+    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'/'+copia.id)
   }
 
 }

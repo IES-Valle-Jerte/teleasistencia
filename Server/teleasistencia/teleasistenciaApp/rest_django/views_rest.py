@@ -1420,7 +1420,7 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
     queryset = Gestion_Base_Datos.objects.all()
     serializer_class = Gestion_Base_Datos_Serializer
 
-    def list(self, request):
+    def list(self, request, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         query = getQueryAnd(request.GET)
         if query:
@@ -1442,6 +1442,8 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         # Devolvemos la base_datos creada
         base_datos_serializer = Gestion_Base_Datos_Serializer(base_datos)
 
+        base_datos.save()
+
         # Obtenemos la ruta actual, nos dirigimos al directorio obtenido y copiamos el archivo
         rutaAct = os.getcwd()
 
@@ -1460,21 +1462,31 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
 
         #Conseguimos el parametro de la URL
         parametro = ((kwargs["pk"]))
+        #Quitamos la letra r, para obtener el id, lo usamos en caso de querer restaurar una base de datos concreta.
+        parametro_res = parametro.lstrip("r")
 
-        #Borramos la entrada de la API-REST
-        if type(parametro) == 'number':
-            base_datos = Gestion_Base_Datos.objects.get(id=parametro)
-            base_datos.delete()
 
-        #Si el parametro que le pasamos en la URL es restore, y existe la copia solo con el ADM(Se debe generar), entonces restauramos esta base de datos.
-        if str(parametro) == 'restore' and os.path.isfile('db.sqlite3_admonly'):
-            os.popen('copy db.sqlite3_admonly db.sqlite3')
+
+        #Si el parametro que le pasamos en la URL es restore, y existe la copia solo con el ADM(Se debe generar),
+        #entonces restauramos esta base de datos.
+        if str(parametro) == 'restore' and os.path.isfile('db.sqlite3_adm'):
+            os.popen('copy db.sqlite3_adm db.sqlite3')
             return Response("La base de datos ha sido restaurada solo con la cuenta de Administrador.")
 
         #Comprobamos si existe copia con el id pasado en la URL, si es asi, lo borramos.
         if os.path.isfile('db.sqlite3'+parametro):
             os.remove('db.sqlite3'+parametro)
+            # Borramos la entrada de la API-REST
+            base_datos = Gestion_Base_Datos.objects.get(id=parametro)
+            base_datos.delete()
             return Response("La copia de la base de datos con id: "+parametro+" ha sido borrada correctamente.")
+
+        #En caso de que tengamos cualquier otra cosa que no sea una r+id, simplemente no entrara en el if
+        #En caso afirmativo, entrara y copiara la base de datos.
+        if os.path.isfile('db.sqlite3'+parametro_res):
+            # No es necesario, si existe el comando la sobreescribe -> os.remove('db.sqlite3')
+            os.popen('copy db.sqlite3'+parametro_res+' db.sqlite3')
+            return Response("La base de datos con id: "+parametro_res+" ha sido restaurada correctamente.")
 
         #Respuesta de error por defecto.
         return Response("La base de datos con id: "+parametro+" seleccionada no existe.")

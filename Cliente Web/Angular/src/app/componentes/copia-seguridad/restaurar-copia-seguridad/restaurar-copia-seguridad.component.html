@@ -4,15 +4,15 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
         <li class="breadcrumb-item"><a [routerLink]="['/copia_seguridad']">Copia seguridad</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Crear Copia de seguridad</li>
+        <li class="breadcrumb-item active" aria-current="page">Restaurar base de datos</li>
       </ol>
     </nav>
 
-    <h1 class="component-title">Crear nueva copia de seguridad</h1>
+    <h1 class="component-title">Restaurar base de datos</h1>
     <hr>
-    <p>La copia generará los datos necesarios automaticamente al pulsar el boton.</p>
-      <button type="submit" class="btn btn-outline-success m-1" (click)="nuevaCopia()">
-        Guardar nueva copia
-      </button>
+    <p>Restaurar la base de datos a su estado original (solo el usuario administrador).</p>
+    <button type="submit" class="btn btn-outline-success m-1" (click)="modalRestauracion()">
+      Restaurar
+    </button>
   </div>
 </main>

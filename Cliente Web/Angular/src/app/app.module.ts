@@ -80,6 +80,7 @@ import { ItemCopiaSeguridadComponent } from './componentes/copia-seguridad/item-
 import { ListaCopiaSeguridadComponent } from './componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component';
 import { CrearCopiaSeguridadComponent } from './componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component';
 import { GruposComponent } from './componentes/grupos/grupos.component';
+import { RestaurarCopiaSeguridadComponent } from './componentes/copia-seguridad/restaurar-copia-seguridad/restaurar-copia-seguridad.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
     ListaCopiaSeguridadComponent,
     CrearCopiaSeguridadComponent,
     GruposComponent,
+    RestaurarCopiaSeguridadComponent,
   ],
   imports: [
     BrowserModule,

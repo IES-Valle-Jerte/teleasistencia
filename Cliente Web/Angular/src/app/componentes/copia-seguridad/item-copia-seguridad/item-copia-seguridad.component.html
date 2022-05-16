@@ -3,13 +3,12 @@
 
 <td>
   <button type="submit" class="btn btn-outline-danger btn-modify"
-          [routerLink]="['/copia_seguridad', copia_seguridad]">
+          (click)="modalConfirmacion()">
     Borrar copia
   </button>
-</td>
-<td>
+
   <button type="submit" class="btn btn-outline-warning btn-modify"
-          [routerLink]="['/copia_seguridad', copia_seguridad]">
+          (click)="modalRestauracion()">
     Restaurar copia
   </button>
 </td>

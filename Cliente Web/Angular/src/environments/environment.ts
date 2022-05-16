@@ -19,6 +19,7 @@ export const environment = {
   fraseErrorModificar: 'Se ha Producido Un Error Inesperado',
   //Frase de error al Crear del Toast
   fraseErrorCrear: 'Se ha Producido Un Error Inesperado',
+  fraseRestaurarCopia: 'La copia seleccionada se ha restaurado.',
 
 
   //Modal

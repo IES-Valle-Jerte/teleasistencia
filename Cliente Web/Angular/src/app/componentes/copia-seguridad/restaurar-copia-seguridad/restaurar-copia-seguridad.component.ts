@@ -1,22 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ICopiaSeguridad} from "../../../interfaces/i-copia-seguridad";
-import {Router} from "@angular/router";
-import {CargaCopiaSeguridadService} from "../../../servicios/carga-copia-seguridad.service";
 import Swal from "sweetalert2";
 import {environment} from "../../../../environments/environment";
+import {ICopiaSeguridad} from "../../../interfaces/i-copia-seguridad";
+import {CargaCopiaSeguridadService} from "../../../servicios/carga-copia-seguridad.service";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-item-copia-seguridad, [app-item-copia-seguridad]',
-  templateUrl: './item-copia-seguridad.component.html',
-  styleUrls: ['./item-copia-seguridad.component.scss']
+  selector: 'app-restaurar-copia-seguridad',
+  templateUrl: './restaurar-copia-seguridad.component.html',
+  styleUrls: ['./restaurar-copia-seguridad.component.scss']
 })
-export class ItemCopiaSeguridadComponent implements OnInit {
+export class RestaurarCopiaSeguridadComponent implements OnInit {
   @Input() public copia_seguridad: ICopiaSeguridad;
+
 
   constructor(private cargaCopias: CargaCopiaSeguridadService, private router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   //Toast para el Alert indicando que la operación fue exitosa
   alertExito() :void {
@@ -58,21 +58,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
     })
   }
 
-  //Modal para confirmar la eliminación de un elemento
-  modalConfirmacion(): void {
-    Swal.fire({
-      title: environment.fraseEliminarModal,
-      showCancelButton: true,
-      confirmButtonColor: environment.colorAceptarModal,
-      cancelButtonColor: environment.colorCancelarModal,
-      confirmButtonText: 'Aceptar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.eliminarCopia('inicio')
-      }
-    })
-  }
-  //Un segundo modal por la necesidad propia de la entidad de gestion de la base de datos.
+
   modalRestauracion(): void {
     Swal.fire({
       title: environment.fraseEliminarModal,
@@ -87,7 +73,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
     })
   }
   restaurarCopia(ruta: string): void {
-    this.cargaCopias.restaurarCopiaConID(this.copia_seguridad).subscribe(
+    this.cargaCopias.restaurarCopia().subscribe(
       e => {
         this.router.navigateByUrl(ruta, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);
@@ -102,20 +88,5 @@ export class ItemCopiaSeguridadComponent implements OnInit {
       }
     )
   }
-  eliminarCopia(ruta: string): void {
-    this.cargaCopias.borrarCopia(this.copia_seguridad).subscribe(
-      e => {
-        this.router.navigateByUrl(ruta, {skipLocationChange: true}).then(() => {
-          this.router.navigate([ruta]);
-        });
-        //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito
-        this.alertExito()
 
-      },
-      error => {
-        //Si ha habido algún error al eliminar el elemento, llama al método que muestra el alert de Error
-        this.alertError()
-      }
-    )
-  }
 }

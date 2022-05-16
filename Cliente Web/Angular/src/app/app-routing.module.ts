@@ -71,6 +71,12 @@ import {ListaCopiaSeguridadComponent} from "./componentes/copia-seguridad/lista-
 import {ListaCopiaSeguridadService} from "./servicios/lista-copia-seguridad.service";
 import {ListaGruposService} from "./servicios/lista-grupos.service";
 import {GruposComponent} from "./componentes/grupos/grupos.component";
+import {
+  CrearCopiaSeguridadComponent
+} from "./componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component";
+import {
+  RestaurarCopiaSeguridadComponent
+} from "./componentes/copia-seguridad/restaurar-copia-seguridad/restaurar-copia-seguridad.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -396,6 +402,16 @@ const routes: Routes = [
     resolve: {
       copia_seguridad: ListaCopiaSeguridadService
     }
+  },
+  {
+    path: 'copia_seguridad/nueva',
+    component: CrearCopiaSeguridadComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'copia_seguridad/restaurar',
+    component: RestaurarCopiaSeguridadComponent,
+    canActivate: [LoginGuard],
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},
   {path: '**', redirectTo: '/inicio', pathMatch: 'full'}
