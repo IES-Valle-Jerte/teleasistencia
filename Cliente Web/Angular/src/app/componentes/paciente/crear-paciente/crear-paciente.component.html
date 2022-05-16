@@ -1,1 +1,109 @@
-<p>crear-paciente works!</p>
+<main class="text-center row p-0 m-0 justify-content-center">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/alarmas']">Alarmas</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Crear Alarma</li>
+      </ol>
+    </nav>
+    <h1 class="component-title" >Crear Alarma</h1>
+    <form #crearPacienteForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="terminal" class="form-label">Terminal</label>
+        <select class="form-select" id="terminal" name="terminal"
+                [(ngModel)]="paciente.id_terminal" required>
+          <option class="form-select" *ngFor="let terminal of terminales; let i = index"
+                  [value]="terminal.id">{{ terminal.numero_terminal }}</option>
+        </select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="persona" class="form-label">Persona</label>
+        <select class="form-select" id="persona" name="persona"
+                [(ngModel)]="paciente.id_persona" required>
+          <option class="form-select" *ngFor="let persona of personas; let i = index"
+                  [value]="persona.id">{{ persona.nombre }}</option>
+        </select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="numero_expediente" class="form-label">Numero Expediente</label>
+        <input type="text" name="numero_expediente" id="numero_expediente" class="form-control"
+               required maxlength="500" [(ngModel)]="paciente.numero_expediente" #numero_expediente="ngModel">
+        <div *ngIf="numero_expediente.invalid && (numero_expediente.dirty || numero_expediente.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="numero_expediente.errors?.required">
+            El numero de expediente es obligatorio
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="numero_seguridad_social" class="form-label">Numero seguridad social</label>
+        <input type="text" name="numero_seguridad_social" id="numero_seguridad_social" class="form-control"
+               required maxlength="500" [(ngModel)]="paciente.numero_seguridad_social" #numero_seguridad_social="ngModel">
+        <div *ngIf="numero_seguridad_social.invalid && (numero_seguridad_social.dirty || numero_seguridad_social.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="numero_seguridad_social.errors?.required">
+            El numero seguridad social es obligatorio
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="prestacion_otros_servicios_sociales" class="form-label">Prestacion Otros Servicios Sociales</label>
+        <input type="text" name="prestacion_otros_servicios_sociales" id="prestacion_otros_servicios_sociales" class="form-control"
+               required maxlength="500" [(ngModel)]="paciente.prestacion_otros_servicios_sociales" #prestacion_otros_servicios_sociales="ngModel">
+        <div *ngIf="prestacion_otros_servicios_sociales.invalid && (prestacion_otros_servicios_sociales.dirty || prestacion_otros_servicios_sociales.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="prestacion_otros_servicios_sociales.errors?.required">
+            La prestacion otros servicios sociales social es obligatorio
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="observaciones_medicas" class="form-label">Observaciones Medicas</label>
+        <input type="text" name="observaciones_medicas" id="observaciones_medicas" class="form-control"
+               required maxlength="500" [(ngModel)]="paciente.observaciones_medicas" #observaciones_medicas="ngModel">
+        <div *ngIf="observaciones_medicas.invalid && (observaciones_medicas.dirty || observaciones_medicas.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="observaciones_medicas.errors?.required">
+            Las observaciones medicas social son obligatorias
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="intereses_y_actividades" class="form-label">Intereses y actividades</label>
+        <input type="text" name="intereses_y_actividades" id="intereses_y_actividades" class="form-control"
+               required maxlength="500" [(ngModel)]="paciente.intereses_y_actividades" #intereses_y_actividades="ngModel">
+        <div *ngIf="intereses_y_actividades.invalid && (intereses_y_actividades.dirty || intereses_y_actividades.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="intereses_y_actividades.errors?.required">
+            Los intereses y actividades sociales son obligatorios
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="tipo_modalidad_paciente" class="form-label">Tipo modalidad paciente</label>
+        <select class="form-select" id="tipo_modalidad_paciente" name="tipo_modalidad_paciente"
+                [(ngModel)]="paciente.id_tipo_modalidad_paciente" required>
+          <option class="form-select" *ngFor="let modalidad_paciente of tipo_modalidades_pacientes; let i = index"
+                  [value]="modalidad_paciente.id">{{ modalidad_paciente.nombre }}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-outline-success m-1" (click)="nuevoPaciente()"
+              [disabled]="!crearPacienteForm.form.valid">
+        Guardar
+      </button>
+      <button type="button" class="btn btn-outline-secondary m-1" [routerLink]="['/relacion_terminal_recurso_comunitario']">
+        Volver
+      </button>
+
+    </form>
+  </div>
+</main>

@@ -1,1 +1,10 @@
-<p>item-relacion-paciente-persona works!</p>
+<td>{{ relacionPacientePersona.id_paciente.id_persona.nombre }} {{relacionPacientePersona.id_paciente.id_persona.apellidos}}</td>
+<td>{{ relacionPacientePersona.tipo_relacion }}</td>
+<td>{{ relacionPacientePersona.id_persona.nombre }} {{ relacionPacientePersona.id_persona.apellidos }}</td>
+
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/relacion_paciente_persona', relacionPacientePersona.id]">
+    Modificar datos
+  </button>
+</td>
+

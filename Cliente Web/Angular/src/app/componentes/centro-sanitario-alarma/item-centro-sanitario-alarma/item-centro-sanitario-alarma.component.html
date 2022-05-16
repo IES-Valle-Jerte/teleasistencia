@@ -1,1 +1,9 @@
-<p>item-centro-sanitario-alarma works!</p>
+<td>{{ centroSanitarioAlarma.persona }}</td>
+<td>{{ centroSanitarioAlarma.id_centro_sanitario.nombre}}</td>
+<td>{{ centroSanitarioAlarma.id_centro_sanitario.telefono }}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/centro_sanitario_alarma/modificar', centroSanitarioAlarma.id]">
+    Modificar datos
+  </button>
+</td>
+

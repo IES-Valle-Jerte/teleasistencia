@@ -96,6 +96,46 @@ import {ListaTerminalComponent} from "./componentes/terminal/lista-terminal/list
 import {ModificarTerminalComponent} from "./componentes/terminal/modificar-terminal/modificar-terminal.component";
 import {ModificarTerminalResolveService} from "./servicios/terminal/modificar-terminal-resolve.service";
 import {CrearTerminalComponent} from "./componentes/terminal/crear-terminal/crear-terminal.component";
+import {ListaPacienteComponent} from "./componentes/paciente/lista-paciente/lista-paciente.component";
+import {ModificarPacienteComponent} from "./componentes/paciente/modificar-paciente/modificar-paciente.component";
+import {ModificarPacienteResolveService} from "./servicios/paciente/modificar-paciente-resolve.service";
+import {CrearPacienteComponent} from "./componentes/paciente/crear-paciente/crear-paciente.component";
+import {
+  ListaRelacionPacientePersonaComponent
+} from "./componentes/relacion-paciente-persona/lista-relacion-paciente-persona/lista-relacion-paciente-persona.component";
+import {
+  ListaRelacionPacientePersonaResolveService
+} from "./servicios/relacion-paciente-persona/lista-relacion-paciente-persona-resolve.service";
+import {
+  ListaCentroSanitarioAlarmaComponent
+} from "./componentes/centro-sanitario-alarma/lista-centro-sanitario-alarma/lista-centro-sanitario-alarma.component";
+import {
+  ListaCentrosSanitariosAlarmaResolveService
+} from "./servicios/centro-sanitario-alarma/lista-centros-sanitarios-alarma-resolve.service";
+import {
+  ListaRecursoComunitarioAlarmaComponent
+} from "./componentes/recurso-comunitario-alarma/lista-recurso-comunitario-alarma/lista-recurso-comunitario-alarma.component";
+import {
+  ListaRecursosComunitariosAlarmaResolveService
+} from "./servicios/recursos-comunitarios-alarma/lista-recursos-comunitarios-alarma-resolve.service";
+import {
+  ListaPersonaContactoAlarmaComponent
+} from "./componentes/persona-contacto-alarma/lista-persona-contacto-alarma/lista-persona-contacto-alarma.component";
+import {
+  ListaPersonaContactoAlarmaResolveService
+} from "./servicios/persona-contacto-alarma/lista-persona-contacto-alarma-resolve.service";
+import {
+  ListaDispositivosAuxiliaresTerminalComponent
+} from "./componentes/dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal.component";
+import {
+  ListaDispositivosAuxiliaresTerminalResolveService
+} from "./servicios/dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal-resolve.service";
+import {
+  ListaRelacionUsuarioCentroComponent
+} from "./componentes/relacion-usuario-centro/lista-relacion-usuario-centro/lista-relacion-usuario-centro.component";
+import {
+  ListaRelacionUsuarioCentroResolveService
+} from "./servicios/relacion-usuario-centro/lista-relacion-usuario-centro-resolve.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -485,6 +525,89 @@ const routes: Routes = [
       terminal: ListaTerminalesResolveService,
       titulares: ListaPacientesResolveService,
       tipos_vivienda: ListaViviendasResolveService
+    }
+  },
+  {
+    path: 'pacientes',
+    component: ListaPacienteComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      pacientes: ListaPacientesResolveService
+    }
+  },
+  {
+    path: 'pacientes/modificar/:id',
+    component: ModificarPacienteComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      paciente: ModificarPacienteResolveService,
+      terminales: ListaTerminalesResolveService,
+      personas: ListaPersonasResolveService,
+      tipo_modalidades_pacientes: ListaTiposModalidadesPacientesResolveService
+    }
+  },
+  {
+    path: 'pacientes/nuevo',
+    component: CrearPacienteComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      paciente: ListaPacientesResolveService,
+      terminales: ListaTerminalesResolveService,
+      personas: ListaPersonasResolveService,
+      tipo_modalidades_pacientes: ListaTiposModalidadesPacientesResolveService
+    }
+  },
+  {
+    path: 'relacion_paciente_persona',
+    component: ListaRelacionPacientePersonaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relaciones_pacientes_personas: ListaRelacionPacientePersonaResolveService
+    }
+  },
+  /**  aquí modificar crear y borrar relacion paciente persona **/
+  {
+    path: 'centro_sanitario_alarma',
+    component: ListaCentroSanitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      centros_sanitarios_alarma: ListaCentrosSanitariosAlarmaResolveService
+    }
+  },
+  /**  aquí modificar crear y borrar centro sanitario en alarma**/
+  {
+    path: 'recursos_comunitarios_alarma',
+    component: ListaRecursoComunitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      recursos_comunitarios_alarma: ListaRecursosComunitariosAlarmaResolveService
+    }
+  },
+  /**  aquí modificar crear y borrar recurso comunitario en alarma**/
+  {
+    path: 'personas_contacto_alarma',
+    component: ListaPersonaContactoAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      personas_contacto_alarma: ListaPersonaContactoAlarmaResolveService
+    }
+  },
+  /**  aquí modificar crear y borrar persona de contacto en alarma**/
+  {
+    path: 'dispositivos_auxiliares_terminal',
+    component: ListaDispositivosAuxiliaresTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      dispositivos_auxiliares_terminal: ListaDispositivosAuxiliaresTerminalResolveService
+    }
+  },
+  /**  aquí modificar crear y borrar dispositivos auxiliares terminal**/
+  {
+    path: 'relaciones_usuario_centro',
+    component: ListaRelacionUsuarioCentroComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relaciones_usuario_centro: ListaRelacionUsuarioCentroResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},

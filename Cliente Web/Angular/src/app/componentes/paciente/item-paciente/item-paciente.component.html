@@ -1,1 +1,10 @@
-<p>item-paciente works!</p>
+<td>{{ paciente.id_persona.nombre}} {{paciente.id_persona.apellidos}}</td>
+<td> {{ paciente.numero_expediente}}</td>
+<td> {{ paciente.id_terminal.numero_terminal}}</td>
+<td> {{ paciente.id_tipo_modalidad_paciente.nombre}}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/pacientes/modificar', paciente.id]">
+    Modificar datos
+  </button>
+</td>
+

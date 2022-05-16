@@ -1,1 +1,8 @@
-<p>item-recurso-comunitario-alarma works!</p>
+<td>{{ recursoComunitarioAlarma.persona }}</td>
+<td>{{ recursoComunitarioAlarma.id_recurso_comunitario.nombre }} </td>
+<td>{{ recursoComunitarioAlarma.id_recurso_comunitario.telefono }}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/recursos_comunitarios_alarma/modificar', recursoComunitarioAlarma.id]">
+    Modificar datos
+  </button>
+</td>

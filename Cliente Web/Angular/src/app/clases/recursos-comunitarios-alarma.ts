@@ -8,5 +8,5 @@ export class RecursosComunitariosAlarma implements IRecursosComunitariosAlarma{
   persona: string;
   acuerdo_alcanzado: string;
   id_alarma: IAlarma;
-  id_centro_sanitario: IRecursoComunitario;
+  id_recurso_comunitario: IRecursoComunitario;
 }

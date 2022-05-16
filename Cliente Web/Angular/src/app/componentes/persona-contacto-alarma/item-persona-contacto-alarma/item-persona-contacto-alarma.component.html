@@ -1,1 +1,7 @@
-<p>item-persona-contacto-alarma works!</p>
+<td>{{ personaContactoAlarma.id_persona_contacto.nombre }} {{personaContactoAlarma.id_persona_contacto.apellidos}}</td>
+<td>{{ personaContactoAlarma.acuerdo_alcanzado }}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/personas_contacto_alarma/modificar', personaContactoAlarma.id]">
+    Modificar datos
+  </button>
+</td>

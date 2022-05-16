@@ -1,1 +1,8 @@
-<p>item-relacion-usuario-centro works!</p>
+<td>{{ relacionUsuarioCentro.persona_contacto }}</td>
+<td>{{ relacionUsuarioCentro.id_centro_sanitario.nombre }}</td>
+<td>{{ relacionUsuarioCentro.id_centro_sanitario.telefono }}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/relacion_usuario_centro/modificar', relacionUsuarioCentro.id]">
+    Modificar datos
+  </button>
+</td>

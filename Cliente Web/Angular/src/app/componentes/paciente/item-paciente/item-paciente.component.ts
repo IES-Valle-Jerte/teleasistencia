@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import { Paciente } from "../../../clases/paciente";
 
 @Component({
-  selector: 'app-item-paciente',
+  selector: 'app-item-paciente, [app-item-paciente]',
   templateUrl: './item-paciente.component.html',
   styleUrls: ['./item-paciente.component.scss']
 })
 export class ItemPacienteComponent implements OnInit {
+
+  @Input() public paciente: Paciente;
 
   constructor() { }
 

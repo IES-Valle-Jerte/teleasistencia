@@ -1,1 +1,29 @@
-<p>lista-relacion-paciente-persona works!</p>
+<main class="text-center row p-0 m-0 justify-content-center">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Relacion paciente persona</li>
+      </ol>
+    </nav>
+    <h1 class="component-title">Relacion paciente persona</h1>
+    <div class="table-responsive m-2">
+      <table class="table table-hover text-center">
+        <thead>
+        <tr class="table-purple">
+          <th scope="col">Paciente</th>
+          <th scope="col">Tipo Relacion</th>
+          <th scope="col">Persona</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let relacionPacientePersona of relaciones_pacientes_personas"
+            app-item-relacion-paciente-persona [relacionPacientePersona]="relacionPacientePersona">
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

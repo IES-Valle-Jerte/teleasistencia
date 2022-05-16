@@ -22,11 +22,12 @@ export class ModificarAlarmaComponent implements OnInit {
   ngOnInit(): void {
     this.alarma = this.route.snapshot.data['alarma'];
     this.idAlarma = this.route.snapshot.params['id'];
-    this.teleoperadores = this.route.snapshot.data['teleoperadores']
+    this.teleoperadores = this.route.snapshot.data['teleoperadores'];
+    this.alarma.id_teleoperador = this.alarma.id_teleoperador.id;
 
   }
   optionSelected(i: number): void {
-    document.getElementsByClassName('user_option')[i].setAttribute('selected', '');
+    document.getElementsByClassName('form-select')[i].setAttribute('selected', '');
   }
   modificarAlarma(): void {
     this.cargarAlarmas.modificarAlarma(this.alarma).subscribe(

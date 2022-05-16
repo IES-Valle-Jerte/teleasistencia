@@ -3,7 +3,7 @@ import {ICentroSanitario} from "./i-centro-sanitario";
 
 export interface IRelacionUsuarioCentro {
   id: number;
-  persona_contracto: string;
+  persona_contacto: string;
   distancia: number;
   tiempo: number;
   observaciones: string;

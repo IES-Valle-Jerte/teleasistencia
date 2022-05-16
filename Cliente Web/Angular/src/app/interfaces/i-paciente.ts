@@ -1,6 +1,6 @@
-import {ITipoVivienda} from "./i-tipo-vivienda";
 import {ITerminal} from "./i-terminal";
 import {IPersona} from "./i-persona";
+import {ITipoModalidadPaciente} from "./i-tipo-modalidad-paciente";
 
 export interface IPaciente {
   id: number;
@@ -12,5 +12,5 @@ export interface IPaciente {
   intereses_y_actividades: string;
   id_terminal: ITerminal;
   id_persona: IPersona;
-  id_tipo_vivienda: ITipoVivienda;
+  id_tipo_modalidad_paciente: ITipoModalidadPaciente;
 }

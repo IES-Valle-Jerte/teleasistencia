@@ -43,7 +43,7 @@
         <select class="form-select" id="titular" name="titular"
                 [(ngModel)]="terminal.id_titular" required>
           <option *ngFor="let titular of titulares; let i = index"
-                  [value]="titular.id">{{ terminal.id_titular.id === titular.id? optionSelectedTitular(i):"" }}{{ titular.id_persona.nombre }}</option>
+                  [value]="titular.id">{{ terminal.id_titular.id === titular.id? optionSelected(i):"" }}{{ titular.id_persona.nombre }}</option>
         </select>
       </div>
       <div class="form-group mb-3">
@@ -51,7 +51,7 @@
         <select class="form-select" id="tipo_vivienda" name="tipo_vivienda"
                 [(ngModel)]="terminal.id_tipo_vivienda" required>
           <option *ngFor="let vivienda of tipo_vivienda; let i = index"
-                  [value]="vivienda.id">{{ terminal.id_tipo_vivienda.id === vivienda.id? optionSelectedTipoVivienda(i):"" }}{{ vivienda.nombre }}</option>
+                  [value]="vivienda.id">{{ terminal.id_tipo_vivienda.id === vivienda.id? optionSelected(i):"" }}{{ vivienda.nombre }}</option>
         </select>
       </div>
 

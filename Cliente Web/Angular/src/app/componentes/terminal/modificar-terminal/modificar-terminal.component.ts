@@ -29,12 +29,10 @@ export class ModificarTerminalComponent implements OnInit {
     this.terminal.id_titular = this.terminal.id_titular.id;
     this.terminal.id_tipo_vivienda = this.terminal.id_tipo_vivienda.id
   }
-  optionSelectedTitular(i: number): void {
-    document.getElementsByClassName('titular_option')[i].setAttribute('selected', '');
+  optionSelected(i: number): void {
+    document.getElementsByClassName('form-select')[i].setAttribute('selected', '');
   }
-  optionSelectedTipoVivienda(i: number): void {
-    document.getElementsByClassName('tipo_vivienda_option')[i].setAttribute('selected', '');
-  }
+
   modificarTerminal(): void {
     this.cargarTerminales.modificarTerminal(this.terminal).subscribe(
       e => {

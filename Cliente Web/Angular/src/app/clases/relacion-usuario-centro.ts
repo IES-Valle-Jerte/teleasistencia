@@ -4,7 +4,7 @@ import {ICentroSanitario} from "../interfaces/i-centro-sanitario";
 
 export class RelacionUsuarioCentro implements IRelacionUsuarioCentro{
   id: number;
-  persona_contracto: string;
+  persona_contacto: string;
   distancia: number;
   tiempo: number;
   observaciones: string;

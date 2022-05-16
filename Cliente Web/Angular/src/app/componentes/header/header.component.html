@@ -63,9 +63,25 @@
             </li>
             <li><a class="dropdown-item" [routerLink]="['/tipos_centros_sanitarios/nuevo']">Crear nuevo tipo de centro
               sanitario</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/centro_sanitario_alarma']">Consultar centros sanitarios en alarma</a>
+            </li>
+
           </ul>
         </li>
 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPacientes" data-bs-toggle="dropdown" aria-expanded="false">
+            Pacientes
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownPacientes">
+            <li><a class="dropdown-item" [routerLink]="['/pacientes']">Consultar pacientes</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/pacientes/nuevo']">Crear paciente</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/relacion_paciente_persona']">Consultar relacion paciente persona</a></li>
+
+          </ul>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownModalidadPaciente" data-bs-toggle="dropdown" aria-expanded="false">
             Modalidad paciente
@@ -84,6 +100,12 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownTerminal">
             <li><a class="dropdown-item" [routerLink]="['/terminales']">Consultar terminales</a></li>
             <li><a class="dropdown-item" [routerLink]="['/terminales/nuevo']">Crear terminal</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/relacion_terminal_recurso_comunitario']">Relacion Terminal Recurso Comunitario</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/relacion_terminal_recurso_comunitario/nueva']">Crear nueva Relacion Terminal Recurso Comunitario</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/dispositivos_auxiliares_terminal']">Consultar dispositivos auxiliares de terminal</a></li>
+
           </ul>
         </li>
 
@@ -101,6 +123,8 @@
               comunitarios</a></li>
             <li><a class="dropdown-item" [routerLink]="['/tipos_recursos_comunitarios/nuevo']">Crear nuevo tipo de recurso
               comunitario</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/recursos_comunitarios_alarma']">Consultar recursos comunitarios en alarma</a></li>
           </ul>
         </li>
 
@@ -112,8 +136,10 @@
             <li><a class="dropdown-item" [routerLink]="['/personas']">Consultar personas</a></li>
             <li><a class="dropdown-item" [routerLink]="['/personas/nueva']">Crear nueva persona seleccionando dirección</a></li>
             <hr class="dropdown-divider">
-            <li><a class="dropdown-item" [routerLink]="['/relacion_terminal_recurso_comunitario']">Relacion Terminal Recurso Comunitario</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/relacion_terminal_recurso_comunitario/nueva']">Crear nueva Relacion Terminal Recurso Comunitario</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/personas_contacto_alarma']">Consultar Personas de contacto en alarma</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/relaciones_usuario_centro']">Consultar Relacion Usuario Centro</a></li>
+
           </ul>
         </li>
 

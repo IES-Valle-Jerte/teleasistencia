@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Paciente } from "../../../clases/paciente";
 
 @Component({
   selector: 'app-lista-paciente',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaPacienteComponent implements OnInit {
 
-  constructor() { }
+  public pacientes: Paciente[]
+
+  constructor(private route: ActivatedRoute, private titleService: Title) { }
 
   ngOnInit(): void {
+    this.pacientes = this.route.snapshot.data['pacientes']
+    this.titleService.setTitle('Paciente');
   }
 
 }
