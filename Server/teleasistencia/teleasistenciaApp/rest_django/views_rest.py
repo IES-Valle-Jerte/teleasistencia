@@ -1462,8 +1462,9 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         parametro = ((kwargs["pk"]))
 
         #Borramos la entrada de la API-REST
-        base_datos = Gestion_Base_Datos.objects.get(id=parametro)
-        base_datos.delete()
+        if type(parametro) == 'number':
+            base_datos = Gestion_Base_Datos.objects.get(id=parametro)
+            base_datos.delete()
 
         #Si el parametro que le pasamos en la URL es restore, y existe la copia solo con el ADM(Se debe generar), entonces restauramos esta base de datos.
         if str(parametro) == 'restore' and os.path.isfile('db.sqlite3_admonly'):
