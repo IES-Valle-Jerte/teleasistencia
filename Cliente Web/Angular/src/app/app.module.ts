@@ -91,10 +91,38 @@ import { ListaTerminalComponent } from './componentes/terminal/lista-terminal/li
 import { ItemTerminalComponent } from './componentes/terminal/item-terminal/item-terminal.component';
 import { CrearTerminalComponent } from './componentes/terminal/crear-terminal/crear-terminal.component';
 import { ModificarTerminalComponent } from './componentes/terminal/modificar-terminal/modificar-terminal.component';
-import {CargarTerminalesService} from "./servicios/terminal/cargar-terminales.service";
+import {CargaTerminalesService} from "./servicios/terminal/carga-terminales.service";
 import {CargaAlarmaService} from "./servicios/alarmas/carga-alarma.service";
 import {CargaPacienteService} from "./servicios/paciente/carga-paciente.service";
 import { BorrarRelacionTerminalRecursosComunitariosComponent } from "./componentes/relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios.component";
+import { CrearPacienteComponent } from './componentes/paciente/crear-paciente/crear-paciente.component';
+import { ItemPacienteComponent } from './componentes/paciente/item-paciente/item-paciente.component';
+import { ListaPacienteComponent } from './componentes/paciente/lista-paciente/lista-paciente.component';
+import { ModificarPacienteComponent } from './componentes/paciente/modificar-paciente/modificar-paciente.component';
+import { ModificarRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/modificar-relacion-paciente-persona/modificar-relacion-paciente-persona.component';
+import { ItemRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/item-relacion-paciente-persona/item-relacion-paciente-persona.component';
+import { ListaRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/lista-relacion-paciente-persona/lista-relacion-paciente-persona.component';
+import { CrearRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/crear-relacion-paciente-persona/crear-relacion-paciente-persona.component';
+import { CrearCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/crear-centro-sanitario-alarma/crear-centro-sanitario-alarma.component';
+import { ModificarCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/modificar-centro-sanitario-alarma/modificar-centro-sanitario-alarma.component';
+import { ListaCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/lista-centro-sanitario-alarma/lista-centro-sanitario-alarma.component';
+import { ItemCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/item-centro-sanitario-alarma/item-centro-sanitario-alarma.component';
+import { ItemRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/item-recurso-comunitario-alarma/item-recurso-comunitario-alarma.component';
+import { ListaRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/lista-recurso-comunitario-alarma/lista-recurso-comunitario-alarma.component';
+import { CrearRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/crear-recurso-comunitario-alarma/crear-recurso-comunitario-alarma.component';
+import { ModificarRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/modificar-recurso-comunitario-alarma/modificar-recurso-comunitario-alarma.component';
+import { ModificarPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/modificar-persona-contacto-alarma/modificar-persona-contacto-alarma.component';
+import { CrearPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/crear-persona-contacto-alarma/crear-persona-contacto-alarma.component';
+import { ListaPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/lista-persona-contacto-alarma/lista-persona-contacto-alarma.component';
+import { ItemPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/item-persona-contacto-alarma/item-persona-contacto-alarma.component';
+import { ItemDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/item-dispositivos-auxiliares-terminal/item-dispositivos-auxiliares-terminal.component';
+import { ListaDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal.component';
+import { CrearDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/crear-dispositivos-auxiliares-terminal/crear-dispositivos-auxiliares-terminal.component';
+import { ModificarDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal.component';
+import { ModificarRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/modificar-relacion-usuario-centro/modificar-relacion-usuario-centro.component';
+import { CrearRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/crear-relacion-usuario-centro/crear-relacion-usuario-centro.component';
+import { ItemRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/item-relacion-usuario-centro/item-relacion-usuario-centro.component';
+import { ListaRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/lista-relacion-usuario-centro/lista-relacion-usuario-centro.component';
 
 @NgModule({
   declarations: [
@@ -169,6 +197,34 @@ import { BorrarRelacionTerminalRecursosComunitariosComponent } from "./component
     CrearTerminalComponent,
     ModificarTerminalComponent,
     BorrarRelacionTerminalRecursosComunitariosComponent,
+    CrearPacienteComponent,
+    ItemPacienteComponent,
+    ListaPacienteComponent,
+    ModificarPacienteComponent,
+    ModificarRelacionPacientePersonaComponent,
+    ItemRelacionPacientePersonaComponent,
+    ListaRelacionPacientePersonaComponent,
+    CrearRelacionPacientePersonaComponent,
+    CrearCentroSanitarioAlarmaComponent,
+    ModificarCentroSanitarioAlarmaComponent,
+    ListaCentroSanitarioAlarmaComponent,
+    ItemCentroSanitarioAlarmaComponent,
+    ItemRecursoComunitarioAlarmaComponent,
+    ListaRecursoComunitarioAlarmaComponent,
+    CrearRecursoComunitarioAlarmaComponent,
+    ModificarRecursoComunitarioAlarmaComponent,
+    ModificarPersonaContactoAlarmaComponent,
+    CrearPersonaContactoAlarmaComponent,
+    ListaPersonaContactoAlarmaComponent,
+    ItemPersonaContactoAlarmaComponent,
+    ItemDispositivosAuxiliaresTerminalComponent,
+    ListaDispositivosAuxiliaresTerminalComponent,
+    CrearDispositivosAuxiliaresTerminalComponent,
+    ModificarDispositivosAuxiliaresTerminalComponent,
+    ModificarRelacionUsuarioCentroComponent,
+    CrearRelacionUsuarioCentroComponent,
+    ItemRelacionUsuarioCentroComponent,
+    ListaRelacionUsuarioCentroComponent,
   ],
   imports: [
     BrowserModule,
@@ -192,7 +248,7 @@ import { BorrarRelacionTerminalRecursosComunitariosComponent } from "./component
     CargaViviendaService,
     CargaAlarmaService,
     CargaPacienteService,
-    CargarTerminalesService,
+    CargaTerminalesService,
     Title,
     {
       provide:HTTP_INTERCEPTORS,

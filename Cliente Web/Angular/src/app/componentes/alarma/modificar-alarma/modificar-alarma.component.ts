@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Alarma } from "../../../clases/alarma";
 import { User } from "../../../clases/user";
-import {CargaAlarmaService} from "../../../servicios/alarmas/carga-alarma.service";
+import { CargaAlarmaService } from "../../../servicios/alarmas/carga-alarma.service";
 
 
 @Component({
@@ -31,15 +31,12 @@ export class ModificarAlarmaComponent implements OnInit {
   modificarAlarma(): void {
     this.cargarAlarmas.modificarAlarma(this.alarma).subscribe(
       e => {
-        console.log('Relacion ' + e.id + ' modificada');
+        console.log('Alarma ' + e.id + ' modificada');
         console.log(this.alarma)
       },
       error => {
-        console.log(error)
+             console.log(error)
       }
     );
-  }
-  mostrar(t): void {
-    console.log(t.pk)
   }
 }

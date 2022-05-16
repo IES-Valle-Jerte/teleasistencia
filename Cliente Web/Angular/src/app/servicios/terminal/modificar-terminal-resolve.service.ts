@@ -3,14 +3,14 @@ import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@ang
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {ITerminal} from "../../interfaces/i-terminal";
-import {CargarTerminalesService} from "./cargar-terminales.service";
+import {CargaTerminalesService} from "./carga-terminales.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModificarTerminalResolveService implements Resolve<ITerminal> {
 
-  constructor(private cargarTerminal: CargarTerminalesService, private router: Router) { }
+  constructor(private cargarTerminal: CargaTerminalesService, private router: Router) { }
 
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITerminal>{

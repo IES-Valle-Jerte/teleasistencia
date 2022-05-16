@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
-        <li class="breadcrumb-item"><a [routerLink]="['/relacion_terminal_recurso_comunitario']">Alarmas</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/alarmas']">Alarmas</a></li>
         <li class="breadcrumb-item active" aria-current="page">Modificar Alarma {{idAlarma}}</li>
       </ol>
     </nav>
@@ -22,35 +22,24 @@
           </div>
         </div>
       </div>
-      <div class="form-group mb-3">
-        <label for="observaciones" class="form-label">Observaciones</label>
-        <input type="text" name="observaciones" id="observaciones" class="form-control"
-               required maxlength="500" [(ngModel)]="alarma.observaciones" #observaciones="ngModel">
-        <div *ngIf="observaciones.invalid && (observaciones.dirty || observaciones.touched)"
-             class="alert alert-secondary" role="alert">
-          <div *ngIf="observaciones.errors?.required">
-            Las observaciones es obligatorias
-          </div>
-        </div>
+            <div class="form-group mb-3">
+      <label for="observaciones" class="form-label">Observaciones</label>
+      <textarea [(ngModel)]="alarma.observaciones" name="observaciones" id="observaciones" class="form-control" required></textarea>
+
       </div>
       <div class="form-group mb-3">
-        <label for="resumen" class="form-label">Resumen</label>
-        <input type="text" name="resumen" id="resumen" class="form-control"
-               required maxlength="500" [(ngModel)]="alarma.resumen" #resumen="ngModel">
-        <div *ngIf="resumen.invalid && (resumen.dirty || resumen.touched)"
-             class="alert alert-secondary" role="alert">
-          <div *ngIf="resumen.errors?.required">
-            El resumen es obligatorio
-          </div>
-        </div>
+      <label for="resumen" class="form-label">Resumen</label>
+      <textarea [(ngModel)]="alarma.resumen" name="resumen" id="resumen" class="form-control" required></textarea>
+
       </div>
+
       <div class="form-group mb-3">
             <div class="form-group mb-3">
               <label for="teleoperador" class="form-label">Teleoperadores</label>
               <select class="form-select" id="teleoperador" name="teleoperador"
                       [(ngModel)]="alarma.id_teleoperador" required>
                 <option class="user_option" *ngFor="let teleoperador of teleoperadores; let i = index"
-                        [value]="teleoperador.id" >{{mostrar(teleoperador)}}{{ alarma.id_teleoperador.id === teleoperador.id? optionSelected(i):"" }}{{ teleoperador.first_name }}</option>
+                        [value]="teleoperador.id" >{{ alarma.id_teleoperador.id === teleoperador.id? optionSelected(i):"" }}{{ teleoperador.first_name }}</option>
               </select>
             </div>
       </div>

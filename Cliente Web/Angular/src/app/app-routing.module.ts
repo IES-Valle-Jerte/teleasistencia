@@ -90,6 +90,12 @@ import {ListaTerminalesResolveService} from "./servicios/terminal/lista-terminal
 import {
   BorrarRelacionTerminalRecursosComunitariosComponent
 } from "./componentes/relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios.component";
+import {CrearAlarmaComponent} from "./componentes/alarma/crear-alarma/crear-alarma.component";
+import {ListaPacientesResolveService} from "./servicios/paciente/lista-pacientes-resolve.service";
+import {ListaTerminalComponent} from "./componentes/terminal/lista-terminal/lista-terminal.component";
+import {ModificarTerminalComponent} from "./componentes/terminal/modificar-terminal/modificar-terminal.component";
+import {ModificarTerminalResolveService} from "./servicios/terminal/modificar-terminal-resolve.service";
+import {CrearTerminalComponent} from "./componentes/terminal/crear-terminal/crear-terminal.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -440,6 +446,45 @@ const routes: Routes = [
     resolve: {
       alarma: ModificarAlarmaResolveService,
       teleoperadores: ListaUsersResolveService
+    }
+  },
+  {
+    path: 'alarmas/nueva',
+    component: CrearAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarma: ListaAlarmasResolveService,
+      terminales: ListaTerminalesResolveService,
+      tipos_alarmas: ListaTiposAlarmasResolveService,
+      pacientes_ucr: ListaPacientesResolveService
+    }
+  },
+  {
+    path: 'terminales',
+    component: ListaTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      terminales: ListaTerminalesResolveService
+    }
+  },
+  {
+    path: 'terminales/modificar/:id',
+    component: ModificarTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      terminales: ModificarTerminalResolveService,
+      titulares: ListaPacientesResolveService,
+      tipo_vivienda: ListaViviendasResolveService
+    }
+  },
+  {
+    path: 'terminales/nuevo',
+    component: CrearTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      terminal: ListaTerminalesResolveService,
+      titulares: ListaPacientesResolveService,
+      tipos_vivienda: ListaViviendasResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},

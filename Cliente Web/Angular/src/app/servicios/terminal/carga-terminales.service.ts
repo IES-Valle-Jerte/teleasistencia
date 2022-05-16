@@ -8,7 +8,7 @@ import {ITerminal} from "../../interfaces/i-terminal";
 @Injectable({
   providedIn: 'root'
 })
-export class CargarTerminalesService {
+export class CargaTerminalesService {
   private urlBase = environment.urlBase;
   private  URL_SERVER_TERMINAL = this.urlBase + 'terminal';
   constructor(private http:HttpClient) { }

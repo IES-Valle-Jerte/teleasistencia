@@ -1,1 +1,7 @@
-<p>item-terminal works!</p>
+<td>{{ terminal.numero_terminal}}</td>
+<td>{{ terminal.id_titular.id_persona.nombre }} {{ terminal.id_titular.id_persona.apellidos }}</td>
+<td>
+  <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/terminales/modificar', terminal.id]">
+    Modificar datos
+  </button>
+</td>

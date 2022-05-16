@@ -29,6 +29,9 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
     this.relaciones_terminales = this.route.snapshot.data['relaciones_terminales']
     this.relaciones_recursos_comunitarios = this.route.snapshot.data['relaciones_recursos_comunitarios']
     this.titleService.setTitle('Modificar relacion de recurso ' + this.idRelacion);
+
+    this.relacion_terminal_recursos_comunitarios.id_terminal = this.relacion_terminal_recursos_comunitarios.id_terminal.id
+    this.relacion_terminal_recursos_comunitarios.id_recurso_comunitario = this.relacion_terminal_recursos_comunitarios.id_recurso_comunitario.id
   }
 
 

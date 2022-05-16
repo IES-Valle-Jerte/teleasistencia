@@ -106,7 +106,7 @@ class Terminal_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Terminal
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Historico_Tipo_Situación_Serializer(serializers.ModelSerializer):
