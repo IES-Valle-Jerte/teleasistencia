@@ -67,6 +67,11 @@ import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-ti
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
+import {
+  ListaCopiaSeguridadComponent
+} from "./componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component";
+import {ListaCopiaSeguridadService} from "./servicios/lista-copia-seguridad.service";
+
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -363,6 +368,14 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       user: DetallesUserResolveService
+    }
+  },
+  {
+    path: 'copia_seguridad',
+    component: ListaCopiaSeguridadComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      copia_seguridad: ListaCopiaSeguridadService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},

@@ -17,7 +17,7 @@ export class ListaCopiaSeguridadComponent implements OnInit {
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) { }
 
   ngOnInit(): void {
-
+    this.copias_seguridad = this.route.snapshot.data['copia_seguridad'];
     this.titleService.setTitle('Gestion copia de seguridad.');
   }
 
