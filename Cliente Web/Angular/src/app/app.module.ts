@@ -7,6 +7,7 @@ import {ListaUsersComponent} from './componentes/user/lista-users/lista-users.co
 import {ItemUserComponent} from './componentes/user/item-user/item-user.component';
 import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
 import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
+
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './componentes/home/home.component';
@@ -78,6 +79,7 @@ import {InterceptorService} from "./interceptors/interceptor.service";
 import { ItemCopiaSeguridadComponent } from './componentes/copia-seguridad/item-copia-seguridad/item-copia-seguridad.component';
 import { ListaCopiaSeguridadComponent } from './componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component';
 import { CrearCopiaSeguridadComponent } from './componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component';
+import { GruposComponent } from './componentes/grupos/grupos.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +143,7 @@ import { CrearCopiaSeguridadComponent } from './componentes/copia-seguridad/crea
     ItemCopiaSeguridadComponent,
     ListaCopiaSeguridadComponent,
     CrearCopiaSeguridadComponent,
+    GruposComponent,
   ],
   imports: [
     BrowserModule,
