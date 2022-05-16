@@ -5,6 +5,11 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CargaPersonaService} from '../../../servicios/carga-persona.service';
 import {Persona} from '../../../clases/persona';
+import Swal from "sweetalert2";
+import {Direccion} from "../../../clases/direccion";
+import {CargaDireccionService} from "../../../servicios/carga-direccion.service";
+
+
 
 @Component({
   selector: 'app-crear-persona',
@@ -14,34 +19,68 @@ import {Persona} from '../../../clases/persona';
 
 export class CrearPersonaComponent implements OnInit {
   public persona: IPersona;
-  public direcciones: IDireccion[];
+  //public direcciones: IDireccion[];
   public fecha_actual = new Date();
   public anno_actual = this.fecha_actual.getFullYear();
   public mes_actual = this.fecha_actual.getMonth() + 1;
   public dia_actual = this.fecha_actual.getDate();
+  public dire : IDireccion;
 
-  constructor(private titleService: Title, private route: ActivatedRoute, private cargaPersonas: CargaPersonaService, private router: Router) {
+  constructor(private titleService: Title, private route: ActivatedRoute, private cargaPersonas: CargaPersonaService, private router: Router, private cargaDirecciones : CargaDireccionService) {
   }
 
   ngOnInit(): void {
     this.titleService.setTitle('Crear nueva persona');
     this.persona = new Persona();
-    this.direcciones = this.route.snapshot.data['direcciones'];
+    //this.direcciones = this.route.snapshot.data['direcciones'];
     this.persona.sexo = 'Hombre';
     this.persona.telefono_fijo = '';
     this.persona.telefono_movil = '';
+    this.dire = new Direccion();
   }
-
-  nuevaPersona(): void {
-    this.cargaPersonas.nuevaPersona(this.persona).subscribe(
+  nuevaDireccion(): void {
+    this.cargaDirecciones.nuevaDireccion(this.dire).subscribe(
       e => {
-        console.log('Persona creada');
-        console.log(this.persona);
         this.router.navigate(['/personas']);
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  nuevaPersona(): void {
+    this.persona.id_direccion = this.dire;
+    this.cargaPersonas.nuevaPersona(this.persona).subscribe(
+      e => {
+        console.log(this.dire)
+        this.nuevaDireccion();
+        console.log('Persona creada');
+        console.log(this.persona);
+        this.router.navigate(['/personas']);
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  ejecutarAlerta() :void{
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: 'Persona Creada Correctamente'
+    })
+
   }
 }
