@@ -5,9 +5,6 @@ import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CargaTipoAgendaService} from "../../../servicios/carga-tipo-agenda.service";
 
-
-
-
 @Component({
   selector: 'app-nuevo-tipo-agenda',
   templateUrl: './nuevo-tipo-agenda.component.html',

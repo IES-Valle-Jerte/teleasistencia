@@ -1,0 +1,15 @@
+<td>Id: {{ historico_tipo_situacion.id }} <br>
+  Tipo situación: {{ historico_tipo_situacion.id_tipo_situacion.nombre }} <br>
+  Terminal: {{ historico_tipo_situacion.id_terminal.numero_terminal }} <br>
+  Fecha: {{ historico_tipo_situacion.fecha }}
+</td>
+<td>
+  <button type="submit" class="btn btn-outline-danger btn-modify mx-2"
+          [routerLink]="['/historico_situaciones/borrado', historico_tipo_situacion.id]">
+    Eliminar
+  </button>
+  <button type="submit" class="btn btn-outline-secondary btn-modify"
+          [routerLink]="['/historico_situaciones/modificar', historico_tipo_situacion.id]">
+    Modificar datos
+  </button>
+</td>

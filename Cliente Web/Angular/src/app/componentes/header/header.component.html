@@ -116,11 +116,12 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownAgenda">
             <li><a class="dropdown-item" [routerLink]="['/agenda']">Consultar agenda</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/agenda/nueva']">Crear nuevo evento en agenda</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item" [routerLink]="['/tipo_agenda']">Consultar tipos de agenda</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/tipo_agenda/nueva']">Crear tipo agenda</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/tipo_agenda/nueva']">Crear nuevo tipo agenda</a></li>
           </ul>
         </li>
 
@@ -142,6 +143,11 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownTipoSituaciones">
             <li><a class="dropdown-item" [routerLink]="['/situaciones']">Consultar tipos de situaciones</a></li>
             <li><a class="dropdown-item" [routerLink]="['/situaciones/nueva']">Crear nuevo tipo de situaciones</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/historico_situaciones']">Consultar histórico de tipos de situaciones</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/historico_situaciones/nueva']">Crear histórico de tipos de situaciones</a></li>
           </ul>
         </li>
       </ul>

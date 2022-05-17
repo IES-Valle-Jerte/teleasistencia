@@ -84,7 +84,17 @@ export class AgendaComponent implements OnInit {
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
-
+    {
+      title: 'New event',
+      start: startOfDay(new Date()),
+      end: endOfDay(new Date()),
+      color: colors.red,
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+    }
   ];
 
   activeDayIsOpen: boolean = false;

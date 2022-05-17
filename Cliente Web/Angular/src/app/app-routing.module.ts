@@ -77,6 +77,23 @@ import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
 import {BorrarTipoAgendaComponent} from "./componentes/tipo-agenda/borrar-tipo-agenda/borrar-tipo-agenda.component";
 import {BorrarTipoAgendaService} from "./servicios/borrar-tipo-agenda.service";
+import {NuevoAgendaComponent} from "./componentes/agenda/nuevo-agenda/nuevo-agenda.component";
+import {ListaAgendaResolveService} from "./servicios/lista-agenda-resolve.service";
+import {HistoricoTipoSituacion} from "./clases/historico-tipo-situacion";
+import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-historico-tipo-situacion-resolve.service";
+import {
+  CrearHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/crear-historico-tipo-situacion/crear-historico-tipo-situacion.component";
+import {
+  BorrarHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/borrar-historico-tipo-situacion/borrar-historico-tipo-situacion.component";
+import {ListaTerminalResolveService} from "./servicios/lista-terminal-resolve.service";
+import {
+  HistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/historico-tipo-situacion.component";
+import {
+  ModificarHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -296,7 +313,18 @@ const routes: Routes = [
     component: AgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      direcciones: ListaDireccionesResolveService
+      agendas: ListaAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService
+    }
+  },
+  {
+    path:'agenda/nueva',
+    component: NuevoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agendas: ListaAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService,
+      personas: ListaPersonasResolveService
     }
   },
   {
@@ -404,6 +432,42 @@ const routes: Routes = [
     resolve: {
       tipos_situaciones: BorrarTipoSituacionService,
       clasificaciones_situaciones: ListaSituacionesService
+    }
+  },
+  {
+    path: 'historico_situaciones',
+    component: HistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_situaciones: ListaHistoricoTipoSituacionResolveService
+    }
+  },
+  {
+    path: 'historico_situaciones/nueva',
+    component: CrearHistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_situaciones: ListaHistoricoTipoSituacionResolveService,
+      tipos_situaciones: ListaSituacionesService,
+      terminales: ListaTerminalResolveService
+    }
+  },
+  {
+    path: 'historico_situaciones/modificar/:id',
+    component: ModificarHistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_situaciones: ListaHistoricoTipoSituacionResolveService,
+      tipos_situaciones: ListaSituacionesService,
+      terminales: ListaTerminalResolveService
+    }
+  },
+  {
+    path: 'historico_situaciones/borrado/:id',
+    component: BorrarHistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historico_situaciones: ListaHistoricoTipoSituacionResolveService,
     }
   },
   {
