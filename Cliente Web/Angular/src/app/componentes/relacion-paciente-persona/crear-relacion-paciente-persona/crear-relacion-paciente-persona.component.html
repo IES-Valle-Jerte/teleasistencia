@@ -1,1 +1,42 @@
-<p>crear-relacion-paciente-persona works!</p>
+<main class="text-center row p-0 m-0 justify-content-center">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/relacion_terminal_recurso_comunitario']">Relacion paciente persona</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Crear Relacion paciente persona</li>
+      </ol>
+    </nav>
+    <h1 class="component-title" >Crear relacion paciente persona</h1>
+    <form #crearRelacionForm="ngForm">
+
+      <div class="form-group mb-3">
+        <div class="form-group mb-3">
+          <label for="pacientes" class="form-label">Nombre</label>
+          <select class="form-select" id="pacientes" name="pacientes"
+                  [(ngModel)]="relacionPacientePersona.id_paciente" required>
+            <option class="relacion_terminal_option" *ngFor="let paciente of pacientes; let i = index"
+                    [value]="paciente.id">{{ paciente.id_persona.nombre }}</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="personas" class="form-label">Recurso Comunitario</label>
+          <select class="form-select" id="personas" name="personas"
+                  [(ngModel)]="relacionPacientePersona.id_persona" required>
+            <option class="relacion_recurso_option" *ngFor="let persona of personas; let i = index"
+                    [value]="persona.id">{{ persona.nombre }} {{ persona.apellidos}}</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline-success m-1" (click)="nuevaRelacionPacientePersona()"
+              [disabled]="!crearRelacionForm.form.valid">
+        Guardar
+      </button>
+      <button type="button" class="btn btn-outline-secondary m-1" [routerLink]="['/relacion_paciente_persona']">
+        Volver
+      </button>
+
+    </form>
+  </div>
+</main>

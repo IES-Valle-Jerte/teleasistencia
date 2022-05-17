@@ -136,6 +136,24 @@ import {
 import {
   ListaRelacionUsuarioCentroResolveService
 } from "./servicios/relacion-usuario-centro/lista-relacion-usuario-centro-resolve.service";
+import {
+  ModificarRelacionPacientePersonaComponent
+} from "./componentes/relacion-paciente-persona/modificar-relacion-paciente-persona/modificar-relacion-paciente-persona.component";
+import {
+  ModificarRelacionPacientePersonaResolveService
+} from "./servicios/relacion-paciente-persona/modificar-relacion-paciente-persona-resolve.service";
+import {
+  CrearRelacionPacientePersonaComponent
+} from "./componentes/relacion-paciente-persona/crear-relacion-paciente-persona/crear-relacion-paciente-persona.component";
+import {
+  ModificarCentroSanitarioAlarmaComponent
+} from "./componentes/centro-sanitario-alarma/modificar-centro-sanitario-alarma/modificar-centro-sanitario-alarma.component";
+import {
+  CrearCentroSanitarioAlarmaComponent
+} from "./componentes/centro-sanitario-alarma/crear-centro-sanitario-alarma/crear-centro-sanitario-alarma.component";
+import {
+  ModificarCentroSanitarioAlarmaResolveService
+} from "./servicios/centro-sanitario-alarma/modificar-centro-sanitario-alarma-resolve.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -565,7 +583,26 @@ const routes: Routes = [
       relaciones_pacientes_personas: ListaRelacionPacientePersonaResolveService
     }
   },
-  /**  aquí modificar crear y borrar relacion paciente persona **/
+  {
+    path: 'relacion_paciente_persona/modificar/:id',
+    component: ModificarRelacionPacientePersonaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_paciente_persona: ModificarRelacionPacientePersonaResolveService,
+      pacientes: ListaPacientesResolveService,
+      personas: ListaPersonasResolveService,
+    }
+  },
+  {
+    path: 'relacion_paciente_persona/nueva',
+    component: CrearRelacionPacientePersonaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_paciente_persona: ListaRelacionPacientePersonaResolveService,
+      pacientes: ListaPacientesResolveService,
+      personas: ListaPersonasResolveService,
+    }
+  },
   {
     path: 'centro_sanitario_alarma',
     component: ListaCentroSanitarioAlarmaComponent,
@@ -574,7 +611,27 @@ const routes: Routes = [
       centros_sanitarios_alarma: ListaCentrosSanitariosAlarmaResolveService
     }
   },
-  /**  aquí modificar crear y borrar centro sanitario en alarma**/
+  {
+    path: 'centro_sanitario_alarma/modificar/:id',
+    component: ModificarCentroSanitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      centros_sanitarios_alarma: ModificarCentroSanitarioAlarmaResolveService,
+      alarmas: ListaAlarmasResolveService,
+      centros_sanitarios: ListaCentrosSanitariosResolveService
+    }
+  },
+  {
+    path: 'centro_sanitario_alarma/nuevo',
+    component: CrearCentroSanitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      centros_sanitarios_alarma: ListaCentrosSanitariosAlarmaResolveService,
+      alarmas: ListaAlarmasResolveService,
+      centros_sanitarios: ListaCentrosSanitariosResolveService
+    }
+  },
+
   {
     path: 'recursos_comunitarios_alarma',
     component: ListaRecursoComunitarioAlarmaComponent,
