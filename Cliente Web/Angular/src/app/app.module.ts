@@ -10,6 +10,7 @@ import {ListaUsersComponent} from './componentes/user/lista-users/lista-users.co
 import {ItemUserComponent} from './componentes/user/item-user/item-user.component';
 import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
 import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
+
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './componentes/home/home.component';
@@ -62,6 +63,7 @@ import {CargaRecursoComunitarioService} from './servicios/carga-recurso-comunita
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
+
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
 import { AgendaComponent } from './componentes/agenda/agenda.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -100,6 +102,7 @@ import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-histo
 import {CargaHistoricoTipoSituacionService} from "./servicios/carga-historico-tipo-situacion.service";
 import {CargaTipoAgendaService} from "./servicios/carga-tipo-agenda.service";
 import {CargaAgendaService} from "./servicios/carga-agenda.service";
+import { GruposComponent } from './componentes/grupos/grupos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -172,6 +175,7 @@ import {CargaAgendaService} from "./servicios/carga-agenda.service";
     CrearHistoricoTipoSituacionComponent,
     ModificarHistoricoTipoSituacionComponent,
     ItemHistoricoTipoSituacionComponent,
+    GruposComponent,
   ],
   imports: [
     BrowserModule,
