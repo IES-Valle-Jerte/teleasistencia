@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.grupos.ModificarGruposFragment">
+    tools:context=".ui.api.fragments.grupos.ModificarGruposFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

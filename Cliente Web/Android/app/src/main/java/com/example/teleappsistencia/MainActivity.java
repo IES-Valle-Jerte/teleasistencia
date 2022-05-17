@@ -1,5 +1,7 @@
 package com.example.teleappsistencia;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -13,23 +15,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.teleappsistencia.ui.clases.Usuario;
-import com.example.teleappsistencia.ui.fragments.api.direccion.InsertarDireccionFragment;
-import com.example.teleappsistencia.ui.fragments.api.direccion.ListarDireccionFragment;
-import com.example.teleappsistencia.ui.fragments.api.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
-import com.example.teleappsistencia.ui.fragments.api.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
-import com.example.teleappsistencia.ui.fragments.api.grupos.InsertarGruposFragment;
-import com.example.teleappsistencia.ui.fragments.api.grupos.ListarGruposFragment;
-import com.example.teleappsistencia.ui.fragments.api.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
-import com.example.teleappsistencia.ui.fragments.api.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
-import com.example.teleappsistencia.ui.fragments.api.persona.InsertarPersonaFragment;
-import com.example.teleappsistencia.ui.fragments.api.persona.ListarPersonaFragment;
-import com.example.teleappsistencia.ui.fragments.api.tipo_situacion.InsertarTipoSituacionFragment;
-import com.example.teleappsistencia.ui.fragments.api.tipo_situacion.ListarTipoSituacionFragment;
-import com.example.teleappsistencia.ui.fragments.api.tipo_vivienda.InsertarTipoViviendaFragment;
-import com.example.teleappsistencia.ui.fragments.api.tipo_vivienda.ListarTipoViviendaFragment;
-import com.example.teleappsistencia.ui.fragments.api.usuarios.InsertarUsuariosFragment;
-import com.example.teleappsistencia.ui.fragments.api.usuarios.ListarUsuariosFragment;
+import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.api.fragments.direccion.InsertarDireccionFragment;
+import com.example.teleappsistencia.ui.api.fragments.direccion.ListarDireccionFragment;
+import com.example.teleappsistencia.ui.api.fragments.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.ui.api.fragments.dispositivos_aux.ListarDispositivosAuxiliaresFragment;
+import com.example.teleappsistencia.ui.api.fragments.grupos.InsertarGruposFragment;
+import com.example.teleappsistencia.ui.api.fragments.grupos.ListarGruposFragment;
+import com.example.teleappsistencia.ui.api.fragments.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.ui.api.fragments.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.ui.api.fragments.persona.InsertarPersonaFragment;
+import com.example.teleappsistencia.ui.api.fragments.persona.ListarPersonaFragment;
+import com.example.teleappsistencia.ui.api.fragments.tipo_situacion.InsertarTipoSituacionFragment;
+import com.example.teleappsistencia.ui.api.fragments.tipo_situacion.ListarTipoSituacionFragment;
+import com.example.teleappsistencia.ui.api.fragments.tipo_vivienda.InsertarTipoViviendaFragment;
+import com.example.teleappsistencia.ui.api.fragments.tipo_vivienda.ListarTipoViviendaFragment;
+import com.example.teleappsistencia.ui.api.fragments.usuarios.InsertarUsuariosFragment;
+import com.example.teleappsistencia.ui.api.fragments.usuarios.ListarUsuariosFragment;
+import com.example.teleappsistencia.ui.expandable_list.ExpandableListAdapter;
+import com.example.teleappsistencia.ui.expandable_list.MenuModel;
+import com.example.teleappsistencia.ui.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -38,10 +43,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ExpandableListAdapter expandableListAdapter;
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<MenuModel> headerList = new ArrayList<>();
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
-    private APIService apiService;
+    private TextView textView_nombre_usuarioLogged;
+    private TextView textView_email_usuarioLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Cargo el servicio que se encarga de realizar las peticiones.
-        apiService = Utils.inicializarApiService(getBaseContext());
-        // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
-        loadMenuHeader();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setAction("Action", null).show();
             }
         });
+
+        fab.setVisibility(View.INVISIBLE);
 
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
@@ -84,32 +83,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
+        loadMenuHeader();
     }
 
-    private void loadMenuHeader(){
-        String username = getIntent().getExtras().getString("usuario");
-        Call<List<Usuario>> call = apiService.getUserByUsername(username, "Bearer " + Utils.getToken().getAccess());
-        call.enqueue(new Callback<List<Usuario>>() {
-            @Override
-            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
-                if(response.isSuccessful()) {
-                    List<Usuario> usuariosList = response.body();
-                    Usuario usuario = usuariosList.get(0);
-                    TextView nombreUsuario = (TextView) findViewById(R.id.textView_nombre_usuario);
-                    TextView emailUsuario = (TextView) findViewById(R.id.textView_email_usuario);
 
-                    nombreUsuario.setText(usuario.getFirstName() + " " + usuario.getLastName());
-                    emailUsuario.setText((String) usuario.getEmail());
-                } else{
-                    System.out.println(response.raw());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Usuario>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    private void loadMenuHeader() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        textView_nombre_usuarioLogged = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textView_nombre_usuarioLogged);
+        textView_email_usuarioLogged = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textView_email_usuarioLogged);
+
+        Usuario usuario = Utils.getUserLogged();
+        String espacio = getString(R.string.espacio_en_blanco);
+        if (usuario != null) {
+            textView_nombre_usuarioLogged.setText(usuario.getFirstName() + espacio + usuario.getLastName());
+            textView_email_usuarioLogged.setText(usuario.getEmail());
+        }
     }
 
     @Override
@@ -182,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -195,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -208,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -221,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -234,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -247,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -260,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
 
@@ -273,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
-        } else{
+        } else {
             childList.put(menuModel, null);
         }
     }

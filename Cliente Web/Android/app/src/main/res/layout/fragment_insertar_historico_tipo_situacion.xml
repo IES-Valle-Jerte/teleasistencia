@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment">
+    tools:context=".ui.api.fragments.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

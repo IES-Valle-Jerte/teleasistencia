@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.direccion.InsertarDireccionFragment">
+    tools:context=".ui.api.fragments.direccion.InsertarDireccionFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

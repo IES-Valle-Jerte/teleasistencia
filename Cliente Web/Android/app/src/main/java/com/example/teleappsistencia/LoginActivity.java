@@ -10,9 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.teleappsistencia.ui.clases.Token;
+import com.example.teleappsistencia.ui.api.APIService;
+import com.example.teleappsistencia.ui.api.ClienteRetrofit;
+import com.example.teleappsistencia.ui.objects.Grupo;
+import com.example.teleappsistencia.ui.objects.Token;
+import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
+import com.example.teleappsistencia.ui.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,11 +38,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.btn_iniciar_sesion = (Button) findViewById(R.id.btn_iniciar_sesion);
-        this.editText_usuario = (EditText) findViewById(R.id.editText_usuario);
-        this.editText_password = (EditText) findViewById(R.id.editText_password);
-        this.textView_error_usuario = (TextView) findViewById(R.id.textView_error_nombre_usuario);
-        this.textView_error_password = (TextView) findViewById(R.id.textView_error_password);
+        this.btn_iniciar_sesion = findViewById(R.id.btn_iniciar_sesion);
+        this.editText_usuario = findViewById(R.id.editText_usuario);
+        this.editText_password = findViewById(R.id.editText_password);
+        this.textView_error_usuario = findViewById(R.id.textView_error_nombre_usuario);
+        this.textView_error_password = findViewById(R.id.textView_error_password);
 
         textView_error_usuario.setVisibility(View.GONE);
         textView_error_password.setVisibility(View.GONE);
@@ -42,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         this.btn_iniciar_sesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validarCredenciales()){
+                if (validarCredenciales()) {
                     peticionToken();
                 }
             }
@@ -83,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Método que valida el nombre del usuario y la contraseña.
+     *
      * @return Devuelve true si los dos son válidos, de lo contrario devuelve false.
      */
     private boolean validarCredenciales() {
@@ -91,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         validNombreUsuario = validarNombreUsuario(editText_usuario.getText().toString());
         validPassword = validarPassword(editText_password.getText().toString());
 
-        if((validNombreUsuario) && (validPassword)){
+        if ((validNombreUsuario) && (validPassword)) {
             return true;
         } else {
             return false;
@@ -125,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Método que recibe una contraseña y comprueba si es válida.
+     *
      * @param password
      * @return
      */
@@ -143,10 +153,10 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Método que realiza una petición a la API, enviandole el nombre de usuario y la contraseña.
-     * Si se recibe el token correctamente se abrirá la MainActivity, de lo contrario mostrará un Toast con el error ocurrido.
+     * Si se recibe el token correctamente llamará al método peticionUsuarioLogueado(), de lo contrario mostrará un AlertDialog con el error ocurrido.
      */
     public void peticionToken() {
-        APIService apiService = Utils.inicializarApiService(getBaseContext());
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
         Call<Token> call = apiService.getToken(this.editText_usuario.getText().toString(), this.editText_password.getText().toString());
         call.enqueue(new Callback<Token>() {
@@ -154,14 +164,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
                     Utils.setToken(response.body());
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    intent.putExtra("usuario", editText_usuario.getText().toString());
-                    startActivity(intent);
+
+                    peticionUsuarioLogueado();
                 } else {
-                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.toast_activity_login), Toast.LENGTH_SHORT).show();
-                    System.out.println(response.message());
-                    System.out.println(response.body());
-                    System.out.println(response.raw());
+                    if (response.message().equalsIgnoreCase(getString(R.string.unauthorized))) {
+                        AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, getString(R.string.infoAlertDialog_credenciales_incorrectas_login));
+                    } else {
+                        AlertDialogBuilder.crearErrorAlerDialog(LoginActivity.this, Integer.toString(response.code()));
+                    }
                 }
             }
 
@@ -171,5 +181,51 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println(t.getMessage());
             }
         });
+    }
+
+    private void peticionUsuarioLogueado() {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<List<Usuario>> call = apiService.getUserByUsername(this.editText_usuario.getText().toString(), "Bearer " + Utils.getToken().getAccess());
+        call.enqueue(new Callback<List<Usuario>>() {
+            @Override
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+                if (response.isSuccessful()) {
+                    List<Usuario> usuariosList = response.body();
+                    Usuario usuario = usuariosList.get(0);
+
+                    // Para reducir el tamaño del método peticionUsuarioLogueado(), se ha separado en otro método la signación del usuario de la clase Utils.
+                    asignarUsuarioAlUtils(usuario);
+
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    AlertDialogBuilder.crearErrorAlerDialog(LoginActivity.this, Integer.toString(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Método para asignar el usuario logeado a la clase Utils.
+     * Además mira si el usuario tiene permisos de admin y lo asigna a la variable isAdmin de la clase Utils.
+     * @param usuario
+     */
+    private void asignarUsuarioAlUtils(Usuario usuario){
+        // Asigno el usuario logueado.
+        Utils.setUserLogged(usuario);
+
+        List<Grupo> gruposList= (ArrayList) usuario.getGroups();  // Recogo su lista de grupos para ver a cual pertenece.
+        Grupo grupo = (Grupo) Utils.getObjeto(gruposList.get(0), getString(R.string.grupo_class));  // LLamo al método Utils.getObjeto() para evitar el error al castear una LinkedTreeMap a un Object
+
+        if (grupo.getName().equalsIgnoreCase(getString(R.string.profesor))) {
+            Utils.setIsAdmin(true); // Si pertenece a el grupo con el nombre "Profesor" entonces se asigna la variable isAdmin a true.
+        } else {
+            Utils.setIsAdmin(false);  // De lo contrario se le asigna false.
+        }
     }
 }

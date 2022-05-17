@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.dispositivos_aux.InsertarDispositivosAuxiliaresFragment">
+    tools:context=".ui.api.fragments.dispositivos_aux.InsertarDispositivosAuxiliaresFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.persona.ModificarPersonaFragment">
+    tools:context=".ui.api.fragments.persona.ModificarPersonaFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

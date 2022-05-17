@@ -17,9 +17,9 @@
     <string name="menu_direccion">Dirección</string>
     <string name="menu_grupos">Grupos</string>
     <string name="menu_dispositivos_auxiliares_terminal">Dispositivos auxiliares en terminal</string>
-    <string name="menu_tipo_vivienda">Tipo vivienda</string>
-    <string name="menu_tipo_situacion">Tipo situación</string>
-    <string name="menu_historico_tipo_situacion">Histórico tipo situación</string>
+    <string name="menu_tipo_vivienda">Tipo de vivienda</string>
+    <string name="menu_tipo_situacion">Tipo de situación</string>
+    <string name="menu_historico_tipo_situacion">Histórico tipo de situación</string>
 
     <!-- Nombres de los submenus -->
     <string name="insertar">Insertar</string>
@@ -29,12 +29,22 @@
     <!-- *** TextViews *** -->
 
     <!-- TextViews de uso general -->
-    <string name="espacio_en_blanco" />
+    <string name="id_con_dos_puntos">"ID: "</string>
+    <string name="string_vacio" />
+    <string name="espacio_en_blanco">&#160;</string>
     <string name="nombreUsuario">Nombre de usuario</string>
     <string name="password">Contraseña</string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="email">Email</string>
+    <string name="sexo">Sexo</string>
+    <string name="sexo_masculino">Hombre</string>
+    <string name="sexo_femenimo">Mujer</string>
+    <string name="id_direccion">ID de la dirección</string>
+    <string name="id_historicoTipoSituacion">ID del histórico tipo de situación</string>
+    <string name="id_terminal">ID del terminal</string>
+    <string name="id_tipoSituacion">ID del tipo de situación</string>
+    <string name="numeroTerminal">Número del terminal</string>
 
 
     <!-- TextViews de datos obligatorios -->
@@ -44,9 +54,29 @@
     <string name="textview_apellidos_obligatorios">Los apellidos son obligatorios</string>
     <string name="textview_email_obligatorio">El email es obligatorio</string>
     <string name="textview_fecha_obligatoria">La fecha es obligatoria</string>
+    <string name="textview_localidad_obligatoria">La localidad es obligatoria</string>
+    <string name="textview_provincia_obligatoria">La provincia es obligatoria</string>
+    <string name="textview_direccion_obligatoria">La dirección es obligatoria</string>
+    <string name="textview_codigoPostal_obligatoria">El código postal es obligatorio</string>
+    <string name="textview_dni_obligatorio">El DNI es obligatorio</string>
+    <string name="textview_fechaNacimiento_obligatorio">La fecha de nacimiento es obligatoria</string>
+    <string name="textview_telefonoFijo_obligatorio">El teléfono fijo es obligatorio</string>
+    <string name="textview_telefonoMovil_obligatorio">El teléfono móvil es obligatorio</string>
 
     <!-- TextViews de condiciones no cumplidas -->
     <string name="textview_longitud_minima_nombre_usuario">El nombre de usuario debe tener al menos 4 caracteres.</string>
+
+
+    <!-- TextViews de titulos de listar -->
+    <string name="titulo_listar_tipoVivienda">Tipos de vivienda</string>
+    <string name="titulo_listar_tipoSituacion">Tipos de Situaciones</string>
+    <string name="titulo_listar_usuario">Usuarios del sistema</string>
+    <string name="titulo_listar_persona">Personas</string>
+    <string name="titulo_listar_historicoTipoSituacion">Histórico tipos de situaciones</string>
+    <string name="titulo_listar_grupo">Grupos en el sistema</string>
+    <string name="titulo_listar_dispositivoAux">Dispositivos auxiliares en terminal</string>
+    <string name="titulo_listar_direccion">Direcciones</string>
+
 
     <!-- TextViews de insertar y modificar TipoVivienda -->
     <string name="titulo_insertar_tipoVivienda">Crear nuevo tipo de vivienda</string>
@@ -104,7 +134,6 @@
     <string name="textview_iniciar_sesion">Iniciar sesión</string>
 
 
-
     <!-- *** Botones *** -->
 
     <!-- Botones de la Activity Login -->
@@ -115,21 +144,70 @@
     <string name="btn_guardar">GUARDAR</string>
 
 
-    <!-- Toast Activity Login -->
-    <string name="toast_activity_login">Nombre de usuario o contraseña incorrectos.</string>
-
     <!-- ID de los fragments de modificar -->
-    <string name="id">ID</string>
+    <string name="object">OBJECT</string>
 
     <!-- Tag del dialogo (datePicker) de las fechas -->
     <string name="tag_date_picker">datePicker</string>
-    <string name="textview_localidad_obligatoria">La localidad es obligatoria</string>
-    <string name="textview_provincia_obligatoria">La provincia es obligatoria</string>
-    <string name="textview_direccion_obligatoria">La dirección es obligatoria</string>
-    <string name="textview_codigoPostal_obligatoria">El código postal es obligatorio</string>
-    <string name="textview_dni_obligatorio">El DNI es obligatorio</string>
-    <string name="textview_fechaNacimiento_obligatorio">La fecha de nacimiento es obligatoria</string>
-    <string name="textview_telefonoFijo_obligatorio">El teléfono fijo es obligatorio</string>
-    <string name="textview_telefonoMovil_obligatorio">El teléfono móvil es obligatorio</string>
+
+    <!-- Mensajes de los AlertDialogs -->
+    <string name="informacion">Información</string>
+    <string name="error">Error</string>
+    <string name="infoAlertDialog_credenciales_incorrectas_login">Nombre de usuario o contraseña incorrectos.</string>
+    <string name="infoAlertDialog_usuario_ya_existe">El usuario ya existe.</string>
+
+    <string name="infoAlertDialog_insertado_usuario">Se ha creado correctamente un nuevo usuario.</string>
+    <string name="infoAlertDialog_insertado_tipoVivienda">Se ha creado correctamente un nuevo tipo de vivienda.</string>
+    <string name="infoAlertDialog_insertado_tipoSituacion">Se ha creado correctamente un nuevo tipo de situación.</string>
+    <string name="infoAlertDialog_insertado_persona">Se ha creado correctamente una nueva persona.</string>
+    <string name="infoAlertDialog_insertado_historicoTipoSituacion">Se ha creado correctamente un nuevo hístorico tipo de situación.</string>
+    <string name="infoAlertDialog_insertado_grupo">Se ha creado correctamente un nuevo grupo.</string>
+    <string name="infoAlertDialog_insertado_dispositivoAuxiliar">Se ha creado correctamente un nuevo dispositivo auxiliar en terminal.</string>
+    <string name="infoAlertDialog_insertado_direccion">Se ha creado correctamente una nueva dirección.</string>
+
+    <string name="infoAlertDialog_modificado_usuario">Se ha modificado correctamente el usuario.</string>
+    <string name="infoAlertDialog_modificado_tipoVivienda">Se ha modificado correctamente el tipo de vivienda.</string>
+    <string name="infoAlertDialog_modificado_tipoSituacion">Se ha modificado correctamente el tipo de situación.</string>
+    <string name="infoAlertDialog_modificado_persona">Se ha modificado correctamente la persona.</string>
+    <string name="infoAlertDialog_modificado_historicoTipoSituacion">Se ha modificado correctamente el hístorico tipo de situación.</string>
+    <string name="infoAlertDialog_modificado_grupo">Se ha modificado correctamente el grupo.</string>
+    <string name="infoAlertDialog_modificado_dispositivoAuxiliar">Se ha modificado correctamente el dispositivo auxiliar en terminal.</string>
+    <string name="infoAlertDialog_modificado_direccion">Se ha modificado correctamente la dirección.</string>
+
+    <string name="infoAlertDialog_eliminado_usuario">Se ha eliminado correctamente el usuario.</string>
+    <string name="infoAlertDialog_eliminado_tipoVienda">Se ha eliminado correctamente el tipo de vivienda.</string>
+    <string name="infoAlertDialog_eliminado_tipoSituacion">Se ha eliminado correctamente el tipo de situación.</string>
+    <string name="infoAlertDialog_eliminado_persona">Se ha eliminado correctamente la persona.</string>
+    <string name="infoAlertDialog_eliminado_historicoTipoSituacion">Se ha eliminado correctamente el hístorico tipo de situación.</string>
+    <string name="infoAlertDialog_eliminado_grupo">Se ha eliminado correctamente el grupo.</string>
+    <string name="infoAlertDialog_eliminado_dispositivoAuxiliar">Se ha eliminado correctamente el dispositivo auxiliar en terminal.</string>
+    <string name="infoAlertDialog_eliminado_direccion">Se ha eliminado correctamente la dirección.</string>
+
+    <string name="alertDialog_error">Ha ocurrido un error. Código de error: </string>
+
+
+    <!-- Strings autorización -->
+    <string name="unauthorized">Unauthorized</string>
+    <string name="profesor">Profesor</string>
+
+    <!-- Nombre de las clases -->
+    <string name="usuario_class">Usuario</string>
+    <string name="titular_class">Titular</string>
+    <string name="tipoVivienda_class">TipoVivienda</string>
+    <string name="tipoSituacion_class">TipoSituacion</string>
+    <string name="tipoAlarma_class">TipoAlarma</string>
+    <string name="terminal_class">Terminal</string>
+    <string name="persona_class">Persona</string>
+    <string name="historicoTipoSituacion_class">HistoricoTipoSituacion</string>
+    <string name="grupo_class">Grupo</string>
+    <string name="dispositivoAuxiliar_class">DispositivoAuxiliar</string>
+    <string name="direccion_class">Direccion</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="id_dispositivoAuxiliar">ID del dispositivo auxiliar en terminal</string>
+    <string name="id_tipoAlarma">ID del tipo de alarma</string>
+
 
 </resources>

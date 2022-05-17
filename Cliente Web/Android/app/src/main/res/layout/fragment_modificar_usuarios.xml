@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.usuarios.ModificarUsuariosFragment">
+    tools:context=".ui.api.fragments.usuarios.ModificarUsuariosFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -174,7 +174,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_volver_tipoSituacion"
+                android:id="@+id/btn_volver_usuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

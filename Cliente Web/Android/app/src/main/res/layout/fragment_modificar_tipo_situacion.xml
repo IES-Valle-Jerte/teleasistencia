@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".ui.fragments.api.tipo_situacion.ModificarTipoSituacionFragment">
+    tools:context=".ui.api.fragments.tipo_situacion.ModificarTipoSituacionFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
