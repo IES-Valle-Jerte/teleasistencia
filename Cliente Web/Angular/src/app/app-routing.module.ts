@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ListaUsersComponent} from './componentes/user/lista-users/lista-users.component';
+import {ListaUsersComponent} from "./componentes/user/lista-users/lista-users.component";
 import {ListaUsersResolveService} from './servicios/lista-users-resolve.service';
-import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
+import {ModificarUserComponent} from "./componentes/user/modificar-user/modificar-user.component";
 import {DetallesUserResolveService} from './servicios/detalles-user-resolve.service';
 import {HomeComponent} from './componentes/home/home.component';
-import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
+import {CrearUserComponent} from "./componentes/user/crear-user/crear-user.component";
 import {ListaClasificacionesAlarmasComponent} from './componentes/clasificacion-alarma/lista-clasificaciones-alarmas/lista-clasificaciones-alarmas.component';
 import {ModificarClasificacionAlarmaComponent} from './componentes/clasificacion-alarma/modificar-clasificacion-alarma/modificar-clasificacion-alarma.component';
 import {ListaClasificacionesAlarmasResolveService} from './servicios/lista-clasificaciones-alarmas-resolve.service';
