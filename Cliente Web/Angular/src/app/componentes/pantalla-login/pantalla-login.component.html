@@ -7,7 +7,7 @@
             <div class="formularioLeft text-center">
 
               <h1>Iniciar sesión</h1>
-              <img class="mb-4" src="../../../assets/login-user.png" alt="Logo usuario" width="120"
+              <img class="mb-4" src="../../../../assets/login-user.png" alt="Logo usuario" width="120"
                    height="120">
               <div class="form-group position-relative mb-4">
                 <input type="text" class="form-control border-0 rounded-0 shadow-none" name="username"
@@ -20,9 +20,6 @@
                    class="alert alert-secondary col-md-12 col-lg-12 col-sm-12" role="alert">
                 <div *ngIf="username.errors?.required">
                   El nombre de usuario es obligatorio
-                </div>
-                <div *ngIf="username.errors?.minlength">
-                  El nombre de usuario debe tener al menos 4 caracteres
                 </div>
                 <div *ngIf="username.errors?.pattern">
                   Introduzca un nombre de usuario válido
@@ -47,8 +44,8 @@
                   La contraseña debe tener entre 8 y 16 caracteres
                 </div>
               </div>
-              <button type="button" class="btn btn-success btn-block shadow border-0 py-2 text-uppercase"
-                      [disabled]="!formLogin.form.valid" (click)="hacerLogin()">
+              <button type="submit" class="btn btn-success btn-block shadow border-0 py-2 text-uppercase pointer"
+                      [disabled]="!formLogin.form.valid" (click)="hacerLogin()" >
                 Login
               </button>
             </div>
@@ -63,7 +60,6 @@
           </div>
         </div>
       </div>
-
     </form>
   </div>
 </div>
