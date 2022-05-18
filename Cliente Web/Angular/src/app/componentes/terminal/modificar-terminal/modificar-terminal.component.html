@@ -24,7 +24,7 @@
       <div class="form-group mb-3">
         <label for="modo_acceso_vivienda" class="form-label">Modo de acceso a la vivienda</label>
         <input type="text" name="modo_acceso_vivienda" id="modo_acceso_vivienda" class="form-control"
-               required maxlength="500" [(ngModel)]="terminal.modo_acceso_vivienda" #modo_acceso_vivienda="ngModel">
+                maxlength="500" [(ngModel)]="terminal.modo_acceso_vivienda" #modo_acceso_vivienda="ngModel">
         <div *ngIf="modo_acceso_vivienda.invalid && (modo_acceso_vivienda.dirty || modo_acceso_vivienda.touched)"
              class="alert alert-secondary" role="alert">
           <div *ngIf="modo_acceso_vivienda.errors?.required">
@@ -36,7 +36,7 @@
       <div class="form-group mb-3">
         <label for="barreras_arquitectonicas" class="form-label">Barreras Arquitectonicas</label>
         <input type="text" name="barreras_arquitectonicas" id="barreras_arquitectonicas" class="form-control"
-              required  maxlength="1000" [(ngModel)]="terminal.barreras_arquitectonicas">
+               maxlength="1000" [(ngModel)]="terminal.barreras_arquitectonicas">
       </div>
       <div class="form-group mb-3">
         <label for="titular" class="form-label">Titular</label>

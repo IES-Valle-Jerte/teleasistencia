@@ -11,11 +11,11 @@
     <form #modificarCentroSanitarioAlarmaForm="ngForm">
       <div class="form-group mb-3">
         <div class="form-group mb-3">
-          <label for="alarmas" class="form-label">Alarma</label>
-          <select class="form-select" id="alarmas" name="alarmas"
+          <label for="alarmas" class="form-label">Alarma (ID - Estado)</label>
+          <select class="form-select" id="alarmas" name="alarmas" disabled
                   [(ngModel)]="centroSanitarioAlarma.id_alarma" required>
             <option class="relacion_alarma_option" *ngFor="let alarma of alarmas; let i = index"
-                    [value]="alarma.id">{{ centroSanitarioAlarma.id_alarma.id === alarma.id? optionSelectedAlarma(i):"" }}{{ alarma.id }}</option>
+                    [value]="alarma.id">{{ centroSanitarioAlarma.id_alarma.id === alarma.id? optionSelectedAlarma(i):"" }}{{ alarma.id }} - {{alarma.estado_alarma}}</option>
           </select>
         </div>
 
@@ -28,6 +28,36 @@
           </select>
         </div>
       </div>
+      <div class="form-group mb-3">
+        <label for="persona" class="form-label">Persona</label>
+        <input type="text" name="persona" id="persona" class="form-control"
+               required maxlength="200" [(ngModel)]="centroSanitarioAlarma.persona" #persona="ngModel">
+        <div *ngIf="persona.invalid && (persona.dirty || persona.touched)" class="alert alert-secondary"
+             role="alert">
+          <div *ngIf="persona.errors?.required">
+            La Persona es obligatoria
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="resumen" class="form-label">Acuerdo alcanzado</label>
+        <textarea [(ngModel)]="centroSanitarioAlarma.acuerdo_alcanzado" name="resumen" id="resumen" class="form-control" required></textarea>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="fecha_registro" class="form-label">Fecha de registro</label>
+        <input type="date" name="fecha_registro" id="fecha_registro" class="form-control"
+               required max="{{ anno_actual }}-{{ mes_actual }}-{{ dia_actual }}"
+               [(ngModel)]="centroSanitarioAlarma.fecha_registro" #fecha_registro="ngModel">
+        <div *ngIf="fecha_registro.invalid && (fecha_registro.dirty || fecha_registro.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="fecha_registro.errors?.required">
+            La fecha de registro es obligatoria
+          </div>
+        </div>
+      </div>
+
 
       <button type="submit" class="btn btn-outline-success m-1" (click)="modificarCentroSanitarioAlarma()"
               [disabled]="!modificarCentroSanitarioAlarmaForm.form.valid">

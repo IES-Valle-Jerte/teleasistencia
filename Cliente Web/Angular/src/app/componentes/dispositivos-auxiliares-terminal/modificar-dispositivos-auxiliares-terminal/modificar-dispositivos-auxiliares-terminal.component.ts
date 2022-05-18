@@ -44,6 +44,7 @@ export class ModificarDispositivosAuxiliaresTerminalComponent implements OnInit 
 
         console.log('Dispositivo Auxiliar Terminal ' + e.id + ' modificado');
         console.log(this.dispositivoAuxiliarTerminal)
+        this.router.navigate(['/dispositivos_auxiliares_terminal'])
       },
       error => {
         console.log(error);

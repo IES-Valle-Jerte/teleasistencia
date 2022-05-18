@@ -18,6 +18,10 @@ export class ModificarPersonaContactoAlarmaComponent implements OnInit {
   public idPersonaContactoAlarma: number;
   public alarmas: Alarma[];
   public personas_contacto: Persona[];
+  public fecha_actual = new Date();
+  public anno_actual = this.fecha_actual.getFullYear();
+  public mes_actual = this.fecha_actual.getMonth() + 1;
+  public dia_actual = this.fecha_actual.getDate();
 
   constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private cargarPersonaContactoAlarma: CargaPersonaContactoAlarmaService) { }
 
@@ -43,6 +47,7 @@ export class ModificarPersonaContactoAlarmaComponent implements OnInit {
 
         console.log('Persona de contacto en alarma ' + e.id + ' modificada');
         console.log(this.personaContactoAlarma)
+        this.router.navigate(['/persona_contacto_alarma'])
       },
       error => {
         console.log(error);

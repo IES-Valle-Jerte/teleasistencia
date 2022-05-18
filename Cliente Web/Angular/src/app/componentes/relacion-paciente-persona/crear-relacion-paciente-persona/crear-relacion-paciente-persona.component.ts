@@ -33,6 +33,7 @@ export class CrearRelacionPacientePersonaComponent implements OnInit {
       e => {
         console.log('Relacion creada');
         console.log(this.relacionPacientePersona)
+        this.router.navigate(['/relacion_paciente_persona'])
       },
       error => {
         console.log(error);

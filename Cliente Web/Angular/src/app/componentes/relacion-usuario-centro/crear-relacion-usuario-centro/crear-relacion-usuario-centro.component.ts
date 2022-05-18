@@ -31,6 +31,7 @@ export class CrearRelacionUsuarioCentroComponent implements OnInit {
       e => {
         console.log('Relacion creada');
         console.log(this.relacionUsuarioCentro)
+        this.router.navigate(['/relaciones_usuario_centro'])
       },
       error => {
         console.log(error);

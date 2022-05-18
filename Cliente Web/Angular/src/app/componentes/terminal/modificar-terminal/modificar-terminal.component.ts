@@ -38,6 +38,7 @@ export class ModificarTerminalComponent implements OnInit {
       e => {
         console.log('Terminal ' +e.id + ' modificado');
         console.log(this.terminal)
+        this.router.navigate(['/terminales'])
       },
       error => {
              console.log(error)

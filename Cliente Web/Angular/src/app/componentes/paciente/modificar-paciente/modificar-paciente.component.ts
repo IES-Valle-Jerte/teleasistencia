@@ -41,6 +41,7 @@ export class ModificarPacienteComponent implements OnInit {
       e => {
         console.log('Paciente ' + e.id + ' modificado');
         console.log(this.paciente)
+        this.router.navigate(['/pacientes'])
       },
         error => {
             console.log(error)

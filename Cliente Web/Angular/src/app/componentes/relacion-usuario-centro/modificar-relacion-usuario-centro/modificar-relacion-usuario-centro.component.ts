@@ -45,6 +45,7 @@ export class ModificarRelacionUsuarioCentroComponent implements OnInit {
 
         console.log('Relacion usuario centro ' + e.id + ' modificada');
         console.log(this.relacionUsuarioCentro)
+        this.router.navigate(['/relaciones_usuario_centro'])
       },
       error => {
         console.log(error);

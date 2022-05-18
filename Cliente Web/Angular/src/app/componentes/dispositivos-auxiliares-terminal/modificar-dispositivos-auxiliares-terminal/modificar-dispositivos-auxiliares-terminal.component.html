@@ -12,7 +12,7 @@
       <div class="form-group mb-3">
         <div class="form-group mb-3">
           <label for="terminal" class="form-label">Terminal</label>
-          <select class="form-select" id="terminal" name="terminal"
+          <select class="form-select" id="terminal" name="terminal" disabled
                   [(ngModel)]="dispositivoAuxiliarTerminal.id_terminal" required>
             <option class="relacion_persona_contacto_option" *ngFor="let terminal of terminales; let i = index"
                     [value]="terminal.id">{{ dispositivoAuxiliarTerminal.id_terminal.id === terminal.id? optionSelectedTerminal(i):"" }}{{ terminal.numero_terminal }}</option>

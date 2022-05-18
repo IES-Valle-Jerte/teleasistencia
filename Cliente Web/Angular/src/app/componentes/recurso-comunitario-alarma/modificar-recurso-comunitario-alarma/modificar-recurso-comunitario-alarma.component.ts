@@ -18,6 +18,10 @@ export class ModificarRecursoComunitarioAlarmaComponent implements OnInit {
   public idRecursoComunitarioAlarma: number;
   public alarmas: Alarma[];
   public recursosComunitarios: RecursoComunitario[];
+  public fecha_actual = new Date();
+  public anno_actual = this.fecha_actual.getFullYear();
+  public mes_actual = this.fecha_actual.getMonth() + 1;
+  public dia_actual = this.fecha_actual.getDate();
 
 
   constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private cargarRecursoComunitarioAlarma: CargaRecursosComunitariosAlarmaService) { }
@@ -43,6 +47,7 @@ export class ModificarRecursoComunitarioAlarmaComponent implements OnInit {
       e => {
         console.log('Recurso comunitario en alarma ' + e.id + ' modificada');
         console.log(this.recursoComunitarioAlarma)
+        this.router.navigate(['/recursos_comunitarios_alarma'])
       },
       error => {
         console.log(error);

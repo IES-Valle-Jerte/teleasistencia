@@ -12,7 +12,7 @@
       <div class="form-group mb-3">
         <div class="form-group mb-3">
           <label for="relacion_terminal" class="form-label">Nombre</label>
-          <select class="form-select" id="relacion_terminal" name="relacion_terminal"
+          <select class="form-select" id="relacion_terminal" name="relacion_terminal" disabled
                   [(ngModel)]="relacion_terminal_recursos_comunitarios.id_terminal" required>
             <option class="relacion_terminal_option" *ngFor="let relacion_terminal of relaciones_terminales; let i = index"
                     [value]="relacion_terminal.id">{{ relacion_terminal_recursos_comunitarios.id_terminal.id === relacion_terminal.id? optionSelected1(i):"" }}{{ relacion_terminal.numero_terminal }}</option>

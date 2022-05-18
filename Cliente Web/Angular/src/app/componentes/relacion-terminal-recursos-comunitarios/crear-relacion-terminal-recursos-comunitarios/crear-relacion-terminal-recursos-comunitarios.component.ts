@@ -31,6 +31,7 @@ export class CrearRelacionTerminalRecursosComunitariosComponent implements OnIni
       e => {
         console.log('Relacion creada');
         console.log(this.relacion_terminal_recursos_comunitarios)
+        this.router.navigate(['/relacion_terminal_recurso_comunitario'])
       },
       error => {
         console.log(error);

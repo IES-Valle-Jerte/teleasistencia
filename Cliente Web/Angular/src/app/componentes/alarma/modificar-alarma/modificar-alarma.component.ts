@@ -34,6 +34,7 @@ export class ModificarAlarmaComponent implements OnInit {
       e => {
         console.log('Alarma ' + e.id + ' modificada');
         console.log(this.alarma)
+        this.router.navigate(['/alarmas'])
       },
       error => {
              console.log(error)

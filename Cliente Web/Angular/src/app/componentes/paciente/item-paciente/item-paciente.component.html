@@ -2,6 +2,7 @@
 <td> {{ paciente.numero_expediente}}</td>
 <td> {{ paciente.id_terminal.numero_terminal}}</td>
 <td> {{ paciente.id_tipo_modalidad_paciente.nombre}}</td>
+<!-- TODO implementar resto de contenido del get -->
 <td>
   <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/pacientes/modificar', paciente.id]">
     Modificar datos

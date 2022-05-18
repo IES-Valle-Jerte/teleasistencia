@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
-        <li class="breadcrumb-item"><a [routerLink]="['/persona_contacto_alarma']">Persona de contacto en alarma</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/personas_contacto_alarma']">Persona de contacto en alarma</a></li>
         <li class="breadcrumb-item active" aria-current="page">Modificar persona de contacto en alarma {{idPersonaContactoAlarma}}</li>
       </ol>
     </nav>
@@ -15,7 +15,7 @@
           <select class="form-select" id="alarmas" name="alarmas"
                   [(ngModel)]="personaContactoAlarma.id_alarma" required>
             <option class="relacion_alarma_option" *ngFor="let alarma of alarmas; let i = index"
-                    [value]="alarma.id">{{ personaContactoAlarma.id_alarma.id === alarma.id? optionSelectedAlarma(i):"" }}{{ alarma.id }}</option>
+                    [value]="alarma.id">{{ personaContactoAlarma.id_alarma.id === alarma.id? optionSelectedAlarma(i):"" }}{{ alarma.id }} - {{alarma.estado_alarma}}</option>
           </select>
         </div>
 
@@ -28,12 +28,28 @@
           </select>
         </div>
       </div>
+      <div class="form-group mb-3">
+        <label for="resumen" class="form-label">Acuerdo alcanzado</label>
+        <textarea [(ngModel)]="personaContactoAlarma.acuerdo_alcanzado" name="resumen" id="resumen" class="form-control" required></textarea>
+      </div>
 
+      <div class="form-group mb-3">
+        <label for="fecha_registro" class="form-label">Fecha de registro</label>
+        <input type="date" name="fecha_registro" id="fecha_registro" class="form-control"
+               required max="{{ anno_actual }}-{{ mes_actual }}-{{ dia_actual }}"
+               [(ngModel)]="personaContactoAlarma.fecha_registro" #fecha_registro="ngModel">
+        <div *ngIf="fecha_registro.invalid && (fecha_registro.dirty || fecha_registro.touched)"
+             class="alert alert-secondary" role="alert">
+          <div *ngIf="fecha_registro.errors?.required">
+            La fecha de registro es obligatoria
+          </div>
+        </div>
+      </div>
       <button type="submit" class="btn btn-outline-success m-1" (click)="modificarPersonaContactoAlarma()"
               [disabled]="!modificarPersonaContactoAlarmaForm.form.valid">
         Guardar
       </button>
-      <button type="button" class="btn btn-outline-secondary m-1" [routerLink]="['/persona_contacto_alarma']">
+      <button type="button" class="btn btn-outline-secondary m-1" [routerLink]="['/personas_contacto_alarma']">
         Volver
       </button>
 

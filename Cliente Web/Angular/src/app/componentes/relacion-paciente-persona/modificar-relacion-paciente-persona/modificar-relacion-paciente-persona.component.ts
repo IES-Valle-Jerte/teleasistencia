@@ -42,6 +42,7 @@ export class ModificarRelacionPacientePersonaComponent implements OnInit {
       e => {
         console.log('Relacion ' + e.id + ' modificada');
         console.log(this.relacionPacientePersona)
+        this.router.navigate(['/relacion_paciente_persona'])
       },
       error => {
         console.log(error);

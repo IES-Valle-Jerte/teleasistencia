@@ -48,6 +48,7 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
 
         console.log('Relacion ' + e.id + ' modificada');
         console.log(this.relacion_terminal_recursos_comunitarios)
+        this.router.navigate(['/relacion_terminal_recurso_comunitario'])
       },
       error => {
         console.log(error);

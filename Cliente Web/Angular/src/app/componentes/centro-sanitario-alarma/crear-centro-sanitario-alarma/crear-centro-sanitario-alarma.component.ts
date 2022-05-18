@@ -17,6 +17,11 @@ export class CrearCentroSanitarioAlarmaComponent implements OnInit {
   public centroSanitarioAlarma: CentroSanitarioAlarma;
   public alarmas: Alarma[];
   public centrosSanitarios: CentroSanitario[];
+  public fecha_actual = new Date();
+  public anno_actual = this.fecha_actual.getFullYear();
+  public mes_actual = this.fecha_actual.getMonth() + 1;
+  public dia_actual = this.fecha_actual.getDate();
+
   constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private cargarCentroSanitarioAlarma: CargaCentroSanitarioAlarmaService) { }
 
   ngOnInit(): void {

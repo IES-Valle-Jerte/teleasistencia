@@ -18,6 +18,10 @@ export class ModificarCentroSanitarioAlarmaComponent implements OnInit {
   public idCentroSanitarioAlarma: number
   public alarmas: Alarma[];
   public centrosSanitarios: CentroSanitario[];
+  public fecha_actual = new Date();
+  public anno_actual = this.fecha_actual.getFullYear();
+  public mes_actual = this.fecha_actual.getMonth() + 1;
+  public dia_actual = this.fecha_actual.getDate();
 
   constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private cargarCentroSanitarioAlarma: CargaCentroSanitarioAlarmaService) { }
 
@@ -44,6 +48,7 @@ export class ModificarCentroSanitarioAlarmaComponent implements OnInit {
       e => {
         console.log('Centro sanitario en alarma ' + e.id + ' modificada');
         console.log(this.centroSanitarioAlarma)
+        this.router.navigate(['centro_sanitario_alarma'])
       },
       error => {
         console.log(error);

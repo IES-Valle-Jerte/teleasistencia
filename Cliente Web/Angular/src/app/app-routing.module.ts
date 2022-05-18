@@ -750,7 +750,7 @@ const routes: Routes = [
     resolve: {
       dispositivo_auxiliar_terminal: ListaDispositivosAuxiliaresTerminalResolveService,
       terminales: ListaTerminalesResolveService,
-      tipo_alarmas: ListaAlarmasResolveService
+      tipo_alarmas: ListaTiposAlarmasResolveService
     }
   },
   {
