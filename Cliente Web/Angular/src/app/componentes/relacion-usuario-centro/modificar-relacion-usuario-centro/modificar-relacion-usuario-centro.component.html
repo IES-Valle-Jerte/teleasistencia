@@ -1,1 +1,51 @@
-<p>modificar-relacion-usuario-centro works!</p>
+<main class="text-center row p-0 m-0 justify-content-center">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/inicio']">Inicio</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/relaciones_usuario_centro']">Relaciones usuario centro</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Modificar relacion usuario centro {{idRelacionUsuarioCentro}}</li>
+      </ol>
+    </nav>
+    <h1 class="component-title" >Modificar relacion usuario centro  {{idRelacionUsuarioCentro}}</h1>
+    <form #modificarRelacionUsuarioCentroForm="ngForm">
+      <div class="form-group mb-3">
+        <div class="form-group mb-3">
+          <label for="pacientes" class="form-label">Pacientes</label>
+          <select class="form-select" id="pacientes" name="pacientes"
+                  [(ngModel)]="relacionUsuarioCentro.id_paciente" required>
+            <option class="relacion_alarma_option" *ngFor="let paciente of pacientes; let i = index"
+                    [value]="paciente.id">{{ relacionUsuarioCentro.id_paciente.id === paciente.id? optionSelectedPersonaPaciente(i):"" }}{{ paciente.id_persona.nombre }}</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="centros_sanitario" class="form-label">Centro sanitario</label>
+          <select class="form-select" id="centros_sanitario" name="centros_sanitario"
+                  [(ngModel)]="relacionUsuarioCentro.id_centro_sanitario" required>
+            <option class="relacion_persona_contacto_option" *ngFor="let centroSanitario of centrosSanitario; let i = index"
+                    [value]="centroSanitario.id">{{ relacionUsuarioCentro.id_centro_sanitario.id === centroSanitario.id? optionSelectedCentroSanitario(i):"" }}{{ centroSanitario.nombre }}</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-outline-success m-1" (click)="modificarRelacionUsuarioCentro()"
+              [disabled]="!modificarRelacionUsuarioCentroForm.form.valid">
+        Guardar
+      </button>
+      <button type="button" class="btn btn-outline-secondary m-1" [routerLink]="['/persona_contacto_alarma']">
+        Volver
+      </button>
+
+    </form>
+  </div>
+</main>
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,4 @@
 import {IRelacionUsuarioCentro} from "../interfaces/i-relacion-usuario-centro";
-import {IPaciente} from "../interfaces/i-paciente";
-import {ICentroSanitario} from "../interfaces/i-centro-sanitario";
 
 export class RelacionUsuarioCentro implements IRelacionUsuarioCentro{
   id: number;
@@ -8,6 +6,6 @@ export class RelacionUsuarioCentro implements IRelacionUsuarioCentro{
   distancia: number;
   tiempo: number;
   observaciones: string;
-  id_paciente: IPaciente;
-  id_centro_sanitario: ICentroSanitario;
+  id_paciente: any;
+  id_centro_sanitario: any;
 }

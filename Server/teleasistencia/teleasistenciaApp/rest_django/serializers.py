@@ -187,5 +187,5 @@ class Relacion_Usuario_Centro_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Relacion_Usuario_Centro
         fields = '__all__'
-        depth = 1
+        depth = 2
 

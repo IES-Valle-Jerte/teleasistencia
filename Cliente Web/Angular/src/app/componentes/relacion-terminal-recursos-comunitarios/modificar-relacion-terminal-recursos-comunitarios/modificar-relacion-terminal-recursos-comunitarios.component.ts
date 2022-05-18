@@ -41,6 +41,7 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
   optionSelected2(i: number): void {
     document.getElementsByClassName('relacion_recurso_option')[i].setAttribute('selected', '');
   }
+
   modificarRelacion(): void {
    this.cargaRelacionTerminalRecursosComunitarios.modificarRelacionRecurso(this.relacion_terminal_recursos_comunitarios).subscribe(
       e => {

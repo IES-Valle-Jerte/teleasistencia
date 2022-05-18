@@ -154,6 +154,42 @@ import {
 import {
   ModificarCentroSanitarioAlarmaResolveService
 } from "./servicios/centro-sanitario-alarma/modificar-centro-sanitario-alarma-resolve.service";
+import {
+  ModificarRecursoComunitarioAlarmaComponent
+} from "./componentes/recurso-comunitario-alarma/modificar-recurso-comunitario-alarma/modificar-recurso-comunitario-alarma.component";
+import {
+  ModificarRecursosComunitariosAlarmaResolveService
+} from "./servicios/recursos-comunitarios-alarma/modificar-recursos-comunitarios-alarma-resolve.service";
+import {
+  CrearRecursoComunitarioAlarmaComponent
+} from "./componentes/recurso-comunitario-alarma/crear-recurso-comunitario-alarma/crear-recurso-comunitario-alarma.component";
+import {
+  ModificarPersonaContactoAlarmaComponent
+} from "./componentes/persona-contacto-alarma/modificar-persona-contacto-alarma/modificar-persona-contacto-alarma.component";
+import {
+  ModificarPersonaContactoAlarmaResolveService
+} from "./servicios/persona-contacto-alarma/modificar-persona-contacto-alarma-resolve.service";
+import {
+  CrearPersonaContactoAlarmaComponent
+} from "./componentes/persona-contacto-alarma/crear-persona-contacto-alarma/crear-persona-contacto-alarma.component";
+import {
+  ModificarDispositivosAuxiliaresTerminalComponent
+} from "./componentes/dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal.component";
+import {
+  CrearDispositivosAuxiliaresTerminalComponent
+} from "./componentes/dispositivos-auxiliares-terminal/crear-dispositivos-auxiliares-terminal/crear-dispositivos-auxiliares-terminal.component";
+import {
+  ModificarDispositivosAuxiliaresTerminalResolveService
+} from "./servicios/dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal-resolve.service";
+import {
+  ModificarRelacionUsuarioCentroComponent
+} from "./componentes/relacion-usuario-centro/modificar-relacion-usuario-centro/modificar-relacion-usuario-centro.component";
+import {
+  ModificarRelacionUsuarioCentroResolveService
+} from "./servicios/relacion-usuario-centro/modificar-relacion-usuario-centro-resolve.service";
+import {
+  CrearRelacionUsuarioCentroComponent
+} from "./componentes/relacion-usuario-centro/crear-relacion-usuario-centro/crear-relacion-usuario-centro.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -640,7 +676,27 @@ const routes: Routes = [
       recursos_comunitarios_alarma: ListaRecursosComunitariosAlarmaResolveService
     }
   },
-  /**  aquí modificar crear y borrar recurso comunitario en alarma**/
+  {
+    path: 'recursos_comunitarios_alarma/modificar/:id',
+    component: ModificarRecursoComunitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      recursos_comunitarios_alarma: ModificarRecursosComunitariosAlarmaResolveService,
+      alarmas: ListaAlarmasResolveService,
+      recursos_comunitarios: ListaRecursosComunitariosResolveService
+    }
+  },
+  {
+    path: 'recursos_comunitarios_alarma/nuevo',
+    component: CrearRecursoComunitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      recursos_comunitarios_alarma: ListaRecursosComunitariosAlarmaResolveService,
+      alarmas: ListaAlarmasResolveService,
+      recursos_comunitarios: ListaRecursosComunitariosResolveService
+
+    }
+  },
   {
     path: 'personas_contacto_alarma',
     component: ListaPersonaContactoAlarmaComponent,
@@ -649,7 +705,26 @@ const routes: Routes = [
       personas_contacto_alarma: ListaPersonaContactoAlarmaResolveService
     }
   },
-  /**  aquí modificar crear y borrar persona de contacto en alarma**/
+  {
+    path: 'personas_contacto_alarma/modificar/:id',
+    component: ModificarPersonaContactoAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      persona_contacto_alarma: ModificarPersonaContactoAlarmaResolveService,
+      alarmas: ListaAlarmasResolveService,
+      personas_contactos: ListaPersonasResolveService,
+    }
+  },
+  {
+    path: 'personas_contacto_alarma/nueva',
+    component: CrearPersonaContactoAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      persona_contacto_alarma: ListaPersonaContactoAlarmaResolveService,
+      alarmas: ListaAlarmasResolveService,
+      personas_contactos: ListaPersonasResolveService,
+    }
+  },
   {
     path: 'dispositivos_auxiliares_terminal',
     component: ListaDispositivosAuxiliaresTerminalComponent,
@@ -658,13 +733,53 @@ const routes: Routes = [
       dispositivos_auxiliares_terminal: ListaDispositivosAuxiliaresTerminalResolveService
     }
   },
-  /**  aquí modificar crear y borrar dispositivos auxiliares terminal**/
+  {
+    path: 'dispositivos_auxiliares_terminal/modificar/:id',
+    component: ModificarDispositivosAuxiliaresTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      dispositivo_auxiliar_terminal: ModificarDispositivosAuxiliaresTerminalResolveService,
+      terminales: ListaTerminalesResolveService,
+      tipo_alarmas: ListaTiposAlarmasResolveService
+    }
+  },
+  {
+    path: 'dispositivos_auxiliares_terminal/nuevo',
+    component: CrearDispositivosAuxiliaresTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      dispositivo_auxiliar_terminal: ListaDispositivosAuxiliaresTerminalResolveService,
+      terminales: ListaTerminalesResolveService,
+      tipo_alarmas: ListaAlarmasResolveService
+    }
+  },
   {
     path: 'relaciones_usuario_centro',
     component: ListaRelacionUsuarioCentroComponent,
     canActivate: [LoginGuard],
     resolve: {
       relaciones_usuario_centro: ListaRelacionUsuarioCentroResolveService
+    }
+  },
+  {
+    path: 'relaciones_usuario_centro/modificar/:id',
+    component: ModificarRelacionUsuarioCentroComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_usuario_centro: ModificarRelacionUsuarioCentroResolveService,
+      pacientes: ListaPacientesResolveService,
+      centros_sanitarios: ListaCentrosSanitariosResolveService
+
+    }
+  },
+  {
+    path: 'relaciones_usuario_centro/nueva',
+    component: CrearRelacionUsuarioCentroComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_usuario_centro: ListaRelacionUsuarioCentroResolveService,
+      pacientes: ListaPacientesResolveService,
+      centros_sanitarios: ListaCentrosSanitariosResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},
