@@ -190,6 +190,9 @@ import {
 import {
   CrearRelacionUsuarioCentroComponent
 } from "./componentes/relacion-usuario-centro/crear-relacion-usuario-centro/crear-relacion-usuario-centro.component";
+import {
+  ModificarTeleoperadorAlarmaComponent
+} from "./componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -536,6 +539,14 @@ const routes: Routes = [
   {
     path: 'alarmas/modificar/:id',
     component: ModificarAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarma: ModificarAlarmaResolveService,
+    }
+  },
+  {
+    path: 'alarmas/modificar_teleoperador/:id',
+    component: ModificarTeleoperadorAlarmaComponent,
     canActivate: [LoginGuard],
     resolve: {
       alarma: ModificarAlarmaResolveService,

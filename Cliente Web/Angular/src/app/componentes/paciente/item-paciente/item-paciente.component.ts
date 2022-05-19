@@ -14,5 +14,10 @@ export class ItemPacienteComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  comprobarUcr(): string {
+    if (this.paciente.tiene_ucr == true) {
+      return 'Sí'
+    }
+    return  'No'
+      }
 }

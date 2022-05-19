@@ -12,5 +12,11 @@ export class ItemRelacionPacientePersonaComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  comprobarLlaves(): string {
+    if (this.relacionPacientePersona.tiene_llaves_vivienda == true) {
+      return 'Sí'
+    }
+    return  'No'
+  }
 
 }

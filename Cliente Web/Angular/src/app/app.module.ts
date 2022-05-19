@@ -123,6 +123,7 @@ import { ModificarRelacionUsuarioCentroComponent } from './componentes/relacion-
 import { CrearRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/crear-relacion-usuario-centro/crear-relacion-usuario-centro.component';
 import { ItemRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/item-relacion-usuario-centro/item-relacion-usuario-centro.component';
 import { ListaRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/lista-relacion-usuario-centro/lista-relacion-usuario-centro.component';
+import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component';
 
 @NgModule({
   declarations: [
@@ -225,6 +226,7 @@ import { ListaRelacionUsuarioCentroComponent } from './componentes/relacion-usua
     CrearRelacionUsuarioCentroComponent,
     ItemRelacionUsuarioCentroComponent,
     ListaRelacionUsuarioCentroComponent,
+    ModificarTeleoperadorAlarmaComponent,
   ],
   imports: [
     BrowserModule,
