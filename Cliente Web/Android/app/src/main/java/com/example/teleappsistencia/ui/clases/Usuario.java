@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.objects;
+package com.example.teleappsistencia.ui.clases;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -33,6 +33,8 @@ public class Usuario implements Serializable {
     private Date dateJoined;
     @SerializedName("groups")
     private Object groups;
+    @SerializedName("imagen")
+    private Imagen imagen;
 
 
     /**
@@ -116,6 +118,14 @@ public class Usuario implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Imagen getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Imagen imagen) {
+        this.imagen = imagen;
     }
 
     @Override

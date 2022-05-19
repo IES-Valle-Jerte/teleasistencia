@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.Direccion;
-import com.example.teleappsistencia.ui.objects.Persona;
+import com.example.teleappsistencia.ui.clases.Direccion;
+import com.example.teleappsistencia.ui.clases.Persona;
 import com.example.teleappsistencia.ui.utils.Utils;
 
 /**

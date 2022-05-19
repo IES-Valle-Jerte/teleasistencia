@@ -18,7 +18,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.TipoVivienda;
+import com.example.teleappsistencia.ui.clases.TipoVivienda;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -44,6 +44,8 @@
     <string name="id_historicoTipoSituacion">ID del histórico tipo de situación</string>
     <string name="id_terminal">ID del terminal</string>
     <string name="id_tipoSituacion">ID del tipo de situación</string>
+    <string name="id_dispositivoAuxiliar">ID del dispositivo auxiliar en terminal</string>
+    <string name="id_tipoAlarma">ID del tipo de alarma</string>
     <string name="numeroTerminal">Número del terminal</string>
 
 
@@ -202,12 +204,4 @@
     <string name="grupo_class">Grupo</string>
     <string name="dispositivoAuxiliar_class">DispositivoAuxiliar</string>
     <string name="direccion_class">Direccion</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="id_dispositivoAuxiliar">ID del dispositivo auxiliar en terminal</string>
-    <string name="id_tipoAlarma">ID del tipo de alarma</string>
-
-
 </resources>

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.Grupo;
+import com.example.teleappsistencia.ui.clases.Grupo;
 import com.example.teleappsistencia.ui.utils.Utils;
 
 /**

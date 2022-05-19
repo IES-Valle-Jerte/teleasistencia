@@ -1,17 +1,12 @@
 package com.example.teleappsistencia.ui.utils;
 
-import android.content.Context;
-
-import com.example.teleappsistencia.MainActivity;
-import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.Direccion;
-import com.example.teleappsistencia.ui.objects.DispositivoAuxiliar;
-import com.example.teleappsistencia.ui.objects.Grupo;
-import com.example.teleappsistencia.ui.objects.Terminal;
-import com.example.teleappsistencia.ui.objects.TipoAlarma;
-import com.example.teleappsistencia.ui.objects.TipoSituacion;
-import com.example.teleappsistencia.ui.objects.Token;
-import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.clases.Direccion;
+import com.example.teleappsistencia.ui.clases.Grupo;
+import com.example.teleappsistencia.ui.clases.Terminal;
+import com.example.teleappsistencia.ui.clases.TipoAlarma;
+import com.example.teleappsistencia.ui.clases.TipoSituacion;
+import com.example.teleappsistencia.ui.clases.Token;
+import com.example.teleappsistencia.ui.clases.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

@@ -9,15 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.teleappsistencia.ui.api.APIService;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.TipoVivienda;
+import com.example.teleappsistencia.ui.clases.TipoVivienda;
 
 import java.util.List;
 

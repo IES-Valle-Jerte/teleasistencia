@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.objects;
+package com.example.teleappsistencia.ui.clases;
 
 import com.google.gson.annotations.SerializedName;
 

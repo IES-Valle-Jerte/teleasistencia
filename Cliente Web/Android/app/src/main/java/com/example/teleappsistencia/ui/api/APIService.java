@@ -1,16 +1,16 @@
 package com.example.teleappsistencia.ui.api;
 
-import com.example.teleappsistencia.ui.objects.Direccion;
-import com.example.teleappsistencia.ui.objects.DispositivoAuxiliar;
-import com.example.teleappsistencia.ui.objects.Grupo;
-import com.example.teleappsistencia.ui.objects.HistoricoTipoSituacion;
-import com.example.teleappsistencia.ui.objects.Persona;
-import com.example.teleappsistencia.ui.objects.Terminal;
-import com.example.teleappsistencia.ui.objects.TipoAlarma;
-import com.example.teleappsistencia.ui.objects.TipoSituacion;
-import com.example.teleappsistencia.ui.objects.TipoVivienda;
-import com.example.teleappsistencia.ui.objects.Token;
-import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.clases.Direccion;
+import com.example.teleappsistencia.ui.clases.DispositivoAuxiliar;
+import com.example.teleappsistencia.ui.clases.Grupo;
+import com.example.teleappsistencia.ui.clases.HistoricoTipoSituacion;
+import com.example.teleappsistencia.ui.clases.Persona;
+import com.example.teleappsistencia.ui.clases.Terminal;
+import com.example.teleappsistencia.ui.clases.TipoAlarma;
+import com.example.teleappsistencia.ui.clases.TipoSituacion;
+import com.example.teleappsistencia.ui.clases.TipoVivienda;
+import com.example.teleappsistencia.ui.clases.Token;
+import com.example.teleappsistencia.ui.clases.Usuario;
 
 import java.util.List;
 
@@ -30,12 +30,15 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
-    // Peticiones del Token
+    // Peticiones del Token y Usuario Logueado
 
     @Headers("Accept: application/json")
     @FormUrlEncoded
     @POST("api/token/")
     public Call<Token> getToken(@Field("username") String username, @Field("password") String password);
+
+    @GET("api-rest/profile")
+    public Call<List<Usuario>> getUsuarioLogueado(@Header("Authorization") String token);
 
 
     // Peticiones de Direccion
@@ -52,6 +55,9 @@ public interface APIService {
     @PUT("api-rest/direccion/{id}")
     public Call<Object> modifyDireccion(@Path("id") int id, @Body Direccion direccion, @Header("Authorization") String token);
 
+    @DELETE("api-rest/direccion/{id}")
+    Call<Response<String>> deleteDireccion(@Path("id") int id, @Header("Authorization") String token);
+
 
     // Peticiones de Dispositivos Auxiliares
 
@@ -67,6 +73,8 @@ public interface APIService {
     @PUT("api-rest/dispositivos_auxiliares_en_terminal/{id}")
     public Call<Object> modifyDispositivoAuxiliar(@Path("id") int id, @Body DispositivoAuxiliar dispositivoAuxiliar, @Header("Authorization") String token);
 
+    @DELETE("api-rest/dispositivos_auxiliares_en_terminal/{id}")
+    Call<Response<String>> deleteDispositivosAuxiliar(@Path("id") int id, @Header("Authorization") String token);
 
     // Peticiones de Grupo
 
@@ -79,8 +87,11 @@ public interface APIService {
     @POST("api-rest/groups")
     public Call<Object> addGrupo(@Body Grupo grupo, @Header("Authorization") String token);
 
-    @PUT("api-rest/groups/{id}")
-    public Call<Object> modifyGrupo(@Path("id") int id, @Body Grupo grupo, @Header("Authorization") String token);
+    @PUT("api-rest/groups/{pk}")
+    public Call<Object> modifyGrupo(@Path("pk") int pk, @Body Grupo grupo, @Header("Authorization") String token);
+
+    @DELETE("api-rest/groups/{pk}")
+    Call<Response<String>> deleteGrupo(@Path("pk") int pk, @Header("Authorization") String token);
 
 
     // Peticiones de Historico Tipo Situacion
@@ -97,6 +108,9 @@ public interface APIService {
     @PUT("api-rest/historico_tipo_situacion/{id}")
     public Call<Object> modifyHistoricoTipoSituacion(@Path("id") int id, @Body HistoricoTipoSituacion historicoTipoSituacion, @Header("Authorization") String token);
 
+    @DELETE("api-rest/historico_tipo_situacion/{id}")
+    Call<Response<String>> deleteHistoricoTipoSituacion(@Path("id") int id, @Header("Authorization") String token);
+
 
     // Peticiones de Persona
 
@@ -111,6 +125,9 @@ public interface APIService {
 
     @PUT("api-rest/persona/{id}")
     public Call<Object> modifyPersona(@Path("id") int id, @Body Persona persona, @Header("Authorization") String token);
+
+    @DELETE("api-rest/persona/{id}")
+    Call<Response<String>> deletePersona(@Path("id") int id, @Header("Authorization") String token);
 
 
     // Peticiones de Tipo Situacion
@@ -127,6 +144,9 @@ public interface APIService {
     @PUT("api-rest/tipo_situacion/{id}")
     public Call<Object> modifyTipoSituacion(@Path("id") int id, @Body TipoSituacion tipoSituacion, @Header("Authorization") String token);
 
+    @DELETE("api-rest/tipo_situacion/{id}")
+    Call<Response<String>> deleteTipoSituacion(@Path("id") int id, @Header("Authorization") String token);
+
 
     // Peticiones de Tipo Vivienda
 
@@ -141,6 +161,9 @@ public interface APIService {
 
     @PUT("api-rest/tipo_vivienda/{id}")
     public Call<Object> modifyTipoVivienda(@Path("id") int id, @Body TipoVivienda tipoVivienda, @Header("Authorization") String token);
+
+    @DELETE("api-rest/tipo_vivienda/{id}")
+    Call<Response<String>> deleteTipoVivienda(@Path("id") int id, @Header("Authorization") String token);
 
 
     // Peticiones de Usuarios

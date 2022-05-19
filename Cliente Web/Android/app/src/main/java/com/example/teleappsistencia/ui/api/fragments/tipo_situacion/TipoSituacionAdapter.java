@@ -11,9 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.TipoSituacion;
+import com.example.teleappsistencia.ui.api.APIService;
+import com.example.teleappsistencia.ui.api.ClienteRetrofit;
+import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
+import com.example.teleappsistencia.ui.clases.TipoSituacion;
+import com.example.teleappsistencia.ui.utils.Utils;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TipoSituacionAdapter extends RecyclerView.Adapter<TipoSituacionAdapter.TipoSituacionViewHolder> {
 
@@ -62,8 +70,32 @@ public class TipoSituacionAdapter extends RecyclerView.Adapter<TipoSituacionAdap
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragmentConsultar).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrar:
+                    borrarTipoSituacion();
                     break;
             }
+        }
+
+        private void borrarTipoSituacion() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+            Call<Response<String>> call = apiService.deletePersona(tipoSituacion.getId(), "Bearer " + Utils.getToken().getAccess());
+            call.enqueue(new Callback<Response<String>>() {
+                @Override
+                public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
+                    if (response.isSuccessful()) {
+                        Response<String> respuesta = response.body();
+                        AlertDialogBuilder.crearInfoAlerDialog(context, context.getString(R.string.infoAlertDialog_eliminado_tipoSituacion));
+                    } else {
+                        AlertDialogBuilder.crearErrorAlerDialog(context, Integer.toString(response.code()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response<String>> call, Throwable t) {
+                    t.printStackTrace();
+                    System.out.println(t.getMessage());
+                }
+            });
         }
 
         public void setTipoSituacion(TipoSituacion tipoSituacion) {

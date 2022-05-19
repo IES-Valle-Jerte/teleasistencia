@@ -3,45 +3,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_usuarios"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_usuarios" />
-
-        <item
-            android:id="@+id/nav_persona"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_persona" />
-
-        <item
-            android:id="@+id/nav_direccion"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_direccion" />
-
-        <item
-            android:id="@+id/nav_grupos"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_grupos" />
-
-        <item
-            android:id="@+id/nav_dispositivos_auxiliares_terminal"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_dispositivos_auxiliares_terminal" />
-
-        <item
-            android:id="@+id/nav_tipo_vivienda"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_tipo_vivienda" />
-
-        <item
-            android:id="@+id/nav_tipo_situacion"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_tipo_situacion" />
-
-        <item
-            android:id="@+id/nav_historico_tipo_situacion"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_historico_tipo_situacion" />
-    </group>
+    <group android:checkableBehavior="single"/>
 </menu>

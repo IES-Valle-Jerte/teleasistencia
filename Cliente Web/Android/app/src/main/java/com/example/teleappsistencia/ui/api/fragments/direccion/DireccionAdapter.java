@@ -11,11 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.api.fragments.grupos.GruposAdapter;
-import com.example.teleappsistencia.ui.objects.Direccion;
-import com.example.teleappsistencia.ui.objects.Grupo;
+import com.example.teleappsistencia.ui.api.APIService;
+import com.example.teleappsistencia.ui.api.ClienteRetrofit;
+import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
+import com.example.teleappsistencia.ui.clases.Direccion;
+import com.example.teleappsistencia.ui.utils.Utils;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DireccionAdapter extends RecyclerView.Adapter<DireccionAdapter.DireccionViewHolder> {
 
@@ -71,11 +77,35 @@ public class DireccionAdapter extends RecyclerView.Adapter<DireccionAdapter.Dire
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragmentConsultar).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrar:
+                    borrarDireccion();
                     break;
             }
         }
 
-            public void setDireccion(Direccion direccion) {
+        private void borrarDireccion() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+                Call<Response<String>> call = apiService.deleteDireccion(direccion.getId(), "Bearer " + Utils.getToken().getAccess());
+            call.enqueue(new Callback<Response<String>>() {
+                @Override
+                public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
+                    if (response.isSuccessful()) {
+                        Response<String> respuesta = response.body();
+                        AlertDialogBuilder.crearInfoAlerDialog(context, context.getString(R.string.infoAlertDialog_eliminado_direccion));
+                    } else {
+                        AlertDialogBuilder.crearErrorAlerDialog(context, Integer.toString(response.code()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response<String>> call, Throwable t) {
+                    t.printStackTrace();
+                    System.out.println(t.getMessage());
+                }
+            });
+        }
+
+        public void setDireccion(Direccion direccion) {
             this.direccion = direccion;
         }
     }

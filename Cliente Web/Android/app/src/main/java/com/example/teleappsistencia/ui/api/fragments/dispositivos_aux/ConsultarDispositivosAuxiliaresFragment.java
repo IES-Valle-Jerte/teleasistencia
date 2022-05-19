@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.DispositivoAuxiliar;
-import com.example.teleappsistencia.ui.objects.Terminal;
-import com.example.teleappsistencia.ui.objects.TipoAlarma;
+import com.example.teleappsistencia.ui.clases.DispositivoAuxiliar;
+import com.example.teleappsistencia.ui.clases.Terminal;
+import com.example.teleappsistencia.ui.clases.TipoAlarma;
 import com.example.teleappsistencia.ui.utils.Utils;
 
 /**

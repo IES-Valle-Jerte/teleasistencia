@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.ui.api.APIService;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.Grupo;
-import com.example.teleappsistencia.ui.objects.Token;
-import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.clases.Grupo;
+import com.example.teleappsistencia.ui.clases.Token;
+import com.example.teleappsistencia.ui.clases.Usuario;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 
@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void peticionUsuarioLogueado() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Usuario>> call = apiService.getUserByUsername(this.editText_usuario.getText().toString(), "Bearer " + Utils.getToken().getAccess());
+        Call<List<Usuario>> call = apiService.getUsuarioLogueado("Bearer " + Utils.getToken().getAccess());
         call.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {

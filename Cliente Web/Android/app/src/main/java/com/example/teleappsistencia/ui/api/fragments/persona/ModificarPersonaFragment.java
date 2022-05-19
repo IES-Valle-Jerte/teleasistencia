@@ -21,12 +21,9 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.Direccion;
-import com.example.teleappsistencia.ui.objects.Persona;
+import com.example.teleappsistencia.ui.clases.Direccion;
+import com.example.teleappsistencia.ui.clases.Persona;
 import com.example.teleappsistencia.ui.dialogs.DatePickerFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,8 +46,11 @@ public class ModificarPersonaFragment extends Fragment {
     private EditText editText_fechaNacimiento;
     private EditText editText_telefonoFijo;
     private EditText editText_telefonoMovil;
+    private EditText editText_localidad;
+    private EditText editText_provincia;
+    private EditText editText_direccion;
+    private EditText editText_codigoPostal;
     private Spinner spinner_sexo;
-    private Spinner spinner_direccion;
 
     private TextView textView_error_nombre;
     private TextView textView_error_apellidos;
@@ -58,6 +58,10 @@ public class ModificarPersonaFragment extends Fragment {
     private TextView textView_error_fechaNacimiento;
     private TextView textView_error_telefonoFijo;
     private TextView textView_error_telefonoMovil;
+    private TextView textView_error_localidad;
+    private TextView textView_error_provincia;
+    private TextView textView_error_direccion;
+    private TextView textView_error_codigoPostal;
 
     public ModificarPersonaFragment() {
         // Required empty public constructor
@@ -100,8 +104,11 @@ public class ModificarPersonaFragment extends Fragment {
         this.editText_fechaNacimiento = view.findViewById(R.id.editText_fechaNacimiento_persona);
         this.editText_telefonoFijo = view.findViewById(R.id.editText_telefonoFijo_persona);
         this.editText_telefonoMovil = view.findViewById(R.id.editText_telefonoMovil_persona);
+        this.editText_localidad = (EditText) view.findViewById(R.id.editText_localidad_direccionPersona);
+        this.editText_provincia = (EditText) view.findViewById(R.id.editText_provincia_direccionPersona);
+        this.editText_direccion = (EditText) view.findViewById(R.id.editText_direccion_direccionPersona);
+        this.editText_codigoPostal = (EditText) view.findViewById(R.id.editText_codigoPostal_direccionPersona);
         this.spinner_sexo = view.findViewById(R.id.spinner_sexo_persona);
-        this.spinner_direccion = view.findViewById(R.id.spinner_direccion_persona);
 
         this.textView_error_nombre = view.findViewById(R.id.textView_error_nombre_persona);
         this.textView_error_apellidos = view.findViewById(R.id.textView_error_apellidos_persona);
@@ -109,6 +116,10 @@ public class ModificarPersonaFragment extends Fragment {
         this.textView_error_fechaNacimiento = view.findViewById(R.id.textView_error_fechaNacimiento_persona);
         this.textView_error_telefonoFijo = view.findViewById(R.id.textView_error_telefonoFijo_persona);
         this.textView_error_telefonoMovil = view.findViewById(R.id.textView_error_telefonoMovil_persona);
+        this.textView_error_localidad = (TextView) view.findViewById(R.id.textView_error_localidad_direccionPersona);
+        this.textView_error_provincia = (TextView) view.findViewById(R.id.textView_error_provincia_direccionPersona);
+        this.textView_error_direccion = (TextView) view.findViewById(R.id.textView_error_direccion_direccionPersona);
+        this.textView_error_codigoPostal = (TextView) view.findViewById(R.id.textView_error_codigoPostal_direccionPersona);
 
         if(persona.getSexo().equalsIgnoreCase(getString(R.string.sexo_masculino))){
             this.spinner_sexo.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, new String[]{getString(R.string.sexo_masculino), getString(R.string.sexo_femenimo)}));
@@ -117,8 +128,6 @@ public class ModificarPersonaFragment extends Fragment {
         }
 
         rellenarDatos();
-
-        inicializarSpinnerDirecciones();
 
         this.btn_insertar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +166,12 @@ public class ModificarPersonaFragment extends Fragment {
         this.editText_fechaNacimiento.setText(persona.getFechaNacimiento());
         this.editText_telefonoFijo.setText(persona.getTelefonoFijo());
         this.editText_telefonoMovil.setText(persona.getTelefonoMovil());
+
+        Direccion direccion = (Direccion) Utils.getObjeto(persona.getDireccion(), getString(R.string.direccion_class));
+        this.editText_localidad.setText(direccion.getLocalidad());
+        this.editText_provincia.setText(direccion.getProvincia());
+        this.editText_direccion.setText(direccion.getDireccion());
+        this.editText_codigoPostal.setText(direccion.getCodigoPostal());
     }
 
     private void mostrarDatePickerDialog() {
@@ -171,29 +186,6 @@ public class ModificarPersonaFragment extends Fragment {
         newFragment.show(getActivity().getSupportFragmentManager(), getString(R.string.tag_date_picker));
     }
 
-    private void inicializarSpinnerDirecciones() {
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-
-        Call<List<Direccion>> call = apiService.getDirecciones("Bearer " + Utils.getToken().getAccess());
-        call.enqueue(new Callback<List<Direccion>>() {
-            @Override
-            public void onResponse(Call<List<Direccion>> call, Response<List<Direccion>> response) {
-                if (response.isSuccessful()) {
-                    List<Direccion> direcciones = response.body();
-                    Direccion direccion = (Direccion) Utils.getObjeto(persona.getDireccion(), getString(R.string.direccion_class));
-                    direcciones.add(0, direccion);
-                    spinner_direccion.setAdapter(new ArrayAdapter<Direccion>(getContext(), R.layout.support_simple_spinner_dropdown_item, direcciones));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Direccion>> call, Throwable t) {
-                t.printStackTrace();
-                System.out.println(t.getMessage());
-            }
-        });
-    }
-
     /**
      * Método para modificar una persona de la base de datos.
      * El método realiza una petición a la API con los datos proporcionados por el usuario.
@@ -206,9 +198,14 @@ public class ModificarPersonaFragment extends Fragment {
         String sexo = spinner_sexo.getSelectedItem().toString();
         String telefonoFijo = editText_telefonoFijo.getText().toString();
         String telefonoMovil = editText_telefonoMovil.getText().toString();
-        Direccion direccion = (Direccion) spinner_direccion.getSelectedItem();
 
-        Persona persona = new Persona(nombre, apellidos, dni, fechaNacimiento, sexo, telefonoFijo, telefonoMovil, direccion.getId());
+        String localidad = this.editText_localidad.getText().toString();
+        String provincia = this.editText_provincia.getText().toString();
+        String direc = this.editText_direccion.getText().toString();
+        String codigoPostal = this.editText_codigoPostal.getText().toString();
+
+        Direccion direccion = new Direccion(localidad, provincia, direc, codigoPostal);
+        Persona persona = new Persona(nombre, apellidos, dni, fechaNacimiento, sexo, telefonoFijo, telefonoMovil, direccion);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
@@ -234,7 +231,7 @@ public class ModificarPersonaFragment extends Fragment {
     }
 
     /**
-     * Método que revisa si los datos de los EditText son válidos.
+     * Método que revisa si los datos de los EditText de persona son válidos.
      *
      * @return Devuelve true si es válido de lo contrario devuelve false.
      */
@@ -250,6 +247,26 @@ public class ModificarPersonaFragment extends Fragment {
         validDireccion = validarDireccion();
 
         if ((validNombre) && (validApellidos) && (validDni) && (validFechaNacimiento) && (validTelefonoFijo) && (validTelefonoMovil) && (validDireccion)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Método que revisa si los datos de los EditText de dirección son válidos.
+     * @return Devuelve true si es válido de lo contrario devuelve false.
+     */
+    private boolean validarDireccion() {
+        boolean validLocalidad, validProvincia, validDireccion, validCodigoPostal;
+
+        validLocalidad = validarLocalidad(editText_localidad.getText().toString());
+        validProvincia = validarProvincia(editText_provincia.getText().toString());
+        validDireccion = validarDir(editText_direccion.getText().toString());
+        validCodigoPostal = validarCodigoPostal(editText_codigoPostal.getText().toString());
+
+
+        if((validLocalidad) && (validProvincia) && (validDireccion) && (validCodigoPostal)){
             return true;
         } else {
             return false;
@@ -351,6 +368,58 @@ public class ModificarPersonaFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
             }
         });
+
+        this.editText_localidad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                validarLocalidad(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        this.editText_provincia.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                validarProvincia(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        this.editText_direccion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                validarDir(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        this.editText_codigoPostal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                validarCodigoPostal(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
     }
 
     public boolean validarNombre(String nombre) {
@@ -431,11 +500,55 @@ public class ModificarPersonaFragment extends Fragment {
         return valid;
     }
 
-    private boolean validarDireccion() {
-        if (spinner_direccion.getSelectedItem() != null) {
-            return true;
-        } else {
-            return false;
+    public boolean validarLocalidad(String localidad) {
+        boolean valid = false;
+        if ((localidad.isEmpty()) || (localidad.trim().equals(""))) {     // Reviso si la localidad está vacia.
+            textView_error_localidad.setText(R.string.textview_localidad_obligatoria);
+            textView_error_localidad.setVisibility(View.VISIBLE);
+            valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
+        } else {                                                        // De lo contrario devuelvo true y hago que el textView desaparezca.
+            textView_error_localidad.setVisibility(View.GONE);
+            valid = true;
         }
+        return valid;
+    }
+
+    public boolean validarProvincia(String provincia) {
+        boolean valid = false;
+        if ((provincia.isEmpty()) || (provincia.trim().equals(""))) {     // Reviso si la provincia está vacia.
+            textView_error_provincia.setText(R.string.textview_provincia_obligatoria);
+            textView_error_provincia.setVisibility(View.VISIBLE);
+            valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
+        } else {                                                        // De lo contrario devuelvo true y hago que el textView desaparezca.
+            textView_error_provincia.setVisibility(View.GONE);
+            valid = true;
+        }
+        return valid;
+    }
+
+    public boolean validarDir(String direccion) {
+        boolean valid = false;
+        if ((direccion.isEmpty()) || (direccion.trim().equals(""))) {     // Reviso si la dirección está vacia.
+            textView_error_direccion.setText(R.string.textview_direccion_obligatoria);
+            textView_error_direccion.setVisibility(View.VISIBLE);
+            valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
+        } else {                                                        // De lo contrario devuelvo true y hago que el textView desaparezca.
+            textView_error_direccion.setVisibility(View.GONE);
+            valid = true;
+        }
+        return valid;
+    }
+
+    public boolean validarCodigoPostal(String codigoPostal) {
+        boolean valid = false;
+        if ((codigoPostal.isEmpty()) || (codigoPostal.trim().equals(""))) {     // Reviso si la dirección está vacia.
+            textView_error_codigoPostal.setText(R.string.textview_codigoPostal_obligatoria);
+            textView_error_codigoPostal.setVisibility(View.VISIBLE);
+            valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
+        } else {                                                        // De lo contrario devuelvo true y hago que el textView desaparezca.
+            textView_error_codigoPostal.setVisibility(View.GONE);
+            valid = true;
+        }
+        return valid;
     }
 }

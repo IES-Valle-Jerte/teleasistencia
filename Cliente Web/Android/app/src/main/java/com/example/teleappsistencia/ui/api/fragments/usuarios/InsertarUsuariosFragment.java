@@ -20,8 +20,8 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.Grupo;
-import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.clases.Grupo;
+import com.example.teleappsistencia.ui.clases.Usuario;
 
 import java.util.List;
 

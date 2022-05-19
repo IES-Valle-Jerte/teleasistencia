@@ -1,10 +1,10 @@
-package com.example.teleappsistencia.ui.objects;
+package com.example.teleappsistencia.ui.clases;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class TipoVivienda implements Serializable {
+public class TipoSituacion implements Serializable {
 
     @SerializedName("id")
     private int id;
@@ -12,20 +12,19 @@ public class TipoVivienda implements Serializable {
     private String nombre;
 
     /**
-     * Constructor para mostrar un TipoVivienda.
-     * @param id
+     * Constructor para mostrar un TipoSituacion.
      * @param nombre
      */
-    public TipoVivienda(int id, String nombre) {
+    public TipoSituacion(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
     /**
-     * CDonstructor para modificar o insertar un nuevo TipoVivienda.
+     * Constructor para modificar o insertar un nuevo TipoSituacion.
      * @param nombre
      */
-    public TipoVivienda(String nombre){
+    public TipoSituacion(String nombre) {
         this.nombre = nombre;
     }
 
@@ -48,9 +47,6 @@ public class TipoVivienda implements Serializable {
 
     @Override
     public String toString() {
-        return "Tipo_vivienda{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                '}';
+        return nombre;
     }
 }

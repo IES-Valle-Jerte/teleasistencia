@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.TipoSituacion;
+import com.example.teleappsistencia.ui.clases.TipoSituacion;
 import com.example.teleappsistencia.ui.utils.Utils;
 
 /**

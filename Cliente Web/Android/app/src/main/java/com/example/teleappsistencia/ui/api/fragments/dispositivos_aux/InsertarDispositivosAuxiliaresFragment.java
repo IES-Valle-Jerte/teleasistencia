@@ -16,9 +16,9 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.DispositivoAuxiliar;
-import com.example.teleappsistencia.ui.objects.Terminal;
-import com.example.teleappsistencia.ui.objects.TipoAlarma;
+import com.example.teleappsistencia.ui.clases.DispositivoAuxiliar;
+import com.example.teleappsistencia.ui.clases.Terminal;
+import com.example.teleappsistencia.ui.clases.TipoAlarma;
 
 import java.util.List;
 

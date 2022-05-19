@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.TipoVivienda;
+import com.example.teleappsistencia.ui.clases.TipoVivienda;
 
 /**
  * A simple {@link Fragment} subclass.

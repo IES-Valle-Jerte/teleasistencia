@@ -11,13 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.api.fragments.usuarios.UsuariosAdapter;
-import com.example.teleappsistencia.ui.objects.Grupo;
-import com.example.teleappsistencia.ui.objects.Persona;
-import com.example.teleappsistencia.ui.objects.Usuario;
+import com.example.teleappsistencia.ui.api.APIService;
+import com.example.teleappsistencia.ui.api.ClienteRetrofit;
+import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
+import com.example.teleappsistencia.ui.clases.Persona;
 import com.example.teleappsistencia.ui.utils.Utils;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PersonaAdapter extends RecyclerView.Adapter<PersonaAdapter.PersonaViewHolder> {
 
@@ -70,8 +74,32 @@ public class PersonaAdapter extends RecyclerView.Adapter<PersonaAdapter.PersonaV
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragmentConsultar).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrar:
+                    borrarPersona();
                     break;
             }
+        }
+
+        private void borrarPersona() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+            Call<Response<String>> call = apiService.deletePersona(persona.getId(), "Bearer " + Utils.getToken().getAccess());
+            call.enqueue(new Callback<Response<String>>() {
+                @Override
+                public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
+                    if (response.isSuccessful()) {
+                        Response<String> respuesta = response.body();
+                        AlertDialogBuilder.crearInfoAlerDialog(context, context.getString(R.string.infoAlertDialog_eliminado_persona));
+                    } else {
+                        AlertDialogBuilder.crearErrorAlerDialog(context, Integer.toString(response.code()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response<String>> call, Throwable t) {
+                    t.printStackTrace();
+                    System.out.println(t.getMessage());
+                }
+            });
         }
 
         public void setPersona(Persona persona) {

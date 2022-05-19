@@ -17,7 +17,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.ui.utils.Utils;
 import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.objects.TipoVivienda;
+import com.example.teleappsistencia.ui.clases.TipoVivienda;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -109,7 +109,7 @@ public class ModificarTipoViviendaFragment extends Fragment {
         TipoVivienda tipoVivienda = new TipoVivienda(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.modifyTipoVivienda(tipoVivienda.getId(), tipoVivienda, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.modifyTipoVivienda(this.tipoVivienda.getId(), tipoVivienda, "Bearer " + Utils.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

@@ -11,9 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.ui.objects.HistoricoTipoSituacion;
+import com.example.teleappsistencia.ui.api.APIService;
+import com.example.teleappsistencia.ui.api.ClienteRetrofit;
+import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
+import com.example.teleappsistencia.ui.clases.HistoricoTipoSituacion;
+import com.example.teleappsistencia.ui.utils.Utils;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HistoricoTipoSituacionAdapter extends RecyclerView.Adapter<HistoricoTipoSituacionAdapter.HistoricoTipoSituacionViewHolder> {
 
@@ -62,8 +70,32 @@ public class HistoricoTipoSituacionAdapter extends RecyclerView.Adapter<Historic
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragmentConsultar).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrar:
+                    borrarHistoricoTipoSituacion();
                     break;
             }
+        }
+
+        private void borrarHistoricoTipoSituacion() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+            Call<Response<String>> call = apiService.deleteHistoricoTipoSituacion(historicoTipoSituacion.getId(), "Bearer " + Utils.getToken().getAccess());
+            call.enqueue(new Callback<Response<String>>() {
+                @Override
+                public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
+                    if (response.isSuccessful()) {
+                        Response<String> respuesta = response.body();
+                        AlertDialogBuilder.crearInfoAlerDialog(context, context.getString(R.string.infoAlertDialog_eliminado_historicoTipoSituacion));
+                    } else {
+                        AlertDialogBuilder.crearErrorAlerDialog(context, Integer.toString(response.code()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response<String>> call, Throwable t) {
+                    t.printStackTrace();
+                    System.out.println(t.getMessage());
+                }
+            });
         }
 
         public void setHistoricoTipoSituacion(HistoricoTipoSituacion historicoTipoSituacion) {
