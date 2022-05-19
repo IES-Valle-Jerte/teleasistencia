@@ -63,6 +63,7 @@ import {
 import {
   ModificarRelacionTerminalRecursosComunitariosComponent
 } from "./componentes/relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios.component";
+import {RecursosComunitariosPersonalesComponent} from "./componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component";
 import {ListaTiposViviendaComponent} from "./componentes/tipo-vivienda/lista-tipos-vivienda/lista-tipos-vivienda.component";
 import {ListaViviendasResolveService} from "./servicios/lista-viviendas-resolve.service";
 import {CrearViviendaComponent} from "./componentes/tipo-vivienda/crear-tipo-vivienda/crear-vivienda.component";
@@ -193,10 +194,15 @@ import {
 import {
   ModificarTeleoperadorAlarmaComponent
 } from "./componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component";
+import {ListaGruposService} from "./servicios/lista-grupos.service";
+import {GruposComponent} from "./componentes/grupos/grupos.component";
+
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
-  {path: 'inicio', component: HomeComponent},
+  {path: 'inicio', canActivate: [LoginGuard], component: HomeComponent},
+  {path: 'recurso-comunitarios-personales', canActivate: [LoginGuard], component: RecursosComunitariosPersonalesComponent},
+
   {
     path: 'usuarios',
     component: ListaUsersComponent,
@@ -213,14 +219,26 @@ const routes: Routes = [
       user: ModificarUserResolveService
     }
   },
-  {path: 'usuarios/nuevo', component: CrearUserComponent, canActivate: [LoginGuard]},
+  {
+    path: 'usuarios/nuevo',
+    component: CrearUserComponent,
+    canActivate: [LoginGuard]},
+
+  {
+    path: 'grupos',
+    component: GruposComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      grupos: ListaGruposService
+    },
+  },
   {
     path: 'clasificaciones_alarmas',
     component: ListaClasificacionesAlarmasComponent,
     canActivate: [LoginGuard],
     resolve: {
       clasificaciones_alarmas: ListaClasificacionesAlarmasResolveService
-    }
+    },
   },
   {
     path: 'clasificaciones_alarmas/modificar/:id',
@@ -313,6 +331,14 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       clasificaciones_alarmas: ListaClasificacionesAlarmasResolveService
+    }
+  },
+  {
+    path: 'direcciones/borrado/:id',
+    component: ListaDireccionesComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      direcciones: ListaDireccionesResolveService
     }
   },
   {
@@ -804,3 +830,4 @@ const routes: Routes = [
 
 export class AppRoutingModule {
 }
+
