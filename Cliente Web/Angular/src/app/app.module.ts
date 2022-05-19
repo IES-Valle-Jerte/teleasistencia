@@ -7,6 +7,7 @@ import {ListaUsersComponent} from './componentes/user/lista-users/lista-users.co
 import {ItemUserComponent} from './componentes/user/item-user/item-user.component';
 import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
 import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
+
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './componentes/home/home.component';
@@ -59,6 +60,7 @@ import {CargaRecursoComunitarioService} from './servicios/carga-recurso-comunita
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
+
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
 import { ListaRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component';
 import { ItemRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios.component';
@@ -124,6 +126,9 @@ import { CrearRelacionUsuarioCentroComponent } from './componentes/relacion-usua
 import { ItemRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/item-relacion-usuario-centro/item-relacion-usuario-centro.component';
 import { ListaRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/lista-relacion-usuario-centro/lista-relacion-usuario-centro.component';
 import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component';
+import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
+import { GruposComponent } from './componentes/grupos/grupos.component';
+
 
 @NgModule({
   declarations: [
@@ -178,6 +183,7 @@ import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modif
     CrearRelacionTerminalRecursosComunitariosComponent,
     ModificarRelacionTerminalRecursosComunitariosComponent,
     CrearRelacionTerminalRecursosComunitariosComponent,
+    RecursosComunitariosPersonalesComponent,
     FiltroBusquedaPipe,
     ListaTiposViviendaComponent,
     ListaTiposSituacionComponent,
@@ -227,6 +233,7 @@ import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modif
     ItemRelacionUsuarioCentroComponent,
     ListaRelacionUsuarioCentroComponent,
     ModificarTeleoperadorAlarmaComponent,
+    GruposComponent,
   ],
   imports: [
     BrowserModule,
