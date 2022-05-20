@@ -75,7 +75,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
   //Un segundo modal por la necesidad propia de la entidad de gestion de la base de datos.
   modalRestauracion(): void {
     Swal.fire({
-      title: environment.fraseEliminarModal,
+      title: "¿Desea restaurar la copia seleccionada?",
       showCancelButton: true,
       confirmButtonColor: environment.colorAceptarModal,
       cancelButtonColor: environment.colorCancelarModal,

@@ -18,14 +18,11 @@ export class OrdenacionTablasService {
 
     // Bucle de filtrado, los boolean deciden su recorrido.
     while (boolEntrada) {
-      //start by saying: no switching is done:
       boolEntrada = false;
-      //Cogemos los distintos campos de la tabla.
       rows = tabla.rows;
       // For donde nos recorremos la tabla, empieza en uno para no incluir la cabecera.
       for (let i = 1; i < rows.length - 1; i++) {
         iAux = i;
-        //Por defecto no accedemos a cambiar el orden de los campos.
         boolContinuar = false;
         // Vamos seleccionando los distintos campos a comparar.
         elemento1 = rows[iAux].getElementsByTagName("td")[indice];
@@ -33,13 +30,11 @@ export class OrdenacionTablasService {
         // Tenemos que tener en cuanta la dirección del filtrado, asc por defecto, desc sería la alternativa, pero al solo tener dos nos ahorramos la pregunta.
         if (dirFiltrado == "asc") {
           if ((tipoContenido == "string" && elemento1.innerHTML.toLowerCase() > elemento2.innerHTML.toLowerCase()) || (tipoContenido == "number" && parseFloat(elemento1.innerHTML) > parseFloat(elemento2.innerHTML))) {
-            //El boolean indica un cambio de orden en la tabla
             boolContinuar = true;
             break;
           }
         } else {
           if ((tipoContenido == "string" && elemento1.innerHTML.toLowerCase() < elemento2.innerHTML.toLowerCase()) || (tipoContenido == "number" && parseFloat(elemento1.innerHTML) < parseFloat(elemento2.innerHTML))) {
-            //El boolean indica un cambio de orden en la tabla
             boolContinuar = true;
             break;
           }
@@ -60,8 +55,5 @@ export class OrdenacionTablasService {
       }
     }
   }
-
-
-
 
 }

@@ -12,14 +12,12 @@ import {TipoVivienda} from "../../../clases/tipo-vivienda";
 })
 export class CrearViviendaComponent implements OnInit {
   public vivienda: ITipoVivienda;
-  public nombreVivienda: string;
 
   constructor(private titleService: Title, private route: ActivatedRoute, private router: Router, private cargaVivienda: CargaViviendaService ) { }
 
   ngOnInit(): void {
     this.titleService.setTitle('Crear nueva vivienda');
     this.vivienda = new TipoVivienda();
-    this.nombreVivienda = '';
   }
 
   nuevaVivienda(): void{
