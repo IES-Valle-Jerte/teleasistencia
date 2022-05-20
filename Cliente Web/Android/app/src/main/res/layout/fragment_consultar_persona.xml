@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#B3AEB3"
-    tools:context=".ui.api.fragments.persona.ConsultarPersonaFragment">
+    tools:context=".ui.fragments.persona.ConsultarPersonaFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

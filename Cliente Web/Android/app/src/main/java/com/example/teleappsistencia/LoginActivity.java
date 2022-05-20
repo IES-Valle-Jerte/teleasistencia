@@ -11,13 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.teleappsistencia.ui.api.APIService;
-import com.example.teleappsistencia.ui.api.ClienteRetrofit;
-import com.example.teleappsistencia.ui.clases.Grupo;
-import com.example.teleappsistencia.ui.clases.Token;
-import com.example.teleappsistencia.ui.clases.Usuario;
-import com.example.teleappsistencia.ui.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.ui.utils.Utils;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.modelos.Grupo;
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.modelos.Usuario;
+import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
+import com.example.teleappsistencia.utilidades.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<Token> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
+                AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, getString(R.string.error_al_conectarse_al_servidor));
             }
         });
     }
@@ -206,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 t.printStackTrace();
+                AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, getString(R.string.error_al_conectarse_al_servidor));
             }
         });
     }

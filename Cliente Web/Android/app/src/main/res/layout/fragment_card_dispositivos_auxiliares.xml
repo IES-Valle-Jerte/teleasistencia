@@ -7,7 +7,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    tools:context=".ui.api.fragments.dispositivos_aux.CardDispositivosAuxiliaresFragment">
+    tools:context=".ui.fragments.dispositivos_aux.CardDispositivosAuxiliaresFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

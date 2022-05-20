@@ -204,4 +204,5 @@
     <string name="grupo_class">Grupo</string>
     <string name="dispositivoAuxiliar_class">DispositivoAuxiliar</string>
     <string name="direccion_class">Direccion</string>
+    <string name="error_al_conectarse_al_servidor">Ha ocurrido un error al conectarse al servidor, intentelo más tarde.</string>
 </resources>
