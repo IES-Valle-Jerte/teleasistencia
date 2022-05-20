@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.internal.LinkedTreeMap;
 
-public class RelacionTerminalRecursoComunitario {
+import java.io.Serializable;
+
+public class RelacionTerminalRecursoComunitario implements Serializable {
 
     @SerializedName("id")
     private int id;

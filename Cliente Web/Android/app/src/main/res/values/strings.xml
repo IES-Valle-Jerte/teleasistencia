@@ -55,7 +55,7 @@
     <!-- Mensajes Botones. -->
     <string name="guardar">Guardar</string>
     <string name="volver">Volver</string>
-    <string name="modificar">Modificar datos</string>
+    <string name="modificar">Modificar</string>
     <string name="visualizar">Visualizar datos</string>
 
     <!-- Mensajes para AlertDialog. -->
@@ -122,5 +122,24 @@
     <string name="idModalidadPaciente">ID modalidad paciente:</string>
     <string name="modalidadPaciente">Modalidad paciente</string>
     <string name="titulo_insertar_paciente">Insertar paciente</string>
+    <string name="titulo_insertar_relacion_paciente_persona">Insertar relación paciente persona</string>
+    <string name="tipoRelacionHint">Introduce relación con el paciente...</string>
+    <string name="texto_insertar_relacion_paciente_persona">Tipo de relación:</string>
+    <string name="texto_insertar_tienes_llave_vivienda">¿Tiene llaves de la vivienda?</string>
+    <string name="tieneLlavesViviendaHint">Indica \"Sí\" o \"No\"</string>
+    <string name="texto_insertar_disponibilidad">Disponibilidad:</string>
+    <string name="disponibilidadHint">Indica la disponibilidad de la persona...</string>
+    <string name="texto_insertar_observaciones">Observaciones:</string>
+    <string name="texto_insertar_prioridad">Prioridad:</string>
+    <string name="texto_insertar_persona">Persona:</string>
+    <string name="nombrePersonaConsultar">Persona de contacto:</string>
+    <string name="numeroSeguridadSocialPacienteConsultar">Nº de Seguridad Social del paciente:</string>
+    <string name="prioridadConsultar">Prioridad:</string>
+    <string name="observacionesConsultar">Observaciones:</string>
+    <string name="disponibilidadConsultar">Disponibilidad:</string>
+    <string name="tieneLlaveViviendasConsultar">¿Tiene llaves de la vivienda?</string>
+    <string name="tipoRelacionConsultar">Tipo de relación:</string>
+    <string name="titulo_modificar_relacion_paciente_persona">Modificar relación paciente persona</string>
+    <string name="titulo_listarRelacionTerminalRecursoComunitario">Relación Terminal Recurso Comunitario</string>
 
 </resources>

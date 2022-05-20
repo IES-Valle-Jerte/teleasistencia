@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -14,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.APIService;
 import com.example.teleappsistencia.ClienteRetrofit;
-import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.Utilidades;
-import com.example.teleappsistencia.clases.Paciente;
+import com.example.teleappsistencia.clases.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.fragments.paciente.PacienteAdapter;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.internal.LinkedTreeMap;
@@ -48,7 +46,7 @@ public class ListarRelacionTerminalRecursoComunitarioFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    static List<LinkedTreeMap> lPacientes;
+    static List<LinkedTreeMap> lRelacionTerminalRecursoComunitario;
 
 
     public ListarRelacionTerminalRecursoComunitarioFragment() {
@@ -85,7 +83,8 @@ public class ListarRelacionTerminalRecursoComunitarioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listar_relacion_terminal_recurso_comunitario, container, false);lPacientes = new ArrayList<>();
+        View view = inflater.inflate(R.layout.fragment_listar_relacion_terminal_recurso_comunitario, container, false);
+        lRelacionTerminalRecursoComunitario = new ArrayList<>();
         //ListView listView = view.findViewById(R.id.listViewPacientes);
 
         //Obtenemos el Recycler
@@ -98,51 +97,47 @@ public class ListarRelacionTerminalRecursoComunitarioFragment extends Fragment {
 
         //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
         generarCapaEspera(view);
-        listarPacientes(view,recycler);
+        listarRelacionTerminalRecursoComunitario(view,recycler);
 
         return view;
     }
 
-    private void listarPacientes(View view, RecyclerView recycler) {
+    private void listarRelacionTerminalRecursoComunitario(View view, RecyclerView recycler) {
 
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getListadoRelacionTerminalRecursoComunitario("Bearer "+ Utilidades.getToken().getAccess());
         call.enqueue(new Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
                 if (response.isSuccessful()) {
-                    lPacientes = response.body();
-                    List<Paciente> listadoPacientes = new ArrayList<>();
-                    for (LinkedTreeMap paciente : lPacientes) {
-                        listadoPacientes.add((Paciente) Utilidades.getObjeto(paciente, "Paciente"));
+                    lRelacionTerminalRecursoComunitario = response.body();
+                    List<RelacionTerminalRecursoComunitario> listadoRelacionTerminalRecursoComunitario = new ArrayList<>();
+                    for (LinkedTreeMap terminalRecursoComunitario : lRelacionTerminalRecursoComunitario) {
+                        listadoRelacionTerminalRecursoComunitario.add((RelacionTerminalRecursoComunitario) Utilidades.getObjeto(terminalRecursoComunitario, "RelacionTerminalRecursoComunitario"));
                     }
                     //Adaptador
-                    adapter = new PacienteAdapter(listadoPacientes);
+                    adapter = new RelacionTerminalRecursoComunitarioAdapter(listadoRelacionTerminalRecursoComunitario);
                     recycler.setAdapter(adapter);
-
-                } else {
-                    Toast.makeText(getContext(), "Error al listar las direcciones. Código de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
             }
+        }
 
             @Override
             public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
-                t.printStackTrace();
-                System.out.println(t.getMessage());
+
             }
         });
+
     }
 
     private static void fijarListado(List<LinkedTreeMap> listado) {
-        lPacientes = listado;
+        lRelacionTerminalRecursoComunitario = listado;
     }
 
     private void generarCapaEspera(View view) {
         ShimmerFrameLayout shimmerFrameLayout =
                 (ShimmerFrameLayout) view.findViewById(R.id.listviewPlaceholder);
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionTerminalRecursoComunitario);
 
         dataConstraintLayout.setVisibility(View.INVISIBLE);
         shimmerFrameLayout.startShimmer();

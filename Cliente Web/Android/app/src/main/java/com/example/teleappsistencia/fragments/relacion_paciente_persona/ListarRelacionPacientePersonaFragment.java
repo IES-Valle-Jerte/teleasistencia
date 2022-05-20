@@ -18,6 +18,7 @@ import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.Utilidades;
 import com.example.teleappsistencia.clases.Paciente;
+import com.example.teleappsistencia.clases.RelacionPacientePersona;
 import com.example.teleappsistencia.fragments.paciente.PacienteAdapter;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.internal.LinkedTreeMap;
@@ -48,7 +49,7 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    static List<LinkedTreeMap> lPacientes;
+    static List<LinkedTreeMap> lRelacionPacientePersona;
 
 
     public ListarRelacionPacientePersonaFragment() {
@@ -85,7 +86,8 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listar_relacion_paciente_persona, container, false);lPacientes = new ArrayList<>();
+        View view = inflater.inflate(R.layout.fragment_listar_relacion_paciente_persona, container, false);
+        lRelacionPacientePersona = new ArrayList<>();
         //ListView listView = view.findViewById(R.id.listViewPacientes);
 
         //Obtenemos el Recycler
@@ -98,7 +100,7 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
 
         //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
         generarCapaEspera(view);
-        listarPacientes(view,recycler);
+        listarPacientes(view, recycler);
 
         return view;
     }
@@ -107,8 +109,28 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
 
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<List<LinkedTreeMap>> call = apiService.getListadoPacientesPersona("Bearer " + Utilidades.getToken().getAccess());
+        call.enqueue(new Callback<List<LinkedTreeMap>>() {
+            @Override
+            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
+                if(response.isSuccessful()){
+                    lRelacionPacientePersona = response.body();
+                    List<RelacionPacientePersona> listadoRelacionPacientePersona = new ArrayList<>();
+                    for (LinkedTreeMap relacionPacientePersona : lRelacionPacientePersona) {
+                        listadoRelacionPacientePersona.add((RelacionPacientePersona) Utilidades.getObjeto(relacionPacientePersona, "RelacionPacientePersonaViewholder"));
+                    }
+                    //Pasamos los datos al adaptador
+                    adapter = new RelacionPacientePersonaAdapter(listadoRelacionPacientePersona);
+                    recycler.setAdapter(adapter);
+                }
+            }
 
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
+            @Override
+            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
+
+            }
+        });
+        /*Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
         call.enqueue(new Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
@@ -132,17 +154,17 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
-        });
+        });*/
     }
 
     private static void fijarListado(List<LinkedTreeMap> listado) {
-        lPacientes = listado;
+        lRelacionPacientePersona = listado;
     }
 
     private void generarCapaEspera(View view) {
         ShimmerFrameLayout shimmerFrameLayout =
                 (ShimmerFrameLayout) view.findViewById(R.id.listviewPlaceholder);
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionPacientePersona);
 
         dataConstraintLayout.setVisibility(View.INVISIBLE);
         shimmerFrameLayout.startShimmer();

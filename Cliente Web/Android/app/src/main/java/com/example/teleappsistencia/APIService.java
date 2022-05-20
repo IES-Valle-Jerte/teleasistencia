@@ -63,7 +63,7 @@ public interface APIService {
 
     //Peticiones de Listado Relacion Terminal Recurso Comunitario
     @GET("api-rest/relacion_terminal_recurso_comunitario")
-    Call<List<RelacionTerminalRecursoComunitario>> getListadoRelacionTerminalRecursoComunitario(@Header("Authorization") String token);
+    Call<List<LinkedTreeMap>> getListadoRelacionTerminalRecursoComunitario(@Header("Authorization") String token);
 
     @POST("api-rest/relacion_terminal_recurso_comunitario")
     Call<RelacionTerminalRecursoComunitario> addRelacionTerminalRecursoComunitario(@Body RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario, @Header("Authorization") String token);

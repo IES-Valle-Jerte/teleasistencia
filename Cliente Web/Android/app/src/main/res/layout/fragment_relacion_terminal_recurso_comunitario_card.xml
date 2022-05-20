@@ -21,7 +21,7 @@
             app:layout_constraintGuide_percent="0.01" />
 
         <TextView
-            android:id="@+id/numSeguridadSocialCard"
+            android:id="@+id/idRelacionTerminalRecursoComunitario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Prueba"
@@ -31,37 +31,28 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/numeroExpedienteCard"
+            android:id="@+id/numeroTerminalCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="@string/numeroExpediente"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerPaciente"
+            android:text="@string/campoVacio"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerRelacionTerminalRecursoComunitario"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionTerminalRecursoComunitario" />
 
         <TextView
-            android:id="@+id/tieneUCRCard"
+            android:id="@+id/recursoComunitarioCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="@string/tieneUCR"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarPaciente"
+            android:text="@string/campoVacio"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionTerminalRecursoComunitario"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionTerminalRecursoComunitario" />
 
-        <TextView
-            android:id="@+id/tipoModalidadPacienteCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/idTerminal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarPaciente"
-            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarPaciente" />
 
         <ImageButton
-            android:id="@+id/imageButtonVerPaciente"
+            android:id="@+id/imageButtonVerRelacionTerminalRecursoComunitario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
@@ -70,17 +61,17 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonModificarPaciente"
+            android:id="@+id/imageButtonModificarRelacionTerminalRecursoComunitario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarPaciente"
+            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarRelacionTerminalRecursoComunitario"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente"
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionTerminalRecursoComunitario"
             tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonBorrarPaciente"
+            android:id="@+id/imageButtonBorrarRelacionTerminalRecursoComunitario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_delete"

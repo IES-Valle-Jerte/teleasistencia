@@ -1,7 +1,6 @@
 package com.example.teleappsistencia.fragments.relacion_paciente_persona;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,45 +13,49 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.Utilidades;
 import com.example.teleappsistencia.clases.Paciente;
-import com.example.teleappsistencia.clases.TipoModalidadPaciente;
-import com.example.teleappsistencia.fragments.paciente.ConsultarPacienteFragment;
-import com.example.teleappsistencia.fragments.paciente.ModificarPacienteFragment;
+import com.example.teleappsistencia.clases.Persona;
+import com.example.teleappsistencia.clases.RelacionPacientePersona;
+import com.example.teleappsistencia.fragments.relacion_terminal_recurso_comunitario.ConsultarRelacionTerminalRecursoComunitarioFragment;
 
 import java.util.List;
 
-public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<RelacionPacientePersonaAdapter.PacienteViewHolder> {
-    private List<Paciente> items;
-    private PacienteViewHolder pacienteViewHolder;
+public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<RelacionPacientePersonaAdapter.RelacionPacientePersonaViewholder> {
+    private List<com.example.teleappsistencia.clases.RelacionPacientePersona> items;
+    private RelacionPacientePersonaViewholder relacionPacientePersonaViewholder;
 
-    public static class PacienteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class RelacionPacientePersonaViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Campos respectivos de un item.
         public Context context;
-        private ImageButton imageButtonModificarPaciente;
-        private ImageButton imageButtonVerPaciente;
-        private ImageButton imageButtonBorrarPaciente;
-        private TextView numSeguridadSocialCard;
-        private TextView numeroExpedienteCard;
-        private TextView tieneUCRCard;
-        private TextView tipoModalidadPacienteCard;
-        private Paciente paciente;
+        private ImageButton imageButtonModificarRelacionPacientePersona;
+        private ImageButton imageButtonVerRelacionPacientePersona;
+        private ImageButton imageButtonBorrarRelacionPacientePersona;
+        private TextView tipoRelacionCard;
+        private TextView prioridadCard;
+        private TextView disponibilidadCard;
+        private TextView pacienteRelacionCard;
+        private TextView personaRelacionCard;
+        private RelacionPacientePersona relacionPacientePersona;
 
-        public PacienteViewHolder(View v) {
+        public RelacionPacientePersonaViewholder(View v) {
             super(v);
             this.context = v.getContext();
-            this.imageButtonModificarPaciente = v.findViewById(R.id.imageButtonModificarPaciente);
-            this.imageButtonVerPaciente = v.findViewById(R.id.imageButtonVerPaciente);
-            this.imageButtonBorrarPaciente = v.findViewById(R.id.imageButtonBorrarPaciente);
-            this.numSeguridadSocialCard = v.findViewById(R.id.numSeguridadSocialCard);
-            this.numeroExpedienteCard = v.findViewById(R.id.numeroExpedienteCard);
-            this.tieneUCRCard = v.findViewById(R.id.tieneUCRCard);
-            this.tipoModalidadPacienteCard = v.findViewById(R.id.tipoModalidadPacienteCard);
+            this.imageButtonModificarRelacionPacientePersona = v.findViewById(R.id.imageButtonModificarRelacionPacientePersona);
+            this.imageButtonVerRelacionPacientePersona = v.findViewById(R.id.imageButtonVerRelacionPacientePersona);
+            this.imageButtonBorrarRelacionPacientePersona = v.findViewById(R.id.imageButtonBorrarRelacionPacientePersona);
+            this.tipoRelacionCard = v.findViewById(R.id.tipoRelacionCard);
+            this.prioridadCard = v.findViewById(R.id.prioridadCard);
+            this.disponibilidadCard = v.findViewById(R.id.disponibilidadCard);
+            this.pacienteRelacionCard = v.findViewById(R.id.pacienteRelacionCard);
+            this.personaRelacionCard = v.findViewById(R.id.personaRelacionCard);
+            this.setOnClickListeners();
+
         }
 
         public void setOnClickListeners() {
-            this.imageButtonModificarPaciente.setOnClickListener(this);
-            this.imageButtonVerPaciente.setOnClickListener(this);
-            this.imageButtonBorrarPaciente.setOnClickListener(this);
+            this.imageButtonModificarRelacionPacientePersona.setOnClickListener(this);
+            this.imageButtonVerRelacionPacientePersona.setOnClickListener(this);
+            this.imageButtonBorrarRelacionPacientePersona.setOnClickListener(this);
         }
 
         @Override
@@ -60,26 +63,27 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
             switch (view.getId()) {
-                case R.id.imageButtonModificarPaciente:
-                    ModificarPacienteFragment modificarPacienteFragment = ModificarPacienteFragment.newInstance(this.paciente);
+                case R.id.imageButtonModificarRelacionPacientePersona:
+                    ModificarRelacionPacientePersonaFragment modificarPacienteFragment = ModificarRelacionPacientePersonaFragment.newInstance(this.relacionPacientePersona);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, modificarPacienteFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonVerPaciente:
-                    ConsultarPacienteFragment consultarPacienteFragment = ConsultarPacienteFragment.newInstance(this.paciente);
+                case R.id.imageButtonVerRelacionPacientePersona:
+                    ConsultarRelacionPacientePersonaFragment consultarPacienteFragment = ConsultarRelacionPacientePersonaFragment.newInstance(this.relacionPacientePersona);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarPacienteFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonBorrarPaciente:
+                case R.id.imageButtonBorrarRelacionPacientePersona:
 
                     break;
             }
         }
 
-        public void setPaciente(Paciente paciente) {
-            this.paciente = paciente;
+        public void setRelacionPacientePersonaViewholder(RelacionPacientePersona relacionPacientePersonaViewholder) {
+            this.relacionPacientePersona = relacionPacientePersonaViewholder;
         }
+
     }
 
-    public RelacionPacientePersonaAdapter(List<Paciente> items) {
+    public RelacionPacientePersonaAdapter(List<RelacionPacientePersona> items) {
         this.items = items;
     }
 
@@ -89,34 +93,24 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
     }
 
     @Override
-    public PacienteViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RelacionPacientePersonaViewholder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fragment_relacion_paciente_persona_card, viewGroup, false);
-        pacienteViewHolder = new PacienteViewHolder(v);
-        return pacienteViewHolder;
+        relacionPacientePersonaViewholder = new RelacionPacientePersonaViewholder(v);
+        return relacionPacientePersonaViewholder;
     }
 
     @Override
-    public void onBindViewHolder(PacienteViewHolder viewHolder, int i) {
+    public void onBindViewHolder(RelacionPacientePersonaViewholder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-        System.out.println(items.get(i));
-        viewHolder.numSeguridadSocialCard.setText(items.get(i).getNumeroSeguridadSocial());
-        viewHolder.numeroExpedienteCard.setText("Exp:" + items.get(i).getNumeroExpediente());
-        if (items.get(i).isTieneUcr()) {
-            viewHolder.tieneUCRCard.setText("El paciente tiene UCR");
-            viewHolder.tieneUCRCard.setTextColor(Color.RED);
-        } else {
-            viewHolder.tieneUCRCard.setText("El paciente no tiene UCR");
-            viewHolder.tieneUCRCard.setTextColor(Color.GREEN);
-        }
-        TipoModalidadPaciente tipoModalidadPaciente = (TipoModalidadPaciente) Utilidades.getObjeto(items.get(i).getTipoModalidadPaciente(), "TipoModalidadPaciente");
-        viewHolder.tipoModalidadPacienteCard.setText(tipoModalidadPaciente.getNombre());
-        //Falta por añadir los atributos del paciente
-        /*viewHolder.textView_id.setText(viewHolder.context.getString(R.string.id_con_dos_puntos) + Integer.toString(items.get(i).getId()));
-        viewHolder.textView_localidad.setText(items.get(i).getLocalidad());
-        viewHolder.textView_provincia.setText(items.get(i).getProvincia());
-        viewHolder.textView_direccion.setText(items.get(i).getDireccion());
-        direccionViewHolder.setDireccion(items.get(i));*/
-        pacienteViewHolder.setPaciente(items.get(i));
+        viewHolder.setRelacionPacientePersonaViewholder(items.get(i));
+        viewHolder.tipoRelacionCard.setText(items.get(i).getTipoRelacion());
+        viewHolder.prioridadCard.setText("Prioridad: " + String.valueOf(items.get(i).getPrioridad()));
+        viewHolder.disponibilidadCard.setText(items.get(i).getDisponibilidad());
+        Paciente paciente = (Paciente) Utilidades.getObjeto(items.get(i).getIdPaciente(), "Paciente");
+        viewHolder.pacienteRelacionCard.setText("SS del paciente: " + paciente.getNumeroSeguridadSocial());
+        Persona persona = (Persona) Utilidades.getObjeto(items.get(i).getIdPersona(), "Persona");
+        viewHolder.personaRelacionCard.setText("Persona de contacto: " +persona.getNombre() + " " + persona.getApellidos());
+        relacionPacientePersonaViewholder.setRelacionPacientePersonaViewholder(items.get(i));
     }
 }

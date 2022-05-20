@@ -16,8 +16,8 @@ import com.example.teleappsistencia.APIService;
 import com.example.teleappsistencia.ClienteRetrofit;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.Utilidades;
-import com.example.teleappsistencia.clases.Paciente;
 import com.example.teleappsistencia.clases.Persona;
+import com.example.teleappsistencia.clases.RelacionPacientePersona;
 import com.example.teleappsistencia.clases.Terminal;
 
 import java.util.ArrayList;
@@ -33,29 +33,26 @@ import retrofit2.Response;
  */
 public class ModificarRelacionPacientePersonaFragment extends Fragment implements View.OnClickListener {
 
-    private Paciente paciente;
+    private RelacionPacientePersona relacionPacientePersona;
+    private Spinner spinnerPersonaModificar;
+    private EditText editTextTipoRelacionModificar;
+    private EditText editTextTieneLlaveViviendaModificar;
+    private EditText editTextDisponibilidadModificar;
+    private EditText editTextObservacionesModificar;
+    private EditText editTextPrioridadModificar;
 
-    private Spinner spinnerTerminal;
-    private Spinner spinnerPersona;
-    private Spinner spinnerTipoModalidadPaciente;
-    private EditText editTextTieneUCR;
-    private EditText editTextNumeroExpediente;
-    private EditText editTextNumeroSeguridadSocial;
-    private EditText editTextPrestacionOtrosServicios;
-    private EditText editTextObservacionesMedicas;
-    private EditText editTextInteresesActividades;
-    private Button btnModificarPaciente;
-    private Button btnVolverPacienteModificar;
+    private Button btnModificarRelacionPacientePersona;
+    private Button btnVolverRelacionPacientePersonaModificar;
 
     public ModificarRelacionPacientePersonaFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ModificarRelacionPacientePersonaFragment newInstance(Paciente paciente) {
+    public static ModificarRelacionPacientePersonaFragment newInstance(RelacionPacientePersona relacionPacientePersona) {
         ModificarRelacionPacientePersonaFragment fragment = new ModificarRelacionPacientePersonaFragment();
         Bundle args = new Bundle();
-        args.putSerializable("objetoPaciente", paciente);
+        args.putSerializable("objetoRelacionPacientePersona", relacionPacientePersona);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +61,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            paciente = (Paciente) getArguments().getSerializable("objetoPaciente");
+            relacionPacientePersona = (RelacionPacientePersona) getArguments().getSerializable("objetoRelacionPacientePersona");
         }
     }
 
@@ -72,34 +69,41 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_modificar_relacion_paciente_persona, container, false);
-
         obtenerComponentes(root);
-
         rellenarCampos();
-
-        this.btnVolverPacienteModificar.setOnClickListener(this);
-        this.btnModificarPaciente.setOnClickListener(this);
-
         // Inflate the layout for this fragment
         return root;
     }
 
-    private void rellenarCampos() {
-        inicializarSpinnerTerminal();
-        inicializarSpinnerPersona();
-        fijarSiTieneUCR();
-        editTextNumeroExpediente.setText(paciente.getNumeroExpediente());
-        editTextNumeroSeguridadSocial.setText(paciente.getNumeroSeguridadSocial());
-        editTextPrestacionOtrosServicios.setText(paciente.getPrestacionOtrosServiciosSociales());
-        editTextObservacionesMedicas.setText(paciente.getObservacionesMedicas());
-        editTextInteresesActividades.setText(paciente.getInteresesYActividades());
+    private void obtenerComponentes(View root) {
+        spinnerPersonaModificar = root.findViewById(R.id.spinnerPersonaModificar);
+        editTextTipoRelacionModificar = root.findViewById(R.id.editTextTipoRelacionModificar);
+        editTextTieneLlaveViviendaModificar = root.findViewById(R.id.editTextTieneLlaveViviendaModificar);
+        editTextDisponibilidadModificar = root.findViewById(R.id.editTextDisponibilidadModificar);
+        editTextObservacionesModificar = root.findViewById(R.id.editTextObservacionesModificar);
+        editTextPrioridadModificar = root.findViewById(R.id.editTextPrioridadModificar);
+
+        btnModificarRelacionPacientePersona = root.findViewById(R.id.btnModificarRelacionPacientePersona);
+        btnVolverRelacionPacientePersonaModificar = root.findViewById(R.id.btnVolverRelacionPacientePersonaModificar);
+
+        btnModificarRelacionPacientePersona.setOnClickListener(this);
+        btnVolverRelacionPacientePersonaModificar.setOnClickListener(this);
     }
 
-    private void fijarSiTieneUCR() {
-        if (paciente.isTieneUcr()) {
-            this.editTextTieneUCR.setText("Si");
+    private void rellenarCampos() {
+        inicializarSpinnerPersona();
+        fijarSiTieneLlaves();
+        editTextTipoRelacionModificar.setText(relacionPacientePersona.getTipoRelacion());
+        editTextDisponibilidadModificar.setText(relacionPacientePersona.getDisponibilidad());
+        editTextObservacionesModificar.setText(relacionPacientePersona.getObservaciones());
+        editTextPrioridadModificar.setText(String.valueOf(relacionPacientePersona.getIdPersona()));
+    }
+
+    private void fijarSiTieneLlaves() {
+        if (relacionPacientePersona.isTieneLlavesVivienda()) {
+            this.editTextTieneLlaveViviendaModificar.setText("Si");
         } else {
-            this.editTextTieneUCR.setText("No");
+            this.editTextTieneLlaveViviendaModificar.setText("No");
         }
     }
 
@@ -113,9 +117,9 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
                     List<Persona> listadoPersona = response.body();
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPersonas(listadoPersona));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    Persona persona = (Persona) Utilidades.getObjeto(paciente.getPersona(), "Persona");
-                    spinnerPersona.setAdapter(adapter);
-                    spinnerPersona.setSelection(buscarPosicionSpinnerPersona(listadoPersona,persona.getId()));
+                    Persona persona = (Persona) Utilidades.getObjeto(relacionPacientePersona.getIdPersona(), "Persona");
+                    spinnerPersonaModificar.setAdapter(adapter);
+                    spinnerPersonaModificar.setSelection(buscarPosicionSpinnerPersona(listadoPersona, persona.getId()));
                 } else {
                     Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
                 }
@@ -136,39 +140,6 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
         return listadoPersonaString;
     }
 
-    private void inicializarSpinnerTerminal() {
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + Utilidades.getToken().getAccess());
-        call.enqueue(new retrofit2.Callback<List<Terminal>>() {
-            @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
-                if (response.isSuccessful()) {
-                    List<Terminal> listadoTerminales = response.body();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaTerminales(listadoTerminales));
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    Terminal terminal = (Terminal) Utilidades.getObjeto(paciente.getTerminal(), "Terminal");
-                    spinnerTerminal.setAdapter(adapter);
-                    spinnerTerminal.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales,terminal.getId()), true);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private List<String> convertirListaTerminales(List<Terminal> listadoTerminales) {
-        List<String> listadoTerminalesString = new ArrayList<>();
-        for (Terminal terminal : listadoTerminales) {
-            listadoTerminalesString.add("Nº de terminal: " + terminal.getNumeroTerminal());
-        }
-        return listadoTerminalesString;
-    }
-
-
     private int buscarPosicionSpinnerTerminal(List<Terminal> listadoTerminales, int id) {
         boolean encontrado = false;
         int i = 0;
@@ -178,10 +149,10 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
             }
             i++;
         }
-        return i-1;
+        return i - 1;
     }
 
-    private int buscarPosicionSpinnerPersona(List<Persona> listadoPersonas,int id) {
+    private int buscarPosicionSpinnerPersona(List<Persona> listadoPersonas, int id) {
         boolean encontrado = false;
         int i = 0;
         while (!encontrado) {
@@ -190,21 +161,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
             }
             i++;
         }
-        return i-1;
-    }
-
-    private void obtenerComponentes(View root) {
-        this.btnVolverPacienteModificar = (Button) root.findViewById(R.id.btnVolverPacienteModificar);
-        this.btnModificarPaciente = (Button) root.findViewById(R.id.btnModificarPaciente);
-        this.spinnerTerminal = (Spinner) root.findViewById(R.id.spinnerTerminal);
-        this.spinnerPersona = (Spinner) root.findViewById(R.id.spinnerPersona);
-        this.spinnerTipoModalidadPaciente = (Spinner) root.findViewById(R.id.spinnerTipoModalidadPaciente);
-        this.editTextTieneUCR = (EditText) root.findViewById(R.id.editTextTieneUCR);
-        this.editTextNumeroExpediente = (EditText) root.findViewById(R.id.editTextNumeroExpediente);
-        this.editTextNumeroSeguridadSocial = (EditText) root.findViewById(R.id.editTextNumeroSeguridadSocial);
-        this.editTextPrestacionOtrosServicios = (EditText) root.findViewById(R.id.editTextPrestacionOtrosServicios);
-        this.editTextObservacionesMedicas = (EditText) root.findViewById(R.id.editTextObservacionesMedicas);
-        this.editTextInteresesActividades = (EditText) root.findViewById(R.id.editTextInteresesActividades);
+        return i - 1;
     }
 
     @Override

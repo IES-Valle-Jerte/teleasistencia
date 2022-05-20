@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    tools:context=".fragments.paciente.paciente_card" >
+    tools:context=".fragments.paciente.paciente_card">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,47 +21,59 @@
             app:layout_constraintGuide_percent="0.01" />
 
         <TextView
-            android:id="@+id/numSeguridadSocialCard"
+            android:id="@+id/tipoRelacionCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prueba"
-            android:textStyle="bold"
+            android:text="@string/campoVacio"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/numeroExpedienteCard"
+            android:id="@+id/prioridadCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/campoVacio"
             android:textColor="@color/black"
-            android:text="@string/numeroExpediente"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerPaciente"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerRelacionPacientePersona"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona" />
 
         <TextView
-            android:id="@+id/tieneUCRCard"
+            android:id="@+id/disponibilidadCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/campoVacio"
             android:textColor="@color/black"
-            android:text="@string/tieneUCR"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarPaciente"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona" />
 
         <TextView
-            android:id="@+id/tipoModalidadPacienteCard"
+            android:id="@+id/pacienteRelacionCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/campoVacio"
+            android:textStyle="italic"
             android:textColor="@color/black"
-            android:text="@string/idTerminal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarPaciente"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarPaciente" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona" />
+
+        <TextView
+            android:id="@+id/personaRelacionCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/campoVacio"
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonBorrarRelacionPacientePersona"
+            app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+            app:layout_constraintTop_toBottomOf="@+id/pacienteRelacionCard" />
 
         <ImageButton
-            android:id="@+id/imageButtonVerPaciente"
+            android:id="@+id/imageButtonVerRelacionPacientePersona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
@@ -70,17 +82,17 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonModificarPaciente"
+            android:id="@+id/imageButtonModificarRelacionPacientePersona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarPaciente"
+            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarRelacionPacientePersona"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente"
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona"
             tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonBorrarPaciente"
+            android:id="@+id/imageButtonBorrarRelacionPacientePersona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_delete"

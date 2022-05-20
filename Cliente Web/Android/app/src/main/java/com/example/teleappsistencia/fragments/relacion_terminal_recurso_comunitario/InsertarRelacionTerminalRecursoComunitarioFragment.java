@@ -79,7 +79,7 @@ public class InsertarRelacionTerminalRecursoComunitarioFragment extends Fragment
 
     private void obtenerComponentes(View root) {
         spinnerTerminal = root.findViewById(R.id.spinnerTerminalInsertar);
-        spinnerPersona = root.findViewById(R.id.spinnerPersonaInsertar);
+        spinnerPersona = root.findViewById(R.id.spinnerPersonaModificar);
         spinnerTipoModalidadPaciente = root.findViewById(R.id.spinnerTipoModalidadPacienteInsertar);
         editTextTieneUCR = root.findViewById(R.id.editTextTieneUCRInsertar);
         editTextNumeroExpediente = root.findViewById(R.id.editTextNumeroExpedienteInsertar);

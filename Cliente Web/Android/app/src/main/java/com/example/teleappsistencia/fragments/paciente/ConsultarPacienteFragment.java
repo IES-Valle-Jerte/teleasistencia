@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
@@ -38,7 +37,7 @@ public class ConsultarPacienteFragment extends Fragment{
     public static ConsultarPacienteFragment newInstance(Paciente paciente) {
         ConsultarPacienteFragment fragment = new ConsultarPacienteFragment();
         Bundle args = new Bundle();
-        args.putSerializable("objetoPaciente", paciente);
+        args.putSerializable("objetoRelacionTerminalRecursoComunitario", paciente);
         fragment.setArguments(args);
         return fragment;
     }

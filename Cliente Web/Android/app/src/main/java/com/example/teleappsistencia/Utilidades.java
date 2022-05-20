@@ -4,6 +4,7 @@ import com.example.teleappsistencia.clases.CentroSanitario;
 import com.example.teleappsistencia.clases.Direccion;
 import com.example.teleappsistencia.clases.Paciente;
 import com.example.teleappsistencia.clases.Persona;
+import com.example.teleappsistencia.clases.RecursoComunitario;
 import com.example.teleappsistencia.clases.RelacionPacientePersona;
 import com.example.teleappsistencia.clases.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.clases.Terminal;
@@ -31,7 +32,7 @@ public class Utilidades {
                 type = new TypeToken<Paciente>() {
                 }.getType();
                 break;
-            case "RelacionPacientePersona":
+            case "RelacionPacientePersonaViewholder":
                 type = new TypeToken<RelacionPacientePersona>() {
                 }.getType();
                 break;
@@ -61,6 +62,10 @@ public class Utilidades {
                 break;
             case "TipoModalidadPaciente":
                 type = new TypeToken<TipoModalidadPaciente>() {
+                }.getType();
+                break;
+            case "RecursoComunitario":
+                type = new TypeToken<RecursoComunitario>() {
                 }.getType();
                 break;
         }

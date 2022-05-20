@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="10"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -24,7 +24,7 @@
                 android:id="@+id/textViewTitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/titulo_modificar_paciente"
+                android:text="@string/titulo_modificar_relacion_paciente_persona"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -37,8 +37,19 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/texto_insertar_persona"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
             <Spinner
-                android:id="@+id/spinnerTerminal"
+                android:id="@+id/spinnerPersonaModificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -54,25 +65,18 @@
                 app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
                 tools:layout_editor_absoluteY="179dp" />
 
-            <Spinner
-                android:id="@+id/spinnerPersona"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="@string/spinnerPersonaHint"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="10dp"
-                android:textColorHint="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-                tools:layout_editor_absoluteY="179dp" />
+                android:text="@string/texto_insertar_relacion_paciente_persona"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTextTieneUCR"
+                android:id="@+id/editTextTipoRelacionModificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -80,24 +84,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
                 android:ems="10"
-                android:hint="@string/tieneUCRHint"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="10dp"
-                android:textColorHint="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-                tools:layout_editor_absoluteY="179dp" />
-
-            <EditText
-                android:id="@+id/editTextNumeroExpediente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="@string/numeroExpedienteHint"
+                android:hint="@string/tipoRelacionHint"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:padding="10dp"
@@ -106,35 +93,17 @@
                 tools:layout_editor_absoluteY="179dp" />
 
             <TextView
-                android:id="@+id/textViewErrorNumeroExpedientePaciente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/fondo_bordes_textviews"
-                android:gravity="center"
-                android:minHeight="35dp"
-                android:text="@string/textViewNumeroExpedienteObligatorio"
+                android:layout_marginBottom="20dp"
+                android:text="@string/texto_insertar_tienes_llave_vivienda"
                 android:textColor="@color/black"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/textViewErrorNumeroSeguridadSocial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/fondo_bordes_textviews"
-                android:gravity="center"
-                android:minHeight="35dp"
-                android:text="@string/textViewNumeroSeguridadSocialObligatorio"
-                android:textColor="@color/black"
-                android:visibility="gone" />
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTextNumeroSeguridadSocial"
+                android:id="@+id/editTextTieneLlaveViviendaModificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -142,7 +111,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
                 android:ems="10"
-                android:hint="@string/numeroSeguridadSocialHint"
+                android:hint="@string/tieneLlavesViviendaHint"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:padding="10dp"
@@ -151,21 +120,17 @@
                 tools:layout_editor_absoluteY="179dp" />
 
             <TextView
-                android:id="@+id/textViewErrorPrestacionOtrosServicios"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/fondo_bordes_textviews"
-                android:gravity="center"
-                android:minHeight="35dp"
-                android:text="@string/textViewPrestacionOtrosServiciosObligatorio"
+                android:layout_marginBottom="20dp"
+                android:text="@string/texto_insertar_disponibilidad"
                 android:textColor="@color/black"
-                android:visibility="gone" />
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTextPrestacionOtrosServicios"
+                android:id="@+id/editTextDisponibilidadModificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -173,24 +138,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
                 android:ems="10"
-                android:hint="@string/editTextPrestacionOtrosServiciosHint"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="10dp"
-                android:textColorHint="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-                tools:layout_editor_absoluteY="179dp" />
-
-            <EditText
-                android:id="@+id/editTextObservacionesMedicas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="@string/observacionesMedicasHint"
+                android:hint="@string/disponibilidadHint"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:padding="10dp"
@@ -199,21 +147,17 @@
                 tools:layout_editor_absoluteY="179dp" />
 
             <TextView
-                android:id="@+id/textViewErrorObservacionesMedicas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/fondo_bordes_textviews"
-                android:gravity="center"
-                android:minHeight="35dp"
-                android:text="@string/textViewObservacionesMedicasObligatorio"
+                android:layout_marginBottom="20dp"
+                android:text="@string/texto_insertar_observaciones"
                 android:textColor="@color/black"
-                android:visibility="gone" />
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTextInteresesActividades"
+                android:id="@+id/editTextObservacionesModificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -221,7 +165,6 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
                 android:ems="10"
-                android:hint="@string/interesesActivadesHint"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:padding="10dp"
@@ -230,21 +173,17 @@
                 tools:layout_editor_absoluteY="179dp" />
 
             <TextView
-                android:id="@+id/textViewErrorInteresesActividades"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/fondo_bordes_textviews"
-                android:gravity="center"
-                android:minHeight="35dp"
-                android:text="@string/textViewInteresesActividadesObligatorios"
+                android:layout_marginBottom="20dp"
+                android:text="@string/texto_insertar_prioridad"
                 android:textColor="@color/black"
-                android:visibility="gone" />
+                android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/spinnerTipoModalidadPaciente"
+            <EditText
+                android:id="@+id/editTextPrioridadModificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -252,19 +191,20 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
                 android:ems="10"
-                android:hint="@string/spinnerTipoModalidadPacienteHint"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:padding="10dp"
                 android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
                 tools:layout_editor_absoluteY="179dp" />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5">
+            android:layout_weight="10">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -274,11 +214,11 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnModificarPaciente"
+                    android:id="@+id/btnModificarRelacionPacientePersona"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:text="@string/guardar"
+                    android:text="@string/modificar"
                     android:textColor="#4CAF50" />
             </LinearLayout>
 
@@ -290,7 +230,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnVolverPacienteInsertar"
+                    android:id="@+id/btnVolverRelacionPacientePersonaModificar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

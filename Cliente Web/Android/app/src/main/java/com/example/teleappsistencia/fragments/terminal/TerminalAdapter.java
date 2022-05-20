@@ -40,9 +40,9 @@ public class TerminalAdapter extends RecyclerView.Adapter<TerminalAdapter.Pacien
         public PacienteViewHolder(View v) {
             super(v);
             this.context = v.getContext();
-            this.imageButtonModificarPaciente = v.findViewById(R.id.imageButtonModificarPaciente);
-            this.imageButtonVerPaciente = v.findViewById(R.id.imageButtonVerPaciente);
-            this.imageButtonBorrarPaciente = v.findViewById(R.id.imageButtonBorrarPaciente);
+            this.imageButtonModificarPaciente = v.findViewById(R.id.imageButtonModificarRelacionPacientePersona);
+            this.imageButtonVerPaciente = v.findViewById(R.id.imageButtonVerRelacionPacientePersona);
+            this.imageButtonBorrarPaciente = v.findViewById(R.id.imageButtonBorrarRelacionPacientePersona);
             this.numSeguridadSocialCard = v.findViewById(R.id.numSeguridadSocialCard);
             this.numeroExpedienteCard = v.findViewById(R.id.numeroExpedienteCard);
             this.tieneUCRCard = v.findViewById(R.id.tieneUCRCard);
@@ -60,15 +60,15 @@ public class TerminalAdapter extends RecyclerView.Adapter<TerminalAdapter.Pacien
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
             switch (view.getId()) {
-                case R.id.imageButtonModificarPaciente:
+                case R.id.imageButtonModificarRelacionPacientePersona:
                     ModificarPacienteFragment modificarPacienteFragment = ModificarPacienteFragment.newInstance(this.paciente);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, modificarPacienteFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonVerPaciente:
+                case R.id.imageButtonVerRelacionPacientePersona:
                     ConsultarPacienteFragment consultarPacienteFragment = ConsultarPacienteFragment.newInstance(this.paciente);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarPacienteFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonBorrarPaciente:
+                case R.id.imageButtonBorrarRelacionPacientePersona:
 
                     break;
             }

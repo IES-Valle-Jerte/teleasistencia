@@ -18,6 +18,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.Utilidades;
 import com.example.teleappsistencia.clases.Paciente;
 import com.example.teleappsistencia.clases.Persona;
+import com.example.teleappsistencia.clases.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.clases.Terminal;
 
 import java.util.ArrayList;
@@ -52,10 +53,10 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ModificarRelacionTerminalRecursoComunitarioFragment newInstance(Paciente paciente) {
+    public static ModificarRelacionTerminalRecursoComunitarioFragment newInstance(RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario) {
         ModificarRelacionTerminalRecursoComunitarioFragment fragment = new ModificarRelacionTerminalRecursoComunitarioFragment();
         Bundle args = new Bundle();
-        args.putSerializable("objetoPaciente", paciente);
+        args.putSerializable("objetoPaciente", relacionTerminalRecursoComunitario);
         fragment.setArguments(args);
         return fragment;
     }
