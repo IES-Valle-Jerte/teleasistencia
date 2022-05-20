@@ -61,6 +61,7 @@ import {
   DetallesTipoAgendaComponent
 } from "./componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component";
 import {DetallesTipoAgendaResolveService} from "./servicios/detalles-tipo-agenda-resolve.service";
+import {RecursosComunitariosPersonalesComponent} from "./componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component";
 import {ListaTiposViviendaComponent} from "./componentes/tipo-vivienda/lista-tipos-vivienda/lista-tipos-vivienda.component";
 import {ListaViviendasResolveService} from "./servicios/lista-viviendas-resolve.service";
 import {CrearViviendaComponent} from "./componentes/tipo-vivienda/crear-tipo-vivienda/crear-vivienda.component";
@@ -102,9 +103,12 @@ import {ItemTipoAgendaComponent} from "./componentes/tipo-agenda/item-tipo-agend
 import {ItemAgendaComponent} from "./componentes/agenda/item-agenda/item-agenda.component";
 import {ListaPacientesResolveService} from "./servicios/lista-paciente-resolve.service";
 
+
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
-  {path: 'inicio', component: HomeComponent},
+  {path: 'inicio', canActivate: [LoginGuard], component: HomeComponent},
+  {path: 'recurso-comunitarios-personales', canActivate: [LoginGuard], component: RecursosComunitariosPersonalesComponent},
+
   {
     path: 'usuarios',
     component: ListaUsersComponent,

@@ -102,6 +102,9 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
 import { DetallesAgendaComponent } from './componentes/agenda/detalles-agenda/detalles-agenda.component';
 import { ItemAgendaComponent } from './componentes/agenda/item-agenda/item-agenda.component';
 import { ListaAgendaComponent } from './componentes/agenda/lista-agenda/lista-agenda.component';
+import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +158,7 @@ import { ListaAgendaComponent } from './componentes/agenda/lista-agenda/lista-ag
     NuevoTipoAgendaComponent,
     ItemTipoAgendaComponent,
     DetallesTipoAgendaComponent,
+    RecursosComunitariosPersonalesComponent,
     FiltroBusquedaPipe,
     ListaTiposViviendaComponent,
     ListaTiposSituacionComponent,
