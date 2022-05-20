@@ -29,4 +29,8 @@ export class CargaRelacionPacientePersonaService {
   nuevaRelacionPacientePersona(relacionPacientePersona: IRelacionPacientePersona): Observable<IRelacionPacientePersona> {
     return this.http.post<IRelacionPacientePersona>(this.URL_SERVER_RELACION_PACIENTE_PERSONA, relacionPacientePersona)
   }
+
+  eliminarRelacionPacientePersona(relacionPacientePersona: IRelacionPacientePersona): Observable<IRelacionPacientePersona> {
+    return this.http.delete<IRelacionPacientePersona>(this.URL_SERVER_RELACION_PACIENTE_PERSONA +'/'+ relacionPacientePersona.id)
+  }
 }

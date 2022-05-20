@@ -28,6 +28,10 @@ export class CargaAlarmaService {
       return this.http.post<IAlarma> (this.URL_SERVER_ALARMA, alarma);
     }
 
+    eliminarAlarma(alarma: IAlarma): Observable<IAlarma> {
+      return this.http.delete<IAlarma> (this.URL_SERVER_ALARMA +'/'+ alarma.id);
+    }
+
 
 
 }

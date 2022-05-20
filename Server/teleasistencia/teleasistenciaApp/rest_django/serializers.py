@@ -187,7 +187,7 @@ class Persona_Contacto_En_Alarma_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Persona_Contacto_En_Alarma
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Relacion_Usuario_Centro_Serializer(serializers.ModelSerializer):

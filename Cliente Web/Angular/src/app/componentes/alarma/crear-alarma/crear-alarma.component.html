@@ -32,27 +32,16 @@
         </div>
       </div>
       <div class="form-group mb-3">
-        <label for="obvservaciones" class="form-label">Observaciones</label>
-        <input type="text" name="obvservaciones" id="obvservaciones" class="form-control"
-               required maxlength="500" [(ngModel)]="alarma.observaciones" #obvservaciones="ngModel">
-        <div *ngIf="obvservaciones.invalid && (obvservaciones.dirty || obvservaciones.touched)"
-             class="alert alert-secondary" role="alert">
-          <div *ngIf="obvservaciones.errors?.required">
-            Las obvservaciones son obligatorias
-          </div>
-        </div>
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea [(ngModel)]="alarma.observaciones" name="observaciones" id="observaciones" class="form-control" required></textarea>
+
       </div>
+
       <div class="form-group mb-3">
         <label for="resumen" class="form-label">Resumen</label>
-        <input type="text" name="resumen" id="resumen" class="form-control"
-               required maxlength="500" [(ngModel)]="alarma.resumen" #resumen="ngModel">
-        <div *ngIf="resumen.invalid && (resumen.dirty || resumen.touched)"
-             class="alert alert-secondary" role="alert">
-          <div *ngIf="resumen.errors?.required">
-            El resumen son obligatorias
-          </div>
-        </div>
+        <textarea [(ngModel)]="alarma.resumen" name="resumen" id="resumen" class="form-control" required></textarea>
       </div>
+
 
 
         <div class="form-group mb-3">

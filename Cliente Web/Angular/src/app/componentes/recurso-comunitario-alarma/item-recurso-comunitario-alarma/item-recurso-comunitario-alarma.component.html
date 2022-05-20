@@ -6,6 +6,8 @@
 <td>{{ recursoComunitarioAlarma.fecha_registro | date : 'dd/MM/YYYY'}}</td>
 <td>
   <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/recursos_comunitarios_alarma/modificar', recursoComunitarioAlarma.id]">
-    Modificar datos
+    <i class="fa fa-pen"></i>
   </button>
+  <button type="submit" class="btn btn-delete m-1" (click)="modalConfirmacion()"
+  ><i class="fa fa-trash"></i></button>
 </td>

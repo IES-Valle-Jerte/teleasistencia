@@ -5,6 +5,8 @@ import { CargaRelacionTerminalRecursosComunitariosService } from '../../../servi
 import { RecursoComunitario } from "../../../clases/recurso-comunitario";
 import { Terminal } from "../../../clases/terminal";
 import { RelacionTerminalRecursoComunitarios } from "../../../clases/relacion-terminal-recurso-comunitarios";
+import Swal from "sweetalert2";
+import {environment} from "../../../../environments/environment";
 
 
 
@@ -46,15 +48,52 @@ export class ModificarRelacionTerminalRecursosComunitariosComponent implements O
    this.cargaRelacionTerminalRecursosComunitarios.modificarRelacionRecurso(this.relacion_terminal_recursos_comunitarios).subscribe(
       e => {
 
-        console.log('Relacion ' + e.id + ' modificada');
-        console.log(this.relacion_terminal_recursos_comunitarios)
+        this.alertExito()
         this.router.navigate(['/relacion_terminal_recurso_comunitario'])
       },
       error => {
-        console.log(error);
+        this.alertError()
       }
     );
   }
+//Toast para el Alert indicando que la operación fue exitosa
+  alertExito() :void {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      //El tiempo que permanece la alerta, se obtiene mediante una variable global en environment.ts
+      timer: environment.timerToast,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
 
+    Toast.fire({
+      icon: 'success',
+      title: environment.fraseModificar,
+    })
+  }
+  //Toast para el alert indicando que hubo algún error en la operación
+  alertError() :void {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: environment.timerToast,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'error',
+      title: environment.fraseErrorModificar
+    })
+  }
 
 }

@@ -29,4 +29,7 @@ export class CargaDispositivosAuxiliaresTerminalService {
   nuevoDispositivoAuxiliarTerminal(dispositivosAuxiliaresTerminal: IDispositivosAuxiliaresTerminal): Observable<IDispositivosAuxiliaresTerminal> {
     return this.http.post<IDispositivosAuxiliaresTerminal> (this.URL_SERVER_DISPOSITIVOS_AUXILIARES_TERMINAL, dispositivosAuxiliaresTerminal);
   }
+  eliminarDispositivoAuxiliarTerminal(dispositivosAuxiliaresTerminal: IDispositivosAuxiliaresTerminal): Observable<IDispositivosAuxiliaresTerminal> {
+    return this.http.delete<IDispositivosAuxiliaresTerminal>(this.URL_SERVER_DISPOSITIVOS_AUXILIARES_TERMINAL + '/' + dispositivosAuxiliaresTerminal.id)
+  }
 }

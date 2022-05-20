@@ -28,4 +28,8 @@ export class CargaPacienteService {
     return this.http.post<IPaciente>(this.URL_SERVER_PACIENTE, paciente)
   }
 
+  eliminarPaciente(paciente: IPaciente): Observable<IPaciente> {
+    return this.http.delete<IPaciente>(this.URL_SERVER_PACIENTE +'/'+ paciente.id)
+  }
+
 }

@@ -96,7 +96,6 @@ import { ModificarTerminalComponent } from './componentes/terminal/modificar-ter
 import {CargaTerminalesService} from "./servicios/terminal/carga-terminales.service";
 import {CargaAlarmaService} from "./servicios/alarmas/carga-alarma.service";
 import {CargaPacienteService} from "./servicios/paciente/carga-paciente.service";
-import { BorrarRelacionTerminalRecursosComunitariosComponent } from "./componentes/relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios/borrar-relacion-terminal-recursos-comunitarios.component";
 import { CrearPacienteComponent } from './componentes/paciente/crear-paciente/crear-paciente.component';
 import { ItemPacienteComponent } from './componentes/paciente/item-paciente/item-paciente.component';
 import { ListaPacienteComponent } from './componentes/paciente/lista-paciente/lista-paciente.component';
@@ -203,7 +202,6 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
     ItemTerminalComponent,
     CrearTerminalComponent,
     ModificarTerminalComponent,
-    BorrarRelacionTerminalRecursosComunitariosComponent,
     CrearPacienteComponent,
     ItemPacienteComponent,
     ListaPacienteComponent,

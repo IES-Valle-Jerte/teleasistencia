@@ -29,4 +29,8 @@ export class CargaPersonaContactoAlarmaService {
     return this.http.post<IPersonaContactoAlarma> (this.URL_SERVER_PERSONA_CONTACTO_ALARMA, personaContactoAlarma);
   }
 
+  eliminarPersonaContactoAlarma(personaContactoAlarma: IPersonaContactoAlarma): Observable<IPersonaContactoAlarma> {
+    return this.http.delete<IPersonaContactoAlarma> (this.URL_SERVER_PERSONA_CONTACTO_ALARMA +'/'+ personaContactoAlarma.id);
+  }
+
 }

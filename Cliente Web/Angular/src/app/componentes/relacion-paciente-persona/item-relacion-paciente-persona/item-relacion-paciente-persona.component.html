@@ -7,8 +7,11 @@
 <td>{{ relacionPacientePersona.prioridad}}</td>
 
 <td>
+
   <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/relacion_paciente_persona/modificar', relacionPacientePersona.id]">
-    Modificar datos
+    <i class="fa fa-pen"></i>
   </button>
+  <button type="submit" class="btn btn-delete m-1" (click)="modalConfirmacion()"
+  ><i class="fa fa-trash"></i></button>
 </td>
 

@@ -29,4 +29,8 @@ export class CargaRelacionUsuarioCentroService {
   nuevaRelacionUsuarioCentro(relacionUsuarioCentro: IRelacionUsuarioCentro): Observable<IRelacionUsuarioCentro> {
     return this.http.post<IRelacionUsuarioCentro> (this.URL_SERVER_RELACION_USUARIO_CENTRO, relacionUsuarioCentro);
   }
+
+  eliminarRelacionUsuarioCentro(relacionUsuarioCentro: IRelacionUsuarioCentro): Observable<IRelacionUsuarioCentro> {
+    return this.http.delete<IRelacionUsuarioCentro> (this.URL_SERVER_RELACION_USUARIO_CENTRO +'/'+ relacionUsuarioCentro.id);
+  }
 }
