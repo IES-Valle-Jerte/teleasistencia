@@ -86,8 +86,8 @@ import { BorrarTipoViviendaComponent } from './componentes/tipo-vivienda/borrar-
 import { BorrarTipoSituacionComponent } from './componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component';
 import {InterceptorService} from "./interceptors/interceptor.service";
 import { ListaAlarmasComponent } from './componentes/alarma/lista-alarmas/lista-alarmas.component';
-import { CrearAlarmaComponent } from './componentes/alarma/crear-alarma/crear-alarma.component';
-import { ModificarAlarmaComponent } from './componentes/alarma/modificar-alarma/modificar-alarma.component';
+import { CrearAlarmaUcrComponent } from './componentes/alarma/crear-alarma-ucr/crear-alarma-ucr.component';
+import { ModificarCerrarAlarmaComponent } from './componentes/alarma/modificar-cerrar-alarma/modificar-cerrar-alarma.component';
 import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarma.component';
 import { ListaTerminalComponent } from './componentes/terminal/lista-terminal/lista-terminal.component';
 import { ItemTerminalComponent } from './componentes/terminal/item-terminal/item-terminal.component';
@@ -127,6 +127,7 @@ import { ListaRelacionUsuarioCentroComponent } from './componentes/relacion-usua
 import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component';
 import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
 import { GruposComponent } from './componentes/grupos/grupos.component';
+import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-terminal/crear-alarma-terminal.component';
 
 
 @NgModule({
@@ -195,8 +196,8 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
     BorrarTipoViviendaComponent,
     BorrarTipoSituacionComponent,
     ListaAlarmasComponent,
-    CrearAlarmaComponent,
-    ModificarAlarmaComponent,
+    CrearAlarmaUcrComponent,
+    ModificarCerrarAlarmaComponent,
     ItemAlarmaComponent,
     ListaTerminalComponent,
     ItemTerminalComponent,
@@ -232,6 +233,7 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
     ListaRelacionUsuarioCentroComponent,
     ModificarTeleoperadorAlarmaComponent,
     GruposComponent,
+    CrearAlarmaTerminalComponent,
   ],
   imports: [
     BrowserModule,

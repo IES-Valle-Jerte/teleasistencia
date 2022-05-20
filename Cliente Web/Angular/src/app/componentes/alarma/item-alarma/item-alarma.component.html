@@ -2,8 +2,9 @@
 <td>{{ alarma.fecha_registro | date }}</td>
 <td>{{ alarma.observaciones }}</td>
 <td>{{ alarma.resumen }}</td>
-<td>{{ alarma.id_tipo_alarma.nombre }}</td>
-<td>{{ alarma.id_paciente_ucr.numero_expediente }}</td>
+<td>{{ alarma.id_tipo_alarma.nombre }} - {{ alarma.id_tipo_alarma.id_clasificacion_alarma.nombre }}</td>
+<td>{{ obtenerUcr()}}</td>
+<td>{{ obtenerTerminal()}}</td>
 <td>{{ obtenerNombre()  }}</td>
 <td>
   <button type="submit" class="btn btn-outline-secondary btn-modify" [routerLink]="['/alarmas/modificar', alarma.id]">

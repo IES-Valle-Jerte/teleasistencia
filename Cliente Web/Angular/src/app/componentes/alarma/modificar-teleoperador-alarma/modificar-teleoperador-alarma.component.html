@@ -13,7 +13,7 @@
 
       <div class="form-group mb-3">
         <label for="estado_alarma" class="form-label">Estado Alarma</label>
-        <input type="text" name="estado_alarma" id="estado_alarma" class="form-control"
+        <input type="text" name="estado_alarma" id="estado_alarma" class="form-control" disabled
                required maxlength="500" [(ngModel)]="alarma.estado_alarma" #estado_alarma="ngModel">
         <div *ngIf="estado_alarma.invalid && (estado_alarma.dirty || estado_alarma.touched)"
              class="alert alert-secondary" role="alert">

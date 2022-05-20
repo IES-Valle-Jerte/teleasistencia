@@ -916,7 +916,7 @@ class Relacion_Paciente_Persona_ViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Comprobamos que existe el paciente que recibimos como parametro get
-        id_paciente = Paciente.objects.get(pk=request.GET.get("id_paciente"))
+        id_paciente = Paciente.objects.get(pk=request.data.get("id_paciente"))
         if id_paciente is None:
             return Response("Error: id_paciente")
         # Comprobamos que existe la persona

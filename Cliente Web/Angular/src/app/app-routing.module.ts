@@ -83,10 +83,10 @@ import {
 } from "./componentes/relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios.component";
 import {ListaAlarmasResolveService} from "./servicios/alarmas/lista-alarmas-resolve.service";
 import {ListaAlarmasComponent} from "./componentes/alarma/lista-alarmas/lista-alarmas.component";
-import {ModificarAlarmaComponent} from "./componentes/alarma/modificar-alarma/modificar-alarma.component";
+import {ModificarCerrarAlarmaComponent} from "./componentes/alarma/modificar-cerrar-alarma/modificar-cerrar-alarma.component";
 import {ModificarAlarmaResolveService} from "./servicios/alarmas/modificar-alarma-resolve.service";
 import {ListaTerminalesResolveService} from "./servicios/terminal/lista-terminales-resolve.service";
-import {CrearAlarmaComponent} from "./componentes/alarma/crear-alarma/crear-alarma.component";
+import {CrearAlarmaUcrComponent} from "./componentes/alarma/crear-alarma-ucr/crear-alarma-ucr.component";
 import {ListaPacientesResolveService} from "./servicios/paciente/lista-pacientes-resolve.service";
 import {ListaTerminalComponent} from "./componentes/terminal/lista-terminal/lista-terminal.component";
 import {ModificarTerminalComponent} from "./componentes/terminal/modificar-terminal/modificar-terminal.component";
@@ -191,6 +191,7 @@ import {
 } from "./componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component";
 import {ListaGruposService} from "./servicios/lista-grupos.service";
 import {GruposComponent} from "./componentes/grupos/grupos.component";
+import {CrearAlarmaTerminalComponent} from "./componentes/alarma/crear-alarma-terminal/crear-alarma-terminal.component";
 
 
 const routes: Routes = [
@@ -550,7 +551,7 @@ const routes: Routes = [
   },
   {
     path: 'alarmas/modificar/:id',
-    component: ModificarAlarmaComponent,
+    component: ModificarCerrarAlarmaComponent,
     canActivate: [LoginGuard],
     resolve: {
       alarma: ModificarAlarmaResolveService,
@@ -566,8 +567,19 @@ const routes: Routes = [
     }
   },
   {
-    path: 'alarmas/nueva',
-    component: CrearAlarmaComponent,
+    path: 'alarmas/nueva/ucr',
+    component: CrearAlarmaUcrComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarma: ListaAlarmasResolveService,
+      terminales: ListaTerminalesResolveService,
+      tipos_alarmas: ListaTiposAlarmasResolveService,
+      pacientes_ucr: ListaPacientesResolveService
+    }
+  },
+  {
+    path: 'alarmas/nueva/terminal',
+    component: CrearAlarmaTerminalComponent,
     canActivate: [LoginGuard],
     resolve: {
       alarma: ListaAlarmasResolveService,

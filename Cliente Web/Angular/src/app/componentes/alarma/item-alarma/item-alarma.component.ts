@@ -23,6 +23,20 @@ export class ItemAlarmaComponent implements OnInit {
     else
       return ""
   }
+
+  obtenerUcr(): string {
+    if (this.alarma.id_paciente_ucr != null)
+      return this.alarma.id_paciente_ucr.id_persona.nombre + ' ' + this.alarma.id_paciente_ucr.id_persona.apellidos
+    else
+      return ""
+  }
+
+  obtenerTerminal(): string {
+    if (this.alarma.id_terminal != null)
+      return this.alarma.id_terminal.numero_terminal
+    else
+      return ""
+  }
   //Toast para el Alert indicando que la operación fue exitosa
   alertExito() :void {
     const Toast = Swal.mixin({
