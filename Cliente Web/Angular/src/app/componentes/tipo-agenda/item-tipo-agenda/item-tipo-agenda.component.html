@@ -1,11 +1,12 @@
 <td>{{ tipo_agenda.nombre }}</td>
+<td>{{ tipo_agenda.codigo }}</td>
+<td>{{ tipo_agenda.importancia }}</td>
 <td>
-  <button type="submit" class="btn btn-outline-danger btn-modify mx-2"
-          [routerLink]="['/tipo_agenda/borrado', tipo_agenda.id]">
-    Eliminar
-  </button>
   <button type="submit" class="btn btn-outline-secondary btn-modify"
           [routerLink]="['/tipo_agenda/modificar', tipo_agenda.id]">
-    Modificar datos
+    <i class="fa fa-pen"></i>
+  </button>
+  <button type="submit" class="btn btn-delete m-1" (click)="modalConfirmacion()">
+    <i class="fa fa-trash"></i>
   </button>
 </td>

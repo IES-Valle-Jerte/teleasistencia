@@ -24,11 +24,13 @@ export class ModificarHistoricoTipoSituacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.historico_tipo_situacion = this.route.snapshot.data['historicos_situaciones'];
+    this.historico_tipo_situacion = this.route.snapshot.data['historico_situacion'];
     this.idHistoricoTipoSituacion = this.route.snapshot.params['id'];
     this.titleService.setTitle('Modificar tipo agenda ' + this.idHistoricoTipoSituacion);
     this.tipos_situaciones = this.route.snapshot.data['tipos_situaciones'];
     this.terminales = this.route.snapshot.data['terminales'];
+    this.historico_tipo_situacion.id_tipo_situacion = this.historico_tipo_situacion.id_tipo_situacion.id;
+    this.historico_tipo_situacion.id_terminal = this.historico_tipo_situacion.id_terminal.id;
   }
 
   modificarHistoricoTipoDeSituacion(): void {
@@ -42,6 +44,10 @@ export class ModificarHistoricoTipoSituacionComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  optionSelected(i: number): void {
+    document.getElementsByClassName('tipo_historico_situacion_option')[i].setAttribute('selected', '');
   }
 
 }

@@ -12,6 +12,7 @@ import {CargaTipoAgendaService} from "../../../servicios/carga-tipo-agenda.servi
 })
 export class NuevoTipoAgendaComponent implements OnInit {
   public tipo_agenda: ITipoAgenda;
+  public importanciaArray = ['Urgente', 'Importante'];
 
   constructor(private titleService: Title, private route: ActivatedRoute, private cargaTiposAgenda: CargaTipoAgendaService, private router: Router) { }
 

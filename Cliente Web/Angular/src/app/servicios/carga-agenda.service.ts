@@ -23,6 +23,22 @@ export class CargaAgendaService {
     return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '/' + idAgenda);
   }
 
+  getAgendaPorIdPaciente(idPaciente: number): Observable<IAgenda> {
+    return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '?id_paciente=' + idPaciente);
+  }
+
+  getAgendaPorIdTipoAgenda(idTipoAgenda: number): Observable<IAgenda> {
+    return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '?id_tipo_agenda=' + idTipoAgenda);
+  }
+
+  getAgendaPorFechaPrevista(fechaPrevista: Date): Observable<IAgenda> {
+    return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '?fecha_prevista=' + fechaPrevista);
+  }
+
+  getAgendasNoResueltas(fechaResolucion: any): Observable<IAgenda> {
+    return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '?fecha_resolucion=' + null);
+  }
+
   modificarAgenda(agenda: IAgenda): Observable<IAgenda> {
     return this.http.put<IAgenda>(this.URL_SERVER_AGENDAS + '/' + agenda.id, agenda);
   }

@@ -4,7 +4,7 @@ import {ITerminal} from "../interfaces/i-terminal";
 
 export class HistoricoTipoSituacion implements IHistoricoTipoSituacion {
   id: number;
-  id_tipo_situacion: ITipoSituacion;
-  id_terminal: ITerminal;
+  id_tipo_situacion: any;
+  id_terminal: any;
   fecha: Date;
 }

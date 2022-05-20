@@ -90,19 +90,18 @@ import {InterceptorService} from "./interceptors/interceptor.service";
 import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component';
 import { ItemTipoAgendaComponent } from './componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component';
 import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
-import { BorrarTipoAgendaComponent } from './componentes/tipo-agenda/borrar-tipo-agenda/borrar-tipo-agenda.component';
 import { NuevoAgendaComponent } from './componentes/agenda/nuevo-agenda/nuevo-agenda.component';
-import { BorrarAgendaComponent } from './componentes/agenda/borrar-agenda/borrar-agenda.component';
 import { HistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/historico-tipo-situacion.component';
-import { BorrarHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/borrar-historico-tipo-situacion/borrar-historico-tipo-situacion.component';
 import { CrearHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/crear-historico-tipo-situacion/crear-historico-tipo-situacion.component';
 import { ModificarHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component';
 import { ItemHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/item-historico-tipo-situacion/item-historico-tipo-situacion.component';
-import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-historico-tipo-situacion-resolve.service";
 import {CargaHistoricoTipoSituacionService} from "./servicios/carga-historico-tipo-situacion.service";
 import {CargaTipoAgendaService} from "./servicios/carga-tipo-agenda.service";
 import {CargaAgendaService} from "./servicios/carga-agenda.service";
 import { GruposComponent } from './componentes/grupos/grupos.component';
+import { DetallesAgendaComponent } from './componentes/agenda/detalles-agenda/detalles-agenda.component';
+import { ItemAgendaComponent } from './componentes/agenda/item-agenda/item-agenda.component';
+import { ListaAgendaComponent } from './componentes/agenda/lista-agenda/lista-agenda.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -167,15 +166,15 @@ import { GruposComponent } from './componentes/grupos/grupos.component';
     ModificarTipoSituacionComponent,
     BorrarTipoViviendaComponent,
     BorrarTipoSituacionComponent,
-    BorrarTipoAgendaComponent,
     NuevoAgendaComponent,
-    BorrarAgendaComponent,
     HistoricoTipoSituacionComponent,
-    BorrarHistoricoTipoSituacionComponent,
     CrearHistoricoTipoSituacionComponent,
     ModificarHistoricoTipoSituacionComponent,
     ItemHistoricoTipoSituacionComponent,
     GruposComponent,
+    DetallesAgendaComponent,
+    ItemAgendaComponent,
+    ListaAgendaComponent,
   ],
   imports: [
     BrowserModule,

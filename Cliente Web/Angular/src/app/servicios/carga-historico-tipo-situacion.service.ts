@@ -19,6 +19,10 @@ export class CargaHistoricoTipoSituacionService {
     return this.http.get<IHistoricoTipoSituacion[]>(this.URL_SERVER_HISTORICO_TIPOS_SITUACION);
   }
 
+  getHistoricoTipoSituacion(idHistoricoTipoSituacion): Observable<IHistoricoTipoSituacion[]> {
+    return this.http.get<IHistoricoTipoSituacion[]>(this.URL_SERVER_HISTORICO_TIPOS_SITUACION + '/' + idHistoricoTipoSituacion);
+  }
+
   modificarHistoricoTipoSituacion(historicoTipoSituacion: IHistoricoTipoSituacion): Observable<IHistoricoTipoSituacion> {
     return this.http.put<IHistoricoTipoSituacion>(this.URL_SERVER_HISTORICO_TIPOS_SITUACION + '/' + historicoTipoSituacion.id, historicoTipoSituacion);
   }

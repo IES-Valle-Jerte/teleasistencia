@@ -23,6 +23,10 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
+import {CargaAgendaService} from "../../servicios/carga-agenda.service";
+import {ActivatedRoute} from "@angular/router";
+import {Title} from "@angular/platform-browser";
+import {IAgenda} from "../../interfaces/i-agenda";
 
 const colors: any = {
   red: {
@@ -37,6 +41,10 @@ const colors: any = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green: {
+    primary: '#0cd921',
+    secondary: '#abdaaa'
+  }
 };
 
 @Component({
@@ -47,10 +55,9 @@ const colors: any = {
 })
 export class AgendaComponent implements OnInit {
 
-  ngOnInit(): void {
-  }
-
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+
+  public agendas: IAgenda[];
 
   view: CalendarView = CalendarView.Month;
 
@@ -83,23 +90,21 @@ export class AgendaComponent implements OnInit {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-    }
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal) {}
+  constructor(
+    private modal: NgbModal,
+    cargaAgendaService: CargaAgendaService,
+    private route: ActivatedRoute,
+    private titleService: Title,
+  ) {}
+
+  ngOnInit() {
+    this.agendas = this.route.snapshot.data['agendas'];
+    this.addEventsToCalendar();
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -107,7 +112,7 @@ export class AgendaComponent implements OnInit {
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
         events.length === 0
       ) {
-        this.activeDayIsOpen = false;
+        this.activeDayIsOpen = true;
       } else {
         this.activeDayIsOpen = true;
       }
@@ -115,48 +120,28 @@ export class AgendaComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({
-                      event,
-                      newStart,
-                      newEnd,
-                    }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
+  addEventsToCalendar(): void {
+    for (let agenda of this.agendas) {
+      console.log();
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+      let evento = {
+        title: agenda.observaciones,
+        start: new Date(agenda.fecha_prevista),
+        end: new Date(agenda.fecha_prevista),
+        color: agenda.fecha_resolucion === null ? colors.red : colors.green,
+        draggable: false,
+        resizable: {
+          beforeStart: false,
+          afterEnd: false,
+        },
+      };
+      this.events.push(evento);
+    }
   }
 
   setView(view: CalendarView) {

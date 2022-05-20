@@ -75,7 +75,6 @@ import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-ti
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
-import {BorrarTipoAgendaComponent} from "./componentes/tipo-agenda/borrar-tipo-agenda/borrar-tipo-agenda.component";
 import {BorrarTipoAgendaService} from "./servicios/borrar-tipo-agenda.service";
 import {NuevoAgendaComponent} from "./componentes/agenda/nuevo-agenda/nuevo-agenda.component";
 import {ListaAgendaResolveService} from "./servicios/lista-agenda-resolve.service";
@@ -84,9 +83,6 @@ import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-histo
 import {
   CrearHistoricoTipoSituacionComponent
 } from "./componentes/historico-tipo-situacion/crear-historico-tipo-situacion/crear-historico-tipo-situacion.component";
-import {
-  BorrarHistoricoTipoSituacionComponent
-} from "./componentes/historico-tipo-situacion/borrar-historico-tipo-situacion/borrar-historico-tipo-situacion.component";
 import {ListaTerminalResolveService} from "./servicios/lista-terminal-resolve.service";
 import {
   HistoricoTipoSituacionComponent
@@ -96,6 +92,15 @@ import {
 } from "./componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component";
 import {ListaGruposService} from "./servicios/lista-grupos.service";
 import {GruposComponent} from "./componentes/grupos/grupos.component";
+import {
+  DetallesHistoricoTipoSituacionResolveService
+} from "./servicios/detalles-historico-tipo-situacion-resolve.service";
+import {
+  ItemHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/item-historico-tipo-situacion/item-historico-tipo-situacion.component";
+import {ItemTipoAgendaComponent} from "./componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component";
+import {ItemAgendaComponent} from "./componentes/agenda/item-agenda/item-agenda.component";
+import {ListaPacientesResolveService} from "./servicios/lista-paciente-resolve.service";
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
@@ -346,7 +351,16 @@ const routes: Routes = [
     resolve: {
       agendas: ListaAgendaResolveService,
       tipos_agenda: ListaTiposAgendaResolveService,
-      personas: ListaPersonasResolveService
+      personas: ListaPersonasResolveService,
+      pacientes: ListaPacientesResolveService
+    }
+  },
+  {
+    path: 'agenda/borrado/:id',
+    component: ItemAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agendas: ListaAgendaResolveService,
     }
   },
   {
@@ -373,7 +387,7 @@ const routes: Routes = [
   },
   {
     path: 'tipo_agenda/borrado/:id',
-    component: BorrarTipoAgendaComponent,
+    component: ItemTipoAgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
       tipo_agenda: BorrarTipoAgendaService,
@@ -479,17 +493,18 @@ const routes: Routes = [
     component: ModificarHistoricoTipoSituacionComponent,
     canActivate: [LoginGuard],
     resolve: {
-      historicos_situaciones: ListaHistoricoTipoSituacionResolveService,
+      historico_situacion: DetallesHistoricoTipoSituacionResolveService,
       tipos_situaciones: ListaSituacionesService,
       terminales: ListaTerminalResolveService
     }
   },
   {
     path: 'historico_situaciones/borrado/:id',
-    component: BorrarHistoricoTipoSituacionComponent,
+    component: ItemHistoricoTipoSituacionComponent,
     canActivate: [LoginGuard],
     resolve: {
       historico_situaciones: ListaHistoricoTipoSituacionResolveService,
+      historico_situacion: DetallesHistoricoTipoSituacionResolveService
     }
   },
   {

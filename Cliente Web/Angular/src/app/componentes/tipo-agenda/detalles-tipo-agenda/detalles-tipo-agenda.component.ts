@@ -13,6 +13,7 @@ export class DetallesTipoAgendaComponent implements OnInit {
 
   public tipo_agenda: ITipoAgenda;
   public idTipoAgenda: number;
+  public importanciaArray = ['Urgente', 'Importante'];
 
   constructor(private route: ActivatedRoute, private titleService: Title, private cargaTipoAgendaService: CargaTipoAgendaService, private router: Router) {
   }
@@ -34,6 +35,10 @@ export class DetallesTipoAgendaComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  optionSelected(i: number): void {
+    document.getElementsByClassName('tipo_agenda_option')[i].setAttribute('selected', '');
   }
 
 }

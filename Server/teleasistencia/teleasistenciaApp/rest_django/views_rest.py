@@ -715,7 +715,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Comprobamos que el tipo situacion existe
-        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("tipo_situacion"))
+        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("id_tipo_situacion"))
         if id_tipo_situacion is None:
             return Response("Error: id_tipo_situacion")
 
@@ -738,7 +738,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         # Comprobamos que el tipo situacion existe
-        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("tipo_situacion"))
+        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("id_tipo_situacion"))
         if id_tipo_situacion is None:
             return Response("Error: id_tipo_situacion")
 
@@ -751,6 +751,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
         historico_tipo_situacion = Historico_Tipo_Situacion.objects.get(pk=kwargs["pk"])
         historico_tipo_situacion.id_tipo_situacion = id_tipo_situacion
         historico_tipo_situacion.id_terminal = id_terminal
+        historico_tipo_situacion.fecha = request.data.get("fecha")
 
         historico_tipo_situacion.save()
 

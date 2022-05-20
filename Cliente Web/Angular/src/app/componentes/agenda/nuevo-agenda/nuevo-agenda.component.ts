@@ -6,6 +6,7 @@ import {Agenda} from "../../../clases/agenda";
 import {CargaAgendaService} from "../../../servicios/carga-agenda.service";
 import {ITipoAgenda} from "../../../interfaces/i-tipo-agenda";
 import {IPersona} from "../../../interfaces/i-persona";
+import {IPaciente} from "../../../interfaces/i-paciente";
 
 @Component({
   selector: 'app-nuevo-agenda',
@@ -17,6 +18,7 @@ export class NuevoAgendaComponent implements OnInit {
   public agenda: IAgenda;
   public tipos_agenda: ITipoAgenda[];
   public personas_contacto: IPersona[];
+  public pacientes: IPaciente[];
 
   constructor(private titleService: Title, private route: ActivatedRoute, private cargaAgendas: CargaAgendaService, private router: Router) { }
 
@@ -25,6 +27,7 @@ export class NuevoAgendaComponent implements OnInit {
     this.personas_contacto = this.route.snapshot.data['personas'];
     this.titleService.setTitle('Nuevo agenda');
     this.agenda = new Agenda();
+    this.pacientes = this.route.snapshot.data['pacientes'];
   }
 
   optionSelected(i: number): void {

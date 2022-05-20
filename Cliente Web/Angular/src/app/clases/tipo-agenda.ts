@@ -4,5 +4,5 @@ export class TipoAgenda implements ITipoAgenda {
   id: number;
   nombre: string;
   codigo: number;
-  importancia: ['Urgente', 'Importante'];
+  importancia: string;
 }

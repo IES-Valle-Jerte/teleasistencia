@@ -6,7 +6,7 @@
         <li class="breadcrumb-item active" aria-current="page">Histórico de tipos de situación</li>
       </ol>
     </nav>
-    <h1 class="component-title">Tipos de agenda</h1>
+    <h1 class="component-title">Histórico de tipos de situación</h1>
     <div class="form-group mb-3">
       <input id="campoBusqueda" type="text" class="form-control" placeholder="Busqueda..." [(ngModel)]="inputBusqueda">
     </div>
@@ -14,7 +14,9 @@
       <table id="tableList" class="table table-hover text-center sortable">
         <thead>
         <tr class="table-purple">
-          <th (click)="ordenacionTabla(0, 'string')" scope="col">Datos <i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(0, 'string')" scope="col">Tipo situación<i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(0, 'string')" scope="col">Terminal <i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(0, 'string')" scope="col">Fecha <i class="fas fa-sort"></i></th>
           <th scope="col"></th>
         </tr>
         </thead>

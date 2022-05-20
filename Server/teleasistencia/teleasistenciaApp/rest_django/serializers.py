@@ -79,7 +79,7 @@ class Agenda_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Agenda
         fields = '__all__' #Indica todos los campos
-        depth = 1
+        depth = 2
 
 
 class Tipo_Agenda_Serializer(serializers.ModelSerializer):

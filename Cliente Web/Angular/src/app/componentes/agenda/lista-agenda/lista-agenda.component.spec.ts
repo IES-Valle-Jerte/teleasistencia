@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BorrarTipoAgendaComponent } from './borrar-tipo-agenda.component';
+import { ListaAgendaComponent } from './lista-agenda.component';
 
-describe('BorrarTipoAgendaComponent', () => {
-  let component: BorrarTipoAgendaComponent;
-  let fixture: ComponentFixture<BorrarTipoAgendaComponent>;
+describe('ListaAgendaComponent', () => {
+  let component: ListaAgendaComponent;
+  let fixture: ComponentFixture<ListaAgendaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BorrarTipoAgendaComponent ]
+      declarations: [ ListaAgendaComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BorrarTipoAgendaComponent);
+    fixture = TestBed.createComponent(ListaAgendaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
