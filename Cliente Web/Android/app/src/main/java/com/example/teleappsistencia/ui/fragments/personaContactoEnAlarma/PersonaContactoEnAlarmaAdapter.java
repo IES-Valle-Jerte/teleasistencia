@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.PersonaContactoEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class PersonaContactoEnAlarmaAdapter extends RecyclerView.Adapter<Persona
         public PersonaContactoEnAlarmaViewHolder(View v) {
             super(v);
             this.context = v.getContext();
+            // Capturamos los elementos del layout
             this.txtCardIdPersonaContactoEnAlarma = (TextView) v.findViewById(R.id.txtCardIdPersonaContactoEnAlarma);
             this.txtCardFechaPersonaContactoEnAlarma = (TextView) v.findViewById(R.id.txtCardFechaPersonaContactoEnAlarma);
             this.txtCardIdAlarmaPersonaContactoEnAlarma = (TextView) v.findViewById(R.id.txtCardIdAlarmaPersonaContactoEnAlarma);
@@ -55,7 +57,7 @@ public class PersonaContactoEnAlarmaAdapter extends RecyclerView.Adapter<Persona
             this.imageButtonModificarPersonaContactoEnAlarma = (ImageButton) v.findViewById(R.id.imageButtonModificarPersonaContactoEnAlarma);
             this.imageButtonBorrarPersonaContactoEnAlarma = (ImageButton) v.findViewById(R.id.imageButtonBorrarPersonaContactoEnAlarma);
         }
-
+        //Asignamos listeners
         public void setOnClickListeners() {
             this.imageButtonVerPersonaContactoEnAlarma.setOnClickListener(this);
             this.imageButtonModificarPersonaContactoEnAlarma.setOnClickListener(this);
@@ -85,33 +87,47 @@ public class PersonaContactoEnAlarmaAdapter extends RecyclerView.Adapter<Persona
                     break;
             }
         }
-
+        // Setter para poder pasarle el atributo desde del Adapter
         public void setPersonaContactoEnAlarma(PersonaContactoEnAlarma personaContactoEnAlarma){
             this.personaContactoEnAlarma = personaContactoEnAlarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar la la persona de contacto en alarma
+         */
         private void borrarPersonaContactoEnAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deletePersonaContactoEnAlarmabyId(this.personaContactoEnAlarma.getId(), "Bearer "+ Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deletePersonaContactoEnAlarmabyId(this.personaContactoEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, "Persona Contacto En Alarma borrado correctamente.", Toast.LENGTH_LONG).show();
-                    MainActivity activity = (MainActivity) context;
-                    ListarPersonasContactoEnAlarmaFragment lPCEN = new ListarPersonasContactoEnAlarmaFragment();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, lPCEN)
-                            .addToBackStack(null)
-                            .commit();
+                    Toast.makeText(context, Constantes.PERSONA_CONTACTO_EN_ALARMA_BORRADA, Toast.LENGTH_LONG).show();
+                    volver();
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, "Error al intentar borrar los datos.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constantes.ERROR_BORRADO, Toast.LENGTH_LONG).show();
                 }
             });
         }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver(){
+            MainActivity activity = (MainActivity) context;
+            ListarPersonasContactoEnAlarmaFragment lPCEN = new ListarPersonasContactoEnAlarmaFragment();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, lPCEN)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
+    /**
+     * Se le carga la lista de items al Adapter, en este caso, de Personas de Contacto en Alarma
+     * @param items
+     */
     public PersonaContactoEnAlarmaAdapter(List<PersonaContactoEnAlarma> items) {
         this.items = items;
     }
@@ -131,15 +147,16 @@ public class PersonaContactoEnAlarmaAdapter extends RecyclerView.Adapter<Persona
     @Override
     public void onBindViewHolder(PersonaContactoEnAlarmaViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
+        // En el bind, le cargamos los atributos al layout de la tarjeta
         PersonaContactoEnAlarma personaContactoEnAlarma = items.get(i);
         viewHolder.setPersonaContactoEnAlarma(personaContactoEnAlarma);
 
-        Alarma alarma = (Alarma) Utilidad.getObjeto(personaContactoEnAlarma.getIdAlarma(), "Alarma");
-        Persona persona = (Persona) Utilidad.getObjeto(personaContactoEnAlarma.getIdPersonaContacto(), "Persona");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(personaContactoEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        Persona persona = (Persona) Utilidad.getObjeto(personaContactoEnAlarma.getIdPersonaContacto(), Constantes.PERSONA);
 
-        viewHolder.txtCardIdPersonaContactoEnAlarma.setText("ID: " + String.valueOf(personaContactoEnAlarma.getId()));
-        viewHolder.txtCardFechaPersonaContactoEnAlarma.setText("Fecha: " + personaContactoEnAlarma.getFechaRegistro());
-        viewHolder.txtCardNombrePersonaContactoEnAlarma.setText("Persona: " + persona.getNombre() + " " + persona.getApellidos());
-        viewHolder.txtCardIdAlarmaPersonaContactoEnAlarma.setText("ID Alarma: " + String.valueOf(alarma.getId()));
+        viewHolder.txtCardIdPersonaContactoEnAlarma.setText(Constantes.ID_DP_SP + String.valueOf(personaContactoEnAlarma.getId()));
+        viewHolder.txtCardFechaPersonaContactoEnAlarma.setText(Constantes.FECHA_DP_SP + personaContactoEnAlarma.getFechaRegistro());
+        viewHolder.txtCardNombrePersonaContactoEnAlarma.setText(Constantes.PERSONA_DP_SP + persona.getNombre() + Constantes.ESPACIO + persona.getApellidos());
+        viewHolder.txtCardIdAlarmaPersonaContactoEnAlarma.setText(Constantes.ID_ALARMA_DP_SP + String.valueOf(alarma.getId()));
     }
 }

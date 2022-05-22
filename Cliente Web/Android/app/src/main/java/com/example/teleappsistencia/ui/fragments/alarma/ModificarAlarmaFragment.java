@@ -19,6 +19,7 @@ import com.example.teleappsistencia.modelos.Teleoperador;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import okhttp3.ResponseBody;
@@ -31,8 +32,7 @@ import retrofit2.Response;
  * Use the {@link ModificarAlarmaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModificarAlarmaFragment extends Fragment {
-
+public class ModificarAlarmaFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_ALARMA = "Alarma";
     private Alarma alarma;
@@ -52,6 +52,7 @@ public class ModificarAlarmaFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param alarma que se va a modificar
      * @return A new instance of fragment ModificarAlarmaFragment.
      */
 
@@ -66,6 +67,7 @@ public class ModificarAlarmaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
             this.alarma = (Alarma) getArguments().getSerializable(ARG_ALARMA);
         }
@@ -91,6 +93,10 @@ public class ModificarAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view){
         this.spinnerEstadoAlarma = (Spinner) view.findViewById(R.id.spinnerEstadoAlarma);
         this.editTextObservacionesAlarmaModificar = (EditText) view.findViewById(R.id.editTextObservacionesAlarmaModificar);
@@ -100,12 +106,24 @@ public class ModificarAlarmaFragment extends Fragment {
         this.buttonVolver = (Button) view.findViewById(R.id.buttonVolver);
     }
 
+    /**
+     * Asignamos la propia clase como OnClickListener, ya que abajo tenemos el método implementado
+     */
+    private void asignarListener(){
+        this.buttonGuardarAlarmaModificada.setOnClickListener(this);
+        this.buttonVolver.setOnClickListener(this);
+    }
+
+    /**
+     * Este método carga los datos de la alarma en el layout.
+     */
     private void cargarDatos() {
         int idTeleoperador;
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.estados, android.R.layout.simple_spinner_item);
+        // Le cargamos de forma estática Array desde un Recurso xml con los dos estados, Abierta y Cerrada.
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.estados_alarmas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spinnerEstadoAlarma.setAdapter(adapter);
-        if(this.alarma.getEstado_alarma().equals("Abierta")){
+        if(this.alarma.getEstado_alarma().equals(Constantes.ABIERTA)){
             this.spinnerEstadoAlarma.setSelection(0);
         }
         else{
@@ -114,61 +132,62 @@ public class ModificarAlarmaFragment extends Fragment {
         this.editTextObservacionesAlarmaModificar.setText(this.alarma.getObservaciones());
         this.editTextResumenAlarmaModificar.setText(this.alarma.getResumen());
         if(this.alarma.getId_teleoperador() != null){
-            idTeleoperador = ((Teleoperador) Utilidad.getObjeto(this.alarma.getId_teleoperador(), "Teleoperador")).getId();
+            idTeleoperador = ((Teleoperador) Utilidad.getObjeto(this.alarma.getId_teleoperador(), Constantes.TELEOPERADOR)).getId();
             this.editTextNumberIdTeleoperadorModificar.setText(String.valueOf(idTeleoperador));
         }
     }
 
-    private void asignarListener(){
-        this.buttonGuardarAlarmaModificada.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(editTextNumberIdTeleoperadorModificar.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Es obligatorio indicar un ID de Teleoperador", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    modificarDatosAlarma();
-                    persistirAlarma();
-                }
-            }
-        });
 
-        this.buttonVolver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                volver();
-            }
-        });
+    /**
+     * Este método realiza las comprobaciones básicas imprescindibles
+     * TODO: se pueden mejorar estas comprobaciones
+     * @return
+     */
+    private boolean comprobaciones(){
+        if(editTextNumberIdTeleoperadorModificar.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), Constantes.OBLIGATORIO_INDICAR_TELEOPERADOR, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
-    private void modificarDatosAlarma(){
+    /**
+     * Modificamos los datos del objeto Alarma que nos llegó al crear el fragment
+     */
+    private void modificarDatos(){
         alarma.setObservaciones(this.editTextObservacionesAlarmaModificar.getText().toString());
         alarma.setResumen(this.editTextResumenAlarmaModificar.getText().toString());
         alarma.setEstado_alarma((String)this.spinnerEstadoAlarma.getSelectedItem());
         alarma.setId_teleoperador(Integer.parseInt(this.editTextNumberIdTeleoperadorModificar.getText().toString()));
     }
 
+    /**
+     * Este método lanza la petición PUT a la API REST para modificar la Alarma
+     */
     private void persistirAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarAlarma(alarma.getId(), "Bearer "+ Token.getToken().getAccess(), alarma);
+        Call<ResponseBody> call = apiService.actualizarAlarma(alarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), alarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.errorBody() == null){
-                    Toast.makeText(getContext(), "Alarma modificada con éxito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ALARMA_MODIFICADA, Toast.LENGTH_LONG).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), "Error en la modificación: " + response.raw().message() + " (Pista: ¿existe Teleoperador con ese ID?)" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.raw().message() + Constantes.PISTA_TELEOPERADOR_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_ +t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Este método vuelve a cargar el fragment con el listado.
+     */
     private void volver(){
         ListarAlarmasFragment listarAlarmasFragment = new ListarAlarmasFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -177,4 +196,18 @@ public class ModificarAlarmaFragment extends Fragment {
                 .commit();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.buttonGuardarAlarmaModificada:
+                if(comprobaciones()){
+                    modificarDatos();
+                    persistirAlarma();
+                }
+                break;
+            case R.id.buttonVolverAlarma:
+                volver();
+                break;
+        }
+    }
 }

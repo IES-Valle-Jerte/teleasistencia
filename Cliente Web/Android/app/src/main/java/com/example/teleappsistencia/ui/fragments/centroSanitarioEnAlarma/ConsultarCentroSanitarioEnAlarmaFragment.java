@@ -13,6 +13,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.CentroSanitario;
 import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
@@ -76,6 +77,10 @@ public class ConsultarCentroSanitarioEnAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.textViewConsultarIdCSEA = (TextView) view.findViewById(R.id.textViewConsultarIdCSEA);
         this.textViewConsultarFechaCSEA = (TextView) view.findViewById(R.id.textViewConsultarFechaCSEA);
@@ -85,9 +90,12 @@ public class ConsultarCentroSanitarioEnAlarmaFragment extends Fragment {
         this.textViewConsultarNombreCentroCSEA = (TextView) view.findViewById(R.id.textViewConsultarNombreCentroCSEA);
     }
 
+    /**
+     * Este método carga los datos en el layout.
+     */
     private void cargarDatos() {
-        Alarma alarma = (Alarma) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdAlarma(), "Alarma");
-        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdCentroSanitario(), "CentroSanitario");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdCentroSanitario(), Constantes.CENTRO_SANITARIO);
 
         this.textViewConsultarIdCSEA.setText(String.valueOf(this.centroSanitarioEnAlarma.getId()));
         this.textViewConsultarFechaCSEA.setText(this.centroSanitarioEnAlarma.getFechaRegistro());

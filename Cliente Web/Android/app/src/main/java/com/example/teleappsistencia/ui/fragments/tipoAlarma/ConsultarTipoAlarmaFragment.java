@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.ClasificacionAlarma;
 import com.example.teleappsistencia.modelos.TipoAlarma;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
@@ -77,6 +78,10 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view){
         this.textViewConsultarIdTipoAlarma = (TextView) view.findViewById(R.id.textViewConsultarIdTipoAlarma);
         this.textViewConsultarNombreTipoAlarma = (TextView) view.findViewById(R.id.textViewConsultarNombreTipoAlarma);
@@ -86,8 +91,11 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
         this.textViewConsultarCodigoClasificacionTipoAlarma = (TextView) view.findViewById(R.id.textViewConsultarCodigoClasificacionTipoAlarma);
     }
 
+    /**
+     * Este método carga los datos en el layout.
+     */
     private void cargarDatos(){
-        ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(this.tipoAlarma.getClasificacionAlarma(), "ClasificacionAlarma");
+        ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(this.tipoAlarma.getClasificacionAlarma(), Constantes.CLASIFICACION_ALARMA);
         this.textViewConsultarIdTipoAlarma.setText(String.valueOf(this.tipoAlarma.getId()));
         this.textViewConsultarNombreTipoAlarma.setText(this.tipoAlarma.getNombre());
         this.textViewConsultarCodigoTipoAlarma.setText(this.tipoAlarma.getCodigo());

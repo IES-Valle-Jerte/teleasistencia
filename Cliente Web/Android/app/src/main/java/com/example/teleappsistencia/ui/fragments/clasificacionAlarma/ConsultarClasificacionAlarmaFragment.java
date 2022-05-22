@@ -33,6 +33,7 @@ public class ConsultarClasificacionAlarmaFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param clasificacionAlarma recibe la clasificación de la alarma para pasarla al onCreate
      * @return A new instance of fragment ConsultarClasificacionAlarmaFragment.
      */
 
@@ -47,6 +48,7 @@ public class ConsultarClasificacionAlarmaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
             this.clasificacionAlarma = (ClasificacionAlarma) getArguments().getSerializable(ARG_CLASIFICACIONALARMA);
         }
@@ -70,12 +72,19 @@ public class ConsultarClasificacionAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.textViewConsultarIdClasificacionAlarma = (TextView) view.findViewById(R.id.textViewConsultarIdClasificacionAlarma );
         this.textViewConsultarNombreClasificacionAlarma = (TextView) view.findViewById(R.id.textViewConsultarNombreClasificacionAlarma);
         this.textViewConsultarCodigoClasificacionAlarma = (TextView) view.findViewById(R.id.textViewConsultarCodigoClasificacionAlarma);
     }
 
+    /**
+     * Este método carga los datos de la alarma en el layout.
+     */
     private void cargarDatos() {
         this.textViewConsultarIdClasificacionAlarma.setText(String.valueOf(this.clasificacionAlarma.getId()));
         this.textViewConsultarNombreClasificacionAlarma.setText(this.clasificacionAlarma.getNombre());

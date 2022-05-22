@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.RecursoComunitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import okhttp3.ResponseBody;
@@ -89,6 +90,10 @@ public class ModificarRecursoComunitarioEnAlarmaFragment extends Fragment implem
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.editTextNumberIdAlarmaRCEAModificar = (EditText) view.findViewById(R.id.editTextNumberIdAlarmaRCEAModificar);
         this.editTextNumberIdRecursoComunitarioRCEAModificar = (EditText) view.findViewById(R.id.editTextNumberIdRecursoComunitarioRCEAModificar);
@@ -99,15 +104,21 @@ public class ModificarRecursoComunitarioEnAlarmaFragment extends Fragment implem
         this.buttonVolverRCEA = (Button) view.findViewById(R.id.buttonVolverRCEA);
     }
 
+    /**
+     * Asignamos la propia clase como OnClickListener, ya que abajo tenemos el método implementado
+     */
     private void asignarListener() {
         this.buttonGuardarRCEAModificado.setOnClickListener(this);
         this.buttonVolverRCEA.setOnClickListener(this);
         this.editTextFechaRegistroRCEAModificar.setOnClickListener(this);
     }
 
+    /**
+     * Este método carga los datos del Recurso Comunitario en Alarma en el layout.
+     */
     private void cargarDatos() {
-        Alarma alarma = (Alarma) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdAlarma(), "Alarma");
-        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdRecursoComunitairo(), "RecursoComunitario");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdRecursoComunitairo(), Constantes.RECURSO_COMUNITARIO);
 
         this.editTextNumberIdAlarmaRCEAModificar.setText(String.valueOf(alarma.getId()));
         this.editTextNumberIdRecursoComunitarioRCEAModificar.setText(String.valueOf(recursoComunitario.getId()));
@@ -116,7 +127,31 @@ public class ModificarRecursoComunitarioEnAlarmaFragment extends Fragment implem
         this.editTextAcuerdoRCEAModificar.setText(this.recursoComunitarioEnAlarma.getAcuerdoAlcanzado());
     }
 
-    private void modificarDatosRecursoComunitarioEnAlarma(){
+    /**
+     * Este método realiza las comprobaciones básicas imprescindibles
+     * TODO: se pueden mejorar estas comprobaciones
+     * @return
+     */
+    private boolean comprobaciones(){
+        if(this.editTextFechaRegistroRCEAModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_FECHA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNumberIdAlarmaRCEAModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_ALARMA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNumberIdRecursoComunitarioRCEAModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_RECURSO_COMUNITARIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Modificamos los datos del objeto RecursoComunitarioEnAlarma que nos llegó al crear el fragment
+     */
+    private void modificarDatos(){
         this.recursoComunitarioEnAlarma.setIdAlarma(Integer.parseInt(this.editTextNumberIdAlarmaRCEAModificar.getText().toString()));
         this.recursoComunitarioEnAlarma.setIdRecursoComunitairo(Integer.parseInt(this.editTextNumberIdRecursoComunitarioRCEAModificar.getText().toString()));
         this.recursoComunitarioEnAlarma.setFechaRegistro(this.editTextFechaRegistroRCEAModificar.getText().toString());
@@ -124,49 +159,39 @@ public class ModificarRecursoComunitarioEnAlarmaFragment extends Fragment implem
         this.recursoComunitarioEnAlarma.setAcuerdoAlcanzado(this.editTextAcuerdoRCEAModificar.getText().toString());
     }
 
+    /**
+     * Este método lanza la petición PUT a la API REST para modificar el Recurso Comunitario en Alarma
+     */
     private void persistirRecursoComunitarioAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma.getId(), "Bearer "+ Token.getToken().getAccess(), this.recursoComunitarioEnAlarma);
+        Call<ResponseBody> call = apiService.actualizarRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.recursoComunitarioEnAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.errorBody() == null){
-                    Toast.makeText(getContext(), "Modificado con éxito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), "Error en la modificación: " + response.raw().message() + " (Pista: ¿existe Alarma y/o Recurso Comunitario con ese ID?)" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.raw().message() + Constantes.PISTA_ALARMA_RECURSOCOMUNITARIO_ID, Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Este método vuelve a cargar el fragment con el listado.
+     */
     private void volver(){
         ListarRecursosComunitariosEnAlarmaFragment lRCEA = new ListarRecursosComunitariosEnAlarmaFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment, lRCEA)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private boolean comprobaciones(){
-        if(this.editTextFechaRegistroRCEAModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir una fecha", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(this.editTextNumberIdAlarmaRCEAModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Alarma", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(this.editTextNumberIdRecursoComunitarioRCEAModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Recurso Comunitario", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
     }
 
     @Override
@@ -177,7 +202,7 @@ public class ModificarRecursoComunitarioEnAlarmaFragment extends Fragment implem
                 break;
             case R.id.buttonGuardarRCEAModificado:
                 if(comprobaciones()){
-                    modificarDatosRecursoComunitarioEnAlarma();
+                    modificarDatos();
                     persistirRecursoComunitarioAlarma();
                 }
                 break;

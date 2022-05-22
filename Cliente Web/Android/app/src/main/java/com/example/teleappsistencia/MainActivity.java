@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ExpandableListView expandableListView;
     private List<MenuModel> headerList = new ArrayList<>();
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-    private CounterFab counterFab;
 
 
     @Override
@@ -86,33 +85,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.counterFab = (CounterFab) findViewById(R.id.fab);
+        /* Iniciamos el servicio de notificación de Alarmas
+        * FIXME: evaluar el rol del Usuario, de momento queda mockeado. */
+        String rol = "Teleoperador";
+        if(rol.equals("Teleoperador")) {
+            Utilidad.iniciarEscuchaAlarmas(this);
+        }
 
-        this.counterFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-
-        //Iniciamos el servicio de notificación de Alarmas
-        Utilidad.iniciarEscuchaAlarmas(this);
-
-        //Iniciamos el token
+        //Iniciamos el token. Esto se cambiará (o se quitará) cuando Samuel introduzca su parte
+        // FIXME: cargar el token de la forma que Samuel tenga implementada
         Token.cargarToken("admin", "admin");
 
         // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
         //loadMenuHeader();
 
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
@@ -183,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_alarma), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarTipoAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarTipoAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarTipoAlarmaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -196,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_clasificacion_alarma), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarClasificacionAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarClasificacionAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarClasificacionAlarmaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -205,16 +191,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Menu Alarma.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarAlarmasFragment()));
+        // FIXME: Evaluar el rol de usuario y si es Profesor, cargar este grupo. Mockeado.
+        String rol = "Profesor";
+        if(rol.equals("Profesor")){
+            childModelsList = new ArrayList<>();
+            menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
+            headerList.add(menuModel);
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));
+            childModelsList.add(new MenuModel(childNames[2], false, false, new ListarAlarmasFragment()));
 
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
+            if (menuModel.hasChildren()) {
+                childList.put(menuModel, childModelsList);
+            } else{
+                childList.put(menuModel, null);
+            }
         }
 
         // Menu Centro Sanitario en Alarma.
@@ -222,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_centro_sanitario_en_alarma), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarCentroSanitarioEnAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarCentrosSanitariosEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarCentrosSanitariosEnAlarmaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -235,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_recursos_comunitarios_en_alarma), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRecursosComunitariosEnAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarRecursosComunitariosEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarRecursosComunitariosEnAlarmaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -248,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_persona_de_contacto_en_alarma), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPersonaContactoEnAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarPersonasContactoEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarPersonasContactoEnAlarmaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -333,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
+        /* TODO: que alguien comente qué hace esto por favor... */
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -367,41 +358,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    public void incrementarBadge(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                counterFab.increase();
-            }
-        });
-    }
-
-    public void decrementarBadge(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                counterFab.decrease();
-            }
-        });
-    }
-
-    public void crearAlertDialog(Alarma alarmaNotificada){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AlarmAlertFragment aAF = AlarmAlertFragment.newInstance(alarmaNotificada);
-                aAF.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme_Dialog_MyDialogTheme);
-                aAF.show(getSupportFragmentManager(), null);
-            }
-        });
-    }
-
-    public void ocultarFAB(){
-        this.counterFab.setVisibility(View.INVISIBLE);
-    }
-
-    public void mostrarFAB(){
-        this.counterFab.setVisibility(View.VISIBLE);
-    }
 
 }

@@ -15,15 +15,18 @@ import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.Teleoperador;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ConsultarAlarmaFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * Fragment donde se mostrarán los datos de una alarma.
  */
 public class ConsultarAlarmaFragment extends Fragment {
 
+    // FIXME: qué hago con esta constante...?
     private static final String ARG_ALARMA = "Alarma";
     private Alarma alarma;
     private TextView textViewConsultarIdAlarma;
@@ -43,6 +46,7 @@ public class ConsultarAlarmaFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param alarma recibe la alarma para pasarla al onCreate
      * @return A new instance of fragment ConsultarAlarmaFragment.
      */
     public static ConsultarAlarmaFragment newInstance(Alarma alarma) {
@@ -56,6 +60,7 @@ public class ConsultarAlarmaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
             this.alarma = (Alarma) getArguments().getSerializable(ARG_ALARMA);
         }
@@ -70,6 +75,7 @@ public class ConsultarAlarmaFragment extends Fragment {
         // Capturar los elementos del layout
         capturarElementos(view);
 
+        //Cargamos los datos si hemos pasado una alarma (el fragment se ha creado a través de newInstance()
         if(this.alarma != null){
             cargarDatos();
         }
@@ -77,6 +83,10 @@ public class ConsultarAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.textViewConsultarIdAlarma = (TextView) view.findViewById(R.id.textViewConsultarIdAlarma);
         this.textViewConsultarEstadoAlarma = (TextView) view.findViewById(R.id.textViewConsultarEstadoAlarma);
@@ -87,6 +97,9 @@ public class ConsultarAlarmaFragment extends Fragment {
         this.textViewConsultarResumenAlarma = (TextView) view.findViewById(R.id.textViewConsultarResumenAlarma);
     }
 
+    /**
+     * Este método carga los datos de la alarma en el layout.
+     */
     private void cargarDatos() {
         Terminal terminal;
         Paciente paciente;
@@ -97,20 +110,19 @@ public class ConsultarAlarmaFragment extends Fragment {
         this.textViewConsultarObservacionesAlarma.setText(alarma.getObservaciones());
         this.textViewConsultarResumenAlarma.setText(alarma.getResumen());
         if(alarma.getId_teleoperador() != null){
-            Teleoperador teleoperador = (Teleoperador) Utilidad.getObjeto(alarma.getId_teleoperador(), "Teleoperador");
-            this.textViewConsultarTeleoperadorAlarma.setText(teleoperador.getFirstName()+" "+teleoperador.getLastName());
+            Teleoperador teleoperador = (Teleoperador) Utilidad.getObjeto(alarma.getId_teleoperador(), Constantes.TELEOPERADOR);
+            this.textViewConsultarTeleoperadorAlarma.setText(teleoperador.getFirstName()+Constantes.ESPACIO+teleoperador.getLastName());
         }
 
         //Dependiendo de como fuese creada la alarma, hay que coger los datos de una forma u otra
         if(alarma.getId_paciente_ucr() != null){
-            paciente = (Paciente) Utilidad.getObjeto(alarma.getId_paciente_ucr(), "Paciente");
-            terminal = (Terminal) Utilidad.getObjeto(paciente.getId_terminal(), "Terminal");
+            paciente = (Paciente) Utilidad.getObjeto(alarma.getId_paciente_ucr(), Constantes.PACIENTE);
         }
         else{
-            terminal = (Terminal) Utilidad.getObjeto(alarma.getId_terminal(), "Terminal");
-            paciente = (Paciente) Utilidad.getObjeto(terminal.getId_titular(), "Paciente");
+            terminal = (Terminal) Utilidad.getObjeto(alarma.getId_terminal(), Constantes.TERMINAL);
+            paciente = (Paciente) Utilidad.getObjeto(terminal.getId_titular(), Constantes.PACIENTE);
         }
-        persona = (Persona) Utilidad.getObjeto(paciente.getId_persona(), "Persona");
-        this.textViewConsultarPacienteAlarma.setText(persona.getNombre()+" "+persona.getApellidos());
+        persona = (Persona) Utilidad.getObjeto(paciente.getId_persona(), Constantes.PERSONA);
+        this.textViewConsultarPacienteAlarma.setText(persona.getNombre() + Constantes.ESPACIO + persona.getApellidos());
     }
 }

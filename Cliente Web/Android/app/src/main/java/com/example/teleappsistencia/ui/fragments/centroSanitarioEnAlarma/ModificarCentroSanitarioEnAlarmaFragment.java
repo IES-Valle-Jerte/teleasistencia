@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import okhttp3.ResponseBody;
@@ -50,6 +51,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param centroSanitarioEnAlarma objeto que se va a modificar
      * @return A new instance of fragment ModificarCentroSanitarioEnAlarmaFragment.
      */
     public static ModificarCentroSanitarioEnAlarmaFragment newInstance(CentroSanitarioEnAlarma centroSanitarioEnAlarma) {
@@ -63,6 +65,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
             this.centroSanitarioEnAlarma = (CentroSanitarioEnAlarma) getArguments().getSerializable(ARG_CENTROSANITARIOEA);
         }
@@ -88,6 +91,10 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.editTextNumberIdAlarmaCSEAModificar = (EditText) view.findViewById(R.id.editTextNumberIdAlarmaCSEAModificar);
         this.editTextNumberIdCentroSanitarioCSEAModificar = (EditText) view.findViewById(R.id.editTextNumberIdCentroSanitarioCSEAModificar);
@@ -98,15 +105,21 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
         this.buttonVolverCSEA = (Button) view.findViewById(R.id.buttonVolverCSEA);
     }
 
+    /**
+     * Asignamos la propia clase como OnClickListener, ya que abajo tenemos el método implementado
+     */
     private void asignarListener() {
         this.buttonGuardarCSEAModificado.setOnClickListener(this);
         this.buttonVolverCSEA.setOnClickListener(this);
         this.editTextFechaRegistroCSEAModificar.setOnClickListener(this);
     }
 
+    /**
+     * Este método carga los datos del Centro Sanitario en Alarma en el layout.
+     */
     private void cargarDatos() {
-        Alarma alarma = (Alarma) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdAlarma(), "Alarma");
-        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdCentroSanitario(), "CentroSanitario");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdCentroSanitario(), Constantes.CENTRO_SANITARIO);
 
         this.editTextNumberIdAlarmaCSEAModificar.setText(String.valueOf(alarma.getId()));
         this.editTextNumberIdCentroSanitarioCSEAModificar.setText(String.valueOf(centroSanitario.getId()));
@@ -115,7 +128,31 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
         this.editTextAcuerdoCSEAModificar.setText(this.centroSanitarioEnAlarma.getAcuerdoAlcanzado());
     }
 
-    private void modificarDatosCentroSanitarioEnAlarma(){
+    /**
+     * Este método realiza las comprobaciones básicas imprescindibles
+     * TODO: se pueden mejorar estas comprobaciones
+     * @return
+     */
+    private boolean comprobaciones(){
+        if(this.editTextFechaRegistroCSEAModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_FECHA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNumberIdAlarmaCSEAModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_ALARMA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNumberIdCentroSanitarioCSEAModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_CENTRO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Modificamos los datos del objeto Centro Sanitario en Alarma que nos llegó al crear el fragment
+     */
+    private void modificarDatos(){
         this.centroSanitarioEnAlarma.setIdAlarma(Integer.parseInt(this.editTextNumberIdAlarmaCSEAModificar.getText().toString()));
         this.centroSanitarioEnAlarma.setIdCentroSanitario(Integer.parseInt(this.editTextNumberIdCentroSanitarioCSEAModificar.getText().toString()));
         this.centroSanitarioEnAlarma.setFechaRegistro(this.editTextFechaRegistroCSEAModificar.getText().toString());
@@ -123,49 +160,40 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
         this.centroSanitarioEnAlarma.setAcuerdoAlcanzado(this.editTextAcuerdoCSEAModificar.getText().toString());
     }
 
+
+    /**
+     * Este método lanza la petición PUT a la API REST para modificar el Centro Sanitario en alarma
+     */
     private void persistirCentroSanitarioEnAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarCentroSanitarioEnAlarma(centroSanitarioEnAlarma.getId(), "Bearer "+ Token.getToken().getAccess(), this.centroSanitarioEnAlarma);
+        Call<ResponseBody> call = apiService.actualizarCentroSanitarioEnAlarma(centroSanitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO+ Token.getToken().getAccess(), this.centroSanitarioEnAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.errorBody() == null){
-                    Toast.makeText(getContext(), "Modificado con éxito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), "Error en la modificación: " + response.raw().message() + " (Pista: ¿existe Alarma y/o Centro con ese ID?)" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.raw().message() + Constantes.PISTA_ALARMA_CENTRO_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Este método vuelve a cargar el fragment con el listado.
+     */
     private void volver(){
         ListarCentrosSanitariosEnAlarmaFragment lCSEA = new ListarCentrosSanitariosEnAlarmaFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment, lCSEA)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private boolean comprobaciones(){
-        if(this.editTextFechaRegistroCSEAModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir una fecha", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(this.editTextNumberIdAlarmaCSEAModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Alarma", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(this.editTextNumberIdCentroSanitarioCSEAModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Centro Sanitario", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
     }
 
     @Override
@@ -176,7 +204,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
                 break;
             case R.id.buttonGuardarCSEAModificado:
                 if(comprobaciones()){
-                    modificarDatosCentroSanitarioEnAlarma();
+                    modificarDatos();
                     persistirCentroSanitarioEnAlarma();
                 }
                 break;

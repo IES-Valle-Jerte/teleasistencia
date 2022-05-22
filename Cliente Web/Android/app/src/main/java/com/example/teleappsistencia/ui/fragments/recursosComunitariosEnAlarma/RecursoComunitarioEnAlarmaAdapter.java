@@ -16,6 +16,7 @@ import com.example.teleappsistencia.modelos.RecursoComunitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import java.util.List;
 import okhttp3.ResponseBody;
@@ -44,6 +45,7 @@ public class RecursoComunitarioEnAlarmaAdapter extends RecyclerView.Adapter<Recu
         public RecursoComunitarioEnAlarmaViewHolder(View v) {
             super(v);
             this.context = v.getContext();
+            // Capturamos los elementos del layout
             this.txtCardIdRecursoComunitarioEnAlarma = (TextView) v.findViewById(R.id.txtCardIdRecursoComunitarioEnAlarma);
             this.txtCardFechaRecursoComunitarioEnAlarma = (TextView) v.findViewById(R.id.txtCardFechaRecursoComunitarioEnAlarma);
             this.txtCardPersonaRecursoComunitarioEnAlarma = (TextView) v.findViewById(R.id.txtCardPersonaRecursoComunitarioEnAlarma);
@@ -53,7 +55,7 @@ public class RecursoComunitarioEnAlarmaAdapter extends RecyclerView.Adapter<Recu
             this.imageButtonModificarRecursoComunitarioEnAlarma = (ImageButton) v.findViewById(R.id.imageButtonModificarRecursoComunitarioEnAlarma);
             this.imageButtonBorrarRecursoComunitarioEnAlarma = (ImageButton) v.findViewById(R.id.imageButtonBorrarRecursoComunitarioEnAlarma);
         }
-
+        //Asignamos listeners
         public void setOnClickListeners() {
             this.imageButtonVerRecursoComunitarioEnAlarma.setOnClickListener(this);
             this.imageButtonModificarRecursoComunitarioEnAlarma.setOnClickListener(this);
@@ -83,33 +85,47 @@ public class RecursoComunitarioEnAlarmaAdapter extends RecyclerView.Adapter<Recu
                     break;
             }
         }
-
+        // Setter para poder pasarle el atributo desde del Adapter
         public void setRecursoComunitarioEnAlarma(RecursoComunitarioEnAlarma recursoComunitarioEnAlarma){
             this.recursoComunitarioEnAlarma = recursoComunitarioEnAlarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar el recurso comunitario en alarma
+         */
         private void borrarRecursoComunitarioEnAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteRecursoComunitarioEnAlarmabyId(this.recursoComunitarioEnAlarma.getId(), "Bearer "+ Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteRecursoComunitarioEnAlarmabyId(this.recursoComunitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, "Recurso Comunitario En Alarma borrado correctamente.", Toast.LENGTH_LONG).show();
-                    MainActivity activity = (MainActivity) context;
-                    ListarRecursosComunitariosEnAlarmaFragment lRCEA = new ListarRecursosComunitariosEnAlarmaFragment();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, lRCEA)
-                            .addToBackStack(null)
-                            .commit();
+                    Toast.makeText(context, Constantes.RECURSO_EN_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
+                    volver();
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, "Error al intentar borrar los datos.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constantes.ERROR_BORRADO, Toast.LENGTH_LONG).show();
                 }
             });
         }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver(){
+            MainActivity activity = (MainActivity) context;
+            ListarRecursosComunitariosEnAlarmaFragment lRCEA = new ListarRecursosComunitariosEnAlarmaFragment();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, lRCEA)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
+    /**
+     * Se le carga la lista de items al Adapter, en este caso de Recursos Comunitarios en Alarma
+     * @param items
+     */
     public RecursoComunitarioEnAlarmaAdapter(List<RecursoComunitarioEnAlarma> items) {
         this.items = items;
     }
@@ -129,17 +145,18 @@ public class RecursoComunitarioEnAlarmaAdapter extends RecyclerView.Adapter<Recu
     @Override
     public void onBindViewHolder(RecursoComunitarioEnAlarmaViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
+        // En el bind, le cargamos los atributos al layout de la tarjeta
         RecursoComunitarioEnAlarma recursoComunitarioEnAlarma = items.get(i);
         viewHolder.setRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma);
 
-        Alarma alarma = (Alarma) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdAlarma(), "Alarma");
-        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdRecursoComunitairo(), "RecursoComunitario");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(recursoComunitarioEnAlarma.getIdRecursoComunitairo(), Constantes.RECURSO_COMUNITARIO);
 
-        viewHolder.txtCardIdRecursoComunitarioEnAlarma.setText("ID: " + String.valueOf(recursoComunitarioEnAlarma.getId()));
-        viewHolder.txtCardFechaRecursoComunitarioEnAlarma.setText("Fecha: " + recursoComunitarioEnAlarma.getFechaRegistro());
-        viewHolder.txtCardPersonaRecursoComunitarioEnAlarma.setText("Persona: " + recursoComunitarioEnAlarma.getPersona());
-        viewHolder.txtCardAlarmaRecursoComunitarioEnAlarma.setText("ID Alarma: " + String.valueOf(alarma.getId()));
-        viewHolder.txtCardNombreRecursoComunitarioEnAlarma.setText("Recurso Comunitario: " + recursoComunitario.getNombre());
+        viewHolder.txtCardIdRecursoComunitarioEnAlarma.setText(Constantes.ID_DP_SP + String.valueOf(recursoComunitarioEnAlarma.getId()));
+        viewHolder.txtCardFechaRecursoComunitarioEnAlarma.setText(Constantes.FECHA_DP_SP + recursoComunitarioEnAlarma.getFechaRegistro());
+        viewHolder.txtCardPersonaRecursoComunitarioEnAlarma.setText(Constantes.PERSONA_DP_SP + recursoComunitarioEnAlarma.getPersona());
+        viewHolder.txtCardAlarmaRecursoComunitarioEnAlarma.setText(Constantes.ID_ALARMA_DP_SP + String.valueOf(alarma.getId()));
+        viewHolder.txtCardNombreRecursoComunitarioEnAlarma.setText(Constantes.RECURSO_COMUNITARIO_DP_SP + recursoComunitario.getNombre());
 
     }
 }

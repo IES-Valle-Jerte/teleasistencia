@@ -16,6 +16,7 @@ import com.example.teleappsistencia.modelos.PersonaContactoEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.ArrayList;
@@ -88,21 +89,25 @@ public class ListarPersonasContactoEnAlarmaFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Este método carga la lista que vamos a mostrar desde la API REST y una vez que se ha cargada
+     * se las añade al adapter y se las cargamos al recycler.
+     */
     private void cargarLista(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getPersonasContactoEnAlarma("Bearer " + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getPersonasContactoEnAlarma(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 List<Object> lObjetos = response.body();
-                lContactosEnAlarma = (ArrayList<PersonaContactoEnAlarma>) Utilidad.getObjeto(lObjetos, "ArrayList<PersonaContactoEnAlarma>");
+                lContactosEnAlarma = (ArrayList<PersonaContactoEnAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_PERSONAS_CONTACTO_EN_ALARMA);
                 adapter = new PersonaContactoEnAlarmaAdapter(lContactosEnAlarma);
                 recycler.setAdapter(adapter);
             }
 
             @Override
             public void onFailure(Call<List<Object>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al cargar los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_CARGAR_DATOS, Toast.LENGTH_LONG).show();
             }
         });
     }

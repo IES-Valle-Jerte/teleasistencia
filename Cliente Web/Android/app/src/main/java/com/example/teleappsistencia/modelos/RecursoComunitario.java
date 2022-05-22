@@ -60,6 +60,10 @@ public class RecursoComunitario implements Serializable {
         this.dirección = dirección;
     }
 
+    /**
+     * Se devuelve el nombre del Recurso Comunitario para identificarlo en ListViews, Spinners etc.
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {

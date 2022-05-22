@@ -16,6 +16,7 @@ import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import retrofit2.Call;
@@ -76,6 +77,10 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.editTextNumberIdAlarmaCSEACrear = (EditText) view.findViewById(R.id.editTextNumberIdAlarmaCSEACrear);
         this.editTextNumberIdCentroSanitarioCSEACrear = (EditText) view.findViewById(R.id.editTextNumberIdCentroSanitarioCSEACrear);
@@ -86,28 +91,40 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
         this.buttonVolverCSEA = (Button) view.findViewById(R.id.buttonVolverCSEA);
     }
 
+    /**
+     * En este método se asignan los lístner a los botones y al Edit Text de la fecha
+     */
     private void asignarListener() {
         this.buttonGuardarCSEA.setOnClickListener(this);
         this.buttonVolverCSEA.setOnClickListener(this);
         this.editTextFechaRegistroCSEACrear.setOnClickListener(this);
     }
 
+
+    /**
+     * Este método realiza las comprobaciones básicas imprescindibles
+     * TODO: se pueden mejorar estas comprobaciones
+     * @return
+     */
     private boolean comprobaciones(){
         if(this.editTextFechaRegistroCSEACrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir una fecha", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_FECHA, Toast.LENGTH_SHORT).show();
             return false;
         }
         if(this.editTextNumberIdAlarmaCSEACrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Alarma", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_ALARMA, Toast.LENGTH_SHORT).show();
             return false;
         }
         if(this.editTextNumberIdCentroSanitarioCSEACrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Centro Sanitario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_CENTRO, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
+    /**
+     * Extraemos los datos del layout y los guardamos en un objeto del tipo CentroSanitarioEnAlarma.
+     */
     private void guardarDatos() {
         this.centroSanitarioEnAlarma = new CentroSanitarioEnAlarma();
         this.centroSanitarioEnAlarma.setIdAlarma(Integer.parseInt(this.editTextNumberIdAlarmaCSEACrear.getText().toString()));
@@ -117,6 +134,33 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
         this.centroSanitarioEnAlarma.setAcuerdoAlcanzado(this.editTextAcuerdoCSEACrear.getText().toString());
     }
 
+    /**
+     * Este método lanza la petición POST a la API REST para guardar los datos del CentroSantiarioEnAlarma
+     */
+    private void persistirCentroSanitarioEnAlarma(){
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<CentroSanitarioEnAlarma> call = apiService.addCentroSanitarioEnAlarma(this.centroSanitarioEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        call.enqueue(new Callback<CentroSanitarioEnAlarma>() {
+            @Override
+            public void onResponse(Call<CentroSanitarioEnAlarma> call, Response<CentroSanitarioEnAlarma> response) {
+                if(response.errorBody() == null){
+                    Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.raw().message() + Constantes.PISTA_ALARMA_CENTRO_ID, Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<CentroSanitarioEnAlarma> call, Throwable t) {
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * Este método vuelve a cargar el fragment con el listado.
+     */
     private void volver(){
         ListarCentrosSanitariosEnAlarmaFragment lCSEA = new ListarCentrosSanitariosEnAlarmaFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -125,26 +169,6 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
                 .commit();
     }
 
-    private void persistirCentroSanitarioEnAlarma(){
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<CentroSanitarioEnAlarma> call = apiService.addCentroSanitarioEnAlarma(this.centroSanitarioEnAlarma, "Bearer "+ Token.getToken().getAccess());
-        call.enqueue(new Callback<CentroSanitarioEnAlarma>() {
-            @Override
-            public void onResponse(Call<CentroSanitarioEnAlarma> call, Response<CentroSanitarioEnAlarma> response) {
-                if(response.errorBody() == null){
-                    Toast.makeText(getContext(), "Guardado con éxito", Toast.LENGTH_SHORT).show();
-                    volver();
-                }
-                else{
-                    Toast.makeText(getContext(), "Error en la creación: " + response.raw().message() + " (Pista: ¿existe Alarma y/o Centro con ese ID?)" , Toast.LENGTH_LONG).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<CentroSanitarioEnAlarma> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     @Override
     public void onClick(View view) {

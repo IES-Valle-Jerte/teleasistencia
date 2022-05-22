@@ -158,8 +158,6 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         if(this.alarma != null){
             extraerDatos();
             cargarDatos();
-            MainActivity ma = (MainActivity) getActivity();
-            ma.ocultarFAB();
         }
 
         return view;
@@ -640,13 +638,5 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getContext(), "Error al intentar guardar los datos.", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        MainActivity ma = (MainActivity) getActivity();
-        ma.mostrarFAB();
-        super.onDestroyView();
     }
 }

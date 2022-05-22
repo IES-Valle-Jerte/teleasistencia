@@ -2,6 +2,7 @@ package com.example.teleappsistencia.modelos;
 
 import androidx.annotation.NonNull;
 
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.google.gson.annotations.SerializedName;
 
@@ -40,10 +41,15 @@ public class RelacionTerminalRecursoComunitario implements Serializable {
         this.recursoComunitario = recursoComunitario;
     }
 
+    /**
+     * Se devuelve el nombre del Recurso en la relación para identificarlo en ListView, Spinners, etc
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {
-        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(this.getRecursoComunitario(), "RecursoComunitario");
+        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(this.getRecursoComunitario(), Constantes.RECURSO_COMUNITARIO);
         return recursoComunitario.getNombre();
     }
 }
+
