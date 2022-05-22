@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import {CentroSanitarioAlarma} from "../../../clases/centro-sanitario-alarma";
+import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
 
 @Component({
   selector: 'app-lista-centro-sanitario-alarma',
@@ -10,11 +11,16 @@ import {CentroSanitarioAlarma} from "../../../clases/centro-sanitario-alarma";
 })
 export class ListaCentroSanitarioAlarmaComponent implements OnInit {
   public centrosSanitariosAlarma: CentroSanitarioAlarma[];
-  constructor(private route: ActivatedRoute, private titleService: Title) { }
+  numPaginacion: number = 1;
+  inputBusqueda: any = '';
+
+  constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) { }
 
   ngOnInit(): void {
     this.centrosSanitariosAlarma = this.route.snapshot.data['centros_sanitarios_alarma'];
     this.titleService.setTitle('Centros sanitarios en alarma');
   }
-
+  ordenacionTabla(indice: number, tipo: string){
+    this.ordTabla.ordenacionService(indice, tipo);
+  }
 }

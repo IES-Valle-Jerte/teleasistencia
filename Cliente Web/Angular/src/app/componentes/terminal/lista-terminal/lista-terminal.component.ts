@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Terminal } from "../../../clases/terminal";
+import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
+
 
 @Component({
   selector: 'app-lista-terminal',
@@ -10,11 +12,16 @@ import { Terminal } from "../../../clases/terminal";
 })
 export class ListaTerminalComponent implements OnInit {
   public terminales: Terminal[]
-  constructor(private route: ActivatedRoute, private titleService: Title) { }
+  numPaginacion: number = 1;
+  inputBusqueda: any = '';
+  constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) { }
 
   ngOnInit(): void {
     this.terminales = this.route.snapshot.data['terminales']
     this.titleService.setTitle('Terminal');
   }
 
+  ordenacionTabla(indice: number, tipo: string){
+    this.ordTabla.ordenacionService(indice, tipo);
+  }
 }

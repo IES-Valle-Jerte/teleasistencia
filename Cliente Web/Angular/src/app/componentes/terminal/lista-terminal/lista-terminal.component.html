@@ -7,25 +7,33 @@
       </ol>
     </nav>
     <h1 class="component-title">Terminales</h1>
+    <div class="form-group mb-3">
+      <input id="campoBusqueda" type="text" class="form-control" placeholder="Busqueda..." [(ngModel)]="inputBusqueda">
+    </div>
     <div class="table-responsive m-2">
-      <table class="table table-hover text-center">
+      <table id="tableList" class="table table-hover text-center">
         <thead>
         <tr class="table-purple">
-          <th scope="col">Número de terminal</th>
-          <th scope="col">Modo de acceso a la vivienda</th>
-          <th scope="col">Barreras arquitectonicas</th>
-          <th scope="col">Titular del servicio</th>
-          <th scope="col">Tipo de vivienda</th>
+          <th (click)="ordenacionTabla(0, 'string')" scope="col">Número de terminal</th>
+          <th (click)="ordenacionTabla(1, 'string')" scope="col">Modo de acceso a la vivienda</th>
+          <th (click)="ordenacionTabla(2, 'string')" scope="col">Barreras arquitectonicas</th>
+          <th (click)="ordenacionTabla(3, 'string')" scope="col">Titular del servicio</th>
+          <th (click)="ordenacionTabla(4, 'string')" scope="col">Tipo de vivienda</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
 
-        <tr *ngFor="let terminal of terminales"
+        <tr *ngFor="let terminal of terminales  | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
             app-item-terminal [terminal]="terminal">
         </tr>
         </tbody>
       </table>
+      <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        responsive="true"
+        (pageChange)="numPaginacion = $event"></pagination-controls>
     </div>
   </div>
 </main>

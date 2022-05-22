@@ -1,5 +1,5 @@
 <td>{{ alarma.estado_alarma }}</td>
-<td>{{ alarma.fecha_registro | date }}</td>
+<td>{{ alarma.fecha_registro | date : 'dd/MM/YYYY' }}</td>
 <td>{{ alarma.observaciones }}</td>
 <td>{{ alarma.resumen }}</td>
 <td>{{ alarma.id_tipo_alarma.nombre }} - {{ alarma.id_tipo_alarma.id_clasificacion_alarma.nombre }}</td>

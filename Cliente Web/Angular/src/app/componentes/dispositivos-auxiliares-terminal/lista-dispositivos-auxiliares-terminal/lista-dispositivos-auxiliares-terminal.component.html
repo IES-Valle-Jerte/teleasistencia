@@ -7,22 +7,30 @@
       </ol>
     </nav>
     <h1 class="component-title">Dispositivos auxiliares en terminal</h1>
+    <div class="form-group mb-3">
+      <input id="campoBusqueda" type="text" class="form-control" placeholder="Busqueda..." [(ngModel)]="inputBusqueda">
+    </div>
     <div class="table-responsive m-2">
-      <table class="table table-hover text-center">
+      <table id="tableList" class="table table-hover text-center">
         <thead>
         <tr class="table-purple">
-          <th scope="col">Número de terminal</th>
-          <th scope="col">Tipo Alarma</th>
+          <th (click)="ordenacionTabla(0, 'string')" scope="col">Número de terminal</th>
+          <th (click)="ordenacionTabla(1, 'string')" scope="col">Tipo Alarma</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
 
-        <tr *ngFor="let dispositivoAuxiliarTerminal of dispositivosAuxiliaresTerminal"
+        <tr *ngFor="let dispositivoAuxiliarTerminal of dispositivosAuxiliaresTerminal | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
             app-item-dispositivos-auxiliares-terminal [dispositivoAuxiliarTerminal]="dispositivoAuxiliarTerminal">
         </tr>
         </tbody>
       </table>
+      <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        responsive="true"
+        (pageChange)="numPaginacion = $event"></pagination-controls>
     </div>
   </div>
 </main>

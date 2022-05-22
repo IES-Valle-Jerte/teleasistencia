@@ -7,23 +7,31 @@
       </ol>
     </nav>
     <h1 class="component-title">Relacion de terminales con Recursos comunitarios</h1>
+    <div class="form-group mb-3">
+      <input id="campoBusqueda" type="text" class="form-control" placeholder="Busqueda..." [(ngModel)]="inputBusqueda">
+    </div>
     <div class="table-responsive m-2">
-      <table class="table table-hover text-center">
+      <table id="tableList" class="table table-hover text-center">
         <thead>
         <tr class="table-purple">
-          <th scope="col">Número de terminal</th>
-          <th scope="col">Titular del servicio</th>
-          <th scope="col">Nombre de recurso comunitario</th>
+          <th (click)="ordenacionTabla(0, 'string')"  scope="col">Número de terminal</th>
+          <th (click)="ordenacionTabla(1, 'string')"  scope="col">Titular del servicio</th>
+          <th (click)="ordenacionTabla(2, 'string')"  scope="col">Nombre de recurso comunitario</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
 
-        <tr *ngFor="let relacionRecurso of relacionRecursos"
+        <tr *ngFor="let relacionRecurso of relacionRecursos| filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
             app-item-relacion-terminal-recursos-comunitarios [relacionRecurso]="relacionRecurso">
         </tr>
         </tbody>
       </table>
+      <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        responsive="true"
+        (pageChange)="numPaginacion = $event"></pagination-controls>
     </div>
   </div>
 </main>
