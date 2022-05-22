@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    tools:context=".fragments.paciente.ModificarPacienteFragment">
+    tools:context=".ui.fragments.paciente.ModificarPacienteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

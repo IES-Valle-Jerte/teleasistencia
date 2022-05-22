@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
-    tools:context=".fragments.paciente.InsertarPacienteFragment" >
+    tools:context=".ui.fragments.paciente.InsertarPacienteFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"

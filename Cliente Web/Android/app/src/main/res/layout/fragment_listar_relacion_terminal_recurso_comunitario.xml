@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment">
+    tools:context=".ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/listviewPlaceholder"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/fondo"
-        tools:context=".fragments.paciente.ListarPacienteFragment">
+        tools:context=".ui.fragments.paciente.ListarPacienteFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineArriba"

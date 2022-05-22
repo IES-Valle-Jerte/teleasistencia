@@ -9,18 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.teleappsistencia.clases.Token;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -77,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     token = response.body();
                     System.out.println("\n" + token + "\n");
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    Utilidades.setToken(token);
+                    Utilidad.setToken(token);
                     intent.putExtra("token", token);
                     intent.putExtra("usuario", editText_usuario.getText().toString());
                     startActivity(intent);
