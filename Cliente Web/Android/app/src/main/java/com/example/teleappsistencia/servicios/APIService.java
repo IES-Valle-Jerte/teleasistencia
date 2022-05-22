@@ -8,6 +8,7 @@ import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.modelos.TipoVivienda;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.Usuario;
 import com.google.gson.internal.LinkedTreeMap;
@@ -216,7 +217,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @DELETE("api-rest/relacion_usuario_centro/{id}")
-    Call<RelacionUsuarioCentro> deleteRelacionUsuarioCentro(@Path("id") String id, @Header("Authorization") String token);
+    Call<ResponseBody> deleteRelacionUsuarioCentro(@Path("id") String id, @Header("Authorization") String token);
 
     /**
      * Esta función actualizará el objeto RelaciónUsuarioCentro con el id especificado en la URL, con los datos
@@ -261,7 +262,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @DELETE("api-rest/terminal/{id}")
-    Call<Terminal> deleteTerminal(@Path("id") String id, @Header("Authorization") String token);
+    Call<ResponseBody> deleteTerminal(@Path("id") String id, @Header("Authorization") String token);
 
     /**
      * Esta función actualizará el objeto Terminal con el id especificado en la URL, con los datos proporcionados
@@ -347,4 +348,20 @@ public interface APIService {
      */
     @GET("api-rest/centro_sanitario")
     Call<List<CentroSanitario>> getListadoCentroSanitario(@Header("Authorization") String token);
+
+    //Peticiones de TipoVivienda
+
+    /**
+     * Esta función devolverá una llamada al servidor y pasará el token especificado en el encabezado de
+     * Autorización.
+     *
+     * @param token el token que obtengo del inicio de sesión
+     * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
+     */
+    @GET("api-rest/tipo_vivienda")
+    Call<List<TipoVivienda>> getListadoTipoVivienda(@Header("Authorization") String token);
+
+
+
+
 }

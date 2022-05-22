@@ -16,6 +16,7 @@ import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
+import com.example.teleappsistencia.modelos.TipoVivienda;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.Usuario;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -88,6 +89,10 @@ public class Utilidad {
                 break;
             case "RelacionUsuarioCentro":
                 type = new TypeToken<RelacionUsuarioCentro>() {
+                }.getType();
+                break;
+            case "TipoVivienda":
+                type = new TypeToken<TipoVivienda>() {
                 }.getType();
                 break;
         }

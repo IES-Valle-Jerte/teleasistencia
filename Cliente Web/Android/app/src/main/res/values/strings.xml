@@ -158,5 +158,15 @@
     <string name="titulo_insertar_relacion_usuario_centro">Insertar Relación Usuario-Centro</string>
     <string name="observacionesHint">Observaciones...</string>
     <string name="titulo_modificar_relacion_usuario_centro">Modificar Relación Usuario-Centro</string>
+    <string name="titulo_listarTerminales">Terminales</string>
+    <string name="idTerminalConsultar">ID del terminal:</string>
+    <string name="modoAccesoViviendaConsultar">Modo de acceso a la vivienda:</string>
+    <string name="barrerasArquitectonicasConsultar">Barreras arquitectónicas:</string>
+    <string name="tipoViviendaConsultar">Tipo vivienda:</string>
+    <string name="titulo_insertar_terminal">Insertar Terminal</string>
+    <string name="numeroTerminalHint">Nº de terminal...</string>
+    <string name="modoAccesoViviendaHint">Modo de acceso a la vivienda...</string>
+    <string name="barrerasArquitectonicasHint">Barreras arquitectonicas...</string>
+    <string name="titulo_modificar_terminal">Modificar terminal:</string>
 
 </resources>

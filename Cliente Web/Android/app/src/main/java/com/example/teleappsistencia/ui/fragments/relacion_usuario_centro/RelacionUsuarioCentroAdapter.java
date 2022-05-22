@@ -7,18 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.CentroSanitario;
 import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.ui.fragments.relacion_terminal_recurso_comunitario.ListarRelacionTerminalRecursoComunitarioFragment;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
 
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionUsuarioCentroAdapter.RelacionUsuarioCentroViewHolder> {
     private List<RelacionUsuarioCentro> items;
@@ -69,13 +79,47 @@ public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionU
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarRelacionUsuarioCentroFragment).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrarRelacionUsuarioCentro:
-
+                    accionBorrarRelacionUsuarioCentro();
                     break;
             }
         }
+
+        private void accionBorrarRelacionUsuarioCentro() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+            Call<ResponseBody> call = apiService.deleteRelacionUsuarioCentro(String.valueOf(this.relacionUsuarioCentro.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, "Relación Usuario-Centro borrado correctamente", Toast.LENGTH_SHORT).show();
+                        recargarFragment();
+                    } else {
+                        Toast.makeText(context, "Error al borrar la Relación Usuario-Centro", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        }
+
+        private void recargarFragment() {
+            MainActivity activity = (MainActivity) this.context;
+            ListarRelacionUsuarioCentroFragment listarRelacionUsuarioCentroFragment = new ListarRelacionUsuarioCentroFragment();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, listarRelacionUsuarioCentroFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
         public void setRelacionUsuarioCentro(RelacionUsuarioCentro relacionUsuarioCentro) {
             this.relacionUsuarioCentro = relacionUsuarioCentro;
         }
+
+
     }
 
     public RelacionUsuarioCentroAdapter(List<RelacionUsuarioCentro> items) {

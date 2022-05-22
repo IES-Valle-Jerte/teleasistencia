@@ -1,7 +1,6 @@
 package com.example.teleappsistencia.ui.fragments.terminal;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.MainActivity;
@@ -19,7 +19,6 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.ui.fragments.paciente.PacienteAdapter;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class ListarTerminalFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    static List<LinkedTreeMap> lPacientes;
+    static List<Terminal> lTerminales;
 
 
     public ListarTerminalFragment() {
@@ -85,7 +84,8 @@ public class ListarTerminalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listar_terminal, container, false);lPacientes = new ArrayList<>();
+        View view = inflater.inflate(R.layout.fragment_listar_terminal, container, false);
+        lTerminales = new ArrayList<>();
         //ListView listView = view.findViewById(R.id.listViewPacientes);
 
         //Obtenemos el Recycler
@@ -96,31 +96,27 @@ public class ListarTerminalFragment extends Fragment {
         lManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(lManager);
 
-        //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
+        //Obtenemos los datos y pasamos los datos al adaptador mientras mostramos la capa de espera
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataTerminal);
         Utilidad.generarCapaEspera(view, dataConstraintLayout);
-        listarPacientes(view,recycler);
+        listarTerminales(view,recycler);
 
         return view;
     }
 
-    private void listarPacientes(View view, RecyclerView recycler) {
+    private void listarTerminales(View view, RecyclerView recycler) {
 
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
-        call.enqueue(new Callback<List<LinkedTreeMap>>() {
+        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + MainActivity.token.getAccess());
+        call.enqueue(new Callback<List<Terminal>>() {
             @Override
-            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
+            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
                 if (response.isSuccessful()) {
-                    lPacientes = response.body();
-                    List<Paciente> listadoPacientes = new ArrayList<>();
-                    for (LinkedTreeMap paciente : lPacientes) {
-                        listadoPacientes.add((Paciente) Utilidad.getObjeto(paciente, "Paciente"));
-                    }
+                    lTerminales = response.body();
                     //Adaptador
-                    adapter = new PacienteAdapter(listadoPacientes);
+                    adapter = new TerminalAdapter(lTerminales);
                     recycler.setAdapter(adapter);
 
                 } else {
@@ -129,15 +125,15 @@ public class ListarTerminalFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
+            public void onFailure(Call<List<Terminal>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
         });
     }
 
-    private static void fijarListado(List<LinkedTreeMap> listado) {
-        lPacientes = listado;
+    private static void fijarListado(List<Terminal> listado) {
+        lTerminales = listado;
     }
 
 }
