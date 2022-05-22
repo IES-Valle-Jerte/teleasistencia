@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
@@ -34,19 +35,12 @@ import retrofit2.Response;
  */
 public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragment implements View.OnClickListener {
 
-    private Paciente paciente;
+    private RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario;
 
-    private Spinner spinnerTerminal;
-    private Spinner spinnerPersona;
-    private Spinner spinnerTipoModalidadPaciente;
-    private EditText editTextTieneUCR;
-    private EditText editTextNumeroExpediente;
-    private EditText editTextNumeroSeguridadSocial;
-    private EditText editTextPrestacionOtrosServicios;
-    private EditText editTextObservacionesMedicas;
-    private EditText editTextInteresesActividades;
-    private Button btnModificarPaciente;
-    private Button btnVolverPacienteModificar;
+    private Spinner spinnerTerminalModificarRelacionTerminalRecursoComunitario;
+    private Spinner spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario;
+    private Button btnModificarRelacionTerminalRecursoComunitario;
+    private Button btnVolverRelacionTerminalRecursoComunitarioModificar;
 
     public ModificarRelacionTerminalRecursoComunitarioFragment() {
         // Required empty public constructor
@@ -56,7 +50,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
     public static ModificarRelacionTerminalRecursoComunitarioFragment newInstance(RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario) {
         ModificarRelacionTerminalRecursoComunitarioFragment fragment = new ModificarRelacionTerminalRecursoComunitarioFragment();
         Bundle args = new Bundle();
-        args.putSerializable("objetoPaciente", relacionTerminalRecursoComunitario);
+        args.putSerializable("objetoRelacionTerminalRecursoComunitario", relacionTerminalRecursoComunitario);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +59,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            paciente = (Paciente) getArguments().getSerializable("objetoPaciente");
+            relacionTerminalRecursoComunitario = (RelacionTerminalRecursoComunitario) getArguments().getSerializable("objetoRelacionTerminalRecursoComunitario");
         }
     }
 
@@ -78,64 +72,15 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
 
         rellenarCampos();
 
-        this.btnVolverPacienteModificar.setOnClickListener(this);
-        this.btnModificarPaciente.setOnClickListener(this);
-
         // Inflate the layout for this fragment
         return root;
     }
 
     private void rellenarCampos() {
         inicializarSpinnerTerminal();
-        inicializarSpinnerPersona();
-        fijarSiTieneUCR();
-        editTextNumeroExpediente.setText(paciente.getNumeroExpediente());
-        editTextNumeroSeguridadSocial.setText(paciente.getNumeroSeguridadSocial());
-        editTextPrestacionOtrosServicios.setText(paciente.getPrestacionOtrosServiciosSociales());
-        editTextObservacionesMedicas.setText(paciente.getObservacionesMedicas());
-        editTextInteresesActividades.setText(paciente.getInteresesYActividades());
+        inicializarSpinnerRecursoComunitario();
     }
 
-    private void fijarSiTieneUCR() {
-        if (paciente.isTieneUcr()) {
-            this.editTextTieneUCR.setText("Si");
-        } else {
-            this.editTextTieneUCR.setText("No");
-        }
-    }
-
-    private void inicializarSpinnerPersona() {
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
-        call.enqueue(new retrofit2.Callback<List<Persona>>() {
-            @Override
-            public void onResponse(Call<List<Persona>> call, Response<List<Persona>> response) {
-                if (response.isSuccessful()) {
-                    List<Persona> listadoPersona = response.body();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPersonas(listadoPersona));
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    Persona persona = (Persona) Utilidad.getObjeto(paciente.getPersona(), "Persona");
-                    spinnerPersona.setAdapter(adapter);
-                    spinnerPersona.setSelection(buscarPosicionSpinnerPersona(listadoPersona,persona.getId()));
-                } else {
-                    Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Persona>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
-        List<String> listadoPersonaString = new ArrayList<>();
-        for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getNombre() + " " + persona.getApellidos());
-        }
-        return listadoPersonaString;
-    }
 
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
@@ -147,9 +92,9 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
                     List<Terminal> listadoTerminales = response.body();
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaTerminales(listadoTerminales));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    Terminal terminal = (Terminal) Utilidad.getObjeto(paciente.getTerminal(), "Terminal");
-                    spinnerTerminal.setAdapter(adapter);
-                    spinnerTerminal.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales,terminal.getId()), true);
+                    Terminal terminal = (Terminal) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdTerminal(), "Terminal");
+                    spinnerTerminalModificarRelacionTerminalRecursoComunitario.setAdapter(adapter);
+                    spinnerTerminalModificarRelacionTerminalRecursoComunitario.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales,terminal.getId()), true);
                 }
             }
 
@@ -169,7 +114,6 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
         return listadoTerminalesString;
     }
 
-
     private int buscarPosicionSpinnerTerminal(List<Terminal> listadoTerminales, int id) {
         boolean encontrado = false;
         int i = 0;
@@ -182,11 +126,35 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
         return i-1;
     }
 
-    private int buscarPosicionSpinnerPersona(List<Persona> listadoPersonas,int id) {
+    private void inicializarSpinnerRecursoComunitario() {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<List<RecursoComunitario>> call = apiService.getListadoRecursoComunitario("Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new retrofit2.Callback<List<RecursoComunitario>>() {
+            @Override
+            public void onResponse(Call<List<RecursoComunitario>> call, Response<List<RecursoComunitario>> response) {
+                if (response.isSuccessful()) {
+                    List<RecursoComunitario> listadoRecursoComunitario = response.body();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaRecursoComunitario(listadoRecursoComunitario));
+                    RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdRecursoComunitario(), "RecursoComunitario");
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.setAdapter(adapter);
+                    spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.setSelection(buscarPosicionSpinnerRecursoComunitario(listadoRecursoComunitario,recursoComunitario.getId()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecursoComunitario>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private int buscarPosicionSpinnerRecursoComunitario(List<RecursoComunitario> listadoRecursoComunitario, int id) {
         boolean encontrado = false;
         int i = 0;
         while (!encontrado) {
-            if (listadoPersonas.get(i).getId() == id) {
+            if (listadoRecursoComunitario.get(i).getId() == id) {
                 encontrado = true;
             }
             i++;
@@ -194,18 +162,19 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
         return i-1;
     }
 
+    private List<String> convertirListaRecursoComunitario(List<RecursoComunitario> listadoRecursoComunitario) {
+        List<String> listadoRecursoComunitarioString = new ArrayList<>();
+        for (RecursoComunitario recursoComunitario : listadoRecursoComunitario) {
+            listadoRecursoComunitarioString.add(recursoComunitario.getNombre());
+        }
+        return listadoRecursoComunitarioString;
+    }
+
     private void obtenerComponentes(View root) {
-        this.btnVolverPacienteModificar = (Button) root.findViewById(R.id.btnVolverPacienteModificar);
-        this.btnModificarPaciente = (Button) root.findViewById(R.id.btnModificarPaciente);
-        this.spinnerTerminal = (Spinner) root.findViewById(R.id.spinnerTerminal);
-        this.spinnerPersona = (Spinner) root.findViewById(R.id.spinnerPersona);
-        this.spinnerTipoModalidadPaciente = (Spinner) root.findViewById(R.id.spinnerTipoModalidadPaciente);
-        this.editTextTieneUCR = (EditText) root.findViewById(R.id.editTextTieneUCR);
-        this.editTextNumeroExpediente = (EditText) root.findViewById(R.id.editTextNumeroExpediente);
-        this.editTextNumeroSeguridadSocial = (EditText) root.findViewById(R.id.editTextNumeroSeguridadSocial);
-        this.editTextPrestacionOtrosServicios = (EditText) root.findViewById(R.id.editTextPrestacionOtrosServicios);
-        this.editTextObservacionesMedicas = (EditText) root.findViewById(R.id.editTextObservacionesMedicas);
-        this.editTextInteresesActividades = (EditText) root.findViewById(R.id.editTextInteresesActividades);
+        this.spinnerTerminalModificarRelacionTerminalRecursoComunitario = root.findViewById(R.id.spinnerTerminalModificarRelacionTerminalRecursoComunitario);
+        this.spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario = root.findViewById(R.id.spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario);
+        this.btnModificarRelacionTerminalRecursoComunitario = root.findViewById(R.id.btnModificarRelacionTerminalRecursoComunitario);
+        this.btnVolverRelacionTerminalRecursoComunitarioModificar = root.findViewById(R.id.btnVolverRelacionTerminalRecursoComunitarioModificar);
     }
 
     @Override

@@ -12,47 +12,47 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.modelos.CentroSanitario;
+import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
-import com.example.teleappsistencia.ui.fragments.paciente.ConsultarPacienteFragment;
-import com.example.teleappsistencia.ui.fragments.paciente.ModificarPacienteFragment;
 
 import java.util.List;
 
-public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionUsuarioCentroAdapter.PacienteViewHolder> {
-    private List<Paciente> items;
-    private PacienteViewHolder pacienteViewHolder;
+public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionUsuarioCentroAdapter.RelacionUsuarioCentroViewHolder> {
+    private List<RelacionUsuarioCentro> items;
+    private RelacionUsuarioCentroViewHolder relacionUsuarioCentroViewHolder;
 
-    public static class PacienteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class RelacionUsuarioCentroViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Campos respectivos de un item.
         public Context context;
-        private ImageButton imageButtonModificarPaciente;
-        private ImageButton imageButtonVerPaciente;
-        private ImageButton imageButtonBorrarPaciente;
-        private TextView numSeguridadSocialCard;
-        private TextView numeroExpedienteCard;
-        private TextView tieneUCRCard;
-        private TextView tipoModalidadPacienteCard;
-        private Paciente paciente;
+        private ImageButton imageButtonModificarRelacionUsuarioCentro;
+        private ImageButton imageButtonVerRelacionUsuarioCentro;
+        private ImageButton imageButtonBorrarRelacionUsuarioCentro;
+        private TextView personaContactoCard;
+        private TextView distanciaCard;
+        private TextView idPacienteCard;
+        private TextView centroSanitarioCard;
+        private RelacionUsuarioCentro relacionUsuarioCentro;
 
-        public PacienteViewHolder(View v) {
+        public RelacionUsuarioCentroViewHolder(View v) {
             super(v);
             this.context = v.getContext();
-            this.imageButtonModificarPaciente = v.findViewById(R.id.imageButtonModificarRelacionPacientePersona);
-            this.imageButtonVerPaciente = v.findViewById(R.id.imageButtonVerRelacionPacientePersona);
-            this.imageButtonBorrarPaciente = v.findViewById(R.id.imageButtonBorrarRelacionPacientePersona);
-            this.numSeguridadSocialCard = v.findViewById(R.id.numSeguridadSocialCard);
-            this.numeroExpedienteCard = v.findViewById(R.id.numeroExpedienteCard);
-            this.tieneUCRCard = v.findViewById(R.id.tieneUCRCard);
-            this.tipoModalidadPacienteCard = v.findViewById(R.id.tipoModalidadPacienteCard);
+            this.centroSanitarioCard = v.findViewById(R.id.centroSanitarioCard);
+            this.distanciaCard = v.findViewById(R.id.distanciaCard);
+            this.idPacienteCard = v.findViewById(R.id.idPacienteCard);
+            this.personaContactoCard = v.findViewById(R.id.personaContactoCard);
+            this.imageButtonVerRelacionUsuarioCentro = v.findViewById(R.id.imageButtonVerRelacionUsuarioCentro);
+            this.imageButtonModificarRelacionUsuarioCentro = v.findViewById(R.id.imageButtonModificarRelacionUsuarioCentro);
+            this.imageButtonBorrarRelacionUsuarioCentro = v.findViewById(R.id.imageButtonBorrarRelacionUsuarioCentro);
         }
 
         public void setOnClickListeners() {
-            this.imageButtonModificarPaciente.setOnClickListener(this);
-            this.imageButtonVerPaciente.setOnClickListener(this);
-            this.imageButtonBorrarPaciente.setOnClickListener(this);
+            this.imageButtonVerRelacionUsuarioCentro.setOnClickListener(this);
+            this.imageButtonModificarRelacionUsuarioCentro.setOnClickListener(this);
+            this.imageButtonBorrarRelacionUsuarioCentro.setOnClickListener(this);
         }
 
         @Override
@@ -60,26 +60,25 @@ public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionU
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
             switch (view.getId()) {
-                case R.id.imageButtonModificarRelacionPacientePersona:
-                    ModificarPacienteFragment modificarPacienteFragment = ModificarPacienteFragment.newInstance(this.paciente);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, modificarPacienteFragment).addToBackStack(null).commit();
+                case R.id.imageButtonModificarRelacionUsuarioCentro:
+                    ModificarRelacionUsuarioCentroFragment modificarRelacionUsuarioCentroFragment = ModificarRelacionUsuarioCentroFragment.newInstance(this.relacionUsuarioCentro);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, modificarRelacionUsuarioCentroFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonVerRelacionPacientePersona:
-                    ConsultarPacienteFragment consultarPacienteFragment = ConsultarPacienteFragment.newInstance(this.paciente);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarPacienteFragment).addToBackStack(null).commit();
+                case R.id.imageButtonVerRelacionUsuarioCentro:
+                    ConsultarRelacionUsuarioCentroFragment consultarRelacionUsuarioCentroFragment = ConsultarRelacionUsuarioCentroFragment.newInstance(this.relacionUsuarioCentro);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarRelacionUsuarioCentroFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonBorrarRelacionPacientePersona:
+                case R.id.imageButtonBorrarRelacionUsuarioCentro:
 
                     break;
             }
         }
-
-        public void setPaciente(Paciente paciente) {
-            this.paciente = paciente;
+        public void setRelacionUsuarioCentro(RelacionUsuarioCentro relacionUsuarioCentro) {
+            this.relacionUsuarioCentro = relacionUsuarioCentro;
         }
     }
 
-    public RelacionUsuarioCentroAdapter(List<Paciente> items) {
+    public RelacionUsuarioCentroAdapter(List<RelacionUsuarioCentro> items) {
         this.items = items;
     }
 
@@ -89,34 +88,27 @@ public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionU
     }
 
     @Override
-    public PacienteViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RelacionUsuarioCentroViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fragment_relacion_usuario_centro_card, viewGroup, false);
-        pacienteViewHolder = new PacienteViewHolder(v);
-        return pacienteViewHolder;
+        relacionUsuarioCentroViewHolder = new RelacionUsuarioCentroViewHolder(v);
+        return relacionUsuarioCentroViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(PacienteViewHolder viewHolder, int i) {
+    public void onBindViewHolder(RelacionUsuarioCentroViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-        System.out.println(items.get(i));
-        viewHolder.numSeguridadSocialCard.setText(items.get(i).getNumeroSeguridadSocial());
-        viewHolder.numeroExpedienteCard.setText("Exp:" + items.get(i).getNumeroExpediente());
-        if (items.get(i).isTieneUcr()) {
-            viewHolder.tieneUCRCard.setText("El paciente tiene UCR");
-            viewHolder.tieneUCRCard.setTextColor(Color.RED);
-        } else {
-            viewHolder.tieneUCRCard.setText("El paciente no tiene UCR");
-            viewHolder.tieneUCRCard.setTextColor(Color.GREEN);
+        viewHolder.setRelacionUsuarioCentro(items.get(i));
+        viewHolder.personaContactoCard.setText(items.get(i).getPersonaContacto());
+        viewHolder.distanciaCard.setText("Distancia: "+ String.valueOf(items.get(i).getDistancia()) + " Km");
+        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(items.get(i).getIdCentroSanitario(), "CentroSanitario");
+        viewHolder.centroSanitarioCard.setText(centroSanitario.getNombre());
+        if(items.get(i).getIdPaciente() != null) {
+            Paciente paciente = (Paciente) Utilidad.getObjeto(items.get(i).getIdPaciente(), "Paciente");
+            viewHolder.idPacienteCard.setText("ID del paciente: "+ paciente.getId());
+        }else{
+            viewHolder.idPacienteCard.setText("ID del paciente: No asignado");
         }
-        TipoModalidadPaciente tipoModalidadPaciente = (TipoModalidadPaciente) Utilidad.getObjeto(items.get(i).getTipoModalidadPaciente(), "TipoModalidadPaciente");
-        viewHolder.tipoModalidadPacienteCard.setText(tipoModalidadPaciente.getNombre());
-        //Falta por añadir los atributos del paciente
-        /*viewHolder.textView_id.setText(viewHolder.context.getString(R.string.id_con_dos_puntos) + Integer.toString(items.get(i).getId()));
-        viewHolder.textView_localidad.setText(items.get(i).getLocalidad());
-        viewHolder.textView_provincia.setText(items.get(i).getProvincia());
-        viewHolder.textView_direccion.setText(items.get(i).getDireccion());
-        direccionViewHolder.setDireccion(items.get(i));*/
-        pacienteViewHolder.setPaciente(items.get(i));
+        relacionUsuarioCentroViewHolder.setRelacionUsuarioCentro(items.get(i));
     }
 }

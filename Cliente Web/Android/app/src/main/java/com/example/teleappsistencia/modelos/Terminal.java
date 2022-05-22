@@ -3,9 +3,15 @@ package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+/**
+ * Clase POJO "Terminal" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Terminal implements Serializable {
-    private final static long serialVersionUID = 7948631309169889790L;
+
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
 
     @SerializedName("id")
     private int id;
@@ -19,6 +25,8 @@ public class Terminal implements Serializable {
     private Object titular;
     @SerializedName("id_tipo_vivienda")
     private Object tipoVivienda;
+
+    // Getters y Setters
 
     public int getId() {
         return id;

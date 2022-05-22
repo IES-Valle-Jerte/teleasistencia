@@ -22,6 +22,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,8 +95,9 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
         lManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(lManager);
 
-        //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
-        generarCapaEspera(view);
+        //Obtenemos los datos de Relación Paciente Persona y pasamos los datos al adaptador mientras mostramos la capa de espera
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionPacientePersona);
+        Utilidad.generarCapaEspera(view, dataConstraintLayout);
         listarPacientes(view, recycler);
 
         return view;
@@ -126,55 +128,10 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
 
             }
         });
-        /*Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
-        call.enqueue(new Callback<List<LinkedTreeMap>>() {
-            @Override
-            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
-                if (response.isSuccessful()) {
-                    lPacientes = response.body();
-                    List<Paciente> listadoPacientes = new ArrayList<>();
-                    for (LinkedTreeMap paciente : lPacientes) {
-                        listadoPacientes.add((Paciente) Utilidad.getObjeto(paciente, "Paciente"));
-                    }
-                    //Adaptador
-                    adapter = new PacienteAdapter(listadoPacientes);
-                    recycler.setAdapter(adapter);
-
-                } else {
-                    Toast.makeText(getContext(), "Error al listar las direcciones. Código de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
-                t.printStackTrace();
-                System.out.println(t.getMessage());
-            }
-        });*/
     }
 
     private static void fijarListado(List<LinkedTreeMap> listado) {
         lRelacionPacientePersona = listado;
     }
-
-    private void generarCapaEspera(View view) {
-        ShimmerFrameLayout shimmerFrameLayout =
-                (ShimmerFrameLayout) view.findViewById(R.id.listviewPlaceholder);
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionPacientePersona);
-
-        dataConstraintLayout.setVisibility(View.INVISIBLE);
-        shimmerFrameLayout.startShimmer();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                dataConstraintLayout.setVisibility(View.VISIBLE);
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
-            }
-        }, 2500);
-    }
-
 
 }

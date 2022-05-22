@@ -6,17 +6,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.modelos.Terminal;
 
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RelacionTerminalRecursoComunitarioAdapter extends RecyclerView.Adapter<RelacionTerminalRecursoComunitarioAdapter.RelacionTerminalRecursoComunitarioViewholder> {
     private List<RelacionTerminalRecursoComunitario> items;
@@ -56,18 +66,49 @@ public class RelacionTerminalRecursoComunitarioAdapter extends RecyclerView.Adap
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
             switch (view.getId()) {
-                case R.id.imageButtonModificarRelacionPacientePersona:
-                    ModificarRelacionTerminalRecursoComunitarioFragment modificarPacienteFragment = ModificarRelacionTerminalRecursoComunitarioFragment.newInstance(this.relacionTerminalRecursoComunitario);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, modificarPacienteFragment).addToBackStack(null).commit();
+                case R.id.imageButtonModificarRelacionTerminalRecursoComunitario:
+                    ModificarRelacionTerminalRecursoComunitarioFragment modificarRelacionTerminalRecursoComunitarioFragment = ModificarRelacionTerminalRecursoComunitarioFragment.newInstance(this.relacionTerminalRecursoComunitario);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, modificarRelacionTerminalRecursoComunitarioFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonVerRelacionPacientePersona:
-                    ConsultarRelacionTerminalRecursoComunitarioFragment consultarPacienteFragment = ConsultarRelacionTerminalRecursoComunitarioFragment.newInstance(this.relacionTerminalRecursoComunitario);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarPacienteFragment).addToBackStack(null).commit();
+                case R.id.imageButtonVerRelacionTerminalRecursoComunitario:
+                    ConsultarRelacionTerminalRecursoComunitarioFragment consultarRelacionTerminalRecursoComunitarioFragment = ConsultarRelacionTerminalRecursoComunitarioFragment.newInstance(this.relacionTerminalRecursoComunitario);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarRelacionTerminalRecursoComunitarioFragment).addToBackStack(null).commit();
                     break;
-                case R.id.imageButtonBorrarRelacionPacientePersona:
-
+                case R.id.imageButtonBorrarRelacionTerminalRecursoComunitario:
+                    accionBorrarTerminalRecursoComunitario();
                     break;
             }
+        }
+
+        private void accionBorrarTerminalRecursoComunitario() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+            Call<ResponseBody> call = apiService.deleteRelacionTerminalRecursoComunitario(String.valueOf(this.relacionTerminalRecursoComunitario.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, "Relación Terminal Recurso Comunitario borrada correctamente", Toast.LENGTH_SHORT).show();
+                        recargarFragment();
+                    } else {
+                        Toast.makeText(context, "Error al borrar Relación Terminal Recurso Comunitario borrada", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        }
+
+        private void recargarFragment() {
+            MainActivity activity = (MainActivity) this.context;
+            ListarRelacionTerminalRecursoComunitarioFragment listarRelacionTerminalRecursoComunitarioFragment = new ListarRelacionTerminalRecursoComunitarioFragment();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, listarRelacionTerminalRecursoComunitarioFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         public void setRelacionTerminalRecursoComunitario(RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario) {
@@ -95,6 +136,7 @@ public class RelacionTerminalRecursoComunitarioAdapter extends RecyclerView.Adap
     @Override
     public void onBindViewHolder(RelacionTerminalRecursoComunitarioViewholder viewHolder, int i) {
         viewHolder.setOnClickListeners();
+        viewHolder.setRelacionTerminalRecursoComunitario(items.get(i));
         viewHolder.idRelacionTerminalRecursoComunitario.setText("ID: " + String.valueOf(items.get(i).getId()));
         Terminal terminal = (Terminal) Utilidad.getObjeto(items.get(i).getIdTerminal(), "Terminal");
         viewHolder.numeroTerminalCard.setText("Nº de terminal: " + terminal.getNumeroTerminal());

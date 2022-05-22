@@ -141,5 +141,22 @@
     <string name="tipoRelacionConsultar">Tipo de relación:</string>
     <string name="titulo_modificar_relacion_paciente_persona">Modificar relación paciente persona</string>
     <string name="titulo_listarRelacionTerminalRecursoComunitario">Relación Terminal Recurso Comunitario</string>
+    <string name="idRelacionTerminalRecursoComunitario">"ID relación Terminal - Recurso Comunitario: "</string>
+    <string name="campoNumeroTerminalConsultar">Número del terminal:</string>
+    <string name="campoNombreRecursoComunitarioConsultar">"Recurso comunitario asociado: "</string>
+    <string name="titulo_insertar_relacion_terminal_recurso_comunitario">Insertar relación Terminal - Recurso Comunitario</string>
+    <string name="titulo_modificar_relacion_terminal_recurso_comunitario">Modificar Relación Terminal - Recurso Comunitario</string>
+    <string name="titulo_listarRelacionUsuarioCentro">Relación Usuario-Centro</string>
+    <string name="idRelacionUsuarioCentroConsultar">ID:</string>
+    <string name="personaContactoConsultar">Persona de contacto:</string>
+    <string name="distanciaConsultar">Distancia:</string>
+    <string name="tiempoConsultar">Tiempo:</string>
+    <string name="nombreCentroSanitarioConsultar">Nombre del centro sanitario:</string>
+    <string name="editTextPersonaContactoHint">Persona de contacto...</string>
+    <string name="distanciaHint">Distancia</string>
+    <string name="tiempoHint">Tiempo...</string>
+    <string name="titulo_insertar_relacion_usuario_centro">Insertar Relación Usuario-Centro</string>
+    <string name="observacionesHint">Observaciones...</string>
+    <string name="titulo_modificar_relacion_usuario_centro">Modificar Relación Usuario-Centro</string>
 
 </resources>

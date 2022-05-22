@@ -3,8 +3,15 @@ package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+/**
+ * Clase POJO "RelacionPacientePersona" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class RelacionPacientePersona implements Serializable {
+
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
 
     @SerializedName("id")
     private int id;
@@ -23,6 +30,8 @@ public class RelacionPacientePersona implements Serializable {
     @SerializedName("id_persona")
     private Object idPersona;
 
+    //Getters y setters
+    
     public int getId() {
         return id;
     }

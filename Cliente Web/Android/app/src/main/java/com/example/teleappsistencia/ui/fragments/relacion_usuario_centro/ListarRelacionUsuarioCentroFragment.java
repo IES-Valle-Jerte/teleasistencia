@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.MainActivity;
@@ -48,7 +49,7 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    static List<LinkedTreeMap> lPacientes;
+    static List<LinkedTreeMap> lRelacionUsuarioCentro;
 
 
     public ListarRelacionUsuarioCentroFragment() {
@@ -85,7 +86,8 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listar_relacion_usuario_centro, container, false);lPacientes = new ArrayList<>();
+        View view = inflater.inflate(R.layout.fragment_listar_relacion_usuario_centro, container, false);
+        lRelacionUsuarioCentro = new ArrayList<>();
         //ListView listView = view.findViewById(R.id.listViewPacientes);
 
         //Obtenemos el Recycler
@@ -97,7 +99,8 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
         recycler.setLayoutManager(lManager);
 
         //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
-        generarCapaEspera(view);
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionPacientePersona);
+        Utilidad.generarCapaEspera(view,dataConstraintLayout);
         listarPacientes(view,recycler);
 
         return view;
@@ -108,18 +111,18 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getListadoRelacionUsuarioCentro("Bearer " + MainActivity.token.getAccess());
         call.enqueue(new Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
                 if (response.isSuccessful()) {
-                    lPacientes = response.body();
-                    List<Paciente> listadoPacientes = new ArrayList<>();
-                    for (LinkedTreeMap paciente : lPacientes) {
-                        listadoPacientes.add((Paciente) Utilidad.getObjeto(paciente, "Paciente"));
+                    lRelacionUsuarioCentro = response.body();
+                    List<RelacionUsuarioCentro> listadoRelacionUsuarioCentro = new ArrayList<>();
+                    for (LinkedTreeMap relacionUsuarioCentro : lRelacionUsuarioCentro) {
+                        listadoRelacionUsuarioCentro.add((RelacionUsuarioCentro) Utilidad.getObjeto(relacionUsuarioCentro, "RelacionUsuarioCentro"));
                     }
                     //Adaptador
-                    adapter = new PacienteAdapter(listadoPacientes);
+                    adapter = new RelacionUsuarioCentroAdapter(listadoRelacionUsuarioCentro);
                     recycler.setAdapter(adapter);
 
                 } else {
@@ -136,27 +139,7 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
     }
 
     private static void fijarListado(List<LinkedTreeMap> listado) {
-        lPacientes = listado;
+        lRelacionUsuarioCentro = listado;
     }
-
-    private void generarCapaEspera(View view) {
-        ShimmerFrameLayout shimmerFrameLayout =
-                (ShimmerFrameLayout) view.findViewById(R.id.listviewPlaceholder);
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
-
-        dataConstraintLayout.setVisibility(View.INVISIBLE);
-        shimmerFrameLayout.startShimmer();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                dataConstraintLayout.setVisibility(View.VISIBLE);
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
-            }
-        }, 2500);
-    }
-
 
 }

@@ -6,17 +6,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.ui.fragments.paciente.ListarPacienteFragment;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<RelacionPacientePersonaAdapter.RelacionPacientePersonaViewholder> {
     private List<com.example.teleappsistencia.modelos.RelacionPacientePersona> items;
@@ -71,9 +81,40 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, consultarPacienteFragment).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrarRelacionPacientePersona:
-
+                    accionBorrarRelacionPacientePersona();
                     break;
             }
+        }
+
+        private void accionBorrarRelacionPacientePersona() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+            Call<ResponseBody> call = apiService.deleteRelacionPacientePersona(String.valueOf(this.relacionPacientePersona.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, "Relación Paciente Persona borrada correctamente", Toast.LENGTH_SHORT).show();
+                        recargarFragment();
+                    } else {
+                        Toast.makeText(context, "Error al borrar Relación Paciente Persona", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        }
+
+        private void recargarFragment() {
+            MainActivity activity = (MainActivity) this.context;
+            ListarRelacionPacientePersonaFragment listarRelacionPacientePersonaFragment = new ListarRelacionPacientePersonaFragment();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, listarRelacionPacientePersonaFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         public void setRelacionPacientePersonaViewholder(RelacionPacientePersona relacionPacientePersonaViewholder) {

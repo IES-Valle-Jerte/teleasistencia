@@ -30,9 +30,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListarPacienteFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una clase {@link Fragment} para recoger los listar los pacientes.
+ * <p> Esta clase es una subclase de {@link Fragment} y hereda de ella todos sus métodos y atributos.
  */
 public class ListarPacienteFragment extends Fragment {
 
@@ -41,6 +40,7 @@ public class ListarPacienteFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // Atributos de la interfaz de usuario (UI) del fragment.
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
@@ -48,21 +48,14 @@ public class ListarPacienteFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    // Lista de pacientes que se van a mostrar.
     static List<LinkedTreeMap> lPacientes;
 
-
+    // Constructor por defecto.
     public ListarPacienteFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListarPacienteFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ListarPacienteFragment newInstance(String param1, String param2) {
         ListarPacienteFragment fragment = new ListarPacienteFragment();
@@ -73,6 +66,7 @@ public class ListarPacienteFragment extends Fragment {
         return fragment;
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +76,18 @@ public class ListarPacienteFragment extends Fragment {
         }
     }
 
+
+    /**
+     * Estoy inflando un fragmento, obteniendo una vista de reciclador, configurando un administrador
+     * de diseño y luego llamando a una función para obtener los datos y pasarlos al adaptador.
+     * 
+     * @param inflater El objeto LayoutInflater que se puede usar para inflar cualquier vista en el
+     * fragmento,
+     * @param container El padre al que se debe adjuntar la interfaz de usuario de este fragmento.
+     * @param savedInstanceState Si el fragmento se vuelve a crear a partir de un estado guardado
+     * anterior, este es el estado.
+     * @return Se está devolviendo la vista.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,13 +102,22 @@ public class ListarPacienteFragment extends Fragment {
         lManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(lManager);
 
-        //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
-        generarCapaEspera(view);
+        //Obtenemos el layout con los datos de los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
+        Utilidad.generarCapaEspera(view,dataConstraintLayout);
+
         listarPacientes(view,recycler);
 
         return view;
     }
 
+    /**
+     * Método para obtener una lista de pacientes de la API para luego mostrarlos en un
+     * RecyclerView
+     * 
+     * @param view Vista
+     * @param recycler RecyclerView
+     */
     private void listarPacientes(View view, RecyclerView recycler) {
 
 
@@ -135,28 +150,17 @@ public class ListarPacienteFragment extends Fragment {
         });
     }
 
+    
+    /**
+     * Toma una lista de objetos LinkedTreeMap y establece el valor del atributo lPacientes.
+     * 
+     * @param listado Lista de objetos LinkedTreeMap
+     */
     private static void fijarListado(List<LinkedTreeMap> listado) {
         lPacientes = listado;
     }
 
-    private void generarCapaEspera(View view) {
-        ShimmerFrameLayout shimmerFrameLayout =
-                (ShimmerFrameLayout) view.findViewById(R.id.listviewPlaceholder);
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
 
-        dataConstraintLayout.setVisibility(View.INVISIBLE);
-        shimmerFrameLayout.startShimmer();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                dataConstraintLayout.setVisibility(View.VISIBLE);
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
-            }
-        }, 2500);
-    }
 
 
 }

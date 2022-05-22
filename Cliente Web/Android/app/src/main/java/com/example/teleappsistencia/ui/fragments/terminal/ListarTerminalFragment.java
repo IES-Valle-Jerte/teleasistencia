@@ -97,7 +97,8 @@ public class ListarTerminalFragment extends Fragment {
         recycler.setLayoutManager(lManager);
 
         //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
-        generarCapaEspera(view);
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
+        Utilidad.generarCapaEspera(view, dataConstraintLayout);
         listarPacientes(view,recycler);
 
         return view;
@@ -138,25 +139,5 @@ public class ListarTerminalFragment extends Fragment {
     private static void fijarListado(List<LinkedTreeMap> listado) {
         lPacientes = listado;
     }
-
-    private void generarCapaEspera(View view) {
-        ShimmerFrameLayout shimmerFrameLayout =
-                (ShimmerFrameLayout) view.findViewById(R.id.listviewPlaceholder);
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataPacientes);
-
-        dataConstraintLayout.setVisibility(View.INVISIBLE);
-        shimmerFrameLayout.startShimmer();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                dataConstraintLayout.setVisibility(View.VISIBLE);
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
-            }
-        }, 2500);
-    }
-
 
 }

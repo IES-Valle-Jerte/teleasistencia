@@ -11,9 +11,8 @@ import android.view.ViewGroup;
 import com.example.teleappsistencia.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link paciente_card#newInstance} factory method to
- * create an instance of this fragment.
+ * Una clase {@link Fragment} para recoger los datos a mostrar dentro de la tarjeta Paciente del RecyclerView.
+ * <p> Esta clase es una subclase de {@link Fragment} y hereda de ella todos sus métodos y atributos.
  */
 public class paciente_card extends Fragment {
 
@@ -26,19 +25,10 @@ public class paciente_card extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
+    // Constructor por defecto.
     public paciente_card() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment paciente_card.
-     */
     // TODO: Rename and change types and number of parameters
     public static paciente_card newInstance(String param1, String param2) {
         paciente_card fragment = new paciente_card();

@@ -4,14 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.google.gson.annotations.SerializedName;
-
+/**
+ * Clase POJO "Usuario" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Usuario implements Serializable
 {
 
-    private final static long serialVersionUID = 2592565805411682085L;
-
     /**
-     * Atributos de la clase
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
      */
 
     @SerializedName("id")
@@ -33,9 +34,8 @@ public class Usuario implements Serializable
     @SerializedName("groups")
     private Object groups = null;
 
-    /**
-     * Getters y setters
-     */
+    // Getters y Setters
+
     public int getId() {
         return id;
     }
@@ -108,18 +108,4 @@ public class Usuario implements Serializable
         this.groups = groups;
     }
 
-    @Override
-    public String toString() {
-        return "UsuarioSistema{" +
-                "pk=" + id +
-                ", url='" + url + '\'' +
-                ", lastLogin='" + lastLogin + '\'' +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", dateJoined=" + dateJoined +
-                ", groups=" + groups +
-                '}';
-    }
 }

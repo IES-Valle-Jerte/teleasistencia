@@ -4,8 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase POJO "Paciente" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Paciente implements Serializable {
-    private final static long serialVersionUID = 4060945482292635773L;
+    
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
 
     @SerializedName("id")
     private int id;
@@ -27,6 +34,8 @@ public class Paciente implements Serializable {
     private Object persona;
     @SerializedName("id_tipo_modalidad_paciente")
     private Object tipoModalidadPaciente;
+
+    //Getters y setters
 
     public int getId() {
         return id;

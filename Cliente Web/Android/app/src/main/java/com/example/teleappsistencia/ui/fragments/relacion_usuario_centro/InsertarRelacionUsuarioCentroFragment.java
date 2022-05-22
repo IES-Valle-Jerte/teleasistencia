@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.teleappsistencia.modelos.CentroSanitario;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
@@ -19,6 +20,7 @@ import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,18 +37,14 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
 
     private Paciente paciente;
 
-    private Spinner spinnerTerminal;
-    private Spinner spinnerPersona;
-    private Spinner spinnerTipoModalidadPaciente;
-    private EditText editTextTieneUCR;
-    private EditText editTextNumeroExpediente;
-    private EditText editTextNumeroSeguridadSocial;
-    private EditText editTextPrestacionOtrosServicios;
-    private EditText editTextObservacionesMedicas;
-    private EditText editTextInteresesActividades;
-
-    private Button btnInsertarPaciente;
-    private Button btnVolverPacienteInsertar;
+    private Spinner spinnerPacienteInsertar;
+    private Spinner spinnerCentroSanitarioInsertar;
+    private EditText editTextPersonaContactoInsertar;
+    private EditText editTextDistanciaInsertar;
+    private EditText editTextTiempoInsertar;
+    private EditText editTextObservacionesInsertar;
+    private Button btnInsertarRelacionUsuarioCentro;
+    private Button btnVolverRelacionUsuarioCentroInsertar;
 
     public InsertarRelacionUsuarioCentroFragment() {
         // Required empty public constructor
@@ -71,33 +69,31 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
         View root = inflater.inflate(R.layout.fragment_insertar_relacion_usuario_centro, container, false);
 
         obtenerComponentes(root);
-        inicializarSpinnerTerminal();
-        inicializarSpinnerPersona();
+        inicializarSpinnerPaciente();
+        inicializarSpinnerCentroSanitario();
         // Inflate the layout for this fragment
         return root;
     }
 
+
     private void obtenerComponentes(View root) {
-        spinnerTerminal = root.findViewById(R.id.spinnerTerminalInsertar);
-        spinnerPersona = root.findViewById(R.id.spinnerPersonaModificar);
-        spinnerTipoModalidadPaciente = root.findViewById(R.id.spinnerTipoModalidadPacienteInsertar);
-        editTextTieneUCR = root.findViewById(R.id.editTextTieneUCRInsertar);
-        editTextNumeroExpediente = root.findViewById(R.id.editTextNumeroExpedienteInsertar);
-        editTextNumeroSeguridadSocial = root.findViewById(R.id.editTextNumeroSeguridadSocialInsertar);
-        editTextPrestacionOtrosServicios = root.findViewById(R.id.editTextPrestacionOtrosServiciosInsertar);
-        editTextObservacionesMedicas = root.findViewById(R.id.editTextObservacionesMedicasInsertar);
-        editTextInteresesActividades = root.findViewById(R.id.editTextInteresesActividadesInsertar);
-        btnInsertarPaciente = root.findViewById(R.id.btnInsertarPaciente);
-        btnVolverPacienteInsertar = root.findViewById(R.id.btnVolverPacienteInsertar);
+        spinnerCentroSanitarioInsertar = root.findViewById(R.id.spinnerCentroSanitarioInsertar);
+        spinnerPacienteInsertar = root.findViewById(R.id.spinnerPacienteInsertar);
+        editTextPersonaContactoInsertar = root.findViewById(R.id.editTextPersonaContactoInsertar);
+        editTextDistanciaInsertar = root.findViewById(R.id.editTextDistanciaInsertar);
+        editTextTiempoInsertar = root.findViewById(R.id.editTextTiempoInsertar);
+        editTextObservacionesInsertar = root.findViewById(R.id.editTextObservacionesInsertar);
+        btnInsertarRelacionUsuarioCentro = root.findViewById(R.id.btnInsertarRelacionUsuarioCentro);
+        btnVolverRelacionUsuarioCentroInsertar = root.findViewById(R.id.btnVolverRelacionUsuarioCentroInsertar);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnInsertarPaciente:
+            case R.id.btnInsertarRelacionUsuarioCentro:
                 accionBotonGuardar();
                 break;
-            case R.id.btnVolverPacienteInsertar:
+            case R.id.btnVolverRelacionUsuarioCentroInsertar:
                 accionBotonVolver();
                 break;
         }
@@ -111,65 +107,69 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
 
     }
 
-    private void inicializarSpinnerTerminal() {
+    private void inicializarSpinnerPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + Utilidad.getToken().getAccess());
-        call.enqueue(new retrofit2.Callback<List<Terminal>>() {
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
             @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
+            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
                 if (response.isSuccessful()) {
-                    List<Terminal> listadoTerminales = response.body();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaTerminales(listadoTerminales));
+                    List<Paciente> listadoPacientes = new ArrayList<>();
+                    List<LinkedTreeMap> lPacientes = response.body();
+                    for (LinkedTreeMap lPaciente : lPacientes) {
+                        listadoPacientes.add((Paciente) Utilidad.getObjeto(lPaciente, "Paciente"));
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPacientes(listadoPacientes));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerTerminal.setAdapter(adapter);
+                    spinnerPacienteInsertar.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
+            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
                 Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
     }
 
-    private List<String> convertirListaTerminales(List<Terminal> listadoTerminales) {
-        List<String> listadoTerminalesString = new ArrayList<>();
-        for (Terminal terminal : listadoTerminales) {
-            listadoTerminalesString.add("Nº de terminal: " + terminal.getNumeroTerminal());
+    private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
+        List<String> listadoPacientesString = new ArrayList<>();
+        for (Paciente paciente : listadoPacientes) {
+            listadoPacientesString.add("Nº expediente: " + paciente.getNumeroExpediente());
         }
-        return listadoTerminalesString;
+        return listadoPacientesString;
     }
 
-
-    private void inicializarSpinnerPersona() {
+    private void inicializarSpinnerCentroSanitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
-        call.enqueue(new retrofit2.Callback<List<Persona>>() {
+        Call<List<CentroSanitario>> call = apiService.getListadoCentroSanitario("Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new retrofit2.Callback<List<CentroSanitario>>() {
             @Override
-            public void onResponse(Call<List<Persona>> call, Response<List<Persona>> response) {
+            public void onResponse(Call<List<CentroSanitario>> call, Response<List<CentroSanitario>> response) {
                 if (response.isSuccessful()) {
-                    List<Persona> listadoPersona = response.body();
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPersonas(listadoPersona));
+                    List<CentroSanitario> lCentrosSanitarios = response.body();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaCentrosSanitarios(lCentrosSanitarios));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerPersona.setAdapter(adapter);
-                } else {
-                    Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
+                    spinnerCentroSanitarioInsertar.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Persona>> call, Throwable t) {
-
+            public void onFailure(Call<List<CentroSanitario>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
             }
         });
     }
 
-    private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
-        List<String> listadoPersonaString = new ArrayList<>();
-        for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getNombre() + " " + persona.getApellidos());
+    private List<String> convertirListaCentrosSanitarios(List<CentroSanitario> lCentrosSanitarios) {
+        List<String> listadoCentrosSanitariosString = new ArrayList<>();
+        for (CentroSanitario centroSanitario : lCentrosSanitarios) {
+            listadoCentrosSanitariosString.add(centroSanitario.getNombre());
         }
-        return listadoPersonaString;
+        return listadoCentrosSanitariosString;
     }
+
+
 }

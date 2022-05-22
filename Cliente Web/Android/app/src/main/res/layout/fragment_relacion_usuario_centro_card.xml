@@ -21,47 +21,47 @@
             app:layout_constraintGuide_percent="0.01" />
 
         <TextView
-            android:id="@+id/numSeguridadSocialCard"
+            android:id="@+id/personaContactoCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Prueba"
-            android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/numeroExpedienteCard"
+            android:id="@+id/distanciaCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="@string/numeroExpediente"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerRelacionPacientePersona"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerRelacionUsuarioCentro"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionUsuarioCentro" />
 
         <TextView
-            android:id="@+id/tieneUCRCard"
+            android:id="@+id/idPacienteCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="@string/tieneUCR"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionUsuarioCentro"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionUsuarioCentro" />
 
         <TextView
-            android:id="@+id/tipoModalidadPacienteCard"
+            android:id="@+id/centroSanitarioCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="@string/idTerminal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionUsuarioCentro"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarRelacionUsuarioCentro" />
 
         <ImageButton
-            android:id="@+id/imageButtonVerRelacionPacientePersona"
+            android:id="@+id/imageButtonVerRelacionUsuarioCentro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
@@ -70,17 +70,17 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonModificarRelacionPacientePersona"
+            android:id="@+id/imageButtonModificarRelacionUsuarioCentro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarRelacionPacientePersona"
+            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarRelacionUsuarioCentro"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona"
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionUsuarioCentro"
             tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonBorrarRelacionPacientePersona"
+            android:id="@+id/imageButtonBorrarRelacionUsuarioCentro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_delete"

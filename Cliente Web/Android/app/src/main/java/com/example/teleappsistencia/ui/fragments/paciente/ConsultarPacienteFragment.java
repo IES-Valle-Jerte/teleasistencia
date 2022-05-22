@@ -13,13 +13,19 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Paciente;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ConsultarPacienteFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una clase {@link Fragment} para recoger los datos de consulta de un Paciente particular.
+ * <p> Esta clase es una subclase de {@link Fragment} y hereda de ella todos sus métodos y atributos.
  */
 public class ConsultarPacienteFragment extends Fragment{
 
+    /**
+     * El paciente que se va a consultar.
+     */
     private Paciente paciente;
+
+    
+    // Atributos de la interfaz de usuario (UI) del fragment.
+    
     private TextView textViewConsultarIdTerminal;
     private TextView textViewConsultarIdPersona;
     private TextView textViewConsultarTieneUCR;
@@ -29,11 +35,17 @@ public class ConsultarPacienteFragment extends Fragment{
     private TextView textViewConsultarObservacionesMedicas;
     private TextView textViewConsultarInteresesActividades;
     private TextView textViewConsultarModalidadPaciente;
-
+    
+    // Constructor por defecto.
     public ConsultarPacienteFragment() {
-        // Required empty public constructor
     }
 
+    /**
+     * Método que crea una instancia de la clase.
+     *
+     * @param paciente El paciente que se va a consultar.
+     * @return Una instancia de la clase.
+     */
     public static ConsultarPacienteFragment newInstance(Paciente paciente) {
         ConsultarPacienteFragment fragment = new ConsultarPacienteFragment();
         Bundle args = new Bundle();
@@ -42,6 +54,18 @@ public class ConsultarPacienteFragment extends Fragment{
         return fragment;
     }
 
+    
+    /**
+     * Esta función crea una nueva instancia del fragmento y establece los argumentos para el paquete.
+     * 
+     * @return Una nueva instancia del fragmento.
+     */
+    /**
+     * La función se llama cuando se crea el fragmento.
+     * 
+     * @param savedInstanceState Un objeto Bundle que contiene el estado guardado previamente de la
+     * actividad. Si la actividad nunca ha existido antes, el valor del objeto Bundle es nulo.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +74,21 @@ public class ConsultarPacienteFragment extends Fragment{
         }
     }
 
+
+    /**
+        * La función se llama cuando se crea la vista del fragmento.
+        *
+        * @param inflater Un objeto LayoutInflater que contiene la representación del layout XML
+        * que se va a usar como contenido de este fragmento.
+        * @param container Un objeto ViewGroup que contiene el fragmento.
+        * @param savedInstanceState Un objeto Bundle que contiene el estado guardado previamente de la
+        * actividad. Si la actividad nunca ha existido antes, el valor del objeto Bundle es nulo.
+        * @return Un objeto View que contiene el fragmento.
+        */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        
         View root = inflater.inflate(R.layout.fragment_consultar_paciente, container, false);
         textViewConsultarIdTerminal = root.findViewById(R.id.textViewConsultarIdTerminal);
         textViewConsultarIdPersona = root.findViewById(R.id.textViewConsultarIdPersona);

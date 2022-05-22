@@ -28,14 +28,17 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link InsertarPacienteFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una clase {@link Fragment} para recoger los datos para insertar un Paciente nuevo.
+ * <p> Esta clase es una subclase de {@link Fragment} y hereda de ella todos sus métodos y atributos.
  */
 public class InsertarPacienteFragment extends Fragment implements View.OnClickListener {
 
+    /**
+     * El paciente que se va a consultar.
+     */
     private Paciente paciente;
 
+    // Atributos de la interfaz de usuario (UI) del fragment.
     private Spinner spinnerTerminal;
     private Spinner spinnerPersona;
     private Spinner spinnerTipoModalidadPaciente;
@@ -45,15 +48,15 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
     private EditText editTextPrestacionOtrosServicios;
     private EditText editTextObservacionesMedicas;
     private EditText editTextInteresesActividades;
-
     private Button btnInsertarPaciente;
     private Button btnVolverPacienteInsertar;
 
-    public InsertarPacienteFragment() {
-        // Required empty public constructor
-    }
+    // Constructor por defecto.
+    public InsertarPacienteFragment() {}
 
-    // TODO: Rename and change types and number of parameters
+    /**
+        * Método que crea una instancia de la clase.
+     */
     public static InsertarPacienteFragment newInstance() {
         InsertarPacienteFragment fragment = new InsertarPacienteFragment();
         Bundle args = new Bundle();
@@ -61,23 +64,47 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         return fragment;
     }
 
+    
+    /**
+     * Esta función se llama cuando la actividad se crea por primera vez.
+     * 
+     * @param savedInstanceState Si la actividad se reinicializa después de cerrarse previamente, este
+     * paquete contiene los datos que suministró más recientemente en onSaveInstanceState(Bundle).
+     * Nota: De lo contrario es nulo.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * La función onCreateView() se llama cuando se crea el fragmento
+     * 
+     * @param inflater El objeto LayoutInflater que se puede usar para inflar cualquier vista en el
+     * fragmento,
+     * @param container La vista principal a la que se debe adjuntar la interfaz de usuario del
+     * fragmento.
+     * @param savedInstanceState Un objeto Bundle que contiene el estado guardado previamente de la
+     * actividad. Si la actividad nunca ha existido antes, el valor del objeto Bundle es nulo.
+     * @return La vista del fragmento.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_insertar_paciente, container, false);
-
+        // Inicialización de los atributos de la interfaz de usuario (UI).
         obtenerComponentes(root);
+        // Inicialización de los Spinners del formulario
         inicializarSpinnerTerminal();
         inicializarSpinnerPersona();
-        // Inflate the layout for this fragment
         return root;
     }
 
+    /**
+    * Método que obtiene los componentes de la interfaz de usuario (UI) del fragment.
+    *
+    * @param root La vista del fragmento.
+     */
     private void obtenerComponentes(View root) {
         spinnerTerminal = root.findViewById(R.id.spinnerTerminalInsertar);
         spinnerPersona = root.findViewById(R.id.spinnerPersonaModificar);
@@ -92,6 +119,12 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         btnVolverPacienteInsertar = root.findViewById(R.id.btnVolverPacienteInsertar);
     }
 
+
+    /**
+     * Una función que se llama cuando se presiona un botón.
+     * 
+     * @param view La vista en la que se hizo clic.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -104,14 +137,23 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         }
     }
 
+    /**
+     * Método que se ejecuta cuando se presiona el botón de Guardar.
+     */
     private void accionBotonGuardar() {
 
     }
 
+    /**
+     * Método que se ejecuta cuando se presiona el botón de Volver.
+     */
     private void accionBotonVolver() {
 
     }
 
+    /**
+     * Método que inicializa el Spinner de Terminal.
+     */
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
         Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + Utilidad.getToken().getAccess());
@@ -134,6 +176,13 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         });
     }
 
+
+    /**
+     * Toma una lista de objetos Terminal y devuelve una lista de String para mostrar en el Spinner.
+     * 
+     * @param listadoTerminales Lista de objetos Terminal
+     * @return Una lista de String.
+     */
     private List<String> convertirListaTerminales(List<Terminal> listadoTerminales) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Terminal terminal : listadoTerminales) {
@@ -142,7 +191,9 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         return listadoTerminalesString;
     }
 
-
+    /**
+     * Método que inicializa el Spinner de Persona.
+     */
     private void inicializarSpinnerPersona() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
         Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
@@ -166,6 +217,13 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         });
     }
 
+    /**
+     * Toma una lista de objetos Persona y devuelve una lista de cadenas que contienen el nombre y
+     * apellido de cada persona para mostrar en el Spinner.
+     * 
+     * @param listadoPersona Lista de objetos de tipo Persona
+     * @return Una lista de String.
+     */
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {

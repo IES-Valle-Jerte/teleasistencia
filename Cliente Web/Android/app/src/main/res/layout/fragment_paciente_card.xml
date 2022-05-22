@@ -36,9 +36,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="@string/numeroExpediente"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerRelacionPacientePersona"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerPaciente"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente" />
 
         <TextView
             android:id="@+id/tieneUCRCard"
@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="@string/tieneUCR"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarPaciente"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente" />
 
         <TextView
             android:id="@+id/tipoModalidadPacienteCard"
@@ -56,12 +56,12 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="@string/idTerminal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificarPaciente"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarRelacionPacientePersona" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonModificarPaciente" />
 
         <ImageButton
-            android:id="@+id/imageButtonVerRelacionPacientePersona"
+            android:id="@+id/imageButtonVerPaciente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
@@ -70,17 +70,17 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonModificarRelacionPacientePersona"
+            android:id="@+id/imageButtonModificarPaciente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarRelacionPacientePersona"
+            app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarPaciente"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRelacionPacientePersona"
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPaciente"
             tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageButton
-            android:id="@+id/imageButtonBorrarRelacionPacientePersona"
+            android:id="@+id/imageButtonBorrarPaciente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_delete"

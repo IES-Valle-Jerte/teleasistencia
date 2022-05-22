@@ -28,14 +28,17 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ModificarPacienteFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Una clase {@link Fragment} para recoger los datos a modificar de un Paciente particular.
+ * <p> Esta clase es una subclase de {@link Fragment} y hereda de ella todos sus métodos y atributos.
  */
 public class ModificarPacienteFragment extends Fragment implements View.OnClickListener {
 
+    /**
+     * El paciente que se quiere modificar.
+     */
     private Paciente paciente;
 
+    // Atributos de la interfaz de usuario (UI) del fragment.
     private Spinner spinnerTerminal;
     private Spinner spinnerPersona;
     private Spinner spinnerTipoModalidadPaciente;
@@ -48,11 +51,17 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
     private Button btnModificarPaciente;
     private Button btnVolverPacienteModificar;
 
+    // Constructor por defecto.
     public ModificarPacienteFragment() {
-        // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
+    
+    /**
+     * Esta función crea una nueva instancia del fragmento y pasa el objeto al fragmento.
+     * 
+     * @param paciente es el objeto que quiero pasar al fragmento
+     * @return Una nueva instancia del fragmento.
+     */
     public static ModificarPacienteFragment newInstance(Paciente paciente) {
         ModificarPacienteFragment fragment = new ModificarPacienteFragment();
         Bundle args = new Bundle();
@@ -61,6 +70,12 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         return fragment;
     }
 
+    /**
+     * La función se llama cuando se crea el fragmento.
+     * 
+     * @param savedInstanceState El estado guardado del fragmento, o nulo si se trata de un fragmento
+     * recién creado.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,26 +84,38 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         }
     }
 
+    /**
+     * La función onCreateView() se llama cuando se crea el fragmento
+     * 
+     * @param inflater El objeto LayoutInflater que se puede usar para inflar cualquier vista en el
+     * fragmento,
+     * @param container La vista principal a la que se debe adjuntar la interfaz de usuario del
+     * fragmento.
+     * @param savedInstanceState Si el fragmento se vuelve a crear a partir de un estado guardado
+     * anterior, este es el estado.
+     * @return La vista del fragmento.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_modificar_paciente, container, false);
-
+        // Inicializamos los atributos de la interfaz de usuario (UI).
         obtenerComponentes(root);
-
+        // Rellenamos los campos con los datos del paciente que se quiere modificar.
         rellenarCampos();
-
+        // Añadimos los eventos de los botones.
         this.btnVolverPacienteModificar.setOnClickListener(this);
         this.btnModificarPaciente.setOnClickListener(this);
-
-        // Inflate the layout for this fragment
         return root;
     }
 
     private void rellenarCampos() {
+        // Inicializamos los spinners.
         inicializarSpinnerTerminal();
         inicializarSpinnerPersona();
+        // Fijamos si el paciente tiene UCR evitando que se muestren booleanos y sea algo más legible.
         fijarSiTieneUCR();
+        // Rellenamos los campos con los datos del paciente que se quiere modificar.
         editTextNumeroExpediente.setText(paciente.getNumeroExpediente());
         editTextNumeroSeguridadSocial.setText(paciente.getNumeroSeguridadSocial());
         editTextPrestacionOtrosServicios.setText(paciente.getPrestacionOtrosServiciosSociales());
@@ -96,6 +123,10 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         editTextInteresesActividades.setText(paciente.getInteresesYActividades());
     }
 
+
+    /**
+     * Si el paciente tiene una UCR, el campo de texto mostrará "Si", de lo contrario, mostrará "No".
+     */
     private void fijarSiTieneUCR() {
         if (paciente.isTieneUcr()) {
             this.editTextTieneUCR.setText("Si");
@@ -104,6 +135,9 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         }
     }
 
+    /**
+     * Método que inicializa el Spinner de Personas en la interfaz de usuario.
+     */
     private void inicializarSpinnerPersona() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
         Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
@@ -194,6 +228,11 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         return i-1;
     }
 
+   /**
+    * Método que obtiene los componentes de la interfaz de usuario (UI) del fragment.
+    *
+    * @param root La vista del fragmento.
+     */
     private void obtenerComponentes(View root) {
         this.btnVolverPacienteModificar = (Button) root.findViewById(R.id.btnVolverPacienteModificar);
         this.btnModificarPaciente = (Button) root.findViewById(R.id.btnModificarPaciente);
@@ -208,6 +247,12 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         this.editTextInteresesActividades = (EditText) root.findViewById(R.id.editTextInteresesActividades);
     }
 
+
+    /**
+     * Una función que se llama cuando se hace clic en un botón.
+     * 
+     * @param view La vista en la que se hizo clic.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -220,6 +265,10 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         }
     }
 
+    /**
+     * Método que se ejecuta cuando se hace clic en el botón de guardar.
+     * Si los campos son válidos, guarde los datos. De lo contrario, mostrar un mensaje de error.
+     */
     private void accionBotonGuardar() {
         if (validarCampos()) {
 
@@ -228,10 +277,14 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         }
     }
 
+    
     private boolean validarCampos() {
         return false;
     }
 
+    /**
+     * La función se llama cuando el usuario hace clic en el botón Volver.
+     */
     private void accionBotonVolver() {
 //        getActivity().getSupportFragmentManager().popBackStack();
         getActivity().onBackPressed();
