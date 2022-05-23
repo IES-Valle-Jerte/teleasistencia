@@ -102,10 +102,10 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnModificarPaciente:
+            case R.id.btnModificarRelacionPacientePersona:
                 accionBotonGuardar();
                 break;
-            case R.id.btnVolverPacienteModificar:
+            case R.id.btnVolverRelacionUsuarioCentroModificar:
                 accionBotonVolver();
                 break;
         }

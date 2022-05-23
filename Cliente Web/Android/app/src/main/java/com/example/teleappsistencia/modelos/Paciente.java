@@ -105,7 +105,7 @@ public class Paciente implements Serializable {
         return persona;
     }
 
-    public void setPersona(Persona persona) {
+    public void setPersona(Object persona) {
         this.persona = persona;
     }
 

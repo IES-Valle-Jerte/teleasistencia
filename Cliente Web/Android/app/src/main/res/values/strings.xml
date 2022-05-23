@@ -168,5 +168,6 @@
     <string name="modoAccesoViviendaHint">Modo de acceso a la vivienda...</string>
     <string name="barrerasArquitectonicasHint">Barreras arquitectonicas...</string>
     <string name="titulo_modificar_terminal">Modificar terminal:</string>
+    <string name="texto_insertar_paciente">Elige el paciente a asociar:</string>
 
 </resources>

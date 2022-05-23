@@ -49,7 +49,7 @@ public class ConsultarPacienteFragment extends Fragment{
     public static ConsultarPacienteFragment newInstance(Paciente paciente) {
         ConsultarPacienteFragment fragment = new ConsultarPacienteFragment();
         Bundle args = new Bundle();
-        args.putSerializable("objetoRelacionTerminalRecursoComunitario", paciente);
+        args.putSerializable("objetoPaciente", paciente);
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,7 +98,6 @@ public class ConsultarPacienteFragment extends Fragment{
         textViewConsultarPrestacionOtrosServiciosSociales = root.findViewById(R.id.textViewConsultarPrestacionOtrosServiciosSociales);
         textViewConsultarObservacionesMedicas = root.findViewById(R.id.textViewConsultarObservacionesMedicas);
         textViewConsultarInteresesActividades = root.findViewById(R.id.textViewConsultarInteresesActividades);
-
         textViewConsultarIdTerminal.setText(String.valueOf(paciente.getId()));
         if (paciente.isTieneUcr()) {
             textViewConsultarTieneUCR.setText("El paciente tiene UCR");

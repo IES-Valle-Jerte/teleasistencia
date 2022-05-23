@@ -202,7 +202,7 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.Pacien
     @Override
     public void onBindViewHolder(PacienteViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-        System.out.println(items.get(i));
+        viewHolder.setPaciente(items.get(i));
         viewHolder.numSeguridadSocialCard.setText(items.get(i).getNumeroSeguridadSocial());
         viewHolder.numeroExpedienteCard.setText("Exp:" + items.get(i).getNumeroExpediente());
         if (items.get(i).isTieneUcr()) {

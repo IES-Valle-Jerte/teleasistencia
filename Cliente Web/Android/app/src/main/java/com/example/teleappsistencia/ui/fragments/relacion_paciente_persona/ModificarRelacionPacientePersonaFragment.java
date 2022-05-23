@@ -12,18 +12,22 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.teleappsistencia.servicios.APIService;
-import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.utilidades.Utilidad;
+import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -35,6 +39,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
 
     private RelacionPacientePersona relacionPacientePersona;
     private Spinner spinnerPersonaModificar;
+    private Spinner spinnerPacienteModificarRelacionPacientePersona;
     private EditText editTextTipoRelacionModificar;
     private EditText editTextTieneLlaveViviendaModificar;
     private EditText editTextDisponibilidadModificar;
@@ -43,6 +48,9 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
 
     private Button btnModificarRelacionPacientePersona;
     private Button btnVolverRelacionPacientePersonaModificar;
+
+    //Atributos de la clase
+    private RelacionPacientePersona relacionPacientePersonaModificar;
 
     public ModificarRelacionPacientePersonaFragment() {
         // Required empty public constructor
@@ -69,6 +77,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_modificar_relacion_paciente_persona, container, false);
+        relacionPacientePersonaModificar = new RelacionPacientePersona();
         obtenerComponentes(root);
         rellenarCampos();
         // Inflate the layout for this fragment
@@ -77,11 +86,12 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
 
     private void obtenerComponentes(View root) {
         spinnerPersonaModificar = root.findViewById(R.id.spinnerPersonaModificar);
+        spinnerPacienteModificarRelacionPacientePersona = root.findViewById(R.id.spinnerPacienteModificarRelacionPacientePersona);
         editTextTipoRelacionModificar = root.findViewById(R.id.editTextTipoRelacionModificar);
         editTextTieneLlaveViviendaModificar = root.findViewById(R.id.editTextTieneLlaveViviendaModificar);
         editTextDisponibilidadModificar = root.findViewById(R.id.editTextDisponibilidadModificar);
         editTextObservacionesModificar = root.findViewById(R.id.editTextObservacionesModificar);
-        editTextPrioridadModificar = root.findViewById(R.id.editTextPrioridadModificar);
+        editTextPrioridadModificar = root.findViewById(R.id.editTextPrioridadModificarRelacionPacientePersona);
 
         btnModificarRelacionPacientePersona = root.findViewById(R.id.btnModificarRelacionPacientePersona);
         btnVolverRelacionPacientePersonaModificar = root.findViewById(R.id.btnVolverRelacionPacientePersonaModificar);
@@ -92,11 +102,12 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
 
     private void rellenarCampos() {
         inicializarSpinnerPersona();
+        inicializarSpinnerPaciente();
         fijarSiTieneLlaves();
         editTextTipoRelacionModificar.setText(relacionPacientePersona.getTipoRelacion());
         editTextDisponibilidadModificar.setText(relacionPacientePersona.getDisponibilidad());
         editTextObservacionesModificar.setText(relacionPacientePersona.getObservaciones());
-        editTextPrioridadModificar.setText(String.valueOf(relacionPacientePersona.getIdPersona()));
+        editTextPrioridadModificar.setText(String.valueOf(relacionPacientePersona.getPrioridad()));
     }
 
     private void fijarSiTieneLlaves() {
@@ -105,6 +116,109 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
         } else {
             this.editTextTieneLlaveViviendaModificar.setText("No");
         }
+    }
+
+    private void inicializarSpinnerPaciente() {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
+            @Override
+            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
+                if (response.isSuccessful()) {
+                    List<Paciente> listadoPacientes = new ArrayList<>();
+                    List<LinkedTreeMap> lPacientes = response.body();
+                    for (LinkedTreeMap lPaciente : lPacientes) {
+                        listadoPacientes.add((Paciente) Utilidad.getObjeto(lPaciente, "Paciente"));
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPacientes(listadoPacientes));
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    Paciente paciente = (Paciente) Utilidad.getObjeto(relacionPacientePersona.getIdPaciente(), "Paciente");
+                    if (relacionPacientePersona.getIdPaciente() != null) {
+                        spinnerPacienteModificarRelacionPacientePersona.setAdapter(adapter);
+                        spinnerPacienteModificarRelacionPacientePersona.setSelection(buscarPosicionSpinnerPaciente(listadoPacientes, paciente.getId()));
+                    } else {
+                        spinnerPacienteModificarRelacionPacientePersona.setAdapter(adapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
+        List<String> listadoPacientesString = new ArrayList<>();
+        for (Paciente paciente : listadoPacientes) {
+            listadoPacientesString.add(paciente.getId() + "-" + "Nº expediente: " + paciente.getNumeroExpediente());
+        }
+        return listadoPacientesString;
+    }
+
+    private int buscarPosicionSpinnerPaciente(List<Paciente> listadoPacientes, int id) {
+        boolean encontrado = false;
+        int i = 0;
+        while (!encontrado) {
+            if (listadoPacientes.get(i).getId() == id) {
+                encontrado = true;
+            }
+            i++;
+        }
+        return i - 1;
+    }
+
+    private void obtenerDatosFormulario() {
+        //Obtemos el id del paciente seleccionado desde el Spinner esta vez, ya que incluye el ID
+        String pacienteSeleccionado = spinnerPacienteModificarRelacionPacientePersona.getSelectedItem().toString();
+        String[] pacienteSplit = pacienteSeleccionado.split("-");
+        pacienteSeleccionado = pacienteSplit[0].replaceAll("\\s+", "");
+        relacionPacientePersonaModificar.setIdPaciente(Integer.parseInt(pacienteSeleccionado));
+        //Obtemos el id de la persona seleccionada desde el Spinner esta vez, ya que incluye el ID
+        String personaSeleccionada = spinnerPersonaModificar.getSelectedItem().toString();
+        String[] personaSplit = personaSeleccionada.split("-");
+        personaSeleccionada = personaSplit[0].replaceAll("\\s+", "");
+        relacionPacientePersonaModificar.setIdPersona(personaSeleccionada);
+        //Obtenemos el resto de atributos de los editText
+        if (editTextTieneLlaveViviendaModificar.getText().toString().equals("Sí") || editTextTieneLlaveViviendaModificar.getText().toString().equals("Si")) {
+            relacionPacientePersonaModificar.setTieneLlavesVivienda(true);
+        } else {
+            relacionPacientePersonaModificar.setTieneLlavesVivienda(false);
+        }
+        relacionPacientePersonaModificar.setTipoRelacion(editTextTipoRelacionModificar.getText().toString());
+        relacionPacientePersonaModificar.setDisponibilidad(editTextDisponibilidadModificar.getText().toString());
+        relacionPacientePersonaModificar.setObservaciones(editTextObservacionesModificar.getText().toString());
+        relacionPacientePersonaModificar.setPrioridad(Integer.parseInt(editTextPrioridadModificar.getText().toString()));
+        modificarRelacionPacientePersona(pacienteSeleccionado, relacionPacientePersonaModificar);
+    }
+
+    private void modificarRelacionPacientePersona(String pacienteSeleccionado, RelacionPacientePersona relacionPacientePersona) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<RelacionPacientePersona> call = apiService.updateRelacionPacientePersona(Integer.parseInt(pacienteSeleccionado), relacionPacientePersona, "Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<RelacionPacientePersona>() {
+            @Override
+            public void onResponse(Call<RelacionPacientePersona> call, Response<RelacionPacientePersona> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Relación Paciente-Persona modificado correctamente", Toast.LENGTH_SHORT).show();
+                    volver();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RelacionPacientePersona> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void volver() {
+        ListarRelacionPacientePersonaFragment listarRelacionPacientePersonaFragment = new ListarRelacionPacientePersonaFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarRelacionPacientePersonaFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void inicializarSpinnerPersona() {
@@ -135,7 +249,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getNombre() + " " + persona.getApellidos());
+            listadoPersonaString.add(persona.getId() + "-" + persona.getNombre() + " " + persona.getApellidos());
         }
         return listadoPersonaString;
     }
@@ -167,29 +281,38 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnModificarPaciente:
+            case R.id.btnModificarRelacionPacientePersona:
                 accionBotonGuardar();
                 break;
-            case R.id.btnVolverPacienteModificar:
-                accionBotonVolver();
+            case R.id.btnVolverRelacionPacientePersonaModificar:
+                volver();
                 break;
         }
     }
 
     private void accionBotonGuardar() {
         if (validarCampos()) {
-
+            obtenerDatosFormulario();
         } else {
             Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean validarCampos() {
-        return false;
+        if (String.valueOf(editTextPrioridadModificar.getText().toString()).isEmpty()) {
+            Toast.makeText(getContext(), Constantes.CAMPO_VACIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (editTextTieneLlaveViviendaModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.CAMPO_VACIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (editTextTipoRelacionModificar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.CAMPO_VACIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
-    private void accionBotonVolver() {
-//        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().onBackPressed();
-    }
+
 }

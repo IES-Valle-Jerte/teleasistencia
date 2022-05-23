@@ -38,6 +38,24 @@
             android:orientation="vertical">
 
             <Spinner
+                android:id="@+id/spinnerTipoModalidadPacienteModificar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="@string/spinnerTipoModalidadPacienteHint"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:textColorHint="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+                tools:layout_editor_absoluteY="179dp" />
+
+            <Spinner
                 android:id="@+id/spinnerTerminal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,22 +261,6 @@
                 android:textColor="@color/black"
                 android:visibility="gone" />
 
-            <Spinner
-                android:id="@+id/spinnerTipoModalidadPaciente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="@string/spinnerTipoModalidadPacienteHint"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="10dp"
-                android:textColorHint="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
-                tools:layout_editor_absoluteY="179dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -290,7 +292,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnVolverPacienteInsertar"
+                    android:id="@+id/btnVolverPacienteModificar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

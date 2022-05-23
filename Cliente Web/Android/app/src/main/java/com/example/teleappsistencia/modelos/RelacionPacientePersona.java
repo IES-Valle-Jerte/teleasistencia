@@ -14,7 +14,7 @@ public class RelacionPacientePersona implements Serializable {
      */
 
     @SerializedName("id")
-    private int id;
+    private Object id;
     @SerializedName("tipo_relacion")
     private String tipoRelacion;
     @SerializedName("tiene_llaves_vivienda")
@@ -24,7 +24,7 @@ public class RelacionPacientePersona implements Serializable {
     @SerializedName("observaciones")
     private String observaciones;
     @SerializedName("prioridad")
-    private Integer prioridad;
+    private int prioridad;
     @SerializedName("id_paciente")
     private Object idPaciente;
     @SerializedName("id_persona")
@@ -32,11 +32,11 @@ public class RelacionPacientePersona implements Serializable {
 
     //Getters y setters
     
-    public int getId() {
+    public Object getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Object id) {
         this.id = id;
     }
 
@@ -72,11 +72,11 @@ public class RelacionPacientePersona implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Integer getPrioridad() {
+    public int getPrioridad() {
         return prioridad;
     }
 
-    public void setPrioridad(Integer prioridad) {
+    public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
     }
 

@@ -8,6 +8,7 @@ import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
 import com.example.teleappsistencia.modelos.TipoVivienda;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.Usuario;
@@ -82,7 +83,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor
      */
     @PUT("api-rest/paciente/{id}")
-    Call<Paciente> updatePaciente(@Path("id") String id, @Body Paciente paciente, @Header("Authorization") String token);
+    Call<Paciente> updatePaciente(@Path("id") int id, @Body Paciente paciente, @Header("Authorization") String token);
 
     /**
      * Esta función eliminará al paciente con el id pasado como parámetro en la ruta, y utilizará el
@@ -110,13 +111,14 @@ public interface APIService {
     /**
      * Esta función enviará una solicitud POST al servidor siendo el cuerpo de la solicitud el objeto
      * relacionPacientePersona y el encabezado de la solicitud el token
-     * 
+     *
+     * @param idPaciente El id del paciente que se desea relacionar con la persona
      * @param relacionPacientePersona es el objeto que quiero enviar al servidor.
      * @param token el token que obtengo del inicio de sesión
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @POST("api-rest/relacion_paciente_persona")
-    Call<RelacionPacientePersona> addRelacionPacientePersona(@Body RelacionPacientePersona relacionPacientePersona, @Header("Authorization") String token);
+    Call<RelacionPacientePersona> addRelacionPacientePersonaSeleccionadoPaciente(@Query("id_paciente") int idPaciente,@Body RelacionPacientePersona relacionPacientePersona, @Header("Authorization") String token);
 
     /**
      * Esta función elimina un objeto RelaciónPacientePersona del servidor
@@ -139,7 +141,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @PUT("api-rest/relacion_paciente_persona/{id}")
-    Call<RelacionPacientePersona> updateRelacionPacientePersona(@Path("id") String id, @Body RelacionPacientePersona relacionPacientePersona, @Header("Authorization") String token);
+    Call<RelacionPacientePersona> updateRelacionPacientePersona(@Path("id") int id, @Body RelacionPacientePersona relacionPacientePersona, @Header("Authorization") String token);
 
     //Peticiones de Listado Relacion Terminal Recurso Comunitario
 
@@ -242,6 +244,9 @@ public interface APIService {
      */
     @GET("api-rest/terminal")
     Call<List<Terminal>> getListadoTerminal(@Header("Authorization") String token);
+
+    @GET("api-rest/terminal")
+    Call<List<Terminal>> getTerminalByNumeroTerminal(@Query("numero_terminal") String numero_terminal, @Header("Authorization") String token);
 
     /**
      * Esta función enviará una solicitud POST al servidor siendo el cuerpo de la solicitud el objeto
@@ -361,7 +366,17 @@ public interface APIService {
     @GET("api-rest/tipo_vivienda")
     Call<List<TipoVivienda>> getListadoTipoVivienda(@Header("Authorization") String token);
 
+    //Peticiones de TipoModalidadPaciente
 
+    /**
+     * Esta función devolverá una llamada al servidor y pasará el token especificado en el encabezado de
+     * Autorización.
+     *
+     * @param token el token que obtengo del inicio de sesión
+     * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
+     */
+    @GET("api-rest/tipo_modalidad_paciente")
+    Call<List<TipoModalidadPaciente>> getListadoTipoModalidadPaciente(@Header("Authorization") String token);
 
 
 }
