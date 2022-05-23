@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {IDireccion} from "../interfaces/i-direccion";
 import {ICopiaSeguridad} from "../interfaces/i-copia-seguridad";
 
 @Injectable({
@@ -27,11 +26,10 @@ export class CargaCopiaSeguridadService {
   }
 
   restaurarCopiaConID(copia: ICopiaSeguridad): Observable<ICopiaSeguridad>{
-    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'/r'+copia.id)
+    return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'/x'+copia.id)
   }
 
   borrarCopia(copia: ICopiaSeguridad): Observable<ICopiaSeguridad>{
     return this.http.delete<ICopiaSeguridad>(this.URL_SERVER_DIRECCIONES+'/'+copia.id)
   }
-
 }

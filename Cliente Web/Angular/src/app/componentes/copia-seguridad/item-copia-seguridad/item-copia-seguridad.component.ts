@@ -35,6 +35,25 @@ export class ItemCopiaSeguridadComponent implements OnInit {
 
     Toast.fire({
       icon: 'success',
+      title: environment.fraseEliminar,
+    })
+  }
+  alertRestaurar() :void {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      //El tiempo que permanece la alerta, se obtiene mediante una variable global en environment.ts
+      timer: environment.timerToast,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
       title: environment.fraseRestaurarCopia,
     })
   }
@@ -68,7 +87,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.eliminarCopia('inicio')
+        this.eliminarCopia('/copia_seguridad')
       }
     })
   }
@@ -82,7 +101,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.restaurarCopia('inicio')
+        this.restaurarCopia('/copia_seguridad')
       }
     })
   }
@@ -93,7 +112,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
           this.router.navigate([ruta]);
         });
         //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito
-        this.alertExito()
+        this.alertRestaurar()
 
       },
       error => {
@@ -105,7 +124,7 @@ export class ItemCopiaSeguridadComponent implements OnInit {
   eliminarCopia(ruta: string): void {
     this.cargaCopias.borrarCopia(this.copia_seguridad).subscribe(
       e => {
-        this.router.navigateByUrl(ruta, {skipLocationChange: true}).then(() => {
+        this.router.navigateByUrl(ruta+'/borrado/'+this.copia_seguridad.id, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);
         });
         //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito

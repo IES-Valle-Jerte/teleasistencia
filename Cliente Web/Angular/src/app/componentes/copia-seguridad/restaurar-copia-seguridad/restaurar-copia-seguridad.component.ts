@@ -61,14 +61,14 @@ export class RestaurarCopiaSeguridadComponent implements OnInit {
 
   modalRestauracion(): void {
     Swal.fire({
-      title: environment.fraseEliminarModal,
+      title:"¿Desea restaurar la base de datos?",
       showCancelButton: true,
       confirmButtonColor: environment.colorAceptarModal,
       cancelButtonColor: environment.colorCancelarModal,
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.restaurarCopia('inicio')
+        this.restaurarCopia('/copia_seguridad')
       }
     })
   }

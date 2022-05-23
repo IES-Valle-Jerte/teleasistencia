@@ -68,15 +68,15 @@ export class ItemTipoViviendaComponent implements OnInit {
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.eliminarTipoSituacion('viviendas')
+        this.eliminarTipoVivienda('/viviendas')
       }
     })
   }
-  eliminarTipoSituacion(ruta: string): void {
+  eliminarTipoVivienda(ruta: string): void {
     this.cargaTipoViviendas.borrarVivienda(this.tipo_vivenda).subscribe(
       e => {
-        this.router.navigateByUrl(ruta, {skipLocationChange: true}).then(() => {
-          this.router.navigate([ruta+'/borrado/'+this.tipo_vivenda.id]);
+        this.router.navigateByUrl(ruta+'/borrado/'+this.tipo_vivenda.id, {skipLocationChange: true}).then(() => {
+          this.router.navigate([ruta]);
         });
         //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito
         this.alertExito()
