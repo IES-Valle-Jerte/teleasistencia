@@ -81,7 +81,17 @@ class Persona_Serializer(serializers.ModelSerializer):
         depth = 1
 
 
+class Historico_Agenda_Llamadas_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Historico_Agenda_Llamadas
+        fields = '__all__'
+        depth = 1
+
+
 class Agenda_Serializer(serializers.ModelSerializer):
+    historico_agenda = Historico_Agenda_Llamadas_Serializer(
+        many=True,
+        read_only=True)
     class Meta:
         model = Agenda
         fields = '__all__' #Indica todos los campos
@@ -92,13 +102,6 @@ class Tipo_Agenda_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Tipo_Agenda
         fields = '__all__'
-
-
-class Historico_Agenda_Llamadas_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model = Historico_Agenda_Llamadas
-        fields = '__all__'
-        depth = 1
 
 
 class Relacion_Terminal_Recurso_Comunitario_Serializer(serializers.ModelSerializer):

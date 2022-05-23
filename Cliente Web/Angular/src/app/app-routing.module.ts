@@ -61,7 +61,9 @@ import {
   DetallesTipoAgendaComponent
 } from "./componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component";
 import {DetallesTipoAgendaResolveService} from "./servicios/detalles-tipo-agenda-resolve.service";
-import {RecursosComunitariosPersonalesComponent} from "./componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component";
+import {
+  RecursosComunitariosPersonalesComponent
+} from "./componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component";
 import {ListaTiposViviendaComponent} from "./componentes/tipo-vivienda/lista-tipos-vivienda/lista-tipos-vivienda.component";
 import {ListaViviendasResolveService} from "./servicios/lista-viviendas-resolve.service";
 import {CrearViviendaComponent} from "./componentes/tipo-vivienda/crear-tipo-vivienda/crear-vivienda.component";
@@ -79,7 +81,6 @@ import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.serv
 import {BorrarTipoAgendaService} from "./servicios/borrar-tipo-agenda.service";
 import {NuevoAgendaComponent} from "./componentes/agenda/nuevo-agenda/nuevo-agenda.component";
 import {ListaAgendaResolveService} from "./servicios/lista-agenda-resolve.service";
-import {HistoricoTipoSituacion} from "./clases/historico-tipo-situacion";
 import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-historico-tipo-situacion-resolve.service";
 import {
   CrearHistoricoTipoSituacionComponent
@@ -102,6 +103,15 @@ import {
 import {ItemTipoAgendaComponent} from "./componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component";
 import {ItemAgendaComponent} from "./componentes/agenda/item-agenda/item-agenda.component";
 import {ListaPacientesResolveService} from "./servicios/lista-paciente-resolve.service";
+import {DetallesAgendaResolveService} from "./servicios/detalles-agenda.resolve.service";
+import {
+  ListaHistoricoAgendaComponent
+} from "./componentes/historico-agenda/lista-historico-agenda/lista-historico-agenda.component";
+import {ListaHistoricoAgendaResolveService} from "./servicios/lista-historico-agenda-resolve.service";
+import {
+  ItemHistoricoAgendaComponent
+} from "./componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component";
+import {DetalleHistoricoAgendaResolveService} from "./servicios/detalle-historico-agenda-resolve.service";
 
 
 const routes: Routes = [
@@ -344,8 +354,8 @@ const routes: Routes = [
     component: AgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      agendas: ListaAgendaResolveService,
-      tipos_agenda: ListaTiposAgendaResolveService
+      agendasDelDia: ListaAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService,
     }
   },
   {
@@ -365,6 +375,23 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       agendas: ListaAgendaResolveService,
+      agenda: DetallesAgendaResolveService
+    }
+  },
+  {
+    path: 'historico_agenda',
+    component: ListaHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_de_agenda: ListaHistoricoAgendaResolveService
+    }
+  },
+  {
+    path: 'historico_agenda/modificar/:id',
+    component: ItemHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historico_agenda: DetalleHistoricoAgendaResolveService
     }
   },
   {

@@ -1,22 +1,26 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IAgenda} from "../../../interfaces/i-agenda";
+import {IHistoricoAgenda} from "../../../interfaces/i-historico-agenda";
+import {CargaAgendaService} from "../../../servicios/carga-agenda.service";
+import {Title} from "@angular/platform-browser";
+import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {environment} from "../../../../environments/environment";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
-import {CargaAgendaService} from "../../../servicios/carga-agenda.service";
 
 @Component({
-  selector: 'app-item-agenda, [app-item-agenda]',
-  templateUrl: './item-agenda.component.html',
-  styleUrls: ['./item-agenda.component.scss']
+  selector: 'app-item-historico-agenda, [app-item-historico-agenda]',
+  templateUrl: './item-historico-agenda.component.html',
+  styleUrls: ['./item-historico-agenda.component.scss']
 })
-export class ItemAgendaComponent implements OnInit {
+export class ItemHistoricoAgendaComponent implements OnInit {
 
-  @Input() public agenda: IAgenda;
-  @Input() public fechaToday: Date = null;
+  @Input() public historico_agenda: IHistoricoAgenda;
 
-  constructor(private cargaAgendaService: CargaAgendaService, private titleService: Title, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private cargaAgendaService: CargaAgendaService,
+    private titleService: Title,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
   }
@@ -63,21 +67,21 @@ export class ItemAgendaComponent implements OnInit {
 
   modalConfirmacion(): void {
     Swal.fire({
-      title: '¿Está seguro que desea eliminar este evento?',
+      title: '¿Está seguro que desea eliminar este elemento?',
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.eliminarAgenda('agenda')
+        this.eliminarHistoricoDeAgenda('agenda')
       }
     })
   }
 
-  eliminarAgenda(ruta:string) : void{
-    this.cargaAgendaService.borrarAgenda(this.agenda.id).subscribe(
+  eliminarHistoricoDeAgenda(ruta:string) : void{
+    this.cargaAgendaService.borrarAgenda(this.historico_agenda.id).subscribe(
       e=>{
-        this.router.navigateByUrl(ruta+'/borrado/'+this.agenda.id, {skipLocationChange: true}).then(() => {
+        this.router.navigateByUrl(ruta+'/borrado/'+this.historico_agenda.id, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);
         });
         //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito
@@ -89,4 +93,5 @@ export class ItemAgendaComponent implements OnInit {
       }
     )
   }
+
 }

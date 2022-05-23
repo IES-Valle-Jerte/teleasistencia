@@ -1,8 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule, Title} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { AnimationTriggerMetadata } from '@angular/animations';
-import { ɵWebAnimationsStyleNormalizer } from '@angular/animations/browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -66,10 +63,7 @@ import {FooterComponent} from './componentes/footer/footer.component';
 
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
 import { AgendaComponent } from './componentes/agenda/agenda.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommonModule } from '@angular/common';
-import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TipoAgendaComponent } from './componentes/tipo-agenda/tipo-agenda.component';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -99,10 +93,10 @@ import {CargaHistoricoTipoSituacionService} from "./servicios/carga-historico-ti
 import {CargaTipoAgendaService} from "./servicios/carga-tipo-agenda.service";
 import {CargaAgendaService} from "./servicios/carga-agenda.service";
 import { GruposComponent } from './componentes/grupos/grupos.component';
-import { DetallesAgendaComponent } from './componentes/agenda/detalles-agenda/detalles-agenda.component';
 import { ItemAgendaComponent } from './componentes/agenda/item-agenda/item-agenda.component';
-import { ListaAgendaComponent } from './componentes/agenda/lista-agenda/lista-agenda.component';
 import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
+import { ItemHistoricoAgendaComponent } from './componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component';
+import { ListaHistoricoAgendaComponent } from './componentes/historico-agenda/lista-historico-agenda/lista-historico-agenda.component';
 
 
 @NgModule({
@@ -176,9 +170,9 @@ import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-
     ModificarHistoricoTipoSituacionComponent,
     ItemHistoricoTipoSituacionComponent,
     GruposComponent,
-    DetallesAgendaComponent,
     ItemAgendaComponent,
-    ListaAgendaComponent,
+    ItemHistoricoAgendaComponent,
+    ListaHistoricoAgendaComponent,
   ],
   imports: [
     BrowserModule,
@@ -187,8 +181,6 @@ import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-
     FormsModule,
     NgbModalModule,
     CommonModule,
-    FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     NgxPaginationModule,
   ],
   providers: [

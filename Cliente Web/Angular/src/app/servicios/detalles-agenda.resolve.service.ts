@@ -9,16 +9,13 @@ import {CargaAgendaService} from "./carga-agenda.service";
   providedIn: 'root'
 })
 
-export class ListaAgendaResolveService implements Resolve<IAgenda> {
+export class DetallesAgendaResolveService implements Resolve<IAgenda> {
 
   constructor(private cargaAgendaService: CargaAgendaService, private router: Router) {
   }
-  fechaPrevista = new Date();
-
-  fechaParseada =  this.fechaPrevista.getFullYear() +'-'+ (this.fechaPrevista.getMonth()+1) +'-'+ this.fechaPrevista.getDate();
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IAgenda> {
-    return this.cargaAgendaService.getAgendasPorFechaPrevista(this.fechaParseada).pipe(
+    return this.cargaAgendaService.getAgenda(route.params['id']).pipe(
       catchError(error => {
         this.router.navigate(['/inicio']);
         return of(null);

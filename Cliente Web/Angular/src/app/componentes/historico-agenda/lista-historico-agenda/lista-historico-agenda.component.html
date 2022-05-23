@@ -9,10 +9,7 @@
       </ol>
     </nav>
     <h1 class="component-title">
-      {{ getNombreDia(fechaToday.getDay()) }}
-      {{ fechaToday.getDate() }} de
-      {{ getNombreMes(fechaToday.getMonth()) }}
-      de {{ fechaToday.getFullYear() }}
+      Históricos de agenda
     </h1>
 
     <div class="form-group mb-3">
@@ -22,19 +19,17 @@
       <table id="tableList" class="table table-hover text-center">
         <thead>
         <tr class="table-purple">
-          <th (click)="ordenacionTabla(0, 'string')" scope="col">Paciente <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(1, 'number')" scope="col">Tipo Agenda <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(2, 'string')" scope="col">Persona de contacto <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(3, 'string')" scope="col">Tlf. contacto <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(4, 'string')" scope="col">Fecha <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(5, 'string')" scope="col">Observaciones <i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(0, 'number')" scope="col">Agenda <i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(1, 'string')" scope="col">Teleoperador <i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(2, 'date')" scope="col">Fecha <i class="fas fa-sort"></i></th>
+          <th (click)="ordenacionTabla(3, 'Observaciones')" scope="col">Observaciones <i class="fas fa-sort"></i></th>
           <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <tr
-          *ngFor="let agenda of agendasDelDia | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
-          app-item-agenda [agenda]="agenda" [fechaToday]="fechaToday">
+          *ngFor="let historico_agenda of historicos_de_agenda | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
+          app-item-historico-agenda [historico_agenda]="historico_agenda">
         </tr>
         </tbody>
       </table>
@@ -46,4 +41,5 @@
     </div>
   </div>
 </main>
+
 

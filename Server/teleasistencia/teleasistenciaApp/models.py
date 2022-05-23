@@ -172,7 +172,7 @@ class Agenda(models.Model):
 
 
 class Historico_Agenda_Llamadas(models.Model):
-    id_agenda = models.ForeignKey(Agenda, null=True, on_delete=models.SET_NULL)
+    id_agenda = models.ForeignKey(Agenda, null=True, on_delete=models.SET_NULL, related_name="historico_agenda")
     id_teleoperador = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) #OJO: User de los modelos de admin.
     fecha_llamada = models.DateField(null=False, default=now)
     observaciones = models.CharField(max_length=4000, blank=True)
