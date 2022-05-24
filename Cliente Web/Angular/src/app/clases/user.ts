@@ -1,6 +1,6 @@
 import {IUsers} from '../interfaces/i-users';
 export class User implements IUsers{
-  pk:          number;
+  id:          number;
   url:         string;
   last_login:  null;
   username:    string;

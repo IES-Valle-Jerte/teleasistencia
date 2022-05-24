@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
    imagen = ImagenUserSerializer(source='imagen_user', read_only=True)
    class Meta:
        model = User
-       fields = ['pk', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups','imagen']
+       fields = ['id', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups','imagen']
        depth = 1
 
 class PermissionSerializer(serializers.ModelSerializer):
@@ -85,7 +85,7 @@ class Historico_Agenda_Llamadas_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Historico_Agenda_Llamadas
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Agenda_Serializer(serializers.ModelSerializer):

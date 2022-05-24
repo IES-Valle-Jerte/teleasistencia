@@ -63,6 +63,10 @@ import {FooterComponent} from './componentes/footer/footer.component';
 
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
 import { AgendaComponent } from './componentes/agenda/agenda.component';
+import {
+  ModificarHistoricoAgendaComponent
+} from "./componentes/historico-agenda/modificar-historico-agenda/modificar-historico-agenda.component";
+import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/modificar-agenda.component";
 import { CommonModule } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TipoAgendaComponent } from './componentes/tipo-agenda/tipo-agenda.component';
@@ -97,7 +101,9 @@ import { ItemAgendaComponent } from './componentes/agenda/item-agenda/item-agend
 import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
 import { ItemHistoricoAgendaComponent } from './componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component';
 import { ListaHistoricoAgendaComponent } from './componentes/historico-agenda/lista-historico-agenda/lista-historico-agenda.component';
-
+import {
+  NuevoHistoricoAgendaComponent
+} from "./componentes/historico-agenda/nuevo-historico-agenda/nuevo-historico-agenda.component";
 
 @NgModule({
   declarations: [
@@ -173,6 +179,9 @@ import { ListaHistoricoAgendaComponent } from './componentes/historico-agenda/li
     ItemAgendaComponent,
     ItemHistoricoAgendaComponent,
     ListaHistoricoAgendaComponent,
+    ModificarHistoricoAgendaComponent,
+    ModificarAgendaComponent,
+    NuevoHistoricoAgendaComponent
   ],
   imports: [
     BrowserModule,

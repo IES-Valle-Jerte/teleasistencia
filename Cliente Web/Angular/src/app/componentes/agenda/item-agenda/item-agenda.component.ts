@@ -89,4 +89,22 @@ export class ItemAgendaComponent implements OnInit {
       }
     )
   }
+
+  modificarFechaResolucionAgenda() {
+    let fecha_resolucion = new Date();
+
+    // @ts-ignore
+    this.agenda.fecha_resolucion = fecha_resolucion.getFullYear()
+      + '-' + (fecha_resolucion.getMonth() + 1)
+      + '-' + fecha_resolucion.getDate();
+
+    this.cargaAgendaService.modificarAgenda(this.agenda).subscribe(
+      e => {
+        console.log('Modificado');
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 }

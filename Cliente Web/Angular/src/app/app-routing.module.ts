@@ -112,6 +112,14 @@ import {
   ItemHistoricoAgendaComponent
 } from "./componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component";
 import {DetalleHistoricoAgendaResolveService} from "./servicios/detalle-historico-agenda-resolve.service";
+import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/modificar-agenda.component";
+import {
+  ModificarHistoricoAgendaComponent
+} from "./componentes/historico-agenda/modificar-historico-agenda/modificar-historico-agenda.component";
+import {ListaTodasAgendasResolveService} from "./servicios/lista-todas-agendas-resolve.service";
+import {
+  NuevoHistoricoAgendaComponent
+} from "./componentes/historico-agenda/nuevo-historico-agenda/nuevo-historico-agenda.component";
 
 
 const routes: Routes = [
@@ -370,6 +378,17 @@ const routes: Routes = [
     }
   },
   {
+    path: 'agenda/modificar/:id',
+    component: ModificarAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agenda: DetallesAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService,
+      pacientes: ListaPacientesResolveService,
+      personas_contacto: ListaPersonasResolveService,
+    }
+  },
+  {
     path: 'agenda/borrado/:id',
     component: ItemAgendaComponent,
     canActivate: [LoginGuard],
@@ -387,11 +406,22 @@ const routes: Routes = [
     }
   },
   {
-    path: 'historico_agenda/modificar/:id',
-    component: ItemHistoricoAgendaComponent,
+    path: 'historico_agenda/nuevo',
+    component: NuevoHistoricoAgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      historico_agenda: DetalleHistoricoAgendaResolveService
+      agendas: ListaTodasAgendasResolveService,
+      teleoperadores: ListaUsersResolveService,
+    }
+  },
+  {
+    path: 'historico_agenda/modificar/:id',
+    component: ModificarHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historico_agenda: DetalleHistoricoAgendaResolveService,
+      agendas: ListaTodasAgendasResolveService,
+      teleoperadores: ListaUsersResolveService
     }
   },
   {

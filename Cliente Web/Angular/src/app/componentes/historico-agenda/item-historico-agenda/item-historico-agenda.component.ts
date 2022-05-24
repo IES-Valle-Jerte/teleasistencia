@@ -5,6 +5,7 @@ import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {environment} from "../../../../environments/environment";
+import {CargaHistoricoAgendaService} from "../../../servicios/carga-historico-agenda.service";
 
 @Component({
   selector: 'app-item-historico-agenda, [app-item-historico-agenda]',
@@ -16,7 +17,7 @@ export class ItemHistoricoAgendaComponent implements OnInit {
   @Input() public historico_agenda: IHistoricoAgenda;
 
   constructor(
-    private cargaAgendaService: CargaAgendaService,
+    private cargaHistoricoAgendaService: CargaHistoricoAgendaService,
     private titleService: Title,
     private router: Router,
     private route: ActivatedRoute
@@ -73,13 +74,13 @@ export class ItemHistoricoAgendaComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.eliminarHistoricoDeAgenda('agenda')
+        this.eliminarHistoricoDeAgenda('historico_agenda')
       }
     })
   }
 
   eliminarHistoricoDeAgenda(ruta:string) : void{
-    this.cargaAgendaService.borrarAgenda(this.historico_agenda.id).subscribe(
+    this.cargaHistoricoAgendaService.borrarHistoricoAgenda(this.historico_agenda.id).subscribe(
       e=>{
         this.router.navigateByUrl(ruta+'/borrado/'+this.historico_agenda.id, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);

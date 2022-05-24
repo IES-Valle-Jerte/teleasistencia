@@ -34,7 +34,7 @@
         <tbody>
         <tr
           *ngFor="let agenda of agendasDelDia | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
-          app-item-agenda [agenda]="agenda" [fechaToday]="fechaToday">
+          app-item-agenda [agenda]="agenda" [fechaToday]="fechaToday" class="{{agenda.fecha_resolucion === null ? 'noResuelta' : 'resuelta'}}">
         </tr>
         </tbody>
       </table>

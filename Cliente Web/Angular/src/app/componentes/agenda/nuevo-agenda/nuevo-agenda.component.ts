@@ -20,7 +20,12 @@ export class NuevoAgendaComponent implements OnInit {
   public personas_contacto: IPersona[];
   public pacientes: IPaciente[];
 
-  constructor(private titleService: Title, private route: ActivatedRoute, private cargaAgendas: CargaAgendaService, private router: Router) { }
+  constructor(
+    private titleService: Title,
+    private route: ActivatedRoute,
+    private cargaAgendas: CargaAgendaService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.tipos_agenda = this.route.snapshot.data['tipos_agenda'];
