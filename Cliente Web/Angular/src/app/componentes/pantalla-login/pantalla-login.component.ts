@@ -54,6 +54,7 @@ export class PantallaLoginComponent implements OnInit, DoCheck {
         localStorage.setItem('token',resp.access)
         this.profileService.getProfile()
           .subscribe((resp:IProfileUser[])=>{
+            console.log(resp)
             this.username=resp[0].first_name
             this.userlastname=resp[0].last_name
             this.grupo=resp[0].groups[0].id
