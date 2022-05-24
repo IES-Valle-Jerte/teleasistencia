@@ -99,7 +99,7 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
         recycler.setLayoutManager(lManager);
 
         //Obtenemos los pacientes y pasamos los datos al adaptador mientras mostramos la capa de espera
-        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionPacientePersona);
+        ConstraintLayout dataConstraintLayout = (ConstraintLayout) view.findViewById(R.id.listViewDataRelacionUsuarioCentro);
         Utilidad.generarCapaEspera(view,dataConstraintLayout);
         listarPacientes(view,recycler);
 

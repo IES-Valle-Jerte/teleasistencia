@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.servicios.APIService;
-import com.example.teleappsistencia.servicios.ClienteRetrofit;
-import com.example.teleappsistencia.ui.fragments.paciente.ListarPacienteFragment;
-import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.RelacionPacientePersona;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -88,7 +87,9 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
 
         private void accionBorrarRelacionPacientePersona() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteRelacionPacientePersona(String.valueOf(this.relacionPacientePersona.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            double idSeleccionadoDouble = (double) this.relacionPacientePersona.getId();
+            int idSeleccionado = (int) idSeleccionadoDouble;
+            Call<ResponseBody> call = apiService.deleteRelacionPacientePersona(idSeleccionado, "Bearer " + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -117,8 +118,8 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
                     .commit();
         }
 
-        public void setRelacionPacientePersonaViewholder(RelacionPacientePersona relacionPacientePersonaViewholder) {
-            this.relacionPacientePersona = relacionPacientePersonaViewholder;
+        public void setRelacionPacientePersona(RelacionPacientePersona relacionPacientePersona) {
+            this.relacionPacientePersona = relacionPacientePersona;
         }
 
     }
@@ -143,14 +144,15 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
     @Override
     public void onBindViewHolder(RelacionPacientePersonaViewholder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-        viewHolder.setRelacionPacientePersonaViewholder(items.get(i));
+        viewHolder.setRelacionPacientePersona(items.get(i));
         viewHolder.tipoRelacionCard.setText(items.get(i).getTipoRelacion());
         viewHolder.prioridadCard.setText("Prioridad: " + String.valueOf(items.get(i).getPrioridad()));
         viewHolder.disponibilidadCard.setText(items.get(i).getDisponibilidad());
-        Paciente paciente = (Paciente) Utilidad.getObjeto(items.get(i).getIdPaciente(), "Paciente");
-        viewHolder.pacienteRelacionCard.setText("SS del paciente: " + paciente.getNumeroSeguridadSocial());
+        if (items.get(i).getIdPaciente() != null) {
+            Paciente paciente = (Paciente) Utilidad.getObjeto(items.get(i).getIdPaciente(), "Paciente");
+            viewHolder.pacienteRelacionCard.setText("SS del paciente: " + paciente.getNumeroSeguridadSocial());
+        }
         Persona persona = (Persona) Utilidad.getObjeto(items.get(i).getIdPersona(), "Persona");
-        viewHolder.personaRelacionCard.setText("Persona de contacto: " +persona.getNombre() + " " + persona.getApellidos());
-        relacionPacientePersonaViewholder.setRelacionPacientePersonaViewholder(items.get(i));
+        viewHolder.personaRelacionCard.setText("Persona de contacto: " + persona.getNombre() + " " + persona.getApellidos());
     }
 }

@@ -128,7 +128,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @DELETE("api-rest/relacion_paciente_persona/{id}")
-    Call<ResponseBody> deleteRelacionPacientePersona(@Path("id") String id, @Header("Authorization") String token);
+    Call<ResponseBody> deleteRelacionPacientePersona(@Path("id") int id, @Header("Authorization") String token);
 
 
     /**
