@@ -186,7 +186,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @PUT("api-rest/relacion_terminal_recurso_comunitario/{id}")
-    Call<RelacionTerminalRecursoComunitario> updateRelacionTerminalRecursoComunitario(@Path("id") String id, @Body RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario, @Header("Authorization") String token);
+    Call<RelacionTerminalRecursoComunitario> updateRelacionTerminalRecursoComunitario(@Path("id") int id, @Body RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario, @Header("Authorization") String token);
 
     //Peticiones de Listado Relacion Usuario Centro
 
@@ -231,7 +231,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @PUT("api-rest/relacion_usuario_centro/{id}")
-    Call<RelacionUsuarioCentro> updateRelacionUsuarioCentro(@Path("id") String id, @Body RelacionUsuarioCentro relacionUsuarioCentro, @Header("Authorization") String token);
+    Call<RelacionUsuarioCentro> updateRelacionUsuarioCentro(@Path("id") int id, @Body RelacionUsuarioCentro relacionUsuarioCentro, @Header("Authorization") String token);
 
     //Peticiones de Terminal
 
@@ -279,7 +279,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @PUT("api-rest/terminal/{id}")
-    Call<Terminal> updateTerminal(@Path("id") String id, @Body Terminal terminal, @Header("Authorization") String token);
+    Call<Terminal> updateTerminal(@Path("id") int id, @Body Terminal terminal, @Header("Authorization") String token);
 
     // Peticiones de Usuarios
 

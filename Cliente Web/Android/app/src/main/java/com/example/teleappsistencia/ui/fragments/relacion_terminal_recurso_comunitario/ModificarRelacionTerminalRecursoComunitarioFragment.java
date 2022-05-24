@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -109,7 +110,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
     private List<String> convertirListaTerminales(List<Terminal> listadoTerminales) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Terminal terminal : listadoTerminales) {
-            listadoTerminalesString.add("Nº de terminal: " + terminal.getNumeroTerminal());
+            listadoTerminalesString.add(terminal.getId() + "-" + "Nº de terminal: " + terminal.getNumeroTerminal());
         }
         return listadoTerminalesString;
     }
@@ -165,7 +166,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
     private List<String> convertirListaRecursoComunitario(List<RecursoComunitario> listadoRecursoComunitario) {
         List<String> listadoRecursoComunitarioString = new ArrayList<>();
         for (RecursoComunitario recursoComunitario : listadoRecursoComunitario) {
-            listadoRecursoComunitarioString.add(recursoComunitario.getNombre());
+            listadoRecursoComunitarioString.add(recursoComunitario.getId() + "-" + recursoComunitario.getNombre());
         }
         return listadoRecursoComunitarioString;
     }
@@ -175,34 +176,68 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
         this.spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario = root.findViewById(R.id.spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario);
         this.btnModificarRelacionTerminalRecursoComunitario = root.findViewById(R.id.btnModificarRelacionTerminalRecursoComunitario);
         this.btnVolverRelacionTerminalRecursoComunitarioModificar = root.findViewById(R.id.btnVolverRelacionTerminalRecursoComunitarioModificar);
+        btnModificarRelacionTerminalRecursoComunitario.setOnClickListener(this);
+        btnVolverRelacionTerminalRecursoComunitarioModificar.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnModificarPaciente:
+            case R.id.btnModificarRelacionTerminalRecursoComunitario:
                 accionBotonGuardar();
                 break;
-            case R.id.btnVolverPacienteModificar:
-                accionBotonVolver();
+            case R.id.btnVolverRelacionTerminalRecursoComunitarioModificar:
+                volver();
                 break;
         }
     }
 
     private void accionBotonGuardar() {
-        if (validarCampos()) {
+        String terminalSeleccionado = spinnerTerminalModificarRelacionTerminalRecursoComunitario.getSelectedItem().toString();
+        String recursoComunitarioSeleccionado = spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.getSelectedItem().toString();
+        String[] terminalSeleccionadoSplit = terminalSeleccionado.split("-");
+        String[] recursoComunitarioSeleccionadoSplit = recursoComunitarioSeleccionado.split("-");
+        terminalSeleccionado = terminalSeleccionadoSplit[0];
+        recursoComunitarioSeleccionado = recursoComunitarioSeleccionadoSplit[0];
+        modificarRelacionTerminalRecursoComunitario(terminalSeleccionado, recursoComunitarioSeleccionado);
+    }
 
-        } else {
-            Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
-        }
+    private void modificarRelacionTerminalRecursoComunitario(String terminalSeleccionado, String recursoComunitarioSeleccionado) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitarioModificado = new RelacionTerminalRecursoComunitario();
+        relacionTerminalRecursoComunitarioModificado.setIdTerminal(Integer.parseInt(terminalSeleccionado));
+        relacionTerminalRecursoComunitarioModificado.setIdRecursoComunitario(Integer.parseInt(recursoComunitarioSeleccionado));
+        Call<RelacionTerminalRecursoComunitario> call = apiService.updateRelacionTerminalRecursoComunitario(relacionTerminalRecursoComunitario.getId(),relacionTerminalRecursoComunitarioModificado,"Bearer "+ Utilidad.getToken().getAccess() );
+        call.enqueue(new Callback<RelacionTerminalRecursoComunitario>() {
+            @Override
+            public void onResponse(Call<RelacionTerminalRecursoComunitario> call, Response<RelacionTerminalRecursoComunitario> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Relacion modificada", Toast.LENGTH_SHORT).show();
+                    volver();
+                } else {
+                    Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RelacionTerminalRecursoComunitario> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        } );
     }
 
     private boolean validarCampos() {
         return false;
     }
 
-    private void accionBotonVolver() {
-//        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().onBackPressed();
+
+    private void volver() {
+        ListarRelacionTerminalRecursoComunitarioFragment listarRelacionTerminalRecursoComunitarioFragment = new ListarRelacionTerminalRecursoComunitarioFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarRelacionTerminalRecursoComunitarioFragment)
+                .addToBackStack(null)
+                .commit();
     }
+
 }

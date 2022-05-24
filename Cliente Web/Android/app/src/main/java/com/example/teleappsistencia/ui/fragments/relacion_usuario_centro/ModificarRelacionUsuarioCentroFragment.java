@@ -19,14 +19,13 @@ import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
-import com.example.teleappsistencia.modelos.Persona;
-import com.example.teleappsistencia.modelos.Terminal;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -96,37 +95,78 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
         this.editTextObservacionesModificarRelacionUsuarioCentro = root.findViewById(R.id.editTextObservacionesModificarRelacionUsuarioCentro);
         this.btnModificarRelacionUsuarioCentro = root.findViewById(R.id.btnModificarRelacionUsuarioCentro);
         this.btnVolverRelacionUsuarioCentroModificar = root.findViewById(R.id.btnVolverRelacionUsuarioCentroModificar);
+        btnModificarRelacionUsuarioCentro.setOnClickListener(this);
+        btnVolverRelacionUsuarioCentroModificar.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnModificarRelacionPacientePersona:
+            case R.id.btnModificarRelacionUsuarioCentro:
                 accionBotonGuardar();
                 break;
             case R.id.btnVolverRelacionUsuarioCentroModificar:
-                accionBotonVolver();
+                volver();
                 break;
         }
     }
 
     private void accionBotonGuardar() {
-        if (validarCampos()) {
+        RelacionUsuarioCentro relacionUsuarioCentroModificar = new RelacionUsuarioCentro();
+        ///Obtenemos el id del paciente
+        String pacienteSeleccionado = spinnerPacienteModificar.getSelectedItem().toString();
+        String[] pacienteSeleccionadoSplit = pacienteSeleccionado.split("-");
+        int idPaciente = Integer.parseInt(pacienteSeleccionadoSplit[0]);
+        relacionUsuarioCentroModificar.setIdPaciente(idPaciente);
+        //Obtenemos el id del centro sanitario
+        String centroSanitarioSeleccionado = spinnerCentroSanitarioModificar.getSelectedItem().toString();
+        String[] centroSanitarioSeleccionadoSplit = centroSanitarioSeleccionado.split("-");
+        int idCentroSanitario = Integer.parseInt(centroSanitarioSeleccionadoSplit[0]);
+        relacionUsuarioCentroModificar.setIdCentroSanitario(idCentroSanitario);
+        //Obtenemos el nombre de la persona de contacto
+        relacionUsuarioCentroModificar.setPersonaContacto(editTextPersonaContactoModificar.getText().toString());
+        //Obtenemos la distancia
+        relacionUsuarioCentroModificar.setDistancia(Integer.parseInt(editTextDistanciaModificar.getText().toString()));
+        //Obtenemos el tiempo
+        relacionUsuarioCentroModificar.setTiempo(Integer.parseInt(editTextTiempoModificar.getText().toString()));
+        //Obtenemos las observaciones
+        relacionUsuarioCentroModificar.setObservaciones(editTextObservacionesModificarRelacionUsuarioCentro.getText().toString());
+        //Modificamos la relacion en la base de datos
+        modificarRelacionUsuarioCentro(relacionUsuarioCentro.getId(),relacionUsuarioCentroModificar);
+    }
 
-        } else {
-            Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
-        }
+    private void modificarRelacionUsuarioCentro(int idRelacionUsuarioPacienteModificar, RelacionUsuarioCentro relacionUsuarioCentroModificar) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<RelacionUsuarioCentro> call = apiService.updateRelacionUsuarioCentro(
+                idRelacionUsuarioPacienteModificar,
+                relacionUsuarioCentroModificar,
+                "Bearer "+ Utilidad.getToken().getAccess()
+                );
+        call.enqueue(new Callback<RelacionUsuarioCentro>() {
+            @Override
+            public void onResponse(Call<RelacionUsuarioCentro> call, Response<RelacionUsuarioCentro> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Relacion modificada correctamente", Toast.LENGTH_SHORT).show();
+                    volver();
+                } else {
+                    Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RelacionUsuarioCentro> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+
     }
 
     private boolean validarCampos() {
         return false;
     }
 
-    private void accionBotonVolver() {
-//        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().onBackPressed();
-    }
 
     private void inicializarSpinnerCentroSanitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
@@ -155,7 +195,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
     private List<String> convertirListaCentrosSanitarios(List<CentroSanitario> lCentrosSanitarios) {
         List<String> listadoCentrosSanitariosString = new ArrayList<>();
         for (CentroSanitario centroSanitario : lCentrosSanitarios) {
-            listadoCentrosSanitariosString.add(centroSanitario.getNombre());
+            listadoCentrosSanitariosString.add(centroSanitario.getId() + "-" + centroSanitario.getNombre());
         }
         return listadoCentrosSanitariosString;
     }
@@ -209,7 +249,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoPacientesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoPacientesString.add("Nº expediente: " + paciente.getNumeroExpediente());
+            listadoPacientesString.add(paciente.getId() + "-" +"Nº expediente: " + paciente.getNumeroExpediente());
         }
         return listadoPacientesString;
     }
@@ -224,5 +264,13 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
             i++;
         }
         return i-1;
+    }
+
+    private void volver() {
+        ListarRelacionUsuarioCentroFragment listarRelacionUsuarioCentroFragment = new ListarRelacionUsuarioCentroFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarRelacionUsuarioCentroFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

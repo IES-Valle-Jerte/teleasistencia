@@ -12,20 +12,22 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Paciente;
+import com.example.teleappsistencia.modelos.Persona;
+import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoVivienda;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
-import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
-import com.example.teleappsistencia.modelos.Persona;
-import com.example.teleappsistencia.modelos.Terminal;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -83,6 +85,8 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
         editTextBarrerasArquitectonicasInsertar = root.findViewById(R.id.editTextBarrerasArquitectonicasInsertar);
         btnInsertarTerminal = root.findViewById(R.id.btnInsertarTerminal);
         btnVolverTerminalInsertar = root.findViewById(R.id.btnVolverTerminalInsertar);
+        btnInsertarTerminal.setOnClickListener(this);
+        btnVolverTerminalInsertar.setOnClickListener(this);
     }
 
     @Override
@@ -92,18 +96,71 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
                 accionBotonGuardar();
                 break;
             case R.id.btnVolverTerminalInsertar:
-                accionBotonVolver();
+                volver();
                 break;
         }
     }
 
     private void accionBotonGuardar() {
-
+        if (validarCampos()) {
+            obtenerDatos();
+        }
     }
 
-    private void accionBotonVolver() {
-
+    private boolean validarCampos() {
+        if (editTextBarrerasArquitectonicasInsertar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBE_INGRESAR_LAS_BARRERAS_ARQUITECTÓNICAS, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (editTextModoAccesoViviendaInsertar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBE_INGRESAR_EL_MODO_DE_ACCESO_A_LA_VIVIENDA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (editTextNumeroTerminalInsertar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBE_INGRESAR_EL_NUMERO_DE_TERMINAL, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
+
+    private void obtenerDatos() {
+        Terminal terminalInsertar = new Terminal();
+        String titularInsertado = spinnerTitularInsertar.getSelectedItem().toString();
+        String[] titularInsertadoSplit = titularInsertado.split("-");
+        titularInsertado = titularInsertadoSplit[0];
+        terminalInsertar.setTitular(titularInsertado);
+        String tipoViviendaInsertado = spinnerTipoViviendaInsertar.getSelectedItem().toString();
+        String[] tipoViviendaInsertadoSplit = tipoViviendaInsertado.split("-");
+        tipoViviendaInsertado = tipoViviendaInsertadoSplit[0];
+        terminalInsertar.setTipoVivienda(tipoViviendaInsertado);
+        terminalInsertar.setNumeroTerminal(editTextNumeroTerminalInsertar.getText().toString());
+        terminalInsertar.setModoAccesoVivienda(editTextModoAccesoViviendaInsertar.getText().toString());
+        terminalInsertar.setBarrerasArquitectonicas(editTextBarrerasArquitectonicasInsertar.getText().toString());
+        insertarTerminal(terminalInsertar);
+    }
+
+    private void insertarTerminal(Terminal terminalInsertar) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<Terminal> call = apiService.addTerminal(terminalInsertar, "Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<Terminal>() {
+            @Override
+            public void onResponse(Call<Terminal> call, Response<Terminal> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), Constantes.TERMINAL_INSERTADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    volver();
+                } else {
+                    Toast.makeText(getContext(), Constantes.ERROR_INSERTANDO_TERMINAL, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Terminal> call, Throwable t) {
+                Toast.makeText(getContext(), Constantes.ERROR_INSERTANDO_TERMINAL, Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
 
     private void inicializarSpinnerTitular() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
@@ -115,7 +172,7 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
                     List<LinkedTreeMap> listadoPacientes = response.body();
                     List<Paciente> listadoPacientesCompleto = new ArrayList<>();
                     for (LinkedTreeMap paciente : listadoPacientes) {
-                        listadoPacientesCompleto.add ((Paciente) Utilidad.getObjeto(paciente, "Paciente"));
+                        listadoPacientesCompleto.add((Paciente) Utilidad.getObjeto(paciente, "Paciente"));
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPacientes(listadoPacientesCompleto));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,7 +191,7 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoTerminalesString.add("Exp: " + paciente.getNumeroExpediente());
+            listadoTerminalesString.add(paciente.getId() + "-" + "Exp: " + paciente.getNumeroExpediente());
         }
         return listadoTerminalesString;
     }
@@ -164,7 +221,7 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
     private List<String> convertirListaTipoVivienda(List<TipoVivienda> listadoTipoVivienda) {
         List<String> listadoTipoViviendaString = new ArrayList<>();
         for (TipoVivienda tipoVivienda : listadoTipoVivienda) {
-            listadoTipoViviendaString.add(tipoVivienda.getNombre());
+            listadoTipoViviendaString.add(tipoVivienda.getId() + "-" + tipoVivienda.getNombre());
         }
         return listadoTipoViviendaString;
     }
@@ -172,8 +229,16 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getNombre() + " " + persona.getApellidos());
+            listadoPersonaString.add(persona.getId() + "-" + persona.getNombre() + " " + persona.getApellidos());
         }
         return listadoPersonaString;
+    }
+
+    private void volver() {
+        ListarTerminalFragment listarTerminalFragment = new ListarTerminalFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarTerminalFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

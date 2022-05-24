@@ -13,9 +13,12 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.modelos.CentroSanitario;
+import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -85,6 +89,8 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
         editTextObservacionesInsertar = root.findViewById(R.id.editTextObservacionesInsertar);
         btnInsertarRelacionUsuarioCentro = root.findViewById(R.id.btnInsertarRelacionUsuarioCentro);
         btnVolverRelacionUsuarioCentroInsertar = root.findViewById(R.id.btnVolverRelacionUsuarioCentroInsertar);
+        btnInsertarRelacionUsuarioCentro.setOnClickListener(this);
+        btnVolverRelacionUsuarioCentroInsertar.setOnClickListener(this);
     }
 
     @Override
@@ -94,18 +100,79 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
                 accionBotonGuardar();
                 break;
             case R.id.btnVolverRelacionUsuarioCentroInsertar:
-                accionBotonVolver();
+                volver();
                 break;
         }
     }
 
     private void accionBotonGuardar() {
-
+        if (validarCampos()) {
+            obtenerDatos();
+        }
     }
 
-    private void accionBotonVolver() {
-
+    private void obtenerDatos() {
+        RelacionUsuarioCentro relacionUsuarioCentroInsertar = new RelacionUsuarioCentro();
+        //Obtenemos el id del paciente
+        String pacienteSeleccionado = spinnerPacienteInsertar.getSelectedItem().toString();
+        String[] pacienteSeleccionadoSplit = pacienteSeleccionado.split("-");
+        int idPaciente = Integer.parseInt(pacienteSeleccionadoSplit[0]);
+        relacionUsuarioCentroInsertar.setIdPaciente(idPaciente);
+        //Obtenemos el id del centro sanitario
+        String centroSanitarioSeleccionado = spinnerCentroSanitarioInsertar.getSelectedItem().toString();
+        String[] centroSanitarioSeleccionadoSplit = centroSanitarioSeleccionado.split("-");
+        int idCentroSanitario = Integer.parseInt(centroSanitarioSeleccionadoSplit[0]);
+        relacionUsuarioCentroInsertar.setIdCentroSanitario(idCentroSanitario);
+        //Obtenemos el nombre de la persona de contacto
+        relacionUsuarioCentroInsertar.setPersonaContacto(editTextPersonaContactoInsertar.getText().toString());
+        //Obtenemos la distancia
+        relacionUsuarioCentroInsertar.setDistancia(Integer.parseInt(editTextDistanciaInsertar.getText().toString()));
+        //Obtenemos el tiempo
+        relacionUsuarioCentroInsertar.setTiempo(Integer.parseInt(editTextTiempoInsertar.getText().toString()));
+        //Obtenemos las observaciones
+        relacionUsuarioCentroInsertar.setObservaciones(editTextObservacionesInsertar.getText().toString());
+        //Insertamos la relacion en la base de datos
+        insertarRelacionUsuarioCentro(relacionUsuarioCentroInsertar);
     }
+
+    private void insertarRelacionUsuarioCentro(RelacionUsuarioCentro relacionUsuarioCentroInsertar) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<RelacionUsuarioCentro> call = apiService.addRelacionUsuarioCentro(relacionUsuarioCentroInsertar,"Bearer " + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<RelacionUsuarioCentro>() {
+            @Override
+            public void onResponse(Call<RelacionUsuarioCentro> call, Response<RelacionUsuarioCentro> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Relacion de usuario centro insertada correctamente", Toast.LENGTH_SHORT).show();
+                    volver();
+                } else {
+                    Toast.makeText(getContext(), "Error al insertar la relacion de usuario centro", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RelacionUsuarioCentro> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al insertar la relacion de usuario centro", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private boolean validarCampos() {
+        if (editTextDistanciaInsertar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.CAMPO_VACIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (editTextTiempoInsertar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.CAMPO_VACIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (editTextObservacionesInsertar.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.CAMPO_VACIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
 
     private void inicializarSpinnerPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
@@ -136,7 +203,7 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoPacientesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoPacientesString.add("Nº expediente: " + paciente.getNumeroExpediente());
+            listadoPacientesString.add(paciente.getId() + "-" +"Nº expediente: " + paciente.getNumeroExpediente());
         }
         return listadoPacientesString;
     }
@@ -166,9 +233,17 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
     private List<String> convertirListaCentrosSanitarios(List<CentroSanitario> lCentrosSanitarios) {
         List<String> listadoCentrosSanitariosString = new ArrayList<>();
         for (CentroSanitario centroSanitario : lCentrosSanitarios) {
-            listadoCentrosSanitariosString.add(centroSanitario.getNombre());
+            listadoCentrosSanitariosString.add(centroSanitario.getId() + "-" + centroSanitario.getNombre());
         }
         return listadoCentrosSanitariosString;
+    }
+
+    private void volver() {
+        ListarRelacionUsuarioCentroFragment listarRelacionUsuarioCentroFragment = new ListarRelacionUsuarioCentroFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarRelacionUsuarioCentroFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
 

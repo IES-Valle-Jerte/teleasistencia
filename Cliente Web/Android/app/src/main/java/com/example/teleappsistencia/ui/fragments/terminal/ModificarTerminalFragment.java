@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -123,7 +124,7 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoTerminalesString.add("Exp: " + paciente.getNumeroExpediente());
+            listadoTerminalesString.add(paciente.getId() + "-" + "Exp: " + paciente.getNumeroExpediente());
         }
         return listadoTerminalesString;
     }
@@ -155,7 +156,7 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
     private List<String> convertirListaTipoVivienda(List<TipoVivienda> listadoTipoVivienda) {
         List<String> listadoTipoViviendaString = new ArrayList<>();
         for (TipoVivienda tipoVivienda : listadoTipoVivienda) {
-            listadoTipoViviendaString.add(tipoVivienda.getNombre());
+            listadoTipoViviendaString.add(tipoVivienda.getId() + "-" + tipoVivienda.getNombre());
         }
         return listadoTipoViviendaString;
     }
@@ -198,29 +199,59 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnModificarPaciente:
+            case R.id.btnModificarTerminal:
                 accionBotonGuardar();
                 break;
-            case R.id.btnVolverPacienteModificar:
-                accionBotonVolver();
+            case R.id.btnVolverTerminalModificar:
+                volver();
                 break;
         }
     }
 
     private void accionBotonGuardar() {
-        if (validarCampos()) {
-
-        } else {
-            Toast.makeText(getContext(), "Error al guardar", Toast.LENGTH_SHORT).show();
-        }
+        Terminal terminalModificar = new Terminal();
+        String titularInsertado = spinnerTitularModificar.getSelectedItem().toString();
+        String[] titularInsertadoSplit = titularInsertado.split("-");
+        titularInsertado = titularInsertadoSplit[0];
+        terminalModificar.setTitular(titularInsertado);
+        String tipoViviendaInsertado = spinnerTipoViviendaModificar.getSelectedItem().toString();
+        String[] tipoViviendaInsertadoSplit = tipoViviendaInsertado.split("-");
+        tipoViviendaInsertado = tipoViviendaInsertadoSplit[0];
+        terminalModificar.setTipoVivienda(tipoViviendaInsertado);
+        terminalModificar.setNumeroTerminal(editTextNumeroTerminalModificar.getText().toString());
+        terminalModificar.setModoAccesoVivienda(editTextModoAccesoViviendaModificar.getText().toString());
+        terminalModificar.setBarrerasArquitectonicas(editTextBarrerasArquitectonicasModificar.getText().toString());
+        modificarTerminal(terminal.getId(),terminalModificar);
     }
 
-    private boolean validarCampos() {
-        return false;
+    private void modificarTerminal(int id, Terminal terminalModificar) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<Terminal> call = apiService.updateTerminal(id,terminalModificar,"Bearer "+Utilidad.getToken().getAccess());
+        call.enqueue(new Callback <Terminal>() {
+            @Override
+            public void onResponse(Call<Terminal> call, Response<Terminal> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(),"Terminal modificada",Toast.LENGTH_SHORT).show();
+                    volver();
+                } else {
+                    Toast.makeText(getContext(),"Error al modificar terminal",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Terminal> call, Throwable t) {
+                Toast.makeText(getContext(),"Error al modificar terminal",Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 
-    private void accionBotonVolver() {
-//        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().onBackPressed();
+
+    private void volver() {
+        ListarTerminalFragment listarTerminalFragment = new ListarTerminalFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarTerminalFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

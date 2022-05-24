@@ -6,26 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
+import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
-import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment;
 import com.example.teleappsistencia.utilidades.Utilidad;
-import com.example.teleappsistencia.modelos.Paciente;
-import com.example.teleappsistencia.modelos.Persona;
-import com.example.teleappsistencia.modelos.Terminal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -84,22 +83,58 @@ public class InsertarRelacionTerminalRecursoComunitarioFragment extends Fragment
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnInsertarPaciente:
+            case R.id.btnInsertarRelacionTerminalRecursoComunitario:
                 accionBotonGuardar();
                 break;
-            case R.id.btnVolverPacienteInsertar:
-                accionBotonVolver();
+            case R.id.btnVolverRelacionTerminalRecursoComunitarioInsertar:
+                volver();
                 break;
         }
     }
 
+    private void volver() {
+        ListarRelacionTerminalRecursoComunitarioFragment listarRelacionTerminalRecursoComunitarioFragment = new ListarRelacionTerminalRecursoComunitarioFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, listarRelacionTerminalRecursoComunitarioFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     private void accionBotonGuardar() {
+        String terminalSeleccionado = spinnerTerminalInsertarRelacionTerminalRecursoComunitario.getSelectedItem().toString();
+        String recursoComunitarioSeleccionado = spinnerRecursoComunitarioInsertarRelacionTerminalRecursoComunitario.getSelectedItem().toString();
+        String[] terminalSeleccionadoSplit = terminalSeleccionado.split("-");
+        String[] recursoComunitarioSeleccionadoSplit = recursoComunitarioSeleccionado.split("-");
+        terminalSeleccionado = terminalSeleccionadoSplit[0];
+        recursoComunitarioSeleccionado = recursoComunitarioSeleccionadoSplit[0];
+        guardarRelacionTerminalRecursoComunitario(terminalSeleccionado, recursoComunitarioSeleccionado);
+    }
+
+    private void guardarRelacionTerminalRecursoComunitario(String terminalSeleccionado, String recursoComunitarioSeleccionado) {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitario = new RelacionTerminalRecursoComunitario();
+        relacionTerminalRecursoComunitario.setIdTerminal(Integer.parseInt(terminalSeleccionado));
+        relacionTerminalRecursoComunitario.setIdRecursoComunitario(Integer.parseInt(recursoComunitarioSeleccionado));
+        Call<RelacionTerminalRecursoComunitario> call = apiService.addRelacionTerminalRecursoComunitario(relacionTerminalRecursoComunitario,"Bearer "+Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<RelacionTerminalRecursoComunitario>() {
+            @Override
+            public void onResponse(Call<RelacionTerminalRecursoComunitario> call, Response<RelacionTerminalRecursoComunitario> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), "Relación guardada", Toast.LENGTH_SHORT).show();
+                    volver();
+                }else{
+                    Toast.makeText(getContext(), "Error al guardar relación", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RelacionTerminalRecursoComunitario> call, Throwable t) {
+
+            }
+        });
 
     }
 
-    private void accionBotonVolver() {
-
-    }
 
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
@@ -126,7 +161,7 @@ public class InsertarRelacionTerminalRecursoComunitarioFragment extends Fragment
     private List<String> convertirListaTerminales(List<Terminal> listadoTerminales) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Terminal terminal : listadoTerminales) {
-            listadoTerminalesString.add("Nº de terminal: " + terminal.getNumeroTerminal());
+            listadoTerminalesString.add(terminal.getId() + "-" + "Nº de terminal: " + terminal.getNumeroTerminal());
         }
         return listadoTerminalesString;
     }
@@ -156,7 +191,7 @@ public class InsertarRelacionTerminalRecursoComunitarioFragment extends Fragment
     private List<String> convertirListaRecursoComunitario(List<RecursoComunitario> listadoRecursoComunitario) {
         List<String> listadoRecursoComunitarioString = new ArrayList<>();
         for (RecursoComunitario recursoComunitario : listadoRecursoComunitario) {
-            listadoRecursoComunitarioString.add(recursoComunitario.getNombre());
+            listadoRecursoComunitarioString.add(recursoComunitario.getId() + "-" + recursoComunitario.getNombre());
         }
         return listadoRecursoComunitarioString;
     }
