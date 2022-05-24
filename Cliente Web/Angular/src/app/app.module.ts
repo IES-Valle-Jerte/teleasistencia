@@ -128,7 +128,6 @@ import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modif
 import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
 import { GruposComponent } from './componentes/grupos/grupos.component';
 import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-terminal/crear-alarma-terminal.component';
-import {WebsocketService} from "./servicios/websocket.service";
 
 
 @NgModule({
@@ -259,7 +258,6 @@ import {WebsocketService} from "./servicios/websocket.service";
     CargaAlarmaService,
     CargaPacienteService,
     CargaTerminalesService,
-    WebsocketService,
     Title,
     {
       provide:HTTP_INTERCEPTORS,
