@@ -13,7 +13,7 @@
         <div class="form-group mb-3">
           <label for="alarmas" class="form-label">Alarma</label>
           <select class="form-select" id="alarmas" name="alarmas"
-                  [(ngModel)]="personaContactoAlarma.id_alarma" required>
+                  [(ngModel)]="personaContactoAlarma.id_alarma" required disabled>
             <option class="relacion_alarma_option" *ngFor="let alarma of alarmas; let i = index"
                     [value]="alarma.id">{{ personaContactoAlarma.id_alarma.id === alarma.id? optionSelectedAlarma(i):"" }}{{ alarma.id }} - {{alarma.estado_alarma}}</option>
           </select>

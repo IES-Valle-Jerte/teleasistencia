@@ -25,7 +25,7 @@ export class CargaTerminalesService {
     nuevoTerminal(terminal: ITerminal): Observable<ITerminal> {
       return this.http.post<ITerminal>(this.URL_SERVER_TERMINAL, terminal)
     }
-  eliminarTerminal(terminal: ITerminal): Observable<ITerminal> {
-    return this.http.delete<ITerminal>(this.URL_SERVER_TERMINAL + '/' + terminal.id)
+    eliminarTerminal(terminal: ITerminal): Observable<ITerminal> {
+      return this.http.delete<ITerminal>(this.URL_SERVER_TERMINAL + '/' + terminal.id)
   }
  }
