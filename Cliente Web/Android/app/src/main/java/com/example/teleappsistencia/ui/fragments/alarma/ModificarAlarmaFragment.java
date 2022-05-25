@@ -34,7 +34,6 @@ import retrofit2.Response;
  */
 public class ModificarAlarmaFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_ALARMA = "Alarma";
     private Alarma alarma;
     private Spinner spinnerEstadoAlarma;
     private EditText editTextObservacionesAlarmaModificar;
@@ -59,7 +58,7 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
     public static ModificarAlarmaFragment newInstance(Alarma alarma) {
         ModificarAlarmaFragment fragment = new ModificarAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ALARMA, alarma);
+        args.putSerializable(Constantes.ARG_ALARMA, alarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +68,7 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
-            this.alarma = (Alarma) getArguments().getSerializable(ARG_ALARMA);
+            this.alarma = (Alarma) getArguments().getSerializable(Constantes.ARG_ALARMA);
         }
     }
 
@@ -170,12 +169,12 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.errorBody() == null){
+                if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.ALARMA_MODIFICADA, Toast.LENGTH_LONG).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.raw().message() + Constantes.PISTA_TELEOPERADOR_ID , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + Constantes.PISTA_TELEOPERADOR_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override

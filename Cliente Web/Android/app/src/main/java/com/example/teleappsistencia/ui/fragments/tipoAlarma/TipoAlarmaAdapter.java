@@ -92,14 +92,21 @@ public class TipoAlarmaAdapter extends RecyclerView.Adapter<TipoAlarmaAdapter.Ti
             this.tipoAlarma = tipoAlarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar el Tipo de Alarma
+         */
         private void borrarTipoAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
             Call<ResponseBody> call = apiService.deleteTipoAlarmabyId(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, Constantes.TIPO_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
-                    volver();
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, Constantes.TIPO_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
+                        volver();
+                    }else{
+                        Toast.makeText(context, Constantes.ERROR_BORRADO + response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {

@@ -176,10 +176,14 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lTipoAlarma = (ArrayList<TipoAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_TIPO_ALARMA);
-                adapterTiposAlarma = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lTipoAlarma);
-                spinnerTipoAlarma.setAdapter(adapterTiposAlarma);
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lTipoAlarma = (ArrayList<TipoAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_TIPO_ALARMA);
+                    adapterTiposAlarma = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lTipoAlarma);
+                    spinnerTipoAlarma.setAdapter(adapterTiposAlarma);
+                }else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -199,10 +203,15 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lTerminales = (ArrayList<Terminal>) Utilidad.getObjeto(lObjetos, Constantes.AL_TERMINAL);
-                adapterTerminales = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lTerminales);
-                spinnerIdTerminalOPaciente.setAdapter(adapterTerminales); // Como los terminales están checkeados por defecto en el xml, se cargan este adapter primero
+                if(response.isSuccessful()){
+                    radioGroupAlarma.check(R.id.radioButtonTerminal);
+                    List<Object> lObjetos = response.body();
+                    lTerminales = (ArrayList<Terminal>) Utilidad.getObjeto(lObjetos, Constantes.AL_TERMINAL);
+                    adapterTerminales = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lTerminales);
+                    spinnerIdTerminalOPaciente.setAdapter(adapterTerminales); // se cargan este adapter primero
+                }else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -222,9 +231,14 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lPacientes = (ArrayList<Paciente>) Utilidad.getObjeto(lObjetos, Constantes.AL_PACIENTE);
-                adapterPacientes = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lPacientes);
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lPacientes = (ArrayList<Paciente>) Utilidad.getObjeto(lObjetos, Constantes.AL_PACIENTE);
+                    adapterPacientes = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lPacientes);
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -239,12 +253,17 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
      */
     private void persistirAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Alarma> call = apiService.addAlarma(this.alarma, Constantes.ERROR_+ Token.getToken().getAccess());
+        Call<Alarma> call = apiService.addAlarma(this.alarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<Alarma>() {
             @Override
             public void onResponse(Call<Alarma> call, Response<Alarma> response) {
-                Toast.makeText(getContext(), Constantes.ALARMA_GUARDADA,  Toast.LENGTH_LONG).show();
-                volver();
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), Constantes.ALARMA_GUARDADA,  Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

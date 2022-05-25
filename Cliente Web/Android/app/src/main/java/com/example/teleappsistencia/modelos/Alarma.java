@@ -24,6 +24,8 @@ public class Alarma implements Serializable {
     @SerializedName("id_terminal")
     private Object id_terminal;
 
+    //Getters y Setters a continucación
+
     public int getId() {
         return id;
     }

@@ -26,8 +26,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
  */
 public class ConsultarAlarmaFragment extends Fragment {
 
-    // FIXME: qué hago con esta constante...?
-    private static final String ARG_ALARMA = "Alarma";
     private Alarma alarma;
     private TextView textViewConsultarIdAlarma;
     private TextView textViewConsultarEstadoAlarma;
@@ -52,7 +50,7 @@ public class ConsultarAlarmaFragment extends Fragment {
     public static ConsultarAlarmaFragment newInstance(Alarma alarma) {
         ConsultarAlarmaFragment fragment = new ConsultarAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ALARMA, alarma);
+        args.putSerializable(Constantes.ARG_ALARMA, alarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +60,7 @@ public class ConsultarAlarmaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
-            this.alarma = (Alarma) getArguments().getSerializable(ARG_ALARMA);
+            this.alarma = (Alarma) getArguments().getSerializable(Constantes.ARG_ALARMA);
         }
     }
 

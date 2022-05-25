@@ -39,6 +39,10 @@ public class Teleoperador implements Serializable {
     @SerializedName("user_permissions")
     private List<Object> user_permissions = null;
 
+    // Solo de prueba hasta que se implemente el login
+    // FIXME: hay que poder acceder al id_teloperador de forma estática
+    public static int id_teleoperador = 11;
+
     /**
      * Getters y setters
      */

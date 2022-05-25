@@ -37,6 +37,9 @@ public interface APIService {
     @GET("api-rest/alarma/{id}")
     public Call<Alarma> getAlarmabyId(@Path("id") int id, @Header("Authorization") String token);
 
+    @GET("/api-rest/alarma")
+    public Call<List<Object>> getAlarmasbyIdTeleoperador(@Query("id_teleoperador") int id, @Header("Authorization") String token);
+
     @GET("/api-rest/alarma?id_teleoperador__isnull=true")
     public Call<List<Object>> getAlarmasSinAsignar(@Header("Authorization") String token);
 

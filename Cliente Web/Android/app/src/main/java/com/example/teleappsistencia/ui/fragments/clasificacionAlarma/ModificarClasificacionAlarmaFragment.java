@@ -31,7 +31,6 @@ import retrofit2.Response;
  */
 public class ModificarClasificacionAlarmaFragment extends Fragment implements View.OnClickListener{
 
-    private final static String ARG_CLASIFICACIONALARMA = "ClasificacionAlarma";
     private ClasificacionAlarma clasificacionAlarma;
     private EditText editTextNombreClasificacionAlarmaModificar;
     private EditText editTextCodigoClasificacionAlarmaModificar;
@@ -52,7 +51,7 @@ public class ModificarClasificacionAlarmaFragment extends Fragment implements Vi
     public static ModificarClasificacionAlarmaFragment newInstance(ClasificacionAlarma clasificacionAlarma) {
         ModificarClasificacionAlarmaFragment fragment = new ModificarClasificacionAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CLASIFICACIONALARMA, clasificacionAlarma);
+        args.putSerializable(Constantes.ARG_CLASIFICACIONALARMA, clasificacionAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +61,7 @@ public class ModificarClasificacionAlarmaFragment extends Fragment implements Vi
         super.onCreate(savedInstanceState);
         // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
-            this.clasificacionAlarma = (ClasificacionAlarma) getArguments().getSerializable(ARG_CLASIFICACIONALARMA);
+            this.clasificacionAlarma = (ClasificacionAlarma) getArguments().getSerializable(Constantes.ARG_CLASIFICACIONALARMA);
         }
     }
 
@@ -150,12 +149,17 @@ public class ModificarClasificacionAlarmaFragment extends Fragment implements Vi
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
-                volver();
+                if(response.errorBody() == null){
+                    Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.message() , Toast.LENGTH_LONG).show();
+                }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -143,12 +143,12 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
         call.enqueue(new Callback<CentroSanitarioEnAlarma>() {
             @Override
             public void onResponse(Call<CentroSanitarioEnAlarma> call, Response<CentroSanitarioEnAlarma> response) {
-                if(response.errorBody() == null){
+                if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_LONG).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.raw().message() + Constantes.PISTA_ALARMA_CENTRO_ID, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + Constantes.PISTA_ALARMA_CENTRO_ID, Toast.LENGTH_LONG).show();
                 }
             }
             @Override

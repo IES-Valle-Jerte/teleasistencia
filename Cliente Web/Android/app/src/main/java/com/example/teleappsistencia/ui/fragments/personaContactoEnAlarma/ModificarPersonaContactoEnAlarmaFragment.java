@@ -33,7 +33,6 @@ import retrofit2.Response;
  */
 public class ModificarPersonaContactoEnAlarmaFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_PERSONACONTACTOEA = "PCEA";
     private PersonaContactoEnAlarma personaContactoEnAlarma;
     private EditText editTextNumberIdAlarmaPCEAModificar;
     private EditText editTextNumberIdPersonaPCEAModificar;
@@ -56,7 +55,7 @@ public class ModificarPersonaContactoEnAlarmaFragment extends Fragment implement
     public static ModificarPersonaContactoEnAlarmaFragment newInstance(PersonaContactoEnAlarma personaContactoEnAlarma) {
         ModificarPersonaContactoEnAlarmaFragment fragment = new ModificarPersonaContactoEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PERSONACONTACTOEA, personaContactoEnAlarma);
+        args.putSerializable(Constantes.ARG_PERSONACONTACTOEA, personaContactoEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +64,7 @@ public class ModificarPersonaContactoEnAlarmaFragment extends Fragment implement
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.personaContactoEnAlarma = (PersonaContactoEnAlarma) getArguments().getSerializable(ARG_PERSONACONTACTOEA);
+            this.personaContactoEnAlarma = (PersonaContactoEnAlarma) getArguments().getSerializable(Constantes.ARG_PERSONACONTACTOEA);
         }
     }
 
@@ -170,7 +169,7 @@ public class ModificarPersonaContactoEnAlarmaFragment extends Fragment implement
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.raw().message() + Constantes.PISTA_ALARMA_PERSONA_ID , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + Constantes.PISTA_ALARMA_PERSONA_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override

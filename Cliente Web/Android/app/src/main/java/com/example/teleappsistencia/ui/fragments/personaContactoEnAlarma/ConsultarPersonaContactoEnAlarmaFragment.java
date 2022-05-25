@@ -23,7 +23,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
  */
 public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
 
-    private static final String ARG_PERSONACONTACTOEA = "PCEA";
     private PersonaContactoEnAlarma personaContactoEnAlarma;
     private TextView textViewConsultarIdPCEA;
     private TextView textViewConsultarFechaPCEA;
@@ -46,7 +45,7 @@ public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
     public static ConsultarPersonaContactoEnAlarmaFragment newInstance(PersonaContactoEnAlarma personaContactoEnAlarma) {
         ConsultarPersonaContactoEnAlarmaFragment fragment = new ConsultarPersonaContactoEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PERSONACONTACTOEA, personaContactoEnAlarma);
+        args.putSerializable(Constantes.ARG_PERSONACONTACTOEA, personaContactoEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +54,7 @@ public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.personaContactoEnAlarma = (PersonaContactoEnAlarma) getArguments().getSerializable(ARG_PERSONACONTACTOEA);
+            this.personaContactoEnAlarma = (PersonaContactoEnAlarma) getArguments().getSerializable(Constantes.ARG_PERSONACONTACTOEA);
         }
     }
 

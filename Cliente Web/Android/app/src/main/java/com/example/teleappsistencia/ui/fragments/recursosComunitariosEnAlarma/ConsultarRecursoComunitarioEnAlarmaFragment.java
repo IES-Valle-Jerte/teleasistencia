@@ -23,9 +23,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
  */
 public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_RCEA = "RCEA";
     private RecursoComunitarioEnAlarma recursoComunitarioEnAlarma;
     private TextView textViewConsultarIdRCEA;
     private TextView textViewConsultarFechaRCEA;
@@ -49,7 +46,7 @@ public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
     public static ConsultarRecursoComunitarioEnAlarmaFragment newInstance(RecursoComunitarioEnAlarma recursoComunitarioEnAlarma) {
         ConsultarRecursoComunitarioEnAlarmaFragment fragment = new ConsultarRecursoComunitarioEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_RCEA, recursoComunitarioEnAlarma);
+        args.putSerializable(Constantes.ARG_RCEA, recursoComunitarioEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +55,7 @@ public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-           this.recursoComunitarioEnAlarma = (RecursoComunitarioEnAlarma) getArguments().getSerializable(ARG_RCEA);
+           this.recursoComunitarioEnAlarma = (RecursoComunitarioEnAlarma) getArguments().getSerializable(Constantes.ARG_RCEA);
         }
     }
 

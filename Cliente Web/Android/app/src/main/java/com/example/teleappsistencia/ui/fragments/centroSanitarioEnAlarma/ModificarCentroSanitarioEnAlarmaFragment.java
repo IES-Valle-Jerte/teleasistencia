@@ -33,7 +33,6 @@ import retrofit2.Response;
  */
 public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_CENTROSANITARIOEA = "CSEA";
     private CentroSanitarioEnAlarma centroSanitarioEnAlarma;
     private EditText editTextNumberIdAlarmaCSEAModificar;
     private EditText editTextNumberIdCentroSanitarioCSEAModificar;
@@ -57,7 +56,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
     public static ModificarCentroSanitarioEnAlarmaFragment newInstance(CentroSanitarioEnAlarma centroSanitarioEnAlarma) {
         ModificarCentroSanitarioEnAlarmaFragment fragment = new ModificarCentroSanitarioEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CENTROSANITARIOEA, centroSanitarioEnAlarma);
+        args.putSerializable(Constantes.ARG_CENTROSANITARIOEA, centroSanitarioEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +66,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
         super.onCreate(savedInstanceState);
         // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
-            this.centroSanitarioEnAlarma = (CentroSanitarioEnAlarma) getArguments().getSerializable(ARG_CENTROSANITARIOEA);
+            this.centroSanitarioEnAlarma = (CentroSanitarioEnAlarma) getArguments().getSerializable(Constantes.ARG_CENTROSANITARIOEA);
         }
     }
 
@@ -175,7 +174,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + response.raw().message() + Constantes.PISTA_ALARMA_CENTRO_ID , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_MODIFICACION + Constantes.PISTA_ALARMA_CENTRO_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override

@@ -24,7 +24,7 @@
             android:id="@+id/txtCardIdRecursoComunitarioEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID: "
+            android:text="@string/id_dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:id="@+id/txtCardFechaRecursoComunitarioEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha registro: "
+            android:text="@string/fecha_registro_dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerRecursoComunitarioEnAlarma"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/imageButtonVerRecursoComunitarioEnAlarma" />
@@ -42,7 +42,7 @@
             android:id="@+id/txtCardPersonaRecursoComunitarioEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Persona: "
+            android:text="@string/persona_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardFechaRecursoComunitarioEnAlarma" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/txtCardAlarmaRecursoComunitarioEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Alarma: "
+            android:text="@string/id_alarma_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardPersonaRecursoComunitarioEnAlarma" />
 
@@ -59,7 +59,7 @@
             android:id="@+id/txtCardNombreRecursoComunitarioEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recurso Comunitario: "
+            android:text="@string/recurso_comunitario_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardAlarmaRecursoComunitarioEnAlarma" />
 

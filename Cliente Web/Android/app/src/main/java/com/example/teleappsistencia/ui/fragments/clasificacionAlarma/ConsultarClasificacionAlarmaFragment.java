@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.ClasificacionAlarma;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +20,6 @@ import com.example.teleappsistencia.modelos.ClasificacionAlarma;
  */
 public class ConsultarClasificacionAlarmaFragment extends Fragment {
 
-    private final static String ARG_CLASIFICACIONALARMA = "ClasificacionAlarma";
     private ClasificacionAlarma clasificacionAlarma;
     private TextView textViewConsultarIdClasificacionAlarma;
     private TextView textViewConsultarNombreClasificacionAlarma;
@@ -40,7 +40,7 @@ public class ConsultarClasificacionAlarmaFragment extends Fragment {
     public static ConsultarClasificacionAlarmaFragment newInstance(ClasificacionAlarma clasificacionAlarma) {
         ConsultarClasificacionAlarmaFragment fragment = new ConsultarClasificacionAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CLASIFICACIONALARMA, clasificacionAlarma);
+        args.putSerializable(Constantes.ARG_CLASIFICACIONALARMA, clasificacionAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +50,7 @@ public class ConsultarClasificacionAlarmaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Comprobamos que la instancia se ha creado con argumentos y si es así las recogemos.
         if (getArguments() != null) {
-            this.clasificacionAlarma = (ClasificacionAlarma) getArguments().getSerializable(ARG_CLASIFICACIONALARMA);
+            this.clasificacionAlarma = (ClasificacionAlarma) getArguments().getSerializable(Constantes.ARG_CLASIFICACIONALARMA);
         }
     }
 

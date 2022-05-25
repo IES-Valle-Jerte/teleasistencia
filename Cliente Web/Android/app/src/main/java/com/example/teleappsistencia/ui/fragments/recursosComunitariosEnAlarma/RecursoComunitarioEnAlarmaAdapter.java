@@ -99,8 +99,12 @@ public class RecursoComunitarioEnAlarmaAdapter extends RecyclerView.Adapter<Recu
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, Constantes.RECURSO_EN_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
-                    volver();
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, Constantes.RECURSO_EN_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
+                        volver();
+                    }else{
+                        Toast.makeText(context, Constantes.ERROR_BORRADO + response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {

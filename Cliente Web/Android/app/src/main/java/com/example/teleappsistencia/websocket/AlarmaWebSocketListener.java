@@ -34,7 +34,7 @@ public class AlarmaWebSocketListener extends WebSocketListener {
 
     /**
      * Constructor del WebSocketListener
-     * @param activity  para acceder al UiThread y al getSupportFragmentManager()
+     * @param activity para acceder al UiThread y al getSupportFragmentManager()
      */
     public AlarmaWebSocketListener(Activity activity){
         this.activity = (MainActivity) activity;
@@ -114,7 +114,7 @@ public class AlarmaWebSocketListener extends WebSocketListener {
     public void crearNotificacion(Alarma alarma){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity.getApplicationContext(), Constantes.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(Constantes.NUEVA_ALARMA )
+                .setContentTitle(Constantes.NUEVA_ALARMA)
                 .setContentText(Constantes.ALARMA_CREADA_CON_ID + String.valueOf(alarma.getId()))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.alarmicon));
@@ -156,6 +156,7 @@ public class AlarmaWebSocketListener extends WebSocketListener {
             @Override
             public void run() {
                 AlarmAlertFragment aAF = AlarmAlertFragment.newInstance(alarmaNotificada);
+                aAF.setCancelable(false); // Esta opción bloquea la pantalla hasta que Rechazamos o Aceptamos la alarma
                 aAF.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme_Dialog_MyDialogTheme);
                 aAF.show(activity.getSupportFragmentManager(), null);
             }

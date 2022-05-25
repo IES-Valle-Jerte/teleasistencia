@@ -1,4 +1,5 @@
 package com.example.teleappsistencia.servicios;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClienteRetrofit {
 
     private static ClienteRetrofit clienteRetrofit = null;
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
 
     private APIService apiService;
 
@@ -24,7 +24,7 @@ public class ClienteRetrofit {
     }
 
     private ClienteRetrofit() {
-        buildRetrofit(BASE_URL);
+        buildRetrofit(Constantes.BASE_URL);
     }
 
     private void buildRetrofit(String urlAPI) {
@@ -37,7 +37,7 @@ public class ClienteRetrofit {
                         .build();
 
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+                .setDateFormat(Constantes.FORMATO_FECHAS_RETROFIT).create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlAPI)

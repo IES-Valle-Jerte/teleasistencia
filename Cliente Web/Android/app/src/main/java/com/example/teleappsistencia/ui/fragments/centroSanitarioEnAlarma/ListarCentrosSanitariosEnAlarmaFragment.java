@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.ui.fragments.alarma.AlarmaAdapter;
 import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
@@ -96,15 +98,19 @@ public class ListarCentrosSanitariosEnAlarmaFragment extends Fragment {
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lCentrosEnAlarma = (ArrayList<CentroSanitarioEnAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CENTRO_SANITARIO_ALARMA);
-                adapter = new CentroSanitarioEnAlarmaAdapter(lCentrosEnAlarma);
-                recycler.setAdapter(adapter);
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lCentrosEnAlarma = (ArrayList<CentroSanitarioEnAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CENTRO_SANITARIO_ALARMA);
+                    adapter = new CentroSanitarioEnAlarmaAdapter(lCentrosEnAlarma);
+                    recycler.setAdapter(adapter);
+                }else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Object>> call, Throwable t) {
-                Toast.makeText(getContext(), Constantes.ERROR_CARGAR_DATOS, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

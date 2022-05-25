@@ -5,9 +5,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ExpandableListView;
-
-import com.andremion.counterfab.CounterFab;
-import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.ui.fragments.alarma.InsertarAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasFragment;
@@ -16,6 +13,8 @@ import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.ListarC
 import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.InsertarClasificacionAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.ListarClasificacionAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.AlarmAlertFragment;
+import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarAlarmasSinAsignarFragment;
+import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarMisAlarmasFragment;
 import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.InsertarPersonaContactoEnAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.ListarPersonasContactoEnAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.recursosComunitariosEnAlarma.InsertarRecursosComunitariosEnAlarmaFragment;
@@ -24,15 +23,12 @@ import com.example.teleappsistencia.ui.fragments.tipoAlarma.InsertarTipoAlarmaFr
 import com.example.teleappsistencia.ui.fragments.tipoAlarma.ListarTipoAlarmaFragment;
 import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
 import com.example.teleappsistencia.ui.menu.MenuModel;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.DialogFragment;
-
-
 import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentInsertarCentroSanitario;
 import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentListarCentroSanitario;
 import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentModificarCentroSanitario;
@@ -48,23 +44,8 @@ import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.Fragmen
 import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentInsertarTipoRecursoComunitario;
 import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentListarTipoRecursoComunitario;
 import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentModificarTipoRecursoComunitario;
-import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
-import com.example.teleappsistencia.ui.menu.MenuModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.snackbar.Snackbar;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +145,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         List<MenuModel> childModelsList;
         MenuModel menuModel;
 
+
+        // Menu Alarma.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
+        headerList.add(menuModel);
+
+        // FIXME: Evaluar el rol de usuario y si es Profesor, cargar este grupo. Mockeado.
+        String rol = "Profesor";
+        if(rol.equals("Profesor")) {
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));
+        }
+        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarAlarmasFragment()));
+        childModelsList.add(new MenuModel(Constantes.SIN_ASIGNAR, false, false, new ListarAlarmasSinAsignarFragment()));
+        childModelsList.add(new MenuModel(Constantes.MIS_ALARMAS, false, false, new ListarMisAlarmasFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
+
+
         // Menu Tipo Alarma.
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_alarma), true, true, null);
@@ -188,23 +191,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, childModelsList);
         } else{
             childList.put(menuModel, null);
-        }
-
-        // Menu Alarma.
-        // FIXME: Evaluar el rol de usuario y si es Profesor, cargar este grupo. Mockeado.
-        String rol = "Profesor";
-        if(rol.equals("Profesor")){
-            childModelsList = new ArrayList<>();
-            menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
-            headerList.add(menuModel);
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));
-            childModelsList.add(new MenuModel(childNames[2], false, false, new ListarAlarmasFragment()));
-
-            if (menuModel.hasChildren()) {
-                childList.put(menuModel, childModelsList);
-            } else{
-                childList.put(menuModel, null);
-            }
         }
 
         // Menu Centro Sanitario en Alarma.

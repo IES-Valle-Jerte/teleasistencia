@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="ID Alarma: "
+            android:text="@string/id_alarma_dp"
             android:textSize="20sp" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="Tipo: "
+            android:text="@string/tipo_dp"
             android:textSize="20sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="Clasificación: "
+            android:text="@string/clasificacion_dp"
             android:textSize="20sp" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="Terminal: "
+            android:text="@string/terminal_dp"
             android:textSize="20sp" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="Paciente: "
+            android:text="@string/paciente_dp"
             android:textSize="20sp" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="Teléfono: "
+            android:text="@string/telefono_dp"
             android:textSize="20sp" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginVertical="5sp"
-            android:text="Contactos: "
+            android:text="@string/contactos_dp"
             android:textSize="20sp" />
 
         <ListView
@@ -96,7 +96,7 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         android:layout_weight="10"
-        android:text="Gestionar"
+        android:text="@string/gestionar"
         android:textAllCaps="false"/>
 
 </LinearLayout>

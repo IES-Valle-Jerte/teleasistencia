@@ -24,7 +24,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
 public class ConsultarCentroSanitarioEnAlarmaFragment extends Fragment {
 
 
-    private static final String ARG_CENTROSANITARIOEA = "CSEA";
     private CentroSanitarioEnAlarma centroSanitarioEnAlarma;
     private TextView textViewConsultarIdCSEA;
     private TextView textViewConsultarFechaCSEA;
@@ -47,7 +46,7 @@ public class ConsultarCentroSanitarioEnAlarmaFragment extends Fragment {
     public static ConsultarCentroSanitarioEnAlarmaFragment newInstance(CentroSanitarioEnAlarma centroSanitarioEnAlarma) {
         ConsultarCentroSanitarioEnAlarmaFragment fragment = new ConsultarCentroSanitarioEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CENTROSANITARIOEA, centroSanitarioEnAlarma);
+        args.putSerializable(Constantes.ARG_CENTROSANITARIOEA, centroSanitarioEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +55,7 @@ public class ConsultarCentroSanitarioEnAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.centroSanitarioEnAlarma = (CentroSanitarioEnAlarma) getArguments().getSerializable(ARG_CENTROSANITARIOEA);
+            this.centroSanitarioEnAlarma = (CentroSanitarioEnAlarma) getArguments().getSerializable(Constantes.ARG_CENTROSANITARIOEA);
         }
     }
 

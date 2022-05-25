@@ -24,7 +24,7 @@
             android:id="@+id/txtCardIdClasificacionAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Clasificación Alarma: "
+            android:text="@string/id_clasificacion_alarma_dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:id="@+id/txtCardNombreClasificacionAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre: "
+            android:text="@string/nombre_dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerClasificacionAlarma"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/imageButtonVerClasificacionAlarma" />
@@ -42,7 +42,7 @@
             android:id="@+id/txtCardCodigoClasificacionAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Código: "
+            android:text="@string/codigo"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardNombreClasificacionAlarma" />
 

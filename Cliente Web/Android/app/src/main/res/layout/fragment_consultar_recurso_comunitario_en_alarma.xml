@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="ID"
+                    android:text="@string/id"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Fecha"
+                    android:text="@string/fecha"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Persona"
+                    android:text="@string/persona"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Acuerdo Alcanzado"
+                    android:text="@string/acuerdo_alcanzado"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="ID Alarma"
+                    android:text="@string/id_alarma"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Observaciones"
+                    android:text="@string/observaciones"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 

@@ -122,10 +122,15 @@ public class InsertarTipoAlarmaFragment extends Fragment implements View.OnClick
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lClasificacionAlarma = (ArrayList<ClasificacionAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CLASIFICACION_ALARMA);
-                ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lClasificacionAlarma);
-                spinnerClasificacionTipoAlarma.setAdapter(adapter);
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lClasificacionAlarma = (ArrayList<ClasificacionAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CLASIFICACION_ALARMA);
+                    ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lClasificacionAlarma);
+                    spinnerClasificacionTipoAlarma.setAdapter(adapter);
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message() , Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -173,8 +178,13 @@ public class InsertarTipoAlarmaFragment extends Fragment implements View.OnClick
         call.enqueue(new Callback<TipoAlarma>() {
             @Override
             public void onResponse(Call<TipoAlarma> call, Response<TipoAlarma> response) {
-                Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_LONG).show();
-                volver();
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.message() , Toast.LENGTH_LONG).show();
+                }
             }
             @Override
             public void onFailure(Call<TipoAlarma> call, Throwable t) {

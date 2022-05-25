@@ -143,12 +143,12 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
         call.enqueue(new Callback<RecursoComunitarioEnAlarma>() {
             @Override
             public void onResponse(Call<RecursoComunitarioEnAlarma> call, Response<RecursoComunitarioEnAlarma> response) {
-                if(response.errorBody() == null){
+                if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_SHORT).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.raw().message() + Constantes.PISTA_ALARMA_RECURSOCOMUNITARIO_ID , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + Constantes.PISTA_ALARMA_RECURSOCOMUNITARIO_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override

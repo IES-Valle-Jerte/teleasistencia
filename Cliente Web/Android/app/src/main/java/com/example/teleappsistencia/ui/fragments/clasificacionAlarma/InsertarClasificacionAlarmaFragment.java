@@ -130,8 +130,13 @@ public class InsertarClasificacionAlarmaFragment extends Fragment implements Vie
         call.enqueue(new Callback<ClasificacionAlarma>() {
             @Override
             public void onResponse(Call<ClasificacionAlarma> call, Response<ClasificacionAlarma> response) {
-                Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO,  Toast.LENGTH_LONG).show();
-                volver();
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO,  Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

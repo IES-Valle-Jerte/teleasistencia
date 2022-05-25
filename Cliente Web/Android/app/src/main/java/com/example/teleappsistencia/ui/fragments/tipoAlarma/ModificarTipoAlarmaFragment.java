@@ -38,7 +38,6 @@ import retrofit2.Response;
  */
 public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_TIPOALARMA = "TipoAlarma";
     private TipoAlarma tipoAlarma;
     private List<ClasificacionAlarma> lClasificacionAlarma;
     private EditText editTextCodigoTipoAlarmaModificar;
@@ -63,7 +62,7 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
     public static ModificarTipoAlarmaFragment newInstance(TipoAlarma tipoAlarma) {
         ModificarTipoAlarmaFragment fragment = new ModificarTipoAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_TIPOALARMA, tipoAlarma);
+        args.putSerializable(Constantes.ARG_TIPOALARMA, tipoAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,7 +71,7 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(ARG_TIPOALARMA);
+            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(Constantes.ARG_TIPOALARMA);
         }
     }
 
@@ -145,11 +144,17 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lClasificacionAlarma = (ArrayList<ClasificacionAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CLASIFICACION_ALARMA);
-                ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lClasificacionAlarma);
-                spinnerClasificacionTipoAlarma.setAdapter(adapter);
-                seleccionarItem();
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lClasificacionAlarma = (ArrayList<ClasificacionAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CLASIFICACION_ALARMA);
+                    ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lClasificacionAlarma);
+                    spinnerClasificacionTipoAlarma.setAdapter(adapter);
+                    seleccionarItem();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
@@ -216,8 +221,13 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
-                volver();
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message() , Toast.LENGTH_LONG).show();
+                }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {

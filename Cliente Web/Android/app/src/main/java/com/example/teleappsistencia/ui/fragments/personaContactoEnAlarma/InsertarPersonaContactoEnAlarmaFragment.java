@@ -140,12 +140,12 @@ public class InsertarPersonaContactoEnAlarmaFragment extends Fragment implements
         call.enqueue(new Callback<PersonaContactoEnAlarma>() {
             @Override
             public void onResponse(Call<PersonaContactoEnAlarma> call, Response<PersonaContactoEnAlarma> response) {
-                if(response.errorBody() == null){
+                if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_SHORT).show();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + response.raw().message() + Constantes.PISTA_ALARMA_PERSONA_ID , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + Constantes.PISTA_ALARMA_PERSONA_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override
