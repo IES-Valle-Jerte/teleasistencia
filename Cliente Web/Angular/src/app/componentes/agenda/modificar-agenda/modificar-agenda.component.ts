@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {IAgenda} from "../../../../../../../../../../Escritorio/Angular/src/app/interfaces/i-agenda";
+import {IAgenda} from "../../../interfaces/i-agenda";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {CargaAgendaService} from "../../../../../../../../../../Escritorio/Angular/src/app/servicios/carga-agenda.service";
-import {ITipoAgenda} from "../../../../../../../../../../Escritorio/Angular/src/app/interfaces/i-tipo-agenda";
-import {IPaciente} from "../../../../../../../../../../Escritorio/Angular/src/app/interfaces/i-paciente";
-import {IPersona} from "../../../../../../../../../../Escritorio/Angular/src/app/interfaces/i-persona";
+import {ITipoAgenda} from "../../../interfaces/i-tipo-agenda";
+import {IPaciente} from "../../../interfaces/i-paciente";
+import {IPersona} from "../../../interfaces/i-persona";
+import {CargaAgendaService} from "../../../servicios/carga-agenda.service";
+
 
 @Component({
   selector: 'app-modificar-agenda',
@@ -35,7 +36,9 @@ export class ModificarAgendaComponent implements OnInit {
     this.personas_contacto = this.route.snapshot.data['personas_contacto'];
     this.titleService.setTitle('Modificar agenda ' + this.idAgenda);
 
-    //
+    this.agenda.id_tipo_agenda = this.agenda.id_tipo_agenda.id;
+    this.agenda.id_paciente = this.agenda.id_paciente.id;
+    this.agenda.id_persona = this.agenda.id_persona.id;
   }
 
   modificarEventoAgenda(): void {
@@ -54,5 +57,4 @@ export class ModificarAgendaComponent implements OnInit {
   optionSelected(i: number): void {
     document.getElementsByClassName('agenda_option')[i].setAttribute('selected', '');
   }
-
 }

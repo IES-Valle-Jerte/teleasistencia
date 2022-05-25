@@ -12,7 +12,7 @@
 
       <div class="form-group mb-3">
         <label for="idPaciente" class="form-label">Paciente</label>
-        <select name="idPaciente" id="idPaciente" [(ngModel)]="agenda.id_paciente.id"
+        <select name="idPaciente" id="idPaciente" [(ngModel)]="agenda.id_paciente"
                 #idPaciente="ngModel" class="form-select" required>
           <option class="agenda_option" *ngFor="let paciente of pacientes; let i = index" [value]="paciente.id">
             {{ agenda.id_paciente.id === paciente.id ? optionSelected(i) : "" }}
@@ -28,7 +28,7 @@
 
       <div class="form-group mb-3">
         <label for="id_tipo_agenda" class="form-label">Tipo agenda</label>
-        <select name="id_tipo_agenda" id="id_tipo_agenda" [(ngModel)]="agenda.id_tipo_agenda.id"
+        <select name="id_tipo_agenda" id="id_tipo_agenda" [(ngModel)]="agenda.id_tipo_agenda"
                 #id_tipo_agenda="ngModel" class="form-select" required>
           <option class="agenda_option" *ngFor="let tipo_agenda of tipos_agenda; let i = index" [value]="tipo_agenda.id">
             {{ agenda.id_tipo_agenda.id === tipo_agenda.id ? optionSelected(i) : "" }}
@@ -44,7 +44,7 @@
 
       <div class="form-group mb-3">
         <label for="id_persona_contacto" class="form-label">Persona de contacto</label>
-        <select name="id_persona_contacto" id="id_persona_contacto" [(ngModel)]="agenda.id_persona.id"
+        <select name="id_persona_contacto" id="id_persona_contacto" [(ngModel)]="agenda.id_persona"
                 #id_persona_contacto="ngModel" class="form-select" required>
           <option class="agenda_option" *ngFor="let persona of personas_contacto; let i = index" [value]="persona.id">
             {{ agenda.id_persona.id === persona.id ? optionSelected(i) : "" }}

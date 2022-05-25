@@ -12,15 +12,10 @@
   <!-- Button trigger modal -->
   <button type="submit" class="btn btn-outline-danger m-1" (click)="modalConfirmacion()"
   ><i class="fa fa-trash"></i></button>
-  <button *ngIf="agenda.fecha_resolucion === null" type="submit" class="btn btn-outline-success m-1" (click)="modificarFechaResolucionAgenda()">
+  <button *ngIf="agenda.fecha_resolucion === null" type="submit" class="btn btn-outline-success m-1" [routerLink]="['/historico_agenda/nuevo', agenda.id]">
     <i class="fa fa-check"></i>
   </button>
-  <button *ngIf="agenda.fecha_resolucion === null" type="submit" class="btn btn-outline-success m-1" [routerLink]="['/historico_agenda/nuevo']">
-    <i class="fa fa-plus"></i>
-  </button>
-  <button *ngIf="agenda.fecha_resolucion !== null" type="submit" class="btn btn-outline-primary m-1" [routerLink]="['/historico_agenda/modificar', agenda.id]">
+  <button *ngIf="agenda.fecha_resolucion !== null" type="submit" class="btn btn-outline-primary m-1" (click)="redirigirAhistorico()">
     <i class="fa fa-eye"></i>
   </button>
 </td>
-
-

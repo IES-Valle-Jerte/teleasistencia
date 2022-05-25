@@ -25,6 +25,10 @@ export class CargaHistoricoAgendaService {
     return this.http.get<IHistoricoAgenda[]>(this.URL_HISTORICO_AGENDA + '/' + idHistoricoAgenda);
   }
 
+  getHistoricoAgendaPorIdAgenda(idAgenda: number): Observable<IHistoricoAgenda[]> {
+    return this.http.get<IHistoricoAgenda[]>(this.URL_HISTORICO_AGENDA + '?id_agenda=' + idAgenda);
+  }
+
   getHistoricoAgendasPorIdTeleoperador(idTeleoperador: number): Observable<IHistoricoAgenda[]> {
     return this.http.get<IHistoricoAgenda[]>(this.URL_HISTORICO_AGENDA + '?id_teleoperador=' + idTeleoperador);
   }

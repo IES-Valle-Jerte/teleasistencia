@@ -21,10 +21,11 @@ import {catchError} from "rxjs/operators";
 })
 export class AgendaComponent implements OnInit {
 
-  public agendasDelDia: IAgenda[];
+  public agendasDelDia: IAgenda[] = [];
   public fechaToday = new Date();
   numPaginacion: number = 1;
   inputBusqueda: any = '';
+  inputFechaBusqueda: any = '';
 
 
 
@@ -39,10 +40,39 @@ export class AgendaComponent implements OnInit {
 
   ngOnInit() {
     this.agendasDelDia = this.route.snapshot.data['agendasDelDia'];
+    console.log(this.agendasDelDia);
   }
 
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
+  }
+
+  ngOnChanges(event) {
+
+  }
+
+  buscarPorFecha(event) {
+    this.cargaAgendaService.getAgendasPorFechaPrevista(event).subscribe(
+      e => {
+        const datos: any = e;
+        this.inputFechaBusqueda = event;
+        if (e) {
+          if(datos && datos.length > 0) {
+            setTimeout(() => {
+              // @ts-ignore
+              this.agendasDelDia = datos;
+              this.agendasDelDia = this.agendasDelDia.filter(el => {
+                return el;
+              });
+              console.log(this.agendasDelDia);
+            }, 1)
+          }
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   // Método para conseguir el nombre del día en string usando el número que nos devuelve la función getDay()

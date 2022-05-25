@@ -5,9 +5,9 @@ import {IPersona} from "../interfaces/i-persona";
 
 export class Agenda implements IAgenda {
   id: number;
-  id_paciente: IPaciente;
-  id_tipo_agenda: ITipoAgenda;
-  id_persona: IPersona;
+  id_paciente: any;
+  id_tipo_agenda: any;
+  id_persona: any;
   fecha_registro: Date;
   fecha_prevista: Date;
   fecha_resolucion: Date;

@@ -32,12 +32,36 @@ export class NuevoHistoricoAgendaComponent implements OnInit {
     this.historico_agenda = new HistoricoAgenda();
     this.agendas = this.route.snapshot.data['agendas'];
     this.teleoperadores = this.route.snapshot.data['teleoperadores'];
-    this.agenda = this.route.snapshot.params['id'];
-    this.historico_agenda.id_teleoperador = 1;
+    this.agenda = this.route.snapshot.data['agenda'];
+
+    this.historico_agenda.id_agenda = this.agenda.id;
   }
 
   nuevoHistoricoAgenda() {
     this.cargaHistoricoAgenda.nuevoHistoricoAgenda(this.historico_agenda).subscribe(
+      e => {
+        this.modificarFechaResolucionAgenda();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  modificarFechaResolucionAgenda() {
+    let fecha_resolucion = new Date();
+
+    // @ts-ignore
+    this.agenda.fecha_resolucion = fecha_resolucion.getFullYear()
+      + '-' + (fecha_resolucion.getMonth() + 1)
+      + '-' + fecha_resolucion.getDate();
+
+    this.agenda.id_tipo_agenda = this.agenda.id_tipo_agenda.id;
+    this.agenda.id_paciente = this.agenda.id_paciente.id;
+    this.agenda.id_persona = this.agenda.id_persona.id;
+
+
+    this.cargaAgendaService.modificarAgenda(this.agenda).subscribe(
       e => {
         this.router.navigate(['/historico_agenda']);
       },
@@ -47,4 +71,7 @@ export class NuevoHistoricoAgendaComponent implements OnInit {
     );
   }
 
+  optionSelected(i: number): void {
+    document.getElementsByClassName('agenda_id_option')[i].setAttribute('selected', '');
+  }
 }

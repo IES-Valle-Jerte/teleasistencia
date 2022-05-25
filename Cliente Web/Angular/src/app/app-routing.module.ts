@@ -406,12 +406,13 @@ const routes: Routes = [
     }
   },
   {
-    path: 'historico_agenda/nuevo',
+    path: 'historico_agenda/nuevo/:id',
     component: NuevoHistoricoAgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
       agendas: ListaTodasAgendasResolveService,
       teleoperadores: ListaUsersResolveService,
+      agenda: DetallesAgendaResolveService
     }
   },
   {
@@ -421,7 +422,7 @@ const routes: Routes = [
     resolve: {
       historico_agenda: DetalleHistoricoAgendaResolveService,
       agendas: ListaTodasAgendasResolveService,
-      teleoperadores: ListaUsersResolveService
+      teleoperadores: ListaUsersResolveService,
     }
   },
   {

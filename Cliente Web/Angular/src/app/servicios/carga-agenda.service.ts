@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 import {IAgenda} from "../interfaces/i-agenda";
+import {map, take} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,11 @@ export class CargaAgendaService {
   }
 
   getAgendasPorFechaPrevista(fechaPrevista: string): Observable<IAgenda> {
-    return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '?fecha_prevista=' + fechaPrevista);
+    return this.http.get<IAgenda>(this.URL_SERVER_AGENDAS + '?fecha_prevista=' + fechaPrevista).pipe(take(1)).pipe(
+      map(datos => {
+        return datos;
+      })
+    );
   }
 
   getAgendasNoResueltas(fechaResolucion: any): Observable<IAgenda> {

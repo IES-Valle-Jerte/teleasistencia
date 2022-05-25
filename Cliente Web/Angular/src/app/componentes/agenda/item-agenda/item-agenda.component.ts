@@ -5,6 +5,7 @@ import {environment} from "../../../../environments/environment";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {CargaAgendaService} from "../../../servicios/carga-agenda.service";
+import {CargaHistoricoAgendaService} from "../../../servicios/carga-historico-agenda.service";
 
 @Component({
   selector: 'app-item-agenda, [app-item-agenda]',
@@ -16,7 +17,12 @@ export class ItemAgendaComponent implements OnInit {
   @Input() public agenda: IAgenda;
   @Input() public fechaToday: Date = null;
 
-  constructor(private cargaAgendaService: CargaAgendaService, private titleService: Title, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private cargaAgendaService: CargaAgendaService,
+    private cargaHistoricoAgendaService: CargaHistoricoAgendaService,
+    private titleService: Title,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -90,21 +96,12 @@ export class ItemAgendaComponent implements OnInit {
     )
   }
 
-  modificarFechaResolucionAgenda() {
-    let fecha_resolucion = new Date();
-
-    // @ts-ignore
-    this.agenda.fecha_resolucion = fecha_resolucion.getFullYear()
-      + '-' + (fecha_resolucion.getMonth() + 1)
-      + '-' + fecha_resolucion.getDate();
-
-    this.cargaAgendaService.modificarAgenda(this.agenda).subscribe(
-      e => {
-        console.log('Modificado');
+  redirigirAhistorico() {
+    this.cargaHistoricoAgendaService.getHistoricoAgendaPorIdAgenda(this.agenda.id).subscribe(
+      e=>{
+        let historico_agenda = e[0];
+        this.router.navigate(['/historico_agenda/modificar', historico_agenda.id]);
       },
-      error => {
-        console.log(error);
-      }
-    );
+    )
   }
 }
