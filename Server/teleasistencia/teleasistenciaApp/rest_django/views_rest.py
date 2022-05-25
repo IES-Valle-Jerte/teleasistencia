@@ -1433,10 +1433,10 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
             base_datos.descripcion_copia = 'Copia sin descripción.'
         base_datos.save()
 
-        # Obtenemos la ruta que no interesa y la pasamos a string para poder editarla ffacilmente
+        # Obtenemos la ruta que nos interesa y la pasamos a string para poder editarla facilmente
         rutaAct = str(Path(__file__).resolve().parent.parent.parent)
         rutaBackup = rutaAct+'\\backup\\'
-        #Obtenemos el ID, el cual usamos para el nombre de la copia. **** Path(__file__).resolve().parent.parent.parent
+        #Obtenemos el ID, el cual usamos para el nombre de la copia.
         id_b = str(base_datos.id)
         #base_datos.ubicacion_copia =
         base_datos.ubicacion_copia = '\\backup\\'+'db.sqlite3'+id_b
@@ -1445,14 +1445,14 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         base_datos.save()
 
         #Comprobar si existe la base de datos original
-        if os.path.isfile(rutaBackup+'db.sqlite3'):
+        if os.path.isfile(rutaAct+'\\db.sqlite3'):
             #Obtenemos la ruta donde esta la base de datos y la que queremos original a partir de esta, shutil lo copia.
-            source = os.getcwd() + '\\backup\\db.sqlite3'
+            source = rutaAct+'\\db.sqlite3'
             destination = rutaBackup+'db.sqlite3'+id_b
             shutil.copy(source, destination)
             return Response("Copia de la base de datos creada correctamente con id: "+id_b)
 
-        return Response(base_datos_serializer.data)
+        return Response("La copia de la base de datos no ha podido ser creada.")
 
     def destroy(self, request, *args, **kwargs):
         #Conseguimos el parametro de la URL
@@ -1493,5 +1493,5 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
             return Response("La copia de la base de datos con id: "+parametro+" ha sido borrada correctamente.")
 
         #Respuesta de error por defecto.
-        return Response("La base de datos con id: "+parametro+" seleccionada no existe.")
+        return Response("La copia de la base de datos con id: "+parametro+" seleccionada no existe.")
 
