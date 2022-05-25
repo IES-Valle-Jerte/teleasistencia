@@ -7,12 +7,22 @@
         <li class="breadcrumb-item active" aria-current="page">Crear Copia de seguridad</li>
       </ol>
     </nav>
-
     <h1 class="component-title">Crear nueva copia de seguridad</h1>
-    <hr>
-    <p>La copia generará los datos necesarios automaticamente al pulsar el boton.</p>
-      <button type="submit" class="btn btn-outline-success m-1" (click)="nuevaCopia()">
-        Guardar nueva copia
+    <form #nuevaCopiaForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="descripcion_copia" class="form-label">Descripción</label>
+        <input type="text" name="descripcion_copia" id="descripcion_copia" class="form-control"
+               [(ngModel)]="copia.descripcion_copia">
+      </div>
+      <button type="submit" class="btn btn-outline-success m-1" (click)="nuevaCopia()"
+              [disabled]="!nuevaCopiaForm.form.valid">
+        Guardar
       </button>
+      <button type="button" class="btn btn-outline-secondary m-1" [routerLink]="['/copia_seguridad']">
+        Volver
+      </button>
+    </form>
   </div>
 </main>
+
+

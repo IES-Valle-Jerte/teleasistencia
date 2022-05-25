@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let tipo_situacion of tipos_situaciones | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
+        <tr *ngFor="let tipo_situacion of tipos_situaciones | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: elementosPaginacion, currentPage: numPaginacion }"
             app-item-tipo-situacion [tipo_situacion]="tipo_situacion">
         </tr>
         </tbody>

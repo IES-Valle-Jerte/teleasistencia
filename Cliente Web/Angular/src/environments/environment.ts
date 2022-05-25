@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
 
+  //Numero de entradas permitidas en la paginacion.
+  num_paginacion: 10,
   //Tiempo que tarda en irse el mensaje de exito
   timerToast : 4000,
   //Frase del Toast al Eliminar Con Exito

@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let clasificacion_alarma of clasificaciones_alarmas | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
+        <tr *ngFor="let clasificacion_alarma of clasificaciones_alarmas | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: elementosPaginacion, currentPage: numPaginacion }"
             app-item-clasificacion-alarma [clasificacion_alarma]="clasificacion_alarma">
         </tr>
         </tbody>

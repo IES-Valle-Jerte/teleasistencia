@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CargaTipoSituacionService} from "../../../servicios/carga-tipo-situacion.service";
 import {ITipoSituacion} from "../../../interfaces/i-tipo-situacion";
 import {TipoSituacion} from "../../../clases/tipo-situacion";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-crear-tipo-situacion',
@@ -26,7 +27,6 @@ export class CrearTipoSituacionComponent implements OnInit {
     this.cargaSituacion.nuevoTipoSituacion(this.situacion).subscribe(
       e => {
         console.log('Situación creada');
-        console.log(this.situacion);
         this.router.navigate(['/situaciones']);
       },
       error => {

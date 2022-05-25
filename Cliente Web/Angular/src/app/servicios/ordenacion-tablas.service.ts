@@ -29,12 +29,14 @@ export class OrdenacionTablasService {
         elemento2 = rows[iAux + 1].getElementsByTagName("td")[indice];
         // Tenemos que tener en cuanta la dirección del filtrado, asc por defecto, desc sería la alternativa, pero al solo tener dos nos ahorramos la pregunta.
         if (dirFiltrado == "asc") {
-          if ((tipoContenido == "string" && elemento1.innerHTML.toLowerCase() > elemento2.innerHTML.toLowerCase()) || (tipoContenido == "number" && parseFloat(elemento1.innerHTML) > parseFloat(elemento2.innerHTML))) {
+          if ((tipoContenido == "string" && elemento1.innerHTML.toLowerCase() > elemento2.innerHTML.toLowerCase()) ||
+            (tipoContenido == "number" && parseFloat(elemento1.innerHTML) > parseFloat(elemento2.innerHTML))) {
             boolContinuar = true;
             break;
           }
         } else {
-          if ((tipoContenido == "string" && elemento1.innerHTML.toLowerCase() < elemento2.innerHTML.toLowerCase()) || (tipoContenido == "number" && parseFloat(elemento1.innerHTML) < parseFloat(elemento2.innerHTML))) {
+          if ((tipoContenido == "string" && elemento1.innerHTML.toLowerCase() < elemento2.innerHTML.toLowerCase()) ||
+            (tipoContenido == "number" && parseFloat(elemento1.innerHTML) < parseFloat(elemento2.innerHTML))) {
             boolContinuar = true;
             break;
           }

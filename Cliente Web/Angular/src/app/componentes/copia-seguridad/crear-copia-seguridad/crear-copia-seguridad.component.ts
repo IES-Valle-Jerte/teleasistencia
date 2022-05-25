@@ -12,19 +12,19 @@ import {CopiaSeguridad} from "../../../clases/copia-seguridad";
 })
 export class CrearCopiaSeguridadComponent implements OnInit {
   public copia: ICopiaSeguridad;
+  public descripcion_copia: string;
 
   constructor(private titleService: Title, private route: ActivatedRoute, private router: Router, private cargaCopia: CargaCopiaSeguridadService) { }
 
   ngOnInit(): void {
     this.titleService.setTitle('Crear nueva Copia de Seguridad');
     this.copia = new CopiaSeguridad();
+    this.descripcion_copia = '';
   }
 
   nuevaCopia(): void{
     this.cargaCopia.nuevaCopia(this.copia).subscribe(
       e => {
-        console.log('Copia de seguridad creada');
-        console.log(this.copia);
         this.router.navigate(['/copia_seguridad']);
       },
       error => {

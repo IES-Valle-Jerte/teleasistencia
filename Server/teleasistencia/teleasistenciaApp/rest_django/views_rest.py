@@ -1,4 +1,5 @@
 from http.client import HTTPResponse
+from pathlib import Path
 
 from django.contrib.auth.models import User, Group, Permission
 
@@ -1421,33 +1422,24 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
     queryset = Gestion_Base_Datos.objects.all().order_by('-fecha_copia')
     serializer_class = Gestion_Base_Datos_Serializer
 
-    #Copiamos la base de datos de la ruta original y funcional a la carpeta donde se van a realizar los backup
-    source = os.getcwd()+'\\db.sqlite3'
-    destination = os.getcwd()+'\\backup\\db.sqlite3'
-    shutil.copy(source, destination)
-
-    def list(self, request, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        query = getQueryAnd(request.GET)
-        if query:
-            queryset = Gestion_Base_Datos.objects.filter(query)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
     def create(self, request, *args, **kwargs):
         base_datos = Gestion_Base_Datos(
             ubicacion_copia = '',
-            fecha_copia = datetime.today().strftime('%Y-%m-%d')
+            fecha_copia = datetime.today().strftime('%Y-%m-%d'),
+            descripcion_copia = request.data.get("descripcion_copia")
         )
+        #En caso de que el usuario no introduzca nada introducimos un mensaje por defecto.
+        if base_datos.descripcion_copia is None:
+            base_datos.descripcion_copia = 'Copia sin descripción.'
         base_datos.save()
 
-        # Obtenemos la ruta actual y le añadimos la ruta a la carpeta backup.
-        rutaAct = os.getcwd()
-        rutaBackup = rutaAct + '\\backup\\'
-        #Obtenemos el ID, el cual usamos para el nombre de la copia.
+        # Obtenemos la ruta que no interesa y la pasamos a string para poder editarla ffacilmente
+        rutaAct = str(Path(__file__).resolve().parent.parent.parent)
+        rutaBackup = rutaAct+'\\backup\\'
+        #Obtenemos el ID, el cual usamos para el nombre de la copia. **** Path(__file__).resolve().parent.parent.parent
         id_b = str(base_datos.id)
-        base_datos.ubicacion_copia = rutaBackup+'db.sqlite3'+id_b
+        #base_datos.ubicacion_copia =
+        base_datos.ubicacion_copia = '\\backup\\'+'db.sqlite3'+id_b
         # Devolvemos la base_datos creada
         base_datos_serializer = Gestion_Base_Datos_Serializer(base_datos)
         base_datos.save()
@@ -1456,7 +1448,7 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         if os.path.isfile(rutaBackup+'db.sqlite3'):
             #Obtenemos la ruta donde esta la base de datos y la que queremos original a partir de esta, shutil lo copia.
             source = os.getcwd() + '\\backup\\db.sqlite3'
-            destination = base_datos.ubicacion_copia
+            destination = rutaBackup+'db.sqlite3'+id_b
             shutil.copy(source, destination)
             return Response("Copia de la base de datos creada correctamente con id: "+id_b)
 
@@ -1468,8 +1460,10 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         #En caso de que tenga alguna x se la quitamos
         parametro_res = parametro.lstrip("x")
         #Variables con las rutas por defecto, seran editadas en los condicionales, son dos para aclaración de la funcion shutil
-        source = os.getcwd() + '\\backup\\db.sqlite3'
-        destination = os.getcwd()
+        source = str(Path(__file__).resolve().parent.parent.parent) + '\\backup\\db.sqlite3'
+        destination = str(Path(__file__).resolve().parent.parent.parent)
+
+        #Gestion_Base_Datos.objects.all().delete()
 
         #Condicional, para que en caso de pasarle algo que no sea un id, como ara en 2/3 funcionalidades, no nos de fallo.
         if parametro != 'restore':
@@ -1486,14 +1480,14 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
 
         #En caso de que tengamos cualquier otra cosa que no sea una x+id, simplemente no entrara en el if
         #En caso afirmativo, entrara y copiara la base de datos con el id indicadp.
-        if os.path.isfile(base_datos.ubicacion_copia) and (kwargs["pk"])[:1] == 'x':
+        if os.path.isfile(source+parametro_res) and (kwargs["pk"])[:1] == 'x':
             source_r = source+str(parametro_res)
             shutil.copy(source_r, destination+'\\db.sqlite3')
             return Response("La base de datos con id: "+parametro_res+" ha sido restaurada correctamente.")
 
         #Comprobamos si existe copia con el id pasado en la URL, si es asi, lo borramos.
-        if os.path.isfile(base_datos.ubicacion_copia):
-            os.remove(base_datos.ubicacion_copia)
+        if os.path.isfile(source+parametro_res):
+            os.remove(source+parametro_res)
             # Borramos la entrada de la API-RES
             base_datos.delete()
             return Response("La copia de la base de datos con id: "+parametro+" ha sido borrada correctamente.")

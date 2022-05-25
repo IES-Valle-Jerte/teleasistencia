@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
 import {ICopiaSeguridad} from "../../../interfaces/i-copia-seguridad";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-lista-copia-seguridad',
@@ -13,6 +14,7 @@ export class ListaCopiaSeguridadComponent implements OnInit {
   public copias_seguridad: ICopiaSeguridad[];
   numPaginacion: number = 1;
   inputBusqueda: any = '';
+  elementosPaginacion: number = environment.num_paginacion;
 
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) { }
 

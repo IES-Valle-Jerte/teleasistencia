@@ -24,7 +24,6 @@ export class CrearViviendaComponent implements OnInit {
     this.cargaVivienda.nuevaVivienda(this.vivienda).subscribe(
       e => {
         console.log('Vivienda creada');
-        console.log(this.vivienda);
         this.router.navigate(['/viviendas']);
       },
       error => {
