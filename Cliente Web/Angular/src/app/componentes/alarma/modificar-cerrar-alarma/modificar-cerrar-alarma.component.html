@@ -19,7 +19,11 @@
         <p> {{obtenerTelefonoMovil()}}</p>
       </div>
       <div class="form-group mb-3 left ">
-        <p>Tipo de alarma {{alarma.id_tipo_alarma.nombre}}</p>
+        <p>Tipo de alarma: {{alarma.id_tipo_alarma.nombre}}</p>
+      </div>
+
+      <div class="form-group mb-3 left ">
+        <p>Fecha de creaccion: {{alarma.fecha_registro | date :'dd/MM/YYYY'}}</p>
       </div>
       <div class="form-group mb-3">
         <label for="estado_alarma" class="form-label">Estado Alarma</label>
