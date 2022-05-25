@@ -26,5 +26,11 @@ export class ListaAlarmasComponent implements OnInit {
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
   }
+  seleccionarFondo(alarma: Alarma): string {
+    if (alarma.estado_alarma == "Cerrada") {
+      return "cerrada"
+    }
+    return "abierta"
 
+  }
 }

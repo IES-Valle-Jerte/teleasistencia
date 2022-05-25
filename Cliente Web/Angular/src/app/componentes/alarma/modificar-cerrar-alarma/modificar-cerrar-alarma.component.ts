@@ -6,6 +6,7 @@ import { User } from "../../../clases/user";
 import { CargaAlarmaService } from "../../../servicios/alarmas/carga-alarma.service";
 import Swal from "sweetalert2";
 import {environment} from "../../../../environments/environment";
+import {Paciente} from "../../../clases/paciente";
 
 
 @Component({
@@ -16,7 +17,7 @@ import {environment} from "../../../../environments/environment";
 export class ModificarCerrarAlarmaComponent implements OnInit {
   public alarma: Alarma
   public idAlarma: number
-  // public teleoperadores: User[];
+  public paciente_ucr: Paciente
 
 
   constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private cargarAlarmas: CargaAlarmaService) { }
@@ -24,9 +25,14 @@ export class ModificarCerrarAlarmaComponent implements OnInit {
   ngOnInit(): void {
     this.alarma = this.route.snapshot.data['alarma'];
     this.idAlarma = this.route.snapshot.params['id'];
-    // this.teleoperadores = this.route.snapshot.data['teleoperadores'];
-    this.alarma.id_teleoperador = this.alarma.id_teleoperador.id;
-    this.alarma.id_paciente_ucr = this.alarma.id_paciente_ucr.id;
+    this.paciente_ucr = this.alarma.id_paciente_ucr
+    if (this.alarma.id_teleoperador) {
+      this.alarma.id_teleoperador = this.alarma.id_teleoperador.id;
+    }
+    if (this.alarma.id_paciente_ucr) {
+      this.alarma.id_paciente_ucr = this.alarma.id_paciente_ucr.id;
+    }
+
 
   }
   //buscamos la opcion que coincida con el buscado para dejarla preseleccionada
@@ -83,5 +89,24 @@ export class ModificarCerrarAlarmaComponent implements OnInit {
       icon: 'error',
       title: environment.fraseErrorModificar
     })
+  }
+  obtenerNombre() {
+    if (this.paciente_ucr) {
+      return 'Titular UCR: ' + this.paciente_ucr.id_persona.nombre + ' ' + this.paciente_ucr.id_persona.apellidos
+    }
+    return 'Titular: ' + this.alarma.id_terminal.id_titular.id_persona.nombre + ' ' + this.alarma.id_terminal.id_titular.id_persona.apellidos +
+      ' --- Terminal: ' + this.alarma.id_terminal.numero_terminal
+  }
+  obtenerTelefonoFijo() {
+    if (this.paciente_ucr) {
+      return 'Numero de telefono fijo: ' + this.paciente_ucr.id_persona.telefono_fijo
+    }
+    return 'Numero de telefono Fijo: ' + this.alarma.id_terminal.id_titular.id_persona.telefono_fijo
+  }
+  obtenerTelefonoMovil() {
+    if (this.paciente_ucr) {
+      return 'Numero de telefono móvil: ' + this.paciente_ucr.id_persona.telefono_movil
+    }
+    return 'Numero de telefono Movil: ' + this.alarma.id_terminal.id_titular.id_persona.telefono_movil
   }
 }

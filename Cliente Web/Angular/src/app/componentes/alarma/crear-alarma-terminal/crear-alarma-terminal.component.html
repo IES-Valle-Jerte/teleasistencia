@@ -9,41 +9,6 @@
     </nav>
     <h1 class="component-title" >Crear Alarma por Terminal</h1>
     <form #crearAlarmaForm="ngForm">
-      <!--      <div class="form-group mb-3">-->
-      <!--        <label for="estado_alarma" class="form-label">Estado Alarma</label>-->
-      <!--        <input type="text" name="estado_alarma" id="estado_alarma" class="form-control"-->
-      <!--               required maxlength="500" [(ngModel)]="alarma.estado_alarma" #estado_alarma="ngModel">-->
-      <!--        <div *ngIf="estado_alarma.invalid && (estado_alarma.dirty || estado_alarma.touched)"-->
-      <!--             class="alert alert-secondary" role="alert">-->
-      <!--          <div *ngIf="estado_alarma.errors?.required">-->
-      <!--            El estado_alarma es obligatorio-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--      <div class="form-group mb-3">-->
-      <!--        <label for="fecha_registro" class="form-label">Fecha de registro</label>-->
-      <!--        <input type="date" name="fecha_registro" id="fecha_registro" class="form-control"-->
-      <!--               required max="{{ anno_actual }}-{{ mes_actual }}-{{ dia_actual }}" [(ngModel)]="alarma.fecha_registro" #fecha_registro="ngModel">-->
-      <!--        <div *ngIf="fecha_registro.invalid && (fecha_registro.dirty || fecha_registro.touched)"-->
-      <!--             class="alert alert-secondary" role="alert">-->
-      <!--          <div *ngIf="fecha_registro.errors?.required">-->
-      <!--            La fecha de registro es obligatoria-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--      <div class="form-group mb-3">-->
-      <!--        <label for="observaciones" class="form-label">Observaciones</label>-->
-      <!--        <textarea [(ngModel)]="alarma.observaciones" name="observaciones" id="observaciones" class="form-control" required></textarea>-->
-
-      <!--      </div>-->
-
-      <!--      <div class="form-group mb-3">-->
-      <!--        <label for="resumen" class="form-label">Resumen</label>-->
-      <!--        <textarea [(ngModel)]="alarma.resumen" name="resumen" id="resumen" class="form-control" required></textarea>-->
-      <!--      </div>-->
-
-
-
       <div class="form-group mb-3">
         <label for="tipos_alarma" class="form-label">Tipo de alarma</label>
         <select class="form-select" id="tipos_alarma" name="tipos_alarma"
@@ -52,20 +17,12 @@
                   [value]="tipo_alarma.id">{{tipo_alarma.nombre}}</option>
         </select>
       </div>
-<!--      <div class="form-group mb-3">-->
-<!--        <label for="paciente" class="form-label">Paciente UCR</label>-->
-<!--        <select class="form-select" id="paciente" name="paciente"-->
-<!--                [(ngModel)]="alarma.id_paciente_ucr" required>-->
-<!--          <option *ngFor="let paciente of pacientes_ucr; let i = index"-->
-<!--                  [value]="paciente.id">{{paciente.numero_expediente}}</option>-->
-<!--        </select>-->
-<!--      </div>-->
             <div class="form-group mb-3">
               <label for="terminal" class="form-label">Terminal</label>
               <select class="form-select" id="terminal" name="terminal"
                       [(ngModel)]="alarma.id_terminal" required>
                 <option class="relacion_recurso_option" *ngFor="let terminal of terminales; let i = index"
-                        [value]="terminal.id">{{terminal.numero_terminal}}</option>
+                        [value]="terminal.id">{{terminal.numero_terminal}} -- {{terminal.id_titular.id_persona.nombre}} {{terminal.id_titular.id_persona.apellidos}} </option>
               </select>
             </div>
 

@@ -28,7 +28,7 @@
         <tbody>
 
         <tr *ngFor="let alarma of alarmas| filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
-            app-item-alarma [alarma]="alarma">
+            app-item-alarma [alarma]="alarma" class="{{seleccionarFondo(alarma)}}">
         </tr>
         </tbody>
       </table>

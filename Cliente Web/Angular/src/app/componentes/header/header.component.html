@@ -32,16 +32,7 @@
             Alarmas
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownAlarmas">
-            <li><a class="dropdown-item" [routerLink]="['/tipos_alarmas']">Consultar tipos de alarma</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/tipos_alarmas/nuevo']">Crear nuevo tipo de alarma</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/clasificaciones_alarmas']">Consultar clasificaciones de alarma</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/clasificaciones_alarmas/nueva']">Crear nueva clasificación de
-              alarma</a></li>
-            <hr class="dropdown-divider">
+
             <li><a class="dropdown-item" [routerLink]="['/alarmas']">Consultar Alarma</a>
             <li><a class="dropdown-item" [routerLink]="['/alarmas/nueva/ucr']">Crear nueva alarma por UCR</a>
             <li><a class="dropdown-item" [routerLink]="['/alarmas/nueva/terminal']">Crear nueva alarma por terminal</a>
@@ -55,6 +46,16 @@
             <hr class="dropdown-divider">
             <li><a class="dropdown-item" [routerLink]="['/personas_contacto_alarma']">Consultar Personas de contacto en alarma</a></li>
             <li><a class="dropdown-item" [routerLink]="['/personas_contacto_alarma/nueva']">Crear Personas de contacto en alarma</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" [routerLink]="['/tipos_alarmas']">Consultar tipos de alarma</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/tipos_alarmas/nuevo']">Crear nuevo tipo de alarma</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/clasificaciones_alarmas']">Consultar clasificaciones de alarma</a>
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/clasificaciones_alarmas/nueva']">Crear nueva clasificación de
+              alarma</a></li>
 
           </ul>
         </li>
