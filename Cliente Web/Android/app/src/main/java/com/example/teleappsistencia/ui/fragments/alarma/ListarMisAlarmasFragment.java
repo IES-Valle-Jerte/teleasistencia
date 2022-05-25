@@ -1,9 +1,10 @@
-package com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments;
+package com.example.teleappsistencia.ui.fragments.alarma;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +14,6 @@ import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
-import com.example.teleappsistencia.ui.fragments.alarma.AlarmaAdapter;
 import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ public class ListarMisAlarmasFragment extends Fragment {
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
+    private TextView textViewTituloAlarmas;
 
     public ListarMisAlarmasFragment() {
         // Required empty public constructor
@@ -78,6 +79,9 @@ public class ListarMisAlarmasFragment extends Fragment {
         //Cargamos lista desde la API REST
         cargarLista();
 
+        //Cambiamos el título
+        this.textViewTituloAlarmas = (TextView) root.findViewById(R.id.textViewTituloAlarmas);
+        this.textViewTituloAlarmas.setText(Constantes.MIS_ALARMAS);
 
         return root;
     }

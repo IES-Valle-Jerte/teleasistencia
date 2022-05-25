@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments;
+package com.example.teleappsistencia.ui.fragments.alarma;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,9 +18,7 @@ import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
-import com.example.teleappsistencia.ui.fragments.alarma.ConsultarAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasFragment;
-import com.example.teleappsistencia.ui.fragments.alarma.ModificarAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.InfoGestionAlarmaFragment;
 import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 

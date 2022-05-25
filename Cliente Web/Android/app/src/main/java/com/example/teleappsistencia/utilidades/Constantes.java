@@ -170,4 +170,5 @@ public class Constantes {
     public static final String NO_HAY_CONTACTOS = "No hay personas de contacto para este paciente";
     public static final String TERMINAL_DP_SP = "Terminal: ";
     public static final String ALARMAS_DE_HOY = "Alarmas de hoy";
+    public static final String ALARMAS_SIN_ASIGNAR = "Alarmas sin asignar";
 }

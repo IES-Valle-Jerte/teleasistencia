@@ -12,9 +12,9 @@ import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.Inserta
 import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.ListarCentrosSanitariosEnAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.InsertarClasificacionAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.ListarClasificacionAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarAlarmasDeHoyFragment;
-import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarAlarmasSinAsignarFragment;
-import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarMisAlarmasFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasDeHoyFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasSinAsignarFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarMisAlarmasFragment;
 import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.InsertarPersonaContactoEnAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.ListarPersonasContactoEnAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.recursosComunitariosEnAlarma.InsertarRecursosComunitariosEnAlarmaFragment;

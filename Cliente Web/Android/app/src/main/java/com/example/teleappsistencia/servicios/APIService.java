@@ -33,7 +33,7 @@ public interface APIService {
     @POST("api/token/")
     public Call<Token> getToken(@Field("username") String username, @Field("password") String password);
 
-    //Peticiones de Alarma
+    /* Peticiones de Alarma */
     @GET("api-rest/alarma")
     public Call<List<Object>> getAlarmas(@Header("Authorization") String token);
 

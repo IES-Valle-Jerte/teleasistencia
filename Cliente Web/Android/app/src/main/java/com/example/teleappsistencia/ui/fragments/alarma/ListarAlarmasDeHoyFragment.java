@@ -1,9 +1,10 @@
-package com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments;
+package com.example.teleappsistencia.ui.fragments.alarma;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,7 @@ public class ListarAlarmasDeHoyFragment extends Fragment {
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
+    private TextView textViewTituloAlarmas;
 
     public ListarAlarmasDeHoyFragment() {
         // Required empty public constructor
@@ -81,6 +83,9 @@ public class ListarAlarmasDeHoyFragment extends Fragment {
         //Cargamos lista desde la API REST
         cargarLista();
 
+        //Cambiamos el título
+        this.textViewTituloAlarmas = (TextView) root.findViewById(R.id.textViewTituloAlarmas);
+        this.textViewTituloAlarmas.setText(Constantes.ALARMAS_DE_HOY);
 
         return root;
     }

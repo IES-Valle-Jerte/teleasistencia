@@ -1,4 +1,4 @@
-package com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments;
+package com.example.teleappsistencia.ui.fragments.alarma;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
