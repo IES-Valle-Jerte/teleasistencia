@@ -169,4 +169,5 @@ public class Constantes {
     public static final String ERROR_CERRAR_ALARMA = "No se ha podido cerrar la alarma correctamente. ";
     public static final String NO_HAY_CONTACTOS = "No hay personas de contacto para este paciente";
     public static final String TERMINAL_DP_SP = "Terminal: ";
+    public static final String ALARMAS_DE_HOY = "Alarmas de hoy";
 }

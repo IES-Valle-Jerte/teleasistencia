@@ -12,7 +12,7 @@ import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.Inserta
 import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.ListarCentrosSanitariosEnAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.InsertarClasificacionAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.ListarClasificacionAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.AlarmAlertFragment;
+import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarAlarmasDeHoyFragment;
 import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarAlarmasSinAsignarFragment;
 import com.example.teleappsistencia.ui.fragments.gestionAlarmasFragments.ListarMisAlarmasFragment;
 import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.InsertarPersonaContactoEnAlarmaFragment;
@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         childModelsList.add(new MenuModel(childNames[2], false, false, new ListarAlarmasFragment()));
         childModelsList.add(new MenuModel(Constantes.SIN_ASIGNAR, false, false, new ListarAlarmasSinAsignarFragment()));
         childModelsList.add(new MenuModel(Constantes.MIS_ALARMAS, false, false, new ListarMisAlarmasFragment()));
+        childModelsList.add(new MenuModel(Constantes.ALARMAS_DE_HOY, false, false, new ListarAlarmasDeHoyFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
