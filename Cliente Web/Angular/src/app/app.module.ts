@@ -62,14 +62,14 @@ import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
 
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
-import { AgendaComponent } from './componentes/agenda/agenda.component';
+import { AgendaComponent } from './componentes/agenda/lista-agenda/agenda.component';
 import {
   ModificarHistoricoAgendaComponent
 } from "./componentes/historico-agenda/modificar-historico-agenda/modificar-historico-agenda.component";
 import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/modificar-agenda.component";
 import { CommonModule } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { TipoAgendaComponent } from './componentes/tipo-agenda/tipo-agenda.component';
+import { TipoAgendaComponent } from './componentes/tipo-agenda/lista-tipo-agenda/tipo-agenda.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {OrdenacionTablasService} from "./servicios/ordenacion-tablas.service";
 import { FiltroBusquedaPipe } from './pipes/filtro-busqueda.pipe';
@@ -89,7 +89,7 @@ import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-a
 import { ItemTipoAgendaComponent } from './componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component';
 import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
 import { NuevoAgendaComponent } from './componentes/agenda/nuevo-agenda/nuevo-agenda.component';
-import { HistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/historico-tipo-situacion.component';
+import { HistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/lista-historico-tipo-situacion/historico-tipo-situacion.component';
 import { CrearHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/crear-historico-tipo-situacion/crear-historico-tipo-situacion.component';
 import { ModificarHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component';
 import { ItemHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/item-historico-tipo-situacion/item-historico-tipo-situacion.component';

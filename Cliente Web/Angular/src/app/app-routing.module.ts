@@ -53,8 +53,8 @@ import {DetallesRecursoComunitarioResolveService} from './servicios/detalles-rec
 import {CrearRecursoComunitarioComponent} from './componentes/recurso-comunitario/crear-recurso-comunitario/crear-recurso-comunitario.component';
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {LoginGuard} from './servicios/login.guard';
-import {AgendaComponent} from "./componentes/agenda/agenda.component";
-import {TipoAgendaComponent} from "./componentes/tipo-agenda/tipo-agenda.component";
+import {AgendaComponent} from "./componentes/agenda/lista-agenda/agenda.component";
+import {TipoAgendaComponent} from "./componentes/tipo-agenda/lista-tipo-agenda/tipo-agenda.component";
 import {NuevoTipoAgendaComponent} from "./componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component";
 import {ListaTiposAgendaResolveService} from "./servicios/lista-tipo-agenda-resolve.service";
 import {
@@ -88,7 +88,7 @@ import {
 import {ListaTerminalResolveService} from "./servicios/lista-terminal-resolve.service";
 import {
   HistoricoTipoSituacionComponent
-} from "./componentes/historico-tipo-situacion/historico-tipo-situacion.component";
+} from "./componentes/historico-tipo-situacion/lista-historico-tipo-situacion/historico-tipo-situacion.component";
 import {
   ModificarHistoricoTipoSituacionComponent
 } from "./componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component";

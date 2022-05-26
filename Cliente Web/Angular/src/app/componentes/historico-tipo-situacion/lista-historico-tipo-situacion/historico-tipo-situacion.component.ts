@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {IHistoricoTipoSituacion} from "../../interfaces/i-historico-tipo-situacion";
+import {IHistoricoTipoSituacion} from "../../../interfaces/i-historico-tipo-situacion";
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {OrdenacionTablasService} from "../../servicios/ordenacion-tablas.service";
+import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
 
 @Component({
   selector: 'app-historico-tipo-situacion',

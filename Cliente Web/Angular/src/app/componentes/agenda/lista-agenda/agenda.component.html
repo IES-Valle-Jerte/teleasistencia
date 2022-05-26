@@ -9,13 +9,10 @@
       </ol>
     </nav>
     <h1 class="component-title">
-      {{ getNombreDia(fechaToday.getDay()) }}
-      {{ fechaToday.getDate() }} de
-      {{ getNombreMes(fechaToday.getMonth()) }}
-      de {{ fechaToday.getFullYear() }}
+      {{ fechaString }}
     </h1>
 
-    <div style="display: none" id="actualizarPagina" (change)="ngOnChanges($event)"></div>
+    <div style="display: none" id="actualizarPagina"></div>
 
     <div class="form-group mb-3">
       <input id="campoBusqueda" type="text" class="form-control" placeholder="Busqueda..." [(ngModel)]="inputBusqueda">

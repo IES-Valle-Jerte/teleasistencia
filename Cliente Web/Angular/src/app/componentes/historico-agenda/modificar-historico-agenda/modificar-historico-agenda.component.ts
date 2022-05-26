@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {CargaHistoricoAgendaService} from "../../../../../../../../../../Escritorio/Angular/src/app/servicios/carga-historico-agenda.service";
-import {IHistoricoAgenda} from "../../../../../../../../../../Escritorio/Angular/src/app/interfaces/i-historico-agenda";
-import {IAgenda} from "../../../../../../../../../../Escritorio/Angular/src/app/interfaces/i-agenda";
+import {IHistoricoAgenda} from "../../../interfaces/i-historico-agenda";
+import {IAgenda} from "../../../interfaces/i-agenda";
+import {CargaHistoricoAgendaService} from "../../../servicios/carga-historico-agenda.service";
+
 
 @Component({
   selector: 'app-modificar-historico-agenda',

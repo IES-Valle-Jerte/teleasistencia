@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {ITipoAgenda} from "../../interfaces/i-tipo-agenda";
-import {OrdenacionTablasService} from "../../servicios/ordenacion-tablas.service";
+import {ITipoAgenda} from "../../../interfaces/i-tipo-agenda";
+import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
 
 @Component({
   selector: 'app-tipo-agenda',

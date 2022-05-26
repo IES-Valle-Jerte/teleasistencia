@@ -5,11 +5,11 @@ import {
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {CargaAgendaService} from "../../servicios/carga-agenda.service";
+import {CargaAgendaService} from "../../../servicios/carga-agenda.service";
 import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {IAgenda} from "../../interfaces/i-agenda";
-import {OrdenacionTablasService} from "../../servicios/ordenacion-tablas.service";
+import {IAgenda} from "../../../interfaces/i-agenda";
+import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 
@@ -26,6 +26,7 @@ export class AgendaComponent implements OnInit {
   numPaginacion: number = 1;
   inputBusqueda: any = '';
   inputFechaBusqueda: any = '';
+  fechaString = '';
 
 
 
@@ -40,68 +41,38 @@ export class AgendaComponent implements OnInit {
 
   ngOnInit() {
     this.agendasDelDia = this.route.snapshot.data['agendasDelDia'];
-    console.log(this.agendasDelDia);
+    this.fechaString = + this.fechaToday.getDate() + ' de ' + this.getNombreMes(this.fechaToday.getMonth()) + ' de '
+      + this.fechaToday.getFullYear();
   }
 
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
   }
 
-  ngOnChanges(event) {
-
-  }
-
   buscarPorFecha(event) {
+    let fechaSeparada = event.split('-');
     this.cargaAgendaService.getAgendasPorFechaPrevista(event).subscribe(
       e => {
         const datos: any = e;
         this.inputFechaBusqueda = event;
         if (e) {
+          this.agendasDelDia = datos;
+          console.log(fechaSeparada[1]);
+          this.fechaString = + fechaSeparada[2] + ' de '
+            + this.getNombreMesActualizarFecha(fechaSeparada[1]) + ' de '
+            + fechaSeparada[0];
           if(datos && datos.length > 0) {
-            setTimeout(() => {
-              // @ts-ignore
-              this.agendasDelDia = datos;
-              this.agendasDelDia = this.agendasDelDia.filter(el => {
-                return el;
-              });
-              console.log(this.agendasDelDia);
-            }, 1)
+            this.agendasDelDia = this.agendasDelDia.filter(el => {
+              return el;
+            });
           }
         }
+        document.getElementById("campoBusqueda").focus();
       },
       error => {
         console.log(error);
       }
     );
-  }
-
-  // Método para conseguir el nombre del día en string usando el número que nos devuelve la función getDay()
-  getNombreDia(numDia: number) {
-    let dia = '';
-    switch (numDia) {
-      case 0:
-        dia = 'Domingo';
-        break;
-      case 1:
-        dia = 'Lunes';
-        break;
-      case 2:
-        dia = 'Martes';
-        break;
-      case 3:
-        dia = 'Miércoles';
-        break;
-      case 4:
-        dia = 'Jueves';
-        break;
-      case 5:
-        dia = 'Viernes';
-        break;
-      case 6:
-        dia = 'Sábado';
-        break;
-    }
-    return dia;
   }
 
   // Método para conseguir el nombre del mes usando el número que nos devuelve la función getMonth()
@@ -142,6 +113,50 @@ export class AgendaComponent implements OnInit {
         mes = 'noviembre';
         break;
       case 11:
+        mes = 'diciembre';
+        break;
+    }
+    return mes;
+  }
+
+  // Método para conseguir el nombre del mes usando el número que nos devuelve la función getMonth()
+  getNombreMesActualizarFecha (numMes: string) {
+    let mes = '';
+    switch (numMes) {
+      case '01':
+        mes = 'enero';
+        break;
+      case '02':
+        mes = 'febrero';
+        break;
+      case '03':
+        mes = 'marzo';
+        break;
+      case '04':
+        mes = 'abril';
+        break;
+      case '05':
+        mes = 'mayo';
+        break;
+      case '06':
+        mes = 'junio';
+        break;
+      case '07':
+        mes = 'julio';
+        break;
+      case '08':
+        mes = 'agosto';
+        break;
+      case '09':
+        mes = 'septiembre';
+        break;
+      case '10':
+        mes = 'octubre';
+        break;
+      case '11':
+        mes = 'noviembre';
+        break;
+      case '12':
         mes = 'diciembre';
         break;
     }
