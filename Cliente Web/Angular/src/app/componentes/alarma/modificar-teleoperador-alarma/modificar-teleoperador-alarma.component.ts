@@ -24,6 +24,7 @@ export class ModificarTeleoperadorAlarmaComponent implements OnInit {
     this.idAlarma = this.route.snapshot.params['id'];
     this.teleoperadores = this.route.snapshot.data['teleoperadores'];
     this.alarma.id_teleoperador = this.alarma.id_teleoperador.id;
+    this.titleService.setTitle("Editar teleoperador en alarma")
 
   }
   modificarTeleoperador(): void {
