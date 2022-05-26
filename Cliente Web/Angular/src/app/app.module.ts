@@ -8,7 +8,7 @@ import {ItemUserComponent} from './componentes/user/item-user/item-user.componen
 import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
 import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
 
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './componentes/home/home.component';
 import {CargaUserService} from './servicios/carga-user.service';
@@ -79,8 +79,10 @@ import {InterceptorService} from "./interceptors/interceptor.service";
 import { ItemCopiaSeguridadComponent } from './componentes/copia-seguridad/item-copia-seguridad/item-copia-seguridad.component';
 import { ListaCopiaSeguridadComponent } from './componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component';
 import { CrearCopiaSeguridadComponent } from './componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component';
+import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
 import { GruposComponent } from './componentes/grupos/grupos.component';
 import { RestaurarCopiaSeguridadComponent } from './componentes/copia-seguridad/restaurar-copia-seguridad/restaurar-copia-seguridad.component';
+
 
 @NgModule({
   declarations: [
@@ -130,6 +132,7 @@ import { RestaurarCopiaSeguridadComponent } from './componentes/copia-seguridad/
     HeaderComponent,
     FooterComponent,
     BotonesLoginComponent,
+    RecursosComunitariosPersonalesComponent,
     FiltroBusquedaPipe,
     ListaTiposViviendaComponent,
     ListaTiposSituacionComponent,

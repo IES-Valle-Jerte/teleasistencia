@@ -6,11 +6,17 @@ from rest_framework.utils.representation import serializer_repr
 
 from ..models import *
 
+class ImagenUserSerializer(serializers.ModelSerializer):
+   class Meta:
+       model = Imagen_User
+       fields = ['imagen']
+
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['pk', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups']
-        depth = 1
+   imagen = ImagenUserSerializer(source='imagen_user', read_only=True)
+   class Meta:
+       model = User
+       fields = ['pk', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups','imagen']
+       depth = 1
 
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -99,7 +105,7 @@ class Relacion_Terminal_Recurso_Comunitario_Serializer(serializers.ModelSerializ
     class Meta:
         model = Relacion_Terminal_Recurso_Comunitario
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Terminal_Serializer(serializers.ModelSerializer):
@@ -159,7 +165,7 @@ class Alarma_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Alarma
         fields = '__all__'
-        depth = 1
+        depth = 3
 
 
 class Dispositivos_Auxiliares_en_Terminal_Serializer(serializers.ModelSerializer):
@@ -187,6 +193,24 @@ class Relacion_Usuario_Centro_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Relacion_Usuario_Centro
         fields = '__all__'
+        depth = 2
+
+class Tecnologia_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tecnologia
+        fields = '__all__' #Indica todos los campos
+        depth = 2
+
+class Desarrollador_Tecnologia_Serializer(serializers.ModelSerializer):
+
+    # Devuelve también los datos de los datos de las tecnologias del Desarrollador_tecnologia
+    tecnologias = Tecnologia_Serializer(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = Desarrollador_Tecnologia
+        fields = '__all__' #Indica todos los campos
         depth = 1
 
 class Gestion_Base_Datos_Serializer(serializers.ModelSerializer):
@@ -195,3 +219,27 @@ class Gestion_Base_Datos_Serializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 1
 
+
+class Desarrollador_Serializer(serializers.ModelSerializer):
+
+    # Devuelve también los datos de los datos de desarrolladores_tecnologias del Desarrollador
+    desarrollador_tecnologias = Desarrollador_Tecnologia_Serializer(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = Desarrollador
+        fields = '__all__' #Indica todos los campos
+        depth = 1
+
+class Convocatoria_Proyecto_Serializer(serializers.ModelSerializer):
+
+    # Devuelve también los datos de los desarrolladores de la convocatoria
+    desarrolladores = Desarrollador_Serializer(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = Convocatoria_Proyecto
+        fields = '__all__' #Indica todos los campos
+        depth = 1

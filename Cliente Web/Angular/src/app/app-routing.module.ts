@@ -52,7 +52,8 @@ import {ModificarRecursoComunitarioComponent} from './componentes/recurso-comuni
 import {DetallesRecursoComunitarioResolveService} from './servicios/detalles-recurso-comunitario-resolve.service';
 import {CrearRecursoComunitarioComponent} from './componentes/recurso-comunitario/crear-recurso-comunitario/crear-recurso-comunitario.component';
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
-import {LoginGuard} from './servicios/login.guard';
+import {LoginGuard} from './guards/login.guard';
+import {RecursosComunitariosPersonalesComponent} from "./componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component";
 import {ListaTiposViviendaComponent} from "./componentes/tipo-vivienda/lista-tipos-vivienda/lista-tipos-vivienda.component";
 import {ListaViviendasResolveService} from "./servicios/lista-viviendas-resolve.service";
 import {CrearViviendaComponent} from "./componentes/tipo-vivienda/crear-tipo-vivienda/crear-vivienda.component";
@@ -78,9 +79,12 @@ import {
   RestaurarCopiaSeguridadComponent
 } from "./componentes/copia-seguridad/restaurar-copia-seguridad/restaurar-copia-seguridad.component";
 
+
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
-  {path: 'inicio', component: HomeComponent},
+  {path: 'inicio', canActivate: [LoginGuard], component: HomeComponent},
+  {path: 'recurso-comunitarios-personales', canActivate: [LoginGuard], component: RecursosComunitariosPersonalesComponent},
+
   {
     path: 'usuarios',
     component: ListaUsersComponent,
