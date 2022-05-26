@@ -52,7 +52,7 @@ import {ModificarRecursoComunitarioComponent} from './componentes/recurso-comuni
 import {ModificarRecursoComunitarioResolveService} from './servicios/modificar-recurso-comunitario-resolve.service';
 import {CrearRecursoComunitarioComponent} from './componentes/recurso-comunitario/crear-recurso-comunitario/crear-recurso-comunitario.component';
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
-import {LoginGuard} from './servicios/login.guard';
+import {LoginGuard} from './guards/login.guard';
 import {ListaRelacionTerminalRecursosComunitariosResolveService} from "./servicios/relacion-terminal-recurso-comunitario/lista-relacion-terminal-recursos-comunitarios-resolve.service";
 import {
   ListaRelacionTerminalRecursosComunitariosComponent
