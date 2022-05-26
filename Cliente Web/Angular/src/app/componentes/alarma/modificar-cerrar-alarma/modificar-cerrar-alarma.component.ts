@@ -90,24 +90,37 @@ export class ModificarCerrarAlarmaComponent implements OnInit {
       title: environment.fraseErrorModificar
     })
   }
+  // funcion que obtiene el nombre del titular
   obtenerNombre() {
+    //si existe paciente ucr devolvemos el nombre del titular del ucr y a que pertenece
     if (this.paciente_ucr) {
-      return 'Nombre(UCR): ' + this.paciente_ucr.id_persona.nombre + ' ' + this.paciente_ucr.id_persona.apellidos
+      return this.paciente_ucr.id_persona.nombre + ' ' + this.paciente_ucr.id_persona.apellidos + ' (UCR)'
     }
-    return 'Nombre(Terminal): ' + this.alarma.id_terminal.id_titular.id_persona.nombre + ' ' + this.alarma.id_terminal.id_titular.id_persona.apellidos
+    // en otro caso devolvemos el nommbre del titular del terminal
+    return  this.alarma.id_terminal.id_titular.id_persona.nombre + ' ' + this.alarma.id_terminal.id_titular.id_persona.apellidos + '(Terminal)'
   }
+  // funcion que obtiene el telefono fijo
+
   obtenerTelefonoFijo() {
+    //si existe paciente ucr devolvemos el telefono fijo
     if (this.paciente_ucr) {
       return this.paciente_ucr.id_persona.telefono_fijo
     }
+    // en otro caso devolvemos el telefono fijo asociado al terminal
     return this.alarma.id_terminal.id_titular.id_persona.telefono_fijo
   }
+
+  // funcion que obtiene el telefono movil
   obtenerTelefonoMovil() {
+    //si existe paciente ucr devolvemos el telefono moviul
     if (this.paciente_ucr) {
       return  this.paciente_ucr.id_persona.telefono_movil
     }
+    // en otro caso devolvemos el telefono movil asociado al terminal
     return this.alarma.id_terminal.id_titular.id_persona.telefono_movil
   }
+
+  // funcion que obtiene el numero del terminal
   obtenerTerminal() {
     return this.alarma.id_terminal.numero_terminal
   }
