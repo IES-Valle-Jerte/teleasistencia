@@ -68,7 +68,7 @@ router.register(r'persona_contacto_en_alarma', views_rest.Persona_Contacto_En_Al
 router.register(r'relacion_usuario_centro', views_rest.Relacion_Usuario_Centro_ViewSet)
 router.register(r'profile', views_rest.ProfileViewSet)
 router.register(r'recurso_comunitario_personal', views_rest.Recurso_comunitario_personalViewSet, basename="recurso_comunitario_personal")
-
+router.register(r'desarrollador_tecnologia', views_rest.DesarrolladorTecnologiaViewSet)
 
 
 
@@ -91,5 +91,5 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
-
+# añadimos el media url y el media root para poder visualizar las imagenes de usuario
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

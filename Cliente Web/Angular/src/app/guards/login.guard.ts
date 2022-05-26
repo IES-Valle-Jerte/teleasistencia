@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import {LoginService} from './login.service';
+import {LoginService} from '../servicios/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +8,9 @@ import {LoginService} from './login.service';
 
 export class LoginGuard implements CanActivate {
 
-  constructor(private loginService: LoginService, public router: Router) {
+  constructor(public router: Router) {
   }
-
+//el guard no permite activar el modulo si no hay token grabado
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
@@ -20,6 +20,8 @@ export class LoginGuard implements CanActivate {
     //   return true
     // }
 
+
+    // si no hay token retorno false y le redirijo al login
       if(!token){
       this.router.navigate(['/login']);
       return false
