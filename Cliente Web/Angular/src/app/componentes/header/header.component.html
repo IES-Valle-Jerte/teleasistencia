@@ -16,7 +16,7 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav px-5" id="ulPrincipal">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsers" data-bs-toggle="dropdown" aria-expanded="false">
             Usuarios
@@ -145,9 +145,8 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownPersonas">
             <li><a class="dropdown-item" [routerLink]="['/personas']">Consultar personas</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/personas/nueva']">Crear nueva persona seleccionando dirección</a></li>
-
-     </ul>
+            <li><a class="dropdown-item" [routerLink]="['/personas/nueva']">Crear nueva persona</a></li>
+          </ul>
         </li>
 
         <li class="nav-item dropdown">
@@ -159,24 +158,46 @@
             <li><a class="dropdown-item" [routerLink]="['/direcciones/nueva']">Crear nueva dirección</a></li>
           </ul>
         </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRecursosComunitariosPersonales" data-bs-toggle="dropdown" aria-expanded="false">
             R.Comunitarios-Personales
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownRecursosComunitariosPersonales">
             <li><a class="dropdown-item" [routerLink]="['/recurso-comunitarios-personales']">Recursos Comunitarios-Personales</a></li>
-            </ul>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAgenda" data-bs-toggle="dropdown" aria-expanded="false">
+            Agenda
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownAgenda">
+            <li><a class="dropdown-item" [routerLink]="['/agenda']">Consultar agenda</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/agenda/nueva']">Crear nueva agenda</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/historico_agenda']">Consultar histórico de agenda</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/tipo_agenda']">Consultar tipos de agenda</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/tipo_agenda/nueva']">Crear nuevo tipo agenda</a></li>
+          </ul>
         </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTipoViviendas" data-bs-toggle="dropdown" aria-expanded="false">
-            Viviendas
+          Viviendas
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownTipoViviendas">
             <li><a class="dropdown-item" [routerLink]="['/viviendas']">Consultar tipos de viviendas</a></li>
             <li><a class="dropdown-item" [routerLink]="['/viviendas/nueva']">Crear nuevo tipo de viviendas</a></li>
           </ul>
         </li>
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTipoSituaciones" data-bs-toggle="dropdown" aria-expanded="false">
             Situaciones
@@ -184,8 +205,14 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownTipoSituaciones">
             <li><a class="dropdown-item" [routerLink]="['/situaciones']">Consultar tipos de situaciones</a></li>
             <li><a class="dropdown-item" [routerLink]="['/situaciones/nueva']">Crear nuevo tipo de situaciones</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" [routerLink]="['/historico_situaciones']">Consultar histórico de tipos de situaciones</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/historico_situaciones/nueva']">Crear histórico de tipos de situaciones</a></li>
           </ul>
         </li>
+
       </ul>
     </div>
   </div>

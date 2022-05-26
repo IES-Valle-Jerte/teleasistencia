@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ListaUsersComponent} from './componentes/user/lista-users/lista-users.component';
+import {ListaUsersComponent} from "./componentes/user/lista-users/lista-users.component";
 import {ListaUsersResolveService} from './servicios/lista-users-resolve.service';
-import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
+import {ModificarUserComponent} from "./componentes/user/modificar-user/modificar-user.component";
 import {ModificarUserResolveService} from './servicios/modificar-user-resolve.service';
 import {HomeComponent} from './componentes/home/home.component';
-import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
+import {CrearUserComponent} from "./componentes/user/crear-user/crear-user.component";
 import {ListaClasificacionesAlarmasComponent} from './componentes/clasificacion-alarma/lista-clasificaciones-alarmas/lista-clasificaciones-alarmas.component';
 import {ModificarClasificacionAlarmaComponent} from './componentes/clasificacion-alarma/modificar-clasificacion-alarma/modificar-clasificacion-alarma.component';
 import {ListaClasificacionesAlarmasResolveService} from './servicios/lista-clasificaciones-alarmas-resolve.service';
@@ -78,6 +78,45 @@ import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-ti
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
+import {NuevoAgendaComponent} from "./componentes/agenda/nuevo-agenda/nuevo-agenda.component";
+import {ListaAgendaResolveService} from "./servicios/lista-agenda-resolve.service";
+import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-historico-tipo-situacion-resolve.service";
+import {
+  CrearHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/crear-historico-tipo-situacion/crear-historico-tipo-situacion.component";
+import {ListaTerminalResolveService} from "./servicios/lista-terminal-resolve.service";
+import {
+  HistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/lista-historico-tipo-situacion/historico-tipo-situacion.component";
+import {
+  ModificarHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component";
+import {
+  DetallesHistoricoTipoSituacionResolveService
+} from "./servicios/detalles-historico-tipo-situacion-resolve.service";
+import {
+  ItemHistoricoTipoSituacionComponent
+} from "./componentes/historico-tipo-situacion/item-historico-tipo-situacion/item-historico-tipo-situacion.component";
+import {ItemTipoAgendaComponent} from "./componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component";
+import {ItemAgendaComponent} from "./componentes/agenda/item-agenda/item-agenda.component";
+import {ListaPacientesResolveService} from "./servicios/lista-paciente-resolve.service";
+import {DetallesAgendaResolveService} from "./servicios/detalles-agenda.resolve.service";
+import {
+  ListaHistoricoAgendaComponent
+} from "./componentes/historico-agenda/lista-historico-agenda/lista-historico-agenda.component";
+import {ListaHistoricoAgendaResolveService} from "./servicios/lista-historico-agenda-resolve.service";
+import {
+  ItemHistoricoAgendaComponent
+} from "./componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component";
+import {DetalleHistoricoAgendaResolveService} from "./servicios/detalle-historico-agenda-resolve.service";
+import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/modificar-agenda.component";
+import {
+  ModificarHistoricoAgendaComponent
+} from "./componentes/historico-agenda/modificar-historico-agenda/modificar-historico-agenda.component";
+import {ListaTodasAgendasResolveService} from "./servicios/lista-todas-agendas-resolve.service";
+import {
+  NuevoHistoricoAgendaComponent
+} from "./componentes/historico-agenda/nuevo-historico-agenda/nuevo-historico-agenda.component";
 import {
   CrearRelacionTerminalRecursosComunitariosComponent
 } from "./componentes/relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios.component";
@@ -87,7 +126,6 @@ import {ModificarCerrarAlarmaComponent} from "./componentes/alarma/modificar-cer
 import {ModificarAlarmaResolveService} from "./servicios/alarmas/modificar-alarma-resolve.service";
 import {ListaTerminalesResolveService} from "./servicios/terminal/lista-terminales-resolve.service";
 import {CrearAlarmaUcrComponent} from "./componentes/alarma/crear-alarma-ucr/crear-alarma-ucr.component";
-import {ListaPacientesResolveService} from "./servicios/paciente/lista-pacientes-resolve.service";
 import {ListaTerminalComponent} from "./componentes/terminal/lista-terminal/lista-terminal.component";
 import {ModificarTerminalComponent} from "./componentes/terminal/modificar-terminal/modificar-terminal.component";
 import {ModificarTerminalResolveService} from "./servicios/terminal/modificar-terminal-resolve.service";
@@ -192,6 +230,12 @@ import {
 import {ListaGruposService} from "./servicios/lista-grupos.service";
 import {GruposComponent} from "./componentes/grupos/grupos.component";
 import {CrearAlarmaTerminalComponent} from "./componentes/alarma/crear-alarma-terminal/crear-alarma-terminal.component";
+import { TipoAgendaComponent } from './componentes/tipo-agenda/lista-tipo-agenda/tipo-agenda.component';
+import { ListaTiposAgendaResolveService } from './servicios/lista-tipo-agenda-resolve.service';
+import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component';
+import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
+import { DetallesTipoAgendaResolveService } from './servicios/detalles-tipo-agenda-resolve.service';
+import { AgendaComponent } from './componentes/agenda/lista-agenda/agenda.component';
 
 
 const routes: Routes = [
@@ -439,6 +483,114 @@ const routes: Routes = [
     }
   },
   {
+    path: 'agenda',
+    component: AgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agendasDelDia: ListaAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService,
+    }
+  },
+  {
+    path:'agenda/nueva',
+    component: NuevoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agendas: ListaAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService,
+      personas: ListaPersonasResolveService,
+      pacientes: ListaPacientesResolveService
+    }
+  },
+  {
+    path: 'agenda/modificar/:id',
+    component: ModificarAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agenda: DetallesAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService,
+      pacientes: ListaPacientesResolveService,
+      personas_contacto: ListaPersonasResolveService,
+    }
+  },
+  {
+    path: 'agenda/borrado/:id',
+    component: ItemAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agendas: ListaAgendaResolveService,
+      agenda: ListaAgendaResolveService
+    }
+  },
+  {
+    path: 'historico_agenda',
+    component: ListaHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_de_agenda: ListaHistoricoAgendaResolveService
+    }
+  },
+  {
+    path: 'historico_agenda/nuevo/:id',
+    component: NuevoHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      agendas: ListaTodasAgendasResolveService,
+      teleoperadores: ListaUsersResolveService,
+      agenda: DetallesAgendaResolveService
+    }
+  },
+  {
+    path: 'historico_agenda/modificar/:id',
+    component: ModificarHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historico_agenda: DetalleHistoricoAgendaResolveService,
+      agendas: ListaTodasAgendasResolveService,
+      teleoperadores: ListaUsersResolveService,
+    }
+  },
+  {
+    path: 'historico_agenda/borrado/:id',
+    component: ListaHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_de_agenda: ListaHistoricoAgendaResolveService
+    }
+  },
+  {
+    path: 'tipo_agenda',
+    component: TipoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      direcciones: ListaDireccionesResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService
+    }
+  },
+  {
+    path: 'tipo_agenda/nueva',
+    component: NuevoTipoAgendaComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'tipo_agenda/modificar/:id',
+    component: DetallesTipoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      tipo_agenda: DetallesTipoAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService
+    }
+  },
+  {
+    path: 'tipo_agenda/borrado/:id',
+    component: ItemTipoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      tipo_agenda: ListaTiposAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService
+    }
+  },
+  {
     path: 'viviendas',
     component: ListaTiposViviendaComponent,
     canActivate: [LoginGuard],
@@ -512,6 +664,43 @@ const routes: Routes = [
     resolve: {
       tipos_situaciones: BorrarTipoSituacionService,
       clasificaciones_situaciones: ListaSituacionesService
+    }
+  },
+  {
+    path: 'historico_situaciones',
+    component: HistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_situaciones: ListaHistoricoTipoSituacionResolveService
+    }
+  },
+  {
+    path: 'historico_situaciones/nueva',
+    component: CrearHistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_situaciones: ListaHistoricoTipoSituacionResolveService,
+      tipos_situaciones: ListaSituacionesService,
+      terminales: ListaTerminalResolveService
+    }
+  },
+  {
+    path: 'historico_situaciones/modificar/:id',
+    component: ModificarHistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historico_situacion: DetallesHistoricoTipoSituacionResolveService,
+      tipos_situaciones: ListaSituacionesService,
+      terminales: ListaTerminalResolveService
+    }
+  },
+  {
+    path: 'historico_situaciones/borrado/:id',
+    component: ItemHistoricoTipoSituacionComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historico_situaciones: ListaHistoricoTipoSituacionResolveService,
+      historico_situacion: ListaHistoricoTipoSituacionResolveService
     }
   },
   {
@@ -924,4 +1113,3 @@ const routes: Routes = [
 
 export class AppRoutingModule {
 }
-

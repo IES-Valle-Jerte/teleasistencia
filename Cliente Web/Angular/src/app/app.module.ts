@@ -62,6 +62,14 @@ import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
 
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
+import { AgendaComponent } from './componentes/agenda/lista-agenda/agenda.component';
+import {
+  ModificarHistoricoAgendaComponent
+} from "./componentes/historico-agenda/modificar-historico-agenda/modificar-historico-agenda.component";
+import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/modificar-agenda.component";
+import { CommonModule } from '@angular/common';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { TipoAgendaComponent } from './componentes/tipo-agenda/lista-tipo-agenda/tipo-agenda.component';
 import { ListaRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component';
 import { ItemRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios.component';
 import { CrearRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios.component';
@@ -85,6 +93,23 @@ import { ModificarTipoSituacionComponent } from './componentes/tipo-situacion/mo
 import { BorrarTipoViviendaComponent } from './componentes/tipo-vivienda/borrar-tipo-vivienda/borrar-tipo-vivienda.component';
 import { BorrarTipoSituacionComponent } from './componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component';
 import {InterceptorService} from "./interceptors/interceptor.service";
+import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component';
+import { ItemTipoAgendaComponent } from './componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component';
+import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
+import { NuevoAgendaComponent } from './componentes/agenda/nuevo-agenda/nuevo-agenda.component';
+import { HistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/lista-historico-tipo-situacion/historico-tipo-situacion.component';
+import { CrearHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/crear-historico-tipo-situacion/crear-historico-tipo-situacion.component';
+import { ModificarHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/modificar-historico-tipo-situacion/modificar-historico-tipo-situacion.component';
+import { ItemHistoricoTipoSituacionComponent } from './componentes/historico-tipo-situacion/item-historico-tipo-situacion/item-historico-tipo-situacion.component';
+import {CargaHistoricoTipoSituacionService} from "./servicios/carga-historico-tipo-situacion.service";
+import {CargaTipoAgendaService} from "./servicios/carga-tipo-agenda.service";
+import {CargaAgendaService} from "./servicios/carga-agenda.service";
+import { ItemAgendaComponent } from './componentes/agenda/item-agenda/item-agenda.component';
+import { ItemHistoricoAgendaComponent } from './componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component';
+import { ListaHistoricoAgendaComponent } from './componentes/historico-agenda/lista-historico-agenda/lista-historico-agenda.component';
+import {
+  NuevoHistoricoAgendaComponent
+} from "./componentes/historico-agenda/nuevo-historico-agenda/nuevo-historico-agenda.component";
 import { ListaAlarmasComponent } from './componentes/alarma/lista-alarmas/lista-alarmas.component';
 import { CrearAlarmaUcrComponent } from './componentes/alarma/crear-alarma-ucr/crear-alarma-ucr.component';
 import { ModificarCerrarAlarmaComponent } from './componentes/alarma/modificar-cerrar-alarma/modificar-cerrar-alarma.component';
@@ -178,6 +203,11 @@ import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-
     HeaderComponent,
     FooterComponent,
     BotonesLoginComponent,
+    AgendaComponent,
+    TipoAgendaComponent,
+    NuevoTipoAgendaComponent,
+    ItemTipoAgendaComponent,
+    DetallesTipoAgendaComponent,
     ListaRelacionTerminalRecursosComunitariosComponent,
     ItemRelacionTerminalRecursosComunitariosComponent,
     CrearRelacionTerminalRecursosComunitariosComponent,
@@ -195,6 +225,18 @@ import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-
     ModificarTipoSituacionComponent,
     BorrarTipoViviendaComponent,
     BorrarTipoSituacionComponent,
+    NuevoAgendaComponent,
+    HistoricoTipoSituacionComponent,
+    CrearHistoricoTipoSituacionComponent,
+    ModificarHistoricoTipoSituacionComponent,
+    ItemHistoricoTipoSituacionComponent,
+    GruposComponent,
+    ItemAgendaComponent,
+    ItemHistoricoAgendaComponent,
+    ListaHistoricoAgendaComponent,
+    ModificarHistoricoAgendaComponent,
+    ModificarAgendaComponent,
+    NuevoHistoricoAgendaComponent,
     ListaAlarmasComponent,
     CrearAlarmaUcrComponent,
     ModificarCerrarAlarmaComponent,
@@ -240,6 +282,8 @@ import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    NgbModalModule,
+    CommonModule,
     NgxPaginationModule,
   ],
   providers: [
@@ -255,6 +299,9 @@ import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-
     CargaPersonaService,
     CargaRelacionTerminalRecursosComunitariosService,
     CargaViviendaService,
+    CargaHistoricoTipoSituacionService,
+    CargaTipoAgendaService,
+    CargaAgendaService,
     CargaAlarmaService,
     CargaPacienteService,
     CargaTerminalesService,
