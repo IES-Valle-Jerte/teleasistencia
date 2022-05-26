@@ -17,11 +17,13 @@ export class HistoricoTipoSituacionComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) { }
 
+  // Carga de datos para mostrarlos en la tabla.
   ngOnInit(): void {
     this.historicos_tipos_situacion = this.route.snapshot.data['historicos_situaciones'];
     this.titleService.setTitle('Histórico tipos situacion');
   }
 
+  // Método que ordena la tabla al hacer click en los th de la tabla.
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
   }

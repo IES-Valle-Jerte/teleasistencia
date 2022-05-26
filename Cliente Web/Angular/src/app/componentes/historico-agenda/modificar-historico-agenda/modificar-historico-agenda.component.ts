@@ -27,6 +27,7 @@ export class ModificarHistoricoAgendaComponent implements OnInit {
     private router: Router
   ) {}
 
+  // Carga de los datos necesarios al cargar el componente.
   ngOnInit(): void {
     this.historico_agenda = this.route.snapshot.data['historico_agenda'];
     this.id_historico_agenda = this.route.snapshot.params['id'];
@@ -36,6 +37,7 @@ export class ModificarHistoricoAgendaComponent implements OnInit {
     this.historico_agenda.id_teleoperador = this.historico_agenda.id_teleoperador.id;
   }
 
+  // Petición al servidor para modificar un histórico de agenda seleccionado
   modificarHistoricoDeAgenda(): void {
     this.cargaHistoricoAgenda.modificarHistoricoAgenda(this.historico_agenda).subscribe(
       e => {
@@ -48,10 +50,12 @@ export class ModificarHistoricoAgendaComponent implements OnInit {
     );
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelected(i: number): void {
     document.getElementsByClassName('historico_agenda_option')[i].setAttribute('selected', '');
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelectedTeleoperador(i: number): void {
     document.getElementsByClassName('historico_agenda_option_teleoperador')[i].setAttribute('selected', '');
   }

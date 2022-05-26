@@ -30,6 +30,7 @@ export class ModificarAgendaComponent implements OnInit {
     private router: Router
   ) { }
 
+  // Carga de los datos al cargar el componente
   ngOnInit(): void {
     this.agenda = this.route.snapshot.data['agenda'];
     this.tipos_agenda = this.route.snapshot.data['tipos_agenda'];
@@ -43,6 +44,7 @@ export class ModificarAgendaComponent implements OnInit {
     this.agenda.id_persona = this.agenda.id_persona.id;
   }
 
+  // Método que realiza la petición al servidor de modificación de una agenda seleccionada
   modificarEventoAgenda(): void {
     this.cargaAgendaService.modificarAgenda(this.agenda).subscribe(
       e => {
@@ -55,6 +57,7 @@ export class ModificarAgendaComponent implements OnInit {
     );
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelected(i: number): void {
     document.getElementsByClassName('agenda_option')[i].setAttribute('selected', '');
   }

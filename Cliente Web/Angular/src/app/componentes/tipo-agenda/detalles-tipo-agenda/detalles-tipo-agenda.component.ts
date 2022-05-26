@@ -21,6 +21,7 @@ export class DetallesTipoAgendaComponent implements OnInit {
   constructor(private route: ActivatedRoute, private titleService: Title, private cargaTipoAgendaService: CargaTipoAgendaService, private router: Router) {
   }
 
+  // Carga de los datos para que se muestren correctamente en el formulario a la hora de modificar un tipo de agenda.
   ngOnInit(): void {
     this.tipo_agenda = this.route.snapshot.data['tipo_agenda'];
     this.idTipoAgenda = this.route.snapshot.params['id'];
@@ -28,6 +29,7 @@ export class DetallesTipoAgendaComponent implements OnInit {
     this.tipos_agenda = this.route.snapshot.data['tipos_agenda'];
   }
 
+  // Lanza una petición al servidor para modificar un tipo de agenda.
   modificarTipoAgenda(): void {
     this.cargaTipoAgendaService.modificarTipoAgenda(this.tipo_agenda).subscribe(
       e => {
@@ -40,6 +42,7 @@ export class DetallesTipoAgendaComponent implements OnInit {
     );
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelected(i: number): void {
     document.getElementsByClassName('tipo_agenda_option')[i].setAttribute('selected', '');
   }

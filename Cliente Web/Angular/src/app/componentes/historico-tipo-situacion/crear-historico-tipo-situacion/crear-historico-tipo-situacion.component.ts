@@ -25,6 +25,7 @@ export class CrearHistoricoTipoSituacionComponent implements OnInit {
               private cargaHistoricoTipoSituacion: CargaHistoricoTipoSituacionService,
               private router: Router) { }
 
+  // Carga de datos.
   ngOnInit(): void {
     this.titleService.setTitle('Nuevo tipo agenda');
     this.historico_tipo_situacion = new HistoricoTipoSituacion();
@@ -32,6 +33,7 @@ export class CrearHistoricoTipoSituacionComponent implements OnInit {
     this.terminales = this.route.snapshot.data['terminales'];
   }
 
+  // Petición al servidor para crear un nuevo histórico de tipo de situación.
   crearHistoricoTipoSituacion() {
     this.cargaHistoricoTipoSituacion.nuevoHistoricoTipoSituacion(this.historico_tipo_situacion).subscribe(
       e => {

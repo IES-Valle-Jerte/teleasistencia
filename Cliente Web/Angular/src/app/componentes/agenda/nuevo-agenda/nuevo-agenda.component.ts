@@ -29,6 +29,7 @@ export class NuevoAgendaComponent implements OnInit {
     private router: Router
   ) { }
 
+  // Carga de los datos para poder rellenar el formulario de creación.
   ngOnInit(): void {
     this.tipos_agenda = this.route.snapshot.data['tipos_agenda'];
     this.personas_contacto = this.route.snapshot.data['personas'];
@@ -37,10 +38,12 @@ export class NuevoAgendaComponent implements OnInit {
     this.pacientes = this.route.snapshot.data['pacientes'];
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelected(i: number): void {
     document.getElementsByClassName('tipo_agenda_option')[i].setAttribute('selected', '');
   }
 
+  // Método que realiza la petición al servidor de creación de una agenda.
   nuevoAgenda() {
     this.cargaAgendas.nuevoAgenda(this.agenda).subscribe(
       e => {

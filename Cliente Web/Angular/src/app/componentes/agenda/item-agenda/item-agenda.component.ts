@@ -14,7 +14,7 @@ import {CargaHistoricoAgendaService} from "../../../servicios/carga-historico-ag
 })
 export class ItemAgendaComponent implements OnInit {
 
-  @Input() public agenda: IAgenda;
+  @Input() public agenda: IAgenda; // Input que servirá para coger una agenda en concreto de la lista
   @Input() public fechaToday: Date = null;
 
   constructor(
@@ -67,6 +67,7 @@ export class ItemAgendaComponent implements OnInit {
     })
   }
 
+  // Función para que al hacer click en el botón eliminar salte un diálogo de confirmación
   modalConfirmacion(): void {
     Swal.fire({
       title: '¿Está seguro que desea eliminar este evento?',
@@ -80,6 +81,7 @@ export class ItemAgendaComponent implements OnInit {
     })
   }
 
+  // Método que realiza la petición de borrado de una agenda seleccionada
   eliminarAgenda(ruta:string) : void{
     this.cargaAgendaService.borrarAgenda(this.agenda.id).subscribe(
       e=>{
@@ -96,6 +98,8 @@ export class ItemAgendaComponent implements OnInit {
     )
   }
 
+  // Método que redirige a la URL "/historico_agenda/modificar" para modificar un histórico de agenda
+  // seleccionado mediante el icono, a través del id de la agenda.
   redirigirAhistorico() {
     this.cargaHistoricoAgendaService.getHistoricoAgendaPorIdAgenda(this.agenda.id).subscribe(
       e=>{

@@ -26,10 +26,12 @@ export class ListaHistoricoAgendaComponent implements OnInit {
     private router: Router
   ) { }
 
+  // Carga de los datos de todos los históricos de agenda
   ngOnInit(): void {
     this.historicos_de_agenda = this.route.snapshot.data['historicos_de_agenda'];
   }
 
+  // Método para ordenar la tabla al hacer click en los th de la tabla.
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
   }

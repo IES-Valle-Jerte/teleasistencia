@@ -23,6 +23,7 @@ export class NuevoTipoAgendaComponent implements OnInit {
     this.tipo_agenda = new TipoAgenda();
   }
 
+  // Método que lanza una petición al servidor para crear un nuevo tipo de agenda.
   nuevoTipoAgenda() {
     this.cargaTiposAgenda.nuevoTipoAgenda(this.tipo_agenda).subscribe(
       e => {

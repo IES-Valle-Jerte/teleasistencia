@@ -17,11 +17,13 @@ export class TipoAgendaComponent implements OnInit {
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) {
   }
 
+  // Carga de datos para mostrarlos en la tabla.
   ngOnInit(): void {
     this.tipos_agenda = this.route.snapshot.data['tipos_agenda'];
     this.titleService.setTitle('Tipos agenda');
   }
 
+  // Método que ordena la tabla al hacer click en los th de la tabla.
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
   }

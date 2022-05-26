@@ -10,8 +10,6 @@ import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} fro
 import {Title} from "@angular/platform-browser";
 import {IAgenda} from "../../../interfaces/i-agenda";
 import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
-import {Observable, of} from "rxjs";
-import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-agenda',
@@ -39,16 +37,24 @@ export class AgendaComponent implements OnInit {
     private router: Router
   ) {}
 
+  // Al cargar el componente, se establecen las agendas para el día actual
   ngOnInit() {
     this.agendasDelDia = this.route.snapshot.data['agendasDelDia'];
     this.fechaString = + this.fechaToday.getDate() + ' de ' + this.getNombreMes(this.fechaToday.getMonth()) + ' de '
       + this.fechaToday.getFullYear();
   }
 
+  // Método que ordena la tabla si hacemos click en las flechas de los th de la tabla
   ordenacionTabla(indice: number, tipo: string){
     this.ordTabla.ordenacionService(indice, tipo);
   }
 
+  // Método para buscar las agendas según un día seleccionado
+  // El funcionamiento del mismo es el siguiente:
+  // 1. Se realiza la petición para cargar las agendas según la fecha que se ha seleccionado
+  // 2. Si hay datos, se actualiza el array "agendasDelDía" y se cambia el string que muestra el día actual
+  // 3. Devuelve los datos actualizados y muestra las agendas para la fecha que se ha buscado.
+  // 4. Al final se hace un .focus() sobre un div con style "display: none" para quitar el foco del input de fecha.
   buscarPorFecha(event) {
     let fechaSeparada = event.split('-');
     this.cargaAgendaService.getAgendasPorFechaPrevista(event).subscribe(
@@ -119,7 +125,8 @@ export class AgendaComponent implements OnInit {
     return mes;
   }
 
-  // Método para conseguir el nombre del mes usando el número que nos devuelve la función getMonth()
+  // Método para conseguir el nombre del mes usando el número que nos devuelve la función getMonth() pero con 0
+  // al principio si es solo 1 digito y en string y empezando por 01 en vez de 0
   getNombreMesActualizarFecha (numMes: string) {
     let mes = '';
     switch (numMes) {

@@ -66,6 +66,7 @@ export class ItemHistoricoAgendaComponent implements OnInit {
     })
   }
 
+  // Función para que salte el diálogo de confirmación al pulsar en el icono "borrar".
   modalConfirmacion(): void {
     Swal.fire({
       title: '¿Está seguro que desea eliminar este elemento?',

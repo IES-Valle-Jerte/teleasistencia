@@ -25,6 +25,7 @@ export class ModificarHistoricoTipoSituacionComponent implements OnInit {
   constructor(private route: ActivatedRoute, private titleService: Title, private cargaHistoricoTipoSituacion: CargaHistoricoTipoSituacionService, private router: Router) {
   }
 
+  // Carga de los datos necesarios para que se muestren correctamente en el formulario a la hora de modificar.
   ngOnInit(): void {
     this.historico_tipo_situacion = this.route.snapshot.data['historico_situacion'];
     this.idHistoricoTipoSituacion = this.route.snapshot.params['id'];
@@ -35,6 +36,7 @@ export class ModificarHistoricoTipoSituacionComponent implements OnInit {
     this.historico_tipo_situacion.id_terminal = this.historico_tipo_situacion.id_terminal.id;
   }
 
+  // Lanza una petición al servidor para modificar un histórico de tipo de situación seleccionado.
   modificarHistoricoTipoDeSituacion(): void {
     this.cargaHistoricoTipoSituacion.modificarHistoricoTipoSituacion(this.historico_tipo_situacion).subscribe(
       e => {
@@ -47,6 +49,7 @@ export class ModificarHistoricoTipoSituacionComponent implements OnInit {
     );
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelected(i: number): void {
     document.getElementsByClassName('tipo_historico_situacion_option')[i].setAttribute('selected', '');
   }

@@ -30,6 +30,7 @@ export class NuevoHistoricoAgendaComponent implements OnInit {
     private router: Router
   ) { }
 
+  // Carga de los datos al cargar el componente
   ngOnInit(): void {
     this.historico_agenda = new HistoricoAgenda();
     this.agendas = this.route.snapshot.data['agendas'];
@@ -39,6 +40,10 @@ export class NuevoHistoricoAgendaComponent implements OnInit {
     this.historico_agenda.id_agenda = this.agenda.id;
   }
 
+  //Petición al servidor para la creación de un nuevo histórico de agenda.
+  // A la vez, se llamará a modificarFechaResoluciónAgenda().
+  // Esta llamada se hace puesto que al hacer la petición de guardado de un nuevo histórico, queremos a su vez settear
+  // la fecha de resolución de dicha agenda para que pase de estar en estado 'no-resuelta' a 'resuelta'.
   nuevoHistoricoAgenda() {
     this.cargaHistoricoAgenda.nuevoHistoricoAgenda(this.historico_agenda).subscribe(
       e => {
@@ -50,6 +55,9 @@ export class NuevoHistoricoAgendaComponent implements OnInit {
     );
   }
 
+  // Método que hace petición al servidor para modificar una agenda seleccionada.
+  // Esté método se llama de forma automática al crear un histórico de agenda, esto es para actualizar su fecha de resolución
+  // de null a la del día actual.
   modificarFechaResolucionAgenda() {
     let fecha_resolucion = new Date();
 
@@ -74,6 +82,7 @@ export class NuevoHistoricoAgendaComponent implements OnInit {
     );
   }
 
+  // Método para marcar como 'selected' el option que coincide con el valor de la agenda seleccionada.
   optionSelected(i: number): void {
     document.getElementsByClassName('agenda_id_option')[i].setAttribute('selected', '');
   }
