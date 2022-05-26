@@ -11,6 +11,7 @@ from datetime import datetime
 from django.contrib.auth.models import User, Group, Permission
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework import status
 # Serializadores generales
 from rest_framework.response import Response
 
@@ -25,7 +26,6 @@ from ..rest_django.serializers import *
 class IsTeacherMember(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return True
         if request.user.groups.filter(name="profesor").exists():
             return True
 
@@ -1440,8 +1440,7 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         id_b = str(base_datos.id)
         #base_datos.ubicacion_copia =
         base_datos.ubicacion_copia = '\\backup\\'+'db.sqlite3'+id_b
-        # Devolvemos la base_datos creada
-        base_datos_serializer = Gestion_Base_Datos_Serializer(base_datos)
+        # Devolvemos la base_datos creada - base_datos_serializer = Gestion_Base_Datos_Serializer(base_datos)
         base_datos.save()
 
         #Comprobar si existe la base de datos original
@@ -1452,7 +1451,7 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
             shutil.copy(source, destination)
             return Response("Copia de la base de datos creada correctamente con id: "+id_b)
 
-        return Response("La copia de la base de datos no ha podido ser creada.")
+        return Response("La copia de la base de datos no ha podido ser creada.", status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
         #Conseguimos el parametro de la URL
@@ -1463,35 +1462,38 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         source = str(Path(__file__).resolve().parent.parent.parent) + '\\backup\\db.sqlite3'
         destination = str(Path(__file__).resolve().parent.parent.parent)
 
-        #Gestion_Base_Datos.objects.all().delete()
-
         #Condicional, para que en caso de pasarle algo que no sea un id, como ara en 2/3 funcionalidades, no nos de fallo.
         if parametro != 'restore':
             base_datos = Gestion_Base_Datos.objects.all().get(pk=parametro_res)
         else:
             base_datos = Gestion_Base_Datos.objects.all()
-
         #Si el parametro que le pasamos en la URL es restore, y existe la copia solo con el ADM(Se debe generar),
         #entonces restauramos esta base de datos.
-        if str(parametro) == 'restore' and os.path.isfile(source+'_adm'):
-            source_res = source+'_adm'
-            shutil.copy(source_res, destination+'\\db.sqlite3')
-            return Response("La base de datos ha sido restaurada solo con la cuenta de Administrador.")
-
+        if str(parametro) == 'restore':
+            if os.path.isfile(source+'_adm'):
+                source_res = source+'_adm'
+                shutil.copy(source_res, destination+'\\db.sqlite3')
+                return Response("La base de datos ha sido restaurada solo con la cuenta de Administrador.")
+            else:
+                return Response("La copia de la base de datos con id: " + parametro + " seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
         #En caso de que tengamos cualquier otra cosa que no sea una x+id, simplemente no entrara en el if
         #En caso afirmativo, entrara y copiara la base de datos con el id indicadp.
-        if os.path.isfile(source+parametro_res) and (kwargs["pk"])[:1] == 'x':
-            source_r = source+str(parametro_res)
-            shutil.copy(source_r, destination+'\\db.sqlite3')
-            return Response("La base de datos con id: "+parametro_res+" ha sido restaurada correctamente.")
-
+        if (kwargs["pk"])[:1] == 'x':
+            if os.path.isfile(source+parametro_res):
+                source_r = source+str(parametro_res)
+                shutil.copy(source_r, destination+'\\db.sqlite3')
+                return Response("La base de datos con id: "+parametro_res+" ha sido restaurada correctamente.")
+            else:
+                return Response("La copia de la base de datos con id: " + parametro + " seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
         #Comprobamos si existe copia con el id pasado en la URL, si es asi, lo borramos.
         if os.path.isfile(source+parametro_res):
             os.remove(source+parametro_res)
             # Borramos la entrada de la API-RES
             base_datos.delete()
             return Response("La copia de la base de datos con id: "+parametro+" ha sido borrada correctamente.")
+        else:
+            base_datos.delete()
 
         #Respuesta de error por defecto.
-        return Response("La copia de la base de datos con id: "+parametro+" seleccionada no existe.")
+        return Response("La copia de la base de datos con id: "+parametro+" seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
 
