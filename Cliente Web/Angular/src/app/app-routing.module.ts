@@ -218,7 +218,8 @@ const routes: Routes = [
   {
     path: 'usuarios/nuevo',
     component: CrearUserComponent,
-    canActivate: [LoginGuard]},
+    canActivate: [LoginGuard]
+  },
 
   {
     path: 'grupos',
@@ -227,6 +228,14 @@ const routes: Routes = [
     resolve: {
       grupos: ListaGruposService
     },
+  },
+  {
+    path: 'usuarios/borrado/:id',
+    component: ListaUsersComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      users: ListaUsersResolveService
+    }
   },
   {
     path: 'clasificaciones_alarmas',

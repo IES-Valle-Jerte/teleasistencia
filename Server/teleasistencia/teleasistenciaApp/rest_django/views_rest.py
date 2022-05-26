@@ -227,10 +227,15 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(user_serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        print(kwargs)
         user = User.objects.get(pk=kwargs["pk"])
-        image = Imagen_User.objects.get(user=user)
-        if image.imagen is not None:
-            os.remove(image.imagen.path)
+        try:
+          image = Imagen_User.objects.get(user=user)
+
+          if image.imagen is not None:
+             os.remove(image.imagen.path)
+        except:
+            print('error propio')
         user.delete()
         return Response('borrado')
 
