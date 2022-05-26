@@ -1,7 +1,7 @@
 import {IPaciente} from "../interfaces/i-paciente";
 import {ITerminal} from "../interfaces/i-terminal";
-import {ITipoVivienda} from "../interfaces/i-tipo-vivienda";
 import {IPersona} from "../interfaces/i-persona";
+import {ITipoModalidadPaciente} from "../interfaces/i-tipo-modalidad-paciente";
 
 export class Paciente implements IPaciente{
   id: number;
@@ -11,7 +11,7 @@ export class Paciente implements IPaciente{
   prestacion_otros_servicios_sociales: string;
   observaciones_medicas: string;
   intereses_y_actividades: string;
-  id_terminal: ITerminal;
-  id_persona: IPersona;
-  id_tipo_vivienda: ITipoVivienda;
+  id_terminal: any;
+  id_persona: any;
+  id_tipo_modalidad_paciente: any;
 }

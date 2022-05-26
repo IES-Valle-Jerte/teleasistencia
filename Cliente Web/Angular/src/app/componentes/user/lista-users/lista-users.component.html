@@ -23,6 +23,7 @@
         </tr>
         </thead>
         <tbody>
+
         <tr *ngFor="let user of users | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
             app-item-user [user]="user">
         </tr>

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
+# Creamos la clase imagen con los atributos usuario e imagen
 class Imagen_User(models.Model):
    user = models.OneToOneField(User, on_delete=models.CASCADE)
    imagen = models.ImageField(upload_to='imagen_usuario', null=True, blank=True, default="")
@@ -249,4 +250,33 @@ class Relacion_Usuario_Centro(models.Model):
     observaciones = models.CharField(max_length=1000, blank=True)
     def __str__(self):
         return self.id_paciente.id_persona.nombre+" - "+self.id_centro_sanitario.nombre+" - "+self.persona_contacto+" - "+self.distancia+" - "+self.tiempo+" - "+self.observaciones
+
+class Convocatoria_Proyecto(models.Model):
+    convocatoria = models.CharField(max_length=1000, blank=True)
+    fecha = models.DateField(null=False, default=now)
+    def __str__(self):
+        return self.convocatoria
+class Desarrollador(models.Model):
+    # Related name nos permite obtener los datos relacionados desde la entidad a la que hace referencia
+    id_convocatoria_proyecto = models.ForeignKey(Convocatoria_Proyecto, null=True, on_delete=models.SET_NULL, related_name='desarrolladores')
+    nombre=models.CharField(max_length=1000, blank=True)
+    descripcion=models.CharField(max_length=10000, blank=True)
+    imagen=models.ImageField(upload_to='desarrollador/imagen_desarrollador', null=True, blank=True, default='')
+    es_profesor= models.BooleanField(default=False)
+    def __str__(self):
+        return self.id_convocatoria_proyecto.convocatoria+ " - "+ self.nombre+ " - "+self.descripcion
+
+class Tecnologia(models.Model):
+    nombre = models.CharField(max_length=1000, blank=True)
+    imagen = models.ImageField(upload_to='desarrollador/imagen_tecnologia', null=True, blank=True, default='')
+    def __str__(self):
+        return self.nombre
+
+class Desarrollador_Tecnologia(models.Model):
+    # Related name nos permite obtener los datos relacionados desde la entidad a la que hace referencia
+    id_desarrollador = models.ForeignKey(Desarrollador, null=True, on_delete=models.SET_NULL, related_name='desarrollador_tecnologias')
+    id_tecnologia = models.ForeignKey(Tecnologia, null=True, on_delete=models.SET_NULL, related_name='tecnologias')
+    def __str__(self):
+        return self.id_desarrollador.nombre+ " - "+self.id_tecnologia.nombre
+
 

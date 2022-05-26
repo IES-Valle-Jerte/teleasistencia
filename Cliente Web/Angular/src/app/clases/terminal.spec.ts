@@ -1,4 +1,4 @@
-import {Terminal} from "./terminal";
+import { Terminal } from './terminal';
 
 describe('Terminal', () => {
   it('should create an instance', () => {

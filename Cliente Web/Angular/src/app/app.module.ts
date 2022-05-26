@@ -8,7 +8,7 @@ import {ItemUserComponent} from './componentes/user/item-user/item-user.componen
 import {ModificarUserComponent} from './componentes/user/modificar-user/modificar-user.component';
 import {CrearUserComponent} from './componentes/user/crear-user/crear-user.component';
 
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './componentes/home/home.component';
 import {CargaUserService} from './servicios/carga-user.service';
@@ -70,6 +70,14 @@ import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/mo
 import { CommonModule } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TipoAgendaComponent } from './componentes/tipo-agenda/lista-tipo-agenda/tipo-agenda.component';
+import { ListaRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component';
+import { ItemRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios.component';
+import { CrearRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios/crear-relacion-terminal-recursos-comunitarios.component';
+import { ModificarRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios/modificar-relacion-terminal-recursos-comunitarios.component';
+import {
+  CargaRelacionTerminalRecursosComunitariosService
+} from "./servicios/relacion-terminal-recurso-comunitario/carga-relacion-terminal-recursos-comunitarios.service";
+
 import {NgxPaginationModule} from 'ngx-pagination';
 import {OrdenacionTablasService} from "./servicios/ordenacion-tablas.service";
 import { FiltroBusquedaPipe } from './pipes/filtro-busqueda.pipe';
@@ -96,14 +104,56 @@ import { ItemHistoricoTipoSituacionComponent } from './componentes/historico-tip
 import {CargaHistoricoTipoSituacionService} from "./servicios/carga-historico-tipo-situacion.service";
 import {CargaTipoAgendaService} from "./servicios/carga-tipo-agenda.service";
 import {CargaAgendaService} from "./servicios/carga-agenda.service";
-import { GruposComponent } from './componentes/grupos/grupos.component';
 import { ItemAgendaComponent } from './componentes/agenda/item-agenda/item-agenda.component';
-import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
 import { ItemHistoricoAgendaComponent } from './componentes/historico-agenda/item-historico-agenda/item-historico-agenda.component';
 import { ListaHistoricoAgendaComponent } from './componentes/historico-agenda/lista-historico-agenda/lista-historico-agenda.component';
 import {
   NuevoHistoricoAgendaComponent
 } from "./componentes/historico-agenda/nuevo-historico-agenda/nuevo-historico-agenda.component";
+import { ListaAlarmasComponent } from './componentes/alarma/lista-alarmas/lista-alarmas.component';
+import { CrearAlarmaUcrComponent } from './componentes/alarma/crear-alarma-ucr/crear-alarma-ucr.component';
+import { ModificarCerrarAlarmaComponent } from './componentes/alarma/modificar-cerrar-alarma/modificar-cerrar-alarma.component';
+import { ItemAlarmaComponent } from './componentes/alarma/item-alarma/item-alarma.component';
+import { ListaTerminalComponent } from './componentes/terminal/lista-terminal/lista-terminal.component';
+import { ItemTerminalComponent } from './componentes/terminal/item-terminal/item-terminal.component';
+import { CrearTerminalComponent } from './componentes/terminal/crear-terminal/crear-terminal.component';
+import { ModificarTerminalComponent } from './componentes/terminal/modificar-terminal/modificar-terminal.component';
+import {CargaTerminalesService} from "./servicios/terminal/carga-terminales.service";
+import {CargaAlarmaService} from "./servicios/alarmas/carga-alarma.service";
+import {CargaPacienteService} from "./servicios/paciente/carga-paciente.service";
+import { CrearPacienteComponent } from './componentes/paciente/crear-paciente/crear-paciente.component';
+import { ItemPacienteComponent } from './componentes/paciente/item-paciente/item-paciente.component';
+import { ListaPacienteComponent } from './componentes/paciente/lista-paciente/lista-paciente.component';
+import { ModificarPacienteComponent } from './componentes/paciente/modificar-paciente/modificar-paciente.component';
+import { ModificarRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/modificar-relacion-paciente-persona/modificar-relacion-paciente-persona.component';
+import { ItemRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/item-relacion-paciente-persona/item-relacion-paciente-persona.component';
+import { ListaRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/lista-relacion-paciente-persona/lista-relacion-paciente-persona.component';
+import { CrearRelacionPacientePersonaComponent } from './componentes/relacion-paciente-persona/crear-relacion-paciente-persona/crear-relacion-paciente-persona.component';
+import { CrearCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/crear-centro-sanitario-alarma/crear-centro-sanitario-alarma.component';
+import { ModificarCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/modificar-centro-sanitario-alarma/modificar-centro-sanitario-alarma.component';
+import { ListaCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/lista-centro-sanitario-alarma/lista-centro-sanitario-alarma.component';
+import { ItemCentroSanitarioAlarmaComponent } from './componentes/centro-sanitario-alarma/item-centro-sanitario-alarma/item-centro-sanitario-alarma.component';
+import { ItemRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/item-recurso-comunitario-alarma/item-recurso-comunitario-alarma.component';
+import { ListaRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/lista-recurso-comunitario-alarma/lista-recurso-comunitario-alarma.component';
+import { CrearRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/crear-recurso-comunitario-alarma/crear-recurso-comunitario-alarma.component';
+import { ModificarRecursoComunitarioAlarmaComponent } from './componentes/recurso-comunitario-alarma/modificar-recurso-comunitario-alarma/modificar-recurso-comunitario-alarma.component';
+import { ModificarPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/modificar-persona-contacto-alarma/modificar-persona-contacto-alarma.component';
+import { CrearPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/crear-persona-contacto-alarma/crear-persona-contacto-alarma.component';
+import { ListaPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/lista-persona-contacto-alarma/lista-persona-contacto-alarma.component';
+import { ItemPersonaContactoAlarmaComponent } from './componentes/persona-contacto-alarma/item-persona-contacto-alarma/item-persona-contacto-alarma.component';
+import { ItemDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/item-dispositivos-auxiliares-terminal/item-dispositivos-auxiliares-terminal.component';
+import { ListaDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal/lista-dispositivos-auxiliares-terminal.component';
+import { CrearDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/crear-dispositivos-auxiliares-terminal/crear-dispositivos-auxiliares-terminal.component';
+import { ModificarDispositivosAuxiliaresTerminalComponent } from './componentes/dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal/modificar-dispositivos-auxiliares-terminal.component';
+import { ModificarRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/modificar-relacion-usuario-centro/modificar-relacion-usuario-centro.component';
+import { CrearRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/crear-relacion-usuario-centro/crear-relacion-usuario-centro.component';
+import { ItemRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/item-relacion-usuario-centro/item-relacion-usuario-centro.component';
+import { ListaRelacionUsuarioCentroComponent } from './componentes/relacion-usuario-centro/lista-relacion-usuario-centro/lista-relacion-usuario-centro.component';
+import { ModificarTeleoperadorAlarmaComponent } from './componentes/alarma/modificar-teleoperador-alarma/modificar-teleoperador-alarma.component';
+import { RecursosComunitariosPersonalesComponent } from './componentes/recursos-comunitarios-personales/recursos-comunitarios-personales.component';
+import { GruposComponent } from './componentes/grupos/grupos.component';
+import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-terminal/crear-alarma-terminal.component';
+
 
 @NgModule({
   declarations: [
@@ -158,6 +208,11 @@ import {
     NuevoTipoAgendaComponent,
     ItemTipoAgendaComponent,
     DetallesTipoAgendaComponent,
+    ListaRelacionTerminalRecursosComunitariosComponent,
+    ItemRelacionTerminalRecursosComunitariosComponent,
+    CrearRelacionTerminalRecursosComunitariosComponent,
+    ModificarRelacionTerminalRecursosComunitariosComponent,
+    CrearRelacionTerminalRecursosComunitariosComponent,
     RecursosComunitariosPersonalesComponent,
     FiltroBusquedaPipe,
     ListaTiposViviendaComponent,
@@ -181,7 +236,46 @@ import {
     ListaHistoricoAgendaComponent,
     ModificarHistoricoAgendaComponent,
     ModificarAgendaComponent,
-    NuevoHistoricoAgendaComponent
+    NuevoHistoricoAgendaComponent,
+    ListaAlarmasComponent,
+    CrearAlarmaUcrComponent,
+    ModificarCerrarAlarmaComponent,
+    ItemAlarmaComponent,
+    ListaTerminalComponent,
+    ItemTerminalComponent,
+    CrearTerminalComponent,
+    ModificarTerminalComponent,
+    CrearPacienteComponent,
+    ItemPacienteComponent,
+    ListaPacienteComponent,
+    ModificarPacienteComponent,
+    ModificarRelacionPacientePersonaComponent,
+    ItemRelacionPacientePersonaComponent,
+    ListaRelacionPacientePersonaComponent,
+    CrearRelacionPacientePersonaComponent,
+    CrearCentroSanitarioAlarmaComponent,
+    ModificarCentroSanitarioAlarmaComponent,
+    ListaCentroSanitarioAlarmaComponent,
+    ItemCentroSanitarioAlarmaComponent,
+    ItemRecursoComunitarioAlarmaComponent,
+    ListaRecursoComunitarioAlarmaComponent,
+    CrearRecursoComunitarioAlarmaComponent,
+    ModificarRecursoComunitarioAlarmaComponent,
+    ModificarPersonaContactoAlarmaComponent,
+    CrearPersonaContactoAlarmaComponent,
+    ListaPersonaContactoAlarmaComponent,
+    ItemPersonaContactoAlarmaComponent,
+    ItemDispositivosAuxiliaresTerminalComponent,
+    ListaDispositivosAuxiliaresTerminalComponent,
+    CrearDispositivosAuxiliaresTerminalComponent,
+    ModificarDispositivosAuxiliaresTerminalComponent,
+    ModificarRelacionUsuarioCentroComponent,
+    CrearRelacionUsuarioCentroComponent,
+    ItemRelacionUsuarioCentroComponent,
+    ListaRelacionUsuarioCentroComponent,
+    ModificarTeleoperadorAlarmaComponent,
+    GruposComponent,
+    CrearAlarmaTerminalComponent,
   ],
   imports: [
     BrowserModule,
@@ -203,10 +297,14 @@ import {
     CargaCentroSanitarioService,
     CargaRecursoComunitarioService,
     CargaPersonaService,
+    CargaRelacionTerminalRecursosComunitariosService,
     CargaViviendaService,
     CargaHistoricoTipoSituacionService,
     CargaTipoAgendaService,
     CargaAgendaService,
+    CargaAlarmaService,
+    CargaPacienteService,
+    CargaTerminalesService,
     Title,
     {
       provide:HTTP_INTERCEPTORS,

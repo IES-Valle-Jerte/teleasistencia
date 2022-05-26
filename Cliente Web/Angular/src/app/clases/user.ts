@@ -3,8 +3,8 @@ export class User implements IUsers{
   id:          number;
   url:         string;
   last_login:  null;
+  password : string;
   username:    string;
-  password:    string;
   first_name:  string;
   last_name:   string;
   email:       string;

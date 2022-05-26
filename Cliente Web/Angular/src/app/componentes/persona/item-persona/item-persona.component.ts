@@ -36,7 +36,7 @@ export class ItemPersonaComponent implements OnInit {
 
     Toast.fire({
       icon: 'success',
-      title: environment.fraseEliminar,
+      title: environment.fraseCrear,
     })
   }
   //Toast para el alert indicando que hubo algún error en la operación
@@ -55,7 +55,7 @@ export class ItemPersonaComponent implements OnInit {
 
     Toast.fire({
       icon: 'error',
-      title: environment.fraseErrorEliminar
+      title: environment.fraseErrorCrear
     })
   }
 
