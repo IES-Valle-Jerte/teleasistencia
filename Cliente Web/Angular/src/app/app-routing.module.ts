@@ -78,7 +78,6 @@ import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-ti
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
-import {BorrarTipoAgendaService} from "./servicios/borrar-tipo-agenda.service";
 import {NuevoAgendaComponent} from "./componentes/agenda/nuevo-agenda/nuevo-agenda.component";
 import {ListaAgendaResolveService} from "./servicios/lista-agenda-resolve.service";
 import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-historico-tipo-situacion-resolve.service";
@@ -511,7 +510,7 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       agendas: ListaAgendaResolveService,
-      agenda: DetallesAgendaResolveService
+      agenda: ListaAgendaResolveService
     }
   },
   {
@@ -543,6 +542,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'historico_agenda/borrado/:id',
+    component: ListaHistoricoAgendaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      historicos_de_agenda: ListaHistoricoAgendaResolveService
+    }
+  },
+  {
     path: 'tipo_agenda',
     component: TipoAgendaComponent,
     canActivate: [LoginGuard],
@@ -570,7 +577,7 @@ const routes: Routes = [
     component: ItemTipoAgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      tipo_agenda: BorrarTipoAgendaService,
+      tipo_agenda: ListaTiposAgendaResolveService,
       tipos_agenda: ListaTiposAgendaResolveService
     }
   },
@@ -684,7 +691,7 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     resolve: {
       historico_situaciones: ListaHistoricoTipoSituacionResolveService,
-      historico_situacion: DetallesHistoricoTipoSituacionResolveService
+      historico_situacion: ListaHistoricoTipoSituacionResolveService
     }
   },
   {
@@ -1097,4 +1104,3 @@ const routes: Routes = [
 
 export class AppRoutingModule {
 }
-
