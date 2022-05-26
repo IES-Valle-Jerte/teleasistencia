@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ITipoVivienda} from "../../../interfaces/i-tipo-vivienda";
 import Swal from "sweetalert2";
 import {environment} from "../../../../environments/environment";
-import {Router} from "@angular/router";
+import {Route, Router} from "@angular/router";
 import {CargaViviendaService} from "../../../servicios/carga-vivienda.service";
 
 @Component({
@@ -13,11 +13,10 @@ import {CargaViviendaService} from "../../../servicios/carga-vivienda.service";
 export class ItemTipoViviendaComponent implements OnInit {
   @Input() public tipo_vivenda: ITipoVivienda;
 
-  constructor(private cargaTipoViviendas: CargaViviendaService, private router: Router) { }
+  constructor(private router:Router, private cargaTipoVivienda:CargaViviendaService) { }
 
   ngOnInit(): void {
   }
-
   //Toast para el Alert indicando que la operación fue exitosa
   alertExito() :void {
     const Toast = Swal.mixin({
@@ -57,7 +56,6 @@ export class ItemTipoViviendaComponent implements OnInit {
       title: environment.fraseErrorEliminar
     })
   }
-
   //Modal para confirmar la eliminación de un elemento
   modalConfirmacion(): void {
     Swal.fire({
@@ -68,12 +66,12 @@ export class ItemTipoViviendaComponent implements OnInit {
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.eliminarTipoVivienda('/viviendas')
+        this.eliminarTipoVivienda('situaciones')
       }
     })
   }
   eliminarTipoVivienda(ruta: string): void {
-    this.cargaTipoViviendas.borrarVivienda(this.tipo_vivenda).subscribe(
+    this.cargaTipoVivienda.borrarVivienda(this.tipo_vivenda).subscribe(
       e => {
         this.router.navigateByUrl(ruta+'/borrado/'+this.tipo_vivenda.id, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);
@@ -88,5 +86,8 @@ export class ItemTipoViviendaComponent implements OnInit {
       }
     )
   }
+
+
+
 
 }

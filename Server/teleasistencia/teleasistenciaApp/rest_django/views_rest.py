@@ -1,5 +1,9 @@
 from http.client import HTTPResponse
 from pathlib import Path
+import os
+
+from django.shortcuts import _get_queryset
+from requests import request
 
 from django.contrib.auth.models import User, Group, Permission
 
@@ -20,14 +24,119 @@ from .utils import getQueryAnd
 from ..models import *
 # Serializadores propios
 from ..rest_django.serializers import *
+from django.http import JsonResponse
+
+# Alarmas
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 # Comprobamos si el usuario es profesor. Se utiliza para la discernir entre solicitudes de Profesor y Teleoperador
 class IsTeacherMember(permissions.BasePermission):
 
     def has_permission(self, request, view):
+        #return True
         if request.user.groups.filter(name="profesor").exists():
             return True
+
+# Creamos la vista Recurso Comunitario Personal de tipo viewSet que retorna un JSON
+class Recurso_comunitario_personalViewSet(viewsets.ViewSet):
+    def list(self,request, *args, **kwargs):
+        data=[
+
+        ]
+        #Obtenemos los pacientes y los tipos de centro sanitario y de recurso comuniatario
+        pacientes = Paciente.objects.all().order_by('id_persona')
+        tipos_centro_santario = Tipo_Centro_Sanitario.objects.all().order_by('nombre')
+        tipos_recurso_comunitario=Tipo_Recurso_Comunitario.objects.all().order_by('nombre')
+        #Recorremos los pacientes y obetensmos loas datos que deseesmos
+        for paciente in pacientes:
+            dataPaciente={
+                "id_paciente": paciente.id,
+                "Nombre": paciente.id_persona.nombre,
+                "Apellidos": paciente.id_persona.apellidos,
+                "Sexo":paciente.id_persona.sexo,
+                "Localidad":paciente.id_persona.id_direccion.localidad,
+                "Direccion":paciente.id_persona.id_direccion.direccion,
+                "Provincia": paciente.id_persona.id_direccion.provincia,
+            }
+                #recorro los tipo de centro sanitario
+            for tipo_centro_santario in tipos_centro_santario:
+                #obtengo los centros segun el id de tipos centro sanitario
+                centro_sanitario = Centro_Sanitario.objects.filter(id_tipos_centro_sanitario=tipo_centro_santario)
+                #si el array es nulo
+                if not centro_sanitario:
+                    dataPaciente[tipo_centro_santario.nombre]=""
+                    #sino
+                else:
+                    # obtengo la relacion usuario centro segun el id de centro y el id de paciente
+                    relaciones_usuario_centro = Relacion_Usuario_Centro.objects.filter(id_paciente=paciente.id).filter(id_centro_sanitario__in=centro_sanitario).first()
+                    if relaciones_usuario_centro is not None:
+                        #si no es null muestro elnombre del centro sanitario
+
+                        dataPaciente[tipo_centro_santario.nombre] = relaciones_usuario_centro.id_centro_sanitario.nombre
+
+                    else:
+                            dataPaciente[tipo_centro_santario.nombre]=""
+            # recorro los tipo de recurso comunitario
+            for tipo_recurso_comunitario in tipos_recurso_comunitario:
+                # obtengo los recursos segun el id de tipos recursos comunitarios
+                recurso_comunitario=Recurso_Comunitario.objects.filter(id_tipos_recurso_comunitario=tipo_recurso_comunitario)
+                # si el array es nulo comillas vacías
+                if not recurso_comunitario:
+                    dataPaciente[tipo_recurso_comunitario.nombre] = ""
+                else:
+                    # obtengo la relacion terminal recurso segun el id de terminal y el id del recurso comunitario
+                    relacion_terminal_recurso_comunitario= Relacion_Terminal_Recurso_Comunitario.objects.filter(id_terminal=paciente.id_terminal).filter(id_recurso_comunitario__in=recurso_comunitario).first()
+                    if relacion_terminal_recurso_comunitario is not None:
+                        dataPaciente[tipo_recurso_comunitario.nombre] =relacion_terminal_recurso_comunitario.id_recurso_comunitario.nombre
+                    else:
+                        # sino tienen nada comillas vacías
+                        dataPaciente[tipo_recurso_comunitario.nombre] = ""
+            #Incluimos los datos en el Array principal y lo retornamos
+            data.append(dataPaciente)
+        return JsonResponse(data,safe=False)
+
+# Creamos la vista Profile que  modificara los datos y retornara la informacion del usuario activo en la aplicación
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    def list(self, request, *args, **kwargs):
+        #Obtenemos el usuario filtrando por el usuario de la request
+        queryset = User.objects.filter(username=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        user = User.objects.get(pk=kwargs["pk"])
+        if request.data.get("email") is not None:
+            user.email = request.data.get("email")
+        if request.data.get("password") is not None:
+            # Encriptamos la contraseña
+            user.set_password(request.data.get("password"))
+        user.save()
+        # si se modifican Files es decir la imagen
+        if request.FILES:
+            #obtengo la imagem eue me modifican
+            img = request.FILES["imagen"]
+            image = Imagen_User.objects.filter(user=user).first()
+            #Si ya tenia imagen borro la anterior y la guardo add al usuario
+            if image:
+                if (image.imagen) is not None:
+                    os.remove(image.imagen.path)
+                image.imagen = img
+                image.save()
+            #Si no tenia imagen se la añado al usuario
+            else:
+                image = Imagen_User(
+                    user=user,
+                    imagen=img
+                )
+            image.save()
+
+        # Devolvemos el user modificado con su imagen
+        user_serializer = self.get_serializer(user, many=False)
+        return Response(user_serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -54,11 +163,13 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         # Comprobamos que existe el groups
         id_groups = Group.objects.get(pk=request.data.get("groups"))
+
         if id_groups is None:
             return Response("Error: Groups")
 
         if User.objects.filter(username=request.data.get("username")).exists():
             return Response("El usuario ya existe")
+
 
         user = User(
             username=request.data.get("username"),
@@ -66,12 +177,20 @@ class UserViewSet(viewsets.ModelViewSet):
             last_name=request.data.get("last_name"),
             email=request.data.get("email"),
         )
+
+
         # Encriptamos la contraseña
         user.set_password(request.data.get("password"))
         user.save()
         user.groups.add(id_groups)
 
-
+        if request.FILES:
+            img = request.FILES["imagen"]
+            image = Imagen_User(
+                user=user,
+                imagen=img
+            )
+            image.save()
         # Devolvemos el user creado
         user_serializer = self.get_serializer(user, many=False)
         return Response(user_serializer.data)
@@ -93,12 +212,34 @@ class UserViewSet(viewsets.ModelViewSet):
         if request.data.get("password") is not None:
             # Encriptamos la contraseña
             user.set_password(request.data.get("password"))
-
         user.save()
+        if request.FILES:
+            img = request.FILES["imagen"]
+            image = Imagen_User.objects.filter(user=user).first()
+            if image:
+                if (image.imagen) is not None:
+                    os.remove(image.imagen.path)
+                image.imagen = img
+                image.save()
+            else:
+                image = Imagen_User(
+                    user=user,
+                    imagen=img
+                )
+            image.save()
 
         # Devolvemos el user creado
         user_serializer = self.get_serializer(user, many=False)
         return Response(user_serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        user = User.objects.get(pk=kwargs["pk"])
+        image = Imagen_User.objects.get(user=user)
+        if image.imagen is not None:
+            os.remove(image.imagen.path)
+        user.delete()
+        return Response('borrado')
+
 
 class PermissionViewSet(viewsets.ModelViewSet):
     """
@@ -583,6 +724,18 @@ class Relacion_Terminal_Recurso_Comunitario_ViewSet(viewsets.ModelViewSet):
     serializer_class = Relacion_Terminal_Recurso_Comunitario_Serializer
     # permission_classes = [permissions.IsAdminUser] # Si quisieramos para todos los registrados: IsAuthenticated]
 
+    # Obtenemos el listado de relacion_terminal_recurso_comunitario filtrado por los parametros GET
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # Hacemos una búsqueda por los valores introducidos por parámetros
+        query = getQueryAnd(request.GET)
+        if query:
+            queryset = Relacion_Terminal_Recurso_Comunitario.objects.filter(query)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def create(self, request, *args, **kwargs):
         # Comprobamos que exite el terminal
         id_terminal = Terminal.objects.get(pk=request.data.get("id_terminal"))
@@ -1058,11 +1211,26 @@ class Recursos_Comunitarios_En_Alarma_ViewSet(viewsets.ModelViewSet):
 
 class Alarma_ViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para las empresas
+    API endpoint para las alarmas
     """
+    #Constantes de notificación
+    ACTION_NEW_ALARM = 'new_alarm'
+    ACTION_ALARM_ASSIGNMENT = 'alarm_assignment'
+
     queryset = Alarma.objects.all()
     serializer_class = Alarma_Serializer
     # permission_classes = [permissions.IsAdminUser] # Si quisieramos para todos los registrados: IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # Hacemos una búsqueda por los valores introducidos por parámetros
+        query = getQueryAnd(request.GET)
+        if query:
+            queryset = Alarma.objects.filter(query)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     # Definimos el metodo para crear la alarma
     def create(self, request, *args, **kwargs):
@@ -1086,6 +1254,9 @@ class Alarma_ViewSet(viewsets.ModelViewSet):
 
             alarma.save()
 
+            # Enviamos notificación a los teleoperadores a través de la app alarmas
+            self.notify(alarma, self.ACTION_NEW_ALARM)
+
             # Devolvemos la alarma creada
             alarma_serializer = Alarma_Serializer(alarma)
             return Response(alarma_serializer.data)
@@ -1103,13 +1274,20 @@ class Alarma_ViewSet(viewsets.ModelViewSet):
 
             alarma.save()
 
-            # Devolvemos la alarma creada
+            # Enviamos notificación a los teleoperadores a través de la app alarmas
+            self.notify(alarma, self.ACTION_NEW_ALARM)
+
+            # Devolvemos la alarma creada y notificamos a los clientes
             alarma_serializer = Alarma_Serializer(alarma)
             return Response(alarma_serializer.data)
+
     # TODO id_teleoperador se añade por JSON
     def update(self, request, *args, **kwargs):
         # Obtenemos la alarma a modificar
         alarma = Alarma.objects.get(pk=kwargs["pk"])
+
+        # Guardamos teleoperador antiguo
+        old_id = alarma.id_teleoperador
 
         # Obtenemos el id_teleoperador que ateiende la alarma
         # Este id sera el del usuario
@@ -1127,11 +1305,22 @@ class Alarma_ViewSet(viewsets.ModelViewSet):
 
         alarma.save()
 
+        # Notificamos si es una asignación (el id_teleoperador era null y ahora no)
+        if old_id is None and id_teleoperador is not None:
+            self.notify(alarma, self.ACTION_ALARM_ASSIGNMENT)
+
         # Devolvemos la alarma modificada
         alarma_serializer = Alarma_Serializer(alarma)
         return Response(alarma_serializer.data)
 
 
+    def notify(self, alarma, accion):
+        alarma_serializer = Alarma_Serializer(alarma)
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'teleoperadores',
+            {"type": "notify.clients", "action": accion, "alarma": alarma_serializer.data},
+        )
 
 
 class Dispositivos_Auxiliares_en_Terminal_ViewSet(viewsets.ModelViewSet):
@@ -1497,3 +1686,48 @@ class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
         #Respuesta de error por defecto.
         return Response("La copia de la base de datos con id: "+parametro+" seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
 
+
+'''{
+               "id": "1",
+               "nombre": "pepe",
+               "apellido": "grillo",
+               "sexo": "Hombre",
+               "telefono": "664489164",
+               "localidad": "Plasencia",
+               "provincia": "Cáceres",
+               "centro_de_salud":" centro de slaud la data",
+               "Hospital":"Hospital de Plasencia",
+               "Guardia Civil":"Guardia civil de plasencia",
+               "Policia":"Policia Local Plasencia",
+               "Bomberos":"Bomberos de Plasencia",
+               "Servicios Sociales":"Servicios Sociales de Plasencia",
+               "Cruz Roja":"Cruz Roja de Plasencia",
+
+           },
+           {
+               "id": "1",
+               "nombre": "María",
+               "apellido": "Gil",
+               "sexo": "Mujer",
+               "telefono": "664428142",
+               "localidad": "Coria",
+               "provincia": "Cáceres",
+               "centro_de_salud": " centro de salud de Coria",
+               "Hospital": "Hospital de Coria",
+               "Guardia Civil": "Guardia civil de Coria",
+               "Policia": "Policia Local Coria",
+               "Bomberos": "Bomberos de Coria",
+               "Servicios Sociales": "Servicios Sociales de Coria",
+               "Cruz Roja": "Cruz Roja de Coria",
+
+               },
+               '''
+class DesarrolladorTecnologiaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint para las empresas
+    """
+    authentication_classes = []
+    permission_classes = (permissions.AllowAny, )
+    queryset = Convocatoria_Proyecto.objects.all()
+    serializer_class = Convocatoria_Proyecto_Serializer
+    http_method_names=['get']

@@ -14,7 +14,7 @@ export const environment = {
   //Frase del Toast al Modificar Con Exito
   fraseModificar: 'Se ha modificado correctamente',
   //Frase del Toast al Crear Con Exito
-  fraseCrear: 'Se ha eliminado correctamente',
+  fraseCrear: 'Se ha creado Correctamente',
   //Frase de error al Eliminar del Toast
   fraseErrorEliminar: 'Se ha producido un error inesperado',
   //Frase de error al Modificar del Toast
@@ -32,6 +32,7 @@ export const environment = {
   //Frase de Confirmación para Eliminar
   fraseEliminarModal: '¿Estás seguro que deseas eliminarlo?',
   urlBase: 'http://localhost:8000/api-rest/',
+  urlToken: 'http://localhost:8000/api/token/',
 };
 
 /*
