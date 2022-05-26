@@ -1627,3 +1627,12 @@ class Relacion_Usuario_Centro_ViewSet(viewsets.ModelViewSet):
 
                },
                '''
+class DesarrolladorTecnologiaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint para las empresas
+    """
+    authentication_classes = []
+    permission_classes = (permissions.AllowAny, )
+    queryset = Convocatoria_Proyecto.objects.all()
+    serializer_class = Convocatoria_Proyecto_Serializer
+    http_method_names=['get']

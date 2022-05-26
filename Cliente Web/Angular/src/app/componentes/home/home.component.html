@@ -125,26 +125,45 @@
         <p class="lead">El software ha sido desarrollado bajo la licencia <abbr
           title="GNU General Public License, versión 3">GPL3</abbr> por el departamento de Informática del
           IES <em>“Valle del Jerte”</em> de Plasencia, con la colaboración principal de Fréderic Sánchez, Angel Enrique
-          Pineda y
-          Jesús Redondo.</p>
-        <p class="lead">Los alumnos que han contribuido en el desarrollo de este proyecto y la labor que han realizado
-          son:</p>
-        <ul class="lead">
-          <li>Lucía González Martín: Propuesta alumno <abbr title="Proyecto de Fin de Ciclo">PFC</abbr> (Cliente <em>Angular</em>).
-          </li>
-          <li>Javier Fernández Martín: Propuesta alumno <abbr title="Proyecto de Fin de Ciclo">PFC</abbr> (<em>API
-            Rest</em> + <em>Postman</em>).
-          </li>
-        </ul>
-        <p class="lead">Especial mención al departamento de Atención Sociosanitaria del IES <em>“San
-          Martín”</em> de Talayuela. Partícipes e impulsores de la plataforma de prácticas de teleasistencia.</p>
+          Pineda y Jesús Redondo.</p>
+        <p class="lead">Especial mención al departamento de Atención Sociosanitaria del IES “San Martín” de Talayuela. Partícipes e impulsores de la plataforma de prácticas de teleasistencia
+          </p>
+        <p class="lead">Los alumnos que han contribuido en el desarrollo de este proyecto son:</p>
       </div>
       <div class="col-md-5">
-        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-             src="../../../assets/home-colaboradores.png" title="Colaboradores" alt="Colaboradores" width="500"
-             height="500"/>
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto imgColaboradores"
+             src="../../../assets/home-colaboradores.png" title="Colaboradores" alt="Colaboradores"/>
       </div>
-    </div>
+      <div class="tecnologias" *ngFor="let convocatoria of desarrolladores">
+        <div>
+          <p class="tituloConvocatoria"><b>Convocatoria: {{convocatoria.convocatoria}}</b></p>
+          <ng-container *ngFor="let desarrollador of convocatoria.desarrolladores">
+            <div class="divDesarrolladores container">
+              <div class="divTitulosDesarrollador">
+                <span>{{desarrollador.nombre}}</span><span>Tecnologías</span><span></span>
+              </div>
+              <div class="divImagenesDesarrollador">
+                <div ><img class="imagenDesarrollador" [src]="desarrollador.desarrollador_tecnologias[0].id_desarrollador.imagen" [title]="desarrollador.desarrollador_tecnologias[0].id_desarrollador.nombre" />
+                </div>
+                <div class="divTecnologias" >
+                  <ng-container *ngFor="let tecnologia of desarrollador.desarrollador_tecnologias">
+                    <img class="imagenTecnologia" [src]="tecnologia.id_tecnologia.imagen" [title]="tecnologia.id_tecnologia.nombre"/>
+                  </ng-container>
+                </div>
+                <div>
+                  <img class="botonMas" src="../../../assets/verDescripcion.png" (click)="mostrarDescripcion($event)" title="Ver descripción"/>
+                </div>
+              </div>
+              <div class="parrafoDescripcionTecnologia d-none" >
+                <h2 class="tituloDescripcion">Descripción del Proyecto.</h2>
+                <p>{{desarrollador.desarrollador_tecnologias[0].id_desarrollador.descripcion}}</p>
+              </div>
+              <hr>
+            </div>
+          </ng-container>
+        </div>
+        </div>
+      </div>
     <hr class="featurette-divider">
   </div>
 </main>
