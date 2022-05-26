@@ -444,7 +444,8 @@ const routes: Routes = [
     component: DetallesTipoAgendaComponent,
     canActivate: [LoginGuard],
     resolve: {
-      tipo_agenda: DetallesTipoAgendaResolveService
+      tipo_agenda: DetallesTipoAgendaResolveService,
+      tipos_agenda: ListaTiposAgendaResolveService
     }
   },
   {
