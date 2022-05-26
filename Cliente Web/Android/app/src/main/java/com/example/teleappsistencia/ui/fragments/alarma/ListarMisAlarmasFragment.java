@@ -92,7 +92,7 @@ public class ListarMisAlarmasFragment extends Fragment {
      */
     private void cargarLista(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        //FIXME: Cuando podemas tener el id de usuario del Teleoperador, podremos parametrizar esta petición
+        //TODO: Cuando podemas tener el id de usuario del Teleoperador, podremos parametrizar esta petición
         Call<List<Object>> call = apiService.getAlarmasbyIdTeleoperador(11, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override

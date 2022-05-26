@@ -236,7 +236,7 @@ public class AlarmAlertFragment extends DialogFragment implements View.OnClickLi
      */
     private void modificarAlarma(Alarma alarmaRecibida){
         /* Cuando la aplicación funcione me imagino que ya habrá un usuario con su id al que se pueda acceder*/
-        /* FIXME: Cuando tengamos la parte del Usuario, los roles etc., hay que arreglar esto */
+        /* TODO: Cuando tengamos la parte del Usuario, los roles etc., hay que arreglar esto */
 
         /* Siempre que hagamos un PUT tenemos que darle a la petición los datatos de la forma
            que requiere. En este caso, idTeleoperador SIEMPRE tiene que ser un intger. */

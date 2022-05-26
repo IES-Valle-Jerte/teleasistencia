@@ -138,6 +138,11 @@ public class Utilidad {
         return objeto;
     }
 
+    /**
+     * Este método devuelve un String con Sí cuando le pasamos un true, y No si es false
+     * @param condicion
+     * @return
+     */
     public static String trueSifalseNo(boolean condicion){
         if(condicion){
             return Constantes.SI;

@@ -23,7 +23,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
 public class ConsultarTipoAlarmaFragment extends Fragment {
 
 
-    private static final String ARG_TIPOALARMA = "TipoAlarma";
     private TipoAlarma tipoAlarma;
     private TextView textViewConsultarIdTipoAlarma;
     private TextView textViewConsultarNombreTipoAlarma;
@@ -47,7 +46,7 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
     public static ConsultarTipoAlarmaFragment newInstance(TipoAlarma tipoAlarma) {
         ConsultarTipoAlarmaFragment fragment = new ConsultarTipoAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_TIPOALARMA, tipoAlarma);
+        args.putSerializable(Constantes.ARG_TIPOALARMA, tipoAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +55,7 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(ARG_TIPOALARMA);
+            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(Constantes.ARG_TIPOALARMA);
         }
     }
 

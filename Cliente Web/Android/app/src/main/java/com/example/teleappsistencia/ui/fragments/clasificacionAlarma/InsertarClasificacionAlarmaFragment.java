@@ -132,6 +132,7 @@ public class InsertarClasificacionAlarmaFragment extends Fragment implements Vie
             public void onResponse(Call<ClasificacionAlarma> call, Response<ClasificacionAlarma> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO,  Toast.LENGTH_LONG).show();
+                    limpiarCampos();
                     volver();
                 }
                 else{
@@ -155,6 +156,14 @@ public class InsertarClasificacionAlarmaFragment extends Fragment implements Vie
                 .replace(R.id.main_fragment, listarClasificacionAlarmaFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /**
+     * Este método limpia los campos.
+     */
+    private void limpiarCampos(){
+        this.editTextCodigoClasificacionAlarmaCrear.setText(Constantes.VACIO);
+        this.editTextNombreClasificacionAlarmaCrear.setText(Constantes.VACIO);
     }
 
     @Override

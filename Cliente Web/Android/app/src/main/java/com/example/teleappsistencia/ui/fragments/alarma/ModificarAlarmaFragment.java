@@ -40,7 +40,7 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
     private EditText editTextResumenAlarmaModificar;
     private EditText editTextNumberIdTeleoperadorModificar;
     private Button buttonGuardarAlarmaModificada;
-    private Button buttonVolver;
+    private Button buttonVolverAlarma;
 
 
     public ModificarAlarmaFragment() {
@@ -102,7 +102,7 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
         this.editTextResumenAlarmaModificar = (EditText) view.findViewById(R.id.editTextResumenAlarmaModificar);
         this.editTextNumberIdTeleoperadorModificar = (EditText) view.findViewById(R.id.editTextNumberIdTeleoperadorModificar);
         this.buttonGuardarAlarmaModificada = (Button) view.findViewById(R.id.buttonGuardarAlarmaModificada);
-        this.buttonVolver = (Button) view.findViewById(R.id.buttonVolver);
+        this.buttonVolverAlarma = (Button) view.findViewById(R.id.buttonVolverAlarma);
     }
 
     /**
@@ -110,7 +110,7 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
      */
     private void asignarListener(){
         this.buttonGuardarAlarmaModificada.setOnClickListener(this);
-        this.buttonVolver.setOnClickListener(this);
+        this.buttonVolverAlarma.setOnClickListener(this);
     }
 
     /**

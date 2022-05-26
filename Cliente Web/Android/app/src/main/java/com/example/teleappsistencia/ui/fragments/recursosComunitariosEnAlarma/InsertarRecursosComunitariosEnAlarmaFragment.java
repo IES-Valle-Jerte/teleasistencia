@@ -145,6 +145,7 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
             public void onResponse(Call<RecursoComunitarioEnAlarma> call, Response<RecursoComunitarioEnAlarma> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 }
                 else{
@@ -168,6 +169,18 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
                 .addToBackStack(null)
                 .commit();
     }
+
+    /**
+     * Este método limpia los campos.
+     */
+    private void limpiarCampos(){
+        this.editTextNumberIdAlarmaRCEACrear.setText(Constantes.VACIO);
+        this.editTextNumberIdRecursoComunitarioRCEACrear.setText(Constantes.VACIO);
+        this.editTextFechaRegistroRCEACrear.setText(Constantes.VACIO);
+        this.editTextPersonaRCEACrear.setText(Constantes.VACIO);
+        this.editTextAcuerdoRCEACrear.setText(Constantes.VACIO);
+    }
+
 
     @Override
     public void onClick(View view) {

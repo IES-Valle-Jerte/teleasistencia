@@ -145,6 +145,7 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
             public void onResponse(Call<CentroSanitarioEnAlarma> call, Response<CentroSanitarioEnAlarma> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    limpiarCampos();
                     volver();
                 }
                 else{
@@ -169,6 +170,17 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
                 .commit();
     }
 
+
+    /**
+     * Este método limpia los campos.
+     */
+    private void limpiarCampos(){
+        this.editTextNumberIdAlarmaCSEACrear.setText(Constantes.VACIO);
+        this.editTextNumberIdCentroSanitarioCSEACrear.setText(Constantes.VACIO);
+        this.editTextFechaRegistroCSEACrear.setText(Constantes.VACIO);
+        this.editTextPersonaCSEACrear.setText(Constantes.VACIO);
+        this.editTextAcuerdoCSEACrear.setText(Constantes.VACIO);
+    }
 
     @Override
     public void onClick(View view) {

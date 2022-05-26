@@ -218,7 +218,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/buttonVolver"
+            android:id="@+id/buttonVolverAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"

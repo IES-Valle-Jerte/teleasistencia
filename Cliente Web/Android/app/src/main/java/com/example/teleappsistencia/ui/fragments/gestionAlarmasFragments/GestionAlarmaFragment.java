@@ -402,7 +402,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         if(!observaciones.isEmpty() && observaciones.length() >= 10) {// Borre la llave para saber por donde voy
             fecha  = LocalDate.now();
             hora = LocalTime.now();
-            this.alarma.setObservaciones(observaciones+ Constantes.LLAMADA_REGISTRADA_A + fecha + Constantes.A_LAS + hora);
+            this.alarma.setObservaciones(observaciones+ Constantes.LLAMADA_REGISTRADA_A + fecha + Constantes.A_LAS + hora + Constantes.PARENTESIS_CIERRE);
             this.btnRegistrarLlamadaPaciente.setText(Constantes.EDITAR);
             Toast.makeText(getContext(), Constantes.LLAMADA_REGISTRADA_EXITO, Toast.LENGTH_LONG).show();
         }
@@ -421,7 +421,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         PersonaContactoEnAlarma personaContactoEnAlarma;
         String acuerdoAlcanzado = editTextAcuerdoContacto.getText().toString();
 
-        if(!acuerdoAlcanzado.isEmpty() && acuerdoAlcanzado.length() >= 10){ //FIXME: estas comprobaciones pueden mejorarse
+        if(!acuerdoAlcanzado.isEmpty() && acuerdoAlcanzado.length() >= 10){ //TODO: estas comprobaciones pueden mejorarse
             contacto = (Contacto) this.spinnerContactos.getSelectedItem();
             personaEnContacto = (Persona) Utilidad.getObjeto(contacto.getPersonaEnContacto(), Constantes.PERSONA);
 
@@ -479,7 +479,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         String personaLlamada = this.editTextPersonaLlamadaCentroSanitario.getText().toString();
         String acuerdoAlcanzado = this.editTextAcuerdoCentro.getText().toString();
 
-        if(!personaLlamada.isEmpty() && personaLlamada.length() >= 3){ //FIXME: estas comprobaciones pueden mejorarse
+        if(!personaLlamada.isEmpty() && personaLlamada.length() >= 3){ //TODO: estas comprobaciones pueden mejorarse
             if(!acuerdoAlcanzado.isEmpty() && acuerdoAlcanzado.length() >= 10) {
                 // Recuperamos el Centro Sanitario del Spinner
                 relacionUsuarioCentro = (RelacionUsuarioCentro) this.spinnerCentrosSanitarios.getSelectedItem();
@@ -546,7 +546,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         String personaLlamada = this.editTextPersonaLlamadaRecursoComunitario.getText().toString();
         String acuerdoAlcanzado = this.editTextAcuerdoRecursoComunitario.getText().toString();
 
-        if(!personaLlamada.isEmpty() && personaLlamada.length() >= 3){ //FIXME: estas comprobaciones pueden mejorarse
+        if(!personaLlamada.isEmpty() && personaLlamada.length() >= 3){ //TODO: estas comprobaciones pueden mejorarse
             if(!acuerdoAlcanzado.isEmpty() && acuerdoAlcanzado.length() >= 10) {
                 // Recuperamos el Recurso Comunitario del Spinner
                 relacionTerminalRecursoComunitario = (RelacionTerminalRecursoComunitario) this.spinnerRecursosComunitarios.getSelectedItem();
@@ -724,11 +724,11 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void finalizarGestion(){
         String resumen = this.editTextResumen.getText().toString();
-        if(!this.alarma.getObservaciones().isEmpty()){ //FIXME: estas comprobaciones pueden merjorarse
+        if(!this.alarma.getObservaciones().isEmpty()){ //TODO: estas comprobaciones pueden merjorarse
             if(resumen.length() > 10){
                 /* Siempre que hagamos un PUT tenemos que darle a la petición los datatos de la forma
                  que requiere. En este caso, idTeleoperador SIEMPRE tiene que ser un intger. */
-                this.alarma.setId_teleoperador(Teleoperador.id_teleoperador); //FIXME: aquí habría que poner el id del usuario que esté logueado.
+                this.alarma.setId_teleoperador(Teleoperador.id_teleoperador); //TODO: aquí habría que poner el id del usuario que esté logueado.
                 this.alarma.setResumen(resumen);
                 this.alarma.setEstado_alarma(Constantes.CERRADA);
                 guardarAlarma();
@@ -746,7 +746,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
     /**
      *  Finalmente al finalizar la gestión, se hace la petición PUT a la API REST para modificar los
      *  datos de la alarma, quedándola cerrada.
-     *  FIXME: habría que investigar si al usuario le gustaría poder elegir finalizar la gestión y guardar datos, pero dejar la alarma como "Abierta"
+     *  TODO: habría que investigar si al usuario le gustaría poder elegir finalizar la gestión y guardar datos, pero dejar la alarma como "Abierta"
      */
     private void guardarAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();

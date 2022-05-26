@@ -88,7 +88,7 @@ public class AlarmaWebSocketListener extends WebSocketListener {
 
     /**
      * Este método se ejecuta cuando falla la conexión. Muestra un TOAST con la información.
-     * FIXME: posiblemente sea mejor opción crear un alert dialog y/o alguna otra alternativa como poner un icono en algún sitio
+     * TODO: posiblemente sea mejor opción crear un alert dialog y/o alguna otra alternativa como poner un icono en algún sitio
      * @param webSocket
      * @param t
      * @param response

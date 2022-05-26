@@ -146,12 +146,12 @@ public class InsertarTipoAlarmaFragment extends Fragment implements View.OnClick
      * @return
      */
     private boolean comprobaciones(){
-        if(this.editTextNombreTipoAlarmaCrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_NOMBRE, Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if(this.editTextCodigoTipoAlarmaCrear.getText().toString().isEmpty()) {
             Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_CODIGO_TIPO_ALARMA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNombreTipoAlarmaCrear.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_NOMBRE, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -180,6 +180,7 @@ public class InsertarTipoAlarmaFragment extends Fragment implements View.OnClick
             public void onResponse(Call<TipoAlarma> call, Response<TipoAlarma> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    limpiarCampos();
                     volver();
                 }
                 else{
@@ -202,6 +203,16 @@ public class InsertarTipoAlarmaFragment extends Fragment implements View.OnClick
                 .replace(R.id.main_fragment, listarTipoAlarmaFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /**
+     * Este método limpia los campos.
+     */
+    private void limpiarCampos(){
+        this.editTextCodigoTipoAlarmaCrear.setText(Constantes.VACIO);
+        this.editTextNombreTipoAlarmaCrear.setText(Constantes.VACIO);
+        this.radioButtonSi.setChecked(true);
+        this.spinnerClasificacionTipoAlarma.setSelection(0);
     }
 
     @Override

@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         /* Iniciamos el servicio de notificación de Alarmas
-        * FIXME: evaluar el rol del Usuario, de momento queda mockeado. */
+        * TODO: evaluar el rol del Usuario, de momento queda mockeado. */
         String rol = "Teleoperador";
         if(rol.equals("Teleoperador")) {
             Utilidad.iniciarEscuchaAlarmas(this);
         }
 
         //Iniciamos el token. Esto se cambiará (o se quitará) cuando Samuel introduzca su parte
-        // FIXME: cargar el token de la forma que Samuel tenga implementada
+        // TODO: cargar el token de la forma que Samuel tenga implementada
         Token.cargarToken("admin", "admin");
 
         // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
         headerList.add(menuModel);
 
-        // FIXME: Evaluar el rol de usuario y si es Profesor, cargar este grupo. Mockeado.
+        // TODO: Evaluar el rol de usuario y si es Profesor, cargar este grupo. Mockeado.
         String rol = "Profesor";
         if(rol.equals("Profesor")) {
             childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));

@@ -142,6 +142,7 @@ public class InsertarPersonaContactoEnAlarmaFragment extends Fragment implements
             public void onResponse(Call<PersonaContactoEnAlarma> call, Response<PersonaContactoEnAlarma> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 }
                 else{
@@ -164,6 +165,16 @@ public class InsertarPersonaContactoEnAlarmaFragment extends Fragment implements
                 .replace(R.id.main_fragment, lPCEA)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /**
+     * Este método limpia los campos.
+     */
+    private void limpiarCampos(){
+        this.editTextNumberIdAlarmaPCEACrear.setText(Constantes.VACIO);
+        this.editTextNumberIdPersonaPCEACrear.setText(Constantes.VACIO);
+        this.editTextFechaRegistroPCEACrear.setText(Constantes.VACIO);
+        this.editTextAcuerdoPCEACrear.setText(Constantes.VACIO);
     }
 
     @Override
