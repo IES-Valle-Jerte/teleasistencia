@@ -15,7 +15,7 @@
           <select class="form-select" id="alarmas" name="alarmas"
                   [(ngModel)]="personaContactoAlarma.id_alarma" required>
             <option class="relacion_alarma_option" *ngFor="let alarma of alarmas; let i = index"
-                    [value]="alarma.id">{{ alarma.id }}</option>
+                    [value]="alarma.id">{{ alarma.id }} - {{alarma.estado_alarma}}</option>
           </select>
         </div>
 

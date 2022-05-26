@@ -79,8 +79,10 @@ export class ItemAlarmaComponent implements OnInit {
 
   modalConfirmacion(): void {
     Swal.fire({
-      title: '¿Está seguro que desea eliminar esta relación?',
+      title: environment.fraseEliminarModal,
       showCancelButton: true,
+      confirmButtonColor: environment.colorAceptarModal,
+      cancelButtonColor: environment.colorCancelarModal,
       confirmButtonText: 'Aceptar',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */

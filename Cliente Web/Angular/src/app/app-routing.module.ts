@@ -542,6 +542,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'relacion_terminal_recurso_comunitario/borrado/:id',
+    component: ListaRelacionTerminalRecursosComunitariosComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relacion_terminal_recursos_comunitarios: ListaRelacionTerminalRecursosComunitariosResolveService
+    }
+  },
+  {
     path: 'alarmas',
     component: ListaAlarmasComponent,
     canActivate: [LoginGuard],
@@ -551,6 +559,14 @@ const routes: Routes = [
   },
   {
     path: 'alarmas/modificar/:id',
+    component: ModificarCerrarAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarma: ModificarAlarmaResolveService,
+    }
+  },
+  {
+    path: 'alarmas/aceptada/modificar/:id',
     component: ModificarCerrarAlarmaComponent,
     canActivate: [LoginGuard],
     resolve: {
@@ -589,6 +605,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'alarmas/borrado/:id',
+    component: ListaAlarmasComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      alarmas: ListaAlarmasResolveService
+    }
+  },
+  {
     path: 'terminales',
     component: ListaTerminalComponent,
     canActivate: [LoginGuard],
@@ -614,6 +638,14 @@ const routes: Routes = [
       terminal: ListaTerminalesResolveService,
       titulares: ListaPacientesResolveService,
       tipos_vivienda: ListaViviendasResolveService
+    }
+  },
+  {
+    path: 'terminales/borrado/:id',
+    component: ListaTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      terminales: ListaTerminalesResolveService
     }
   },
   {
@@ -647,7 +679,23 @@ const routes: Routes = [
     }
   },
   {
+    path: 'pacientes/borrado/:id',
+    component: ListaPacienteComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      pacientes: ListaPacientesResolveService
+    }
+  },
+  {
     path: 'relacion_paciente_persona',
+    component: ListaRelacionPacientePersonaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relaciones_pacientes_personas: ListaRelacionPacientePersonaResolveService
+    }
+  },
+  {
+    path: 'relacion_paciente_persona/borrado/:id',
     component: ListaRelacionPacientePersonaComponent,
     canActivate: [LoginGuard],
     resolve: {
@@ -702,7 +750,14 @@ const routes: Routes = [
       centros_sanitarios: ListaCentrosSanitariosResolveService
     }
   },
-
+  {
+    path: 'centro_sanitario_alarma/borrado/:id',
+    component: ListaCentroSanitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      centros_sanitarios_alarma: ListaCentrosSanitariosAlarmaResolveService
+    }
+  },
   {
     path: 'recursos_comunitarios_alarma',
     component: ListaRecursoComunitarioAlarmaComponent,
@@ -730,6 +785,14 @@ const routes: Routes = [
       alarmas: ListaAlarmasResolveService,
       recursos_comunitarios: ListaRecursosComunitariosResolveService
 
+    }
+  },
+  {
+    path: 'recursos_comunitarios_alarma/borrado/:id',
+    component: ListaRecursoComunitarioAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      recursos_comunitarios_alarma: ListaRecursosComunitariosAlarmaResolveService
     }
   },
   {
@@ -761,6 +824,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'personas_contacto_alarma/borrado/:id',
+    component: ListaPersonaContactoAlarmaComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      personas_contacto_alarma: ListaPersonaContactoAlarmaResolveService
+    }
+  },
+  {
     path: 'dispositivos_auxiliares_terminal',
     component: ListaDispositivosAuxiliaresTerminalComponent,
     canActivate: [LoginGuard],
@@ -786,6 +857,14 @@ const routes: Routes = [
       dispositivo_auxiliar_terminal: ListaDispositivosAuxiliaresTerminalResolveService,
       terminales: ListaTerminalesResolveService,
       tipo_alarmas: ListaTiposAlarmasResolveService
+    }
+  },
+  {
+    path: 'dispositivos_auxiliares_terminal/borrado/:id',
+    component: ListaDispositivosAuxiliaresTerminalComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      dispositivos_auxiliares_terminal: ListaDispositivosAuxiliaresTerminalResolveService
     }
   },
   {
@@ -815,6 +894,14 @@ const routes: Routes = [
       relacion_usuario_centro: ListaRelacionUsuarioCentroResolveService,
       pacientes: ListaPacientesResolveService,
       centros_sanitarios: ListaCentrosSanitariosResolveService
+    }
+  },
+  {
+    path: 'relaciones_usuario_centro/borrado/:id',
+    component: ListaRelacionUsuarioCentroComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      relaciones_usuario_centro: ListaRelacionUsuarioCentroResolveService
     }
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},

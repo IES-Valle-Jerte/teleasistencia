@@ -10,23 +10,42 @@
     <h1 class="component-title" >Modificar Alarma {{idAlarma}}</h1>
     <form #modificarAlarmaForm="ngForm">
 
+      <div class="form-group mb-3">
+      <label for="nombre" class="form-label">Titular: </label>
+      <input type="text" name="nombre" id="nombre" class="form-control" disabled
+             required maxlength="500" value="{{obtenerNombre()}}" >
+  </div>
+      <div *ngIf="alarma.id_terminal" class="form-group mb-3">
+      <label for="nombre1" class="form-label">Terminal: </label>
+      <input type="text" name="nombre" id="nombre1" class="form-control" disabled
+             required maxlength="500" value="{{obtenerTerminal()}}" >
+  </div>
 
-      <div class="form-group mb-3 left">
-        <p> {{obtenerNombre()}}</p>
-      </div>
-      <div class="form-group mb-3 left">
-        <p> {{obtenerTelefonoFijo()}}</p>
-        <p> {{obtenerTelefonoMovil()}}</p>
-      </div>
+      <div class="form-group mb-3">
+        <label for="telefonoFijo" class="form-label">Numero de telefono fijo: </label>
+        <input type="text" name="telefonoFijo" id="telefonoFijo" class="form-control" disabled
+               required maxlength="500" value="{{obtenerTelefonoFijo()}}" >
+        </div>
+      <div class="form-group mb-3">
+        <label for="telefonoMovil" class="form-label">Numero de telefono movil: </label>
+        <input type="text" name="telefonoMovil" id="telefonoMovil" class="form-control" disabled
+               required maxlength="500" value="{{obtenerTelefonoMovil()}}" >
+        </div>
+
+
       <div class="form-group mb-3 left ">
-        <p>Tipo de alarma: {{alarma.id_tipo_alarma.nombre}}</p>
+        <label for="tipoAlarma" class="form-label">Tipo de alarma: </label>
+        <input type="text" name="tipoAlarma" id="tipoAlarma" class="form-control" disabled
+               required maxlength="500" value="{{alarma.id_tipo_alarma.nombre}}" >
       </div>
 
       <div class="form-group mb-3 left ">
-        <p>Fecha de creaccion: {{alarma.fecha_registro | date :'dd/MM/YYYY'}}</p>
+        <label for="fechaCreacion" class="form-label">Fecha de creación: </label>
+        <input type="text" name="fechaCreacion" id="fechaCreacion" class="form-control" disabled
+               required maxlength="500" value="{{alarma.fecha_registro | date :'dd/MM/YYYY'}}" >
       </div>
       <div class="form-group mb-3">
-        <label for="estado_alarma" class="form-label">Estado Alarma</label>
+        <label for="estado_alarma" class="form-label">Estado Alarma: </label>
         <input type="text" name="estado_alarma" id="estado_alarma" class="form-control" disabled
                required maxlength="500" [(ngModel)]="alarma.estado_alarma" #estado_alarma="ngModel">
         <div *ngIf="estado_alarma.invalid && (estado_alarma.dirty || estado_alarma.touched)"

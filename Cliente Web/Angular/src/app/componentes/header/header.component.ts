@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit, DoCheck {
             this.alarmaAModificar = msg['alarma']
             //iniciamos el modal mostrando la id y comprobando la procedencia de la alarma
             Swal.fire({
-              html: '<h2>¡Atención! Nueva alarma desde ' + this.comprobarProcedencia(this.alarmaAModificar) + '<h2>' +
+              html: '<h3>¡Atención! Nueva alarma desde ' + this.comprobarProcedencia(this.alarmaAModificar) + '<h3>' +
                 '<p class="left">Identificador de alarma: ' + this.alarmaAModificar.id + '</p>' +
                 '<p class="left">' + this.comprobarProcedenciaTitular(this.alarmaAModificar) + '</p>' +
                 '<p class="left"> Tipo de alarma: ' + this.alarmaAModificar.id_tipo_alarma.nombre + '</p>' +
@@ -134,7 +134,7 @@ export class HeaderComponent implements OnInit, DoCheck {
           this.alarmaAModificar.id_teleoperador = this.teleoperador
           this.cargarAlarma.modificarAlarma(this.alarmaAModificar).subscribe(
             e => {
-              this.router.navigate(['alarmas/modificar', alarma.id])
+              this.router.navigate(['alarmas/aceptada/modificar', alarma.id])
             },
             error => {
               this.alertError()

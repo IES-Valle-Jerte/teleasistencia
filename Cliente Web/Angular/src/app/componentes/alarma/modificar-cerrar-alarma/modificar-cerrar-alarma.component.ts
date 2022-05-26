@@ -92,21 +92,23 @@ export class ModificarCerrarAlarmaComponent implements OnInit {
   }
   obtenerNombre() {
     if (this.paciente_ucr) {
-      return 'Titular UCR: ' + this.paciente_ucr.id_persona.nombre + ' ' + this.paciente_ucr.id_persona.apellidos
+      return 'Nombre(UCR): ' + this.paciente_ucr.id_persona.nombre + ' ' + this.paciente_ucr.id_persona.apellidos
     }
-    return 'Titular: ' + this.alarma.id_terminal.id_titular.id_persona.nombre + ' ' + this.alarma.id_terminal.id_titular.id_persona.apellidos +
-      ' --- Terminal: ' + this.alarma.id_terminal.numero_terminal
+    return 'Nombre(Terminal): ' + this.alarma.id_terminal.id_titular.id_persona.nombre + ' ' + this.alarma.id_terminal.id_titular.id_persona.apellidos
   }
   obtenerTelefonoFijo() {
     if (this.paciente_ucr) {
-      return 'Numero de telefono fijo: ' + this.paciente_ucr.id_persona.telefono_fijo
+      return this.paciente_ucr.id_persona.telefono_fijo
     }
-    return 'Numero de telefono Fijo: ' + this.alarma.id_terminal.id_titular.id_persona.telefono_fijo
+    return this.alarma.id_terminal.id_titular.id_persona.telefono_fijo
   }
   obtenerTelefonoMovil() {
     if (this.paciente_ucr) {
-      return 'Numero de telefono móvil: ' + this.paciente_ucr.id_persona.telefono_movil
+      return  this.paciente_ucr.id_persona.telefono_movil
     }
-    return 'Numero de telefono Movil: ' + this.alarma.id_terminal.id_titular.id_persona.telefono_movil
+    return this.alarma.id_terminal.id_titular.id_persona.telefono_movil
+  }
+  obtenerTerminal() {
+    return this.alarma.id_terminal.numero_terminal
   }
 }
