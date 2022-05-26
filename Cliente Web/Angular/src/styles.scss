@@ -488,11 +488,22 @@ footer {
   padding-top: 10px;
 }
 
+.left {
+  text-align: left;
+}
+
+
 .pointer{
   cursor: pointer;
 }
 .imagenUsuario{
   object-fit: cover;
+}
+
+
+//botones
+.btn-delete {
+  background-color: transparent;
 }
 .divDesarrolladores{
   margin: 10px 0;

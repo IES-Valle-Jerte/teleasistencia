@@ -1,3 +1,4 @@
+
 import {Component, OnInit, Output} from '@angular/core';
 import {ITipoAlarma} from '../../../interfaces/i-tipo-alarma';
 import {ActivatedRoute} from '@angular/router';

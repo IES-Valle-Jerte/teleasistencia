@@ -12,10 +12,11 @@ class ImagenUserSerializer(serializers.ModelSerializer):
        fields = ['imagen']
 
 class UserSerializer(serializers.ModelSerializer):
+
    imagen = ImagenUserSerializer(source='imagen_user', read_only=True)
    class Meta:
        model = User
-       fields = ['pk', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups','imagen']
+       fields = ['id', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups', 'imagen']
        depth = 1
 
 class PermissionSerializer(serializers.ModelSerializer):
@@ -105,14 +106,14 @@ class Relacion_Terminal_Recurso_Comunitario_Serializer(serializers.ModelSerializ
     class Meta:
         model = Relacion_Terminal_Recurso_Comunitario
         fields = '__all__'
-        depth = 2
+        depth = 3
 
 
 class Terminal_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Terminal
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Historico_Tipo_Situación_Serializer(serializers.ModelSerializer):
@@ -138,14 +139,14 @@ class Relacion_Paciente_Persona_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Relacion_Paciente_Persona
         fields = '__all__'
-        depth = 1
+        depth = 3
 
 
 class Paciente_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Paciente
         fields = '__all__'
-        depth = 2
+        depth = 3
 
 
 class Tipo_Modalidad_Paciente_Serializer(serializers.ModelSerializer):
@@ -186,7 +187,7 @@ class Persona_Contacto_En_Alarma_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Persona_Contacto_En_Alarma
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Relacion_Usuario_Centro_Serializer(serializers.ModelSerializer):
