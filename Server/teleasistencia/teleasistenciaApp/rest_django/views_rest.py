@@ -1,3 +1,5 @@
+from http.client import HTTPResponse
+from pathlib import Path
 import os
 
 from django.shortcuts import _get_queryset
@@ -5,19 +7,23 @@ from requests import request
 
 from django.contrib.auth.models import User, Group, Permission
 
-from rest_framework import viewsets
+import os
+import shutil
+# Imports necesarios para la gestion de la base de datos
+from datetime import datetime
+
+from django.contrib.auth.models import User, Group, Permission
 from rest_framework import permissions
+from rest_framework import viewsets
+from rest_framework import status
 # Serializadores generales
 from rest_framework.response import Response
-from rest_framework.templatetags.rest_framework import data
 
 from .utils import getQueryAnd
-from ..rest_django.serializers import UserSerializer, GroupSerializer
-
-# Serializadores propios
-from ..rest_django.serializers import *
 # Modelos propios
 from ..models import *
+# Serializadores propios
+from ..rest_django.serializers import *
 from django.http import JsonResponse
 
 # Alarmas
@@ -247,7 +253,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
     permission_classes = [IsTeacherMember]
-    #permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -310,7 +316,8 @@ class Recurso_Comunitario_ViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         # Comprobamos que el tipo de centro sanitario existe
-        tipos_recurso_comunitario = Tipo_Recurso_Comunitario.objects.get(pk=request.data.get("id_tipos_recurso_comunitario"))
+        tipos_recurso_comunitario = Tipo_Recurso_Comunitario.objects.get \
+            (pk=request.data.get("id_tipos_recurso_comunitario"))
         if tipos_recurso_comunitario is None:
             return Response("Error: tipos_recurso_comunitario")
 
@@ -466,7 +473,7 @@ class Clasificacion_Alarma_ViewSet(viewsets.ModelViewSet):
     queryset = Clasificacion_Alarma.objects.all()
     serializer_class = Clasificacion_Alarma_Serializer
     permission_classes = [IsTeacherMember]
-    #permission_classes = [permissions.IsAdminUser] # Si quieriéramos para todos los registrados: IsAuthenticated]
+    # permission_classes = [permissions.IsAdminUser] # Si quieriéramos para todos los registrados: IsAuthenticated]
 
 
 class Direccion_ViewSet(viewsets.ModelViewSet):
@@ -753,7 +760,8 @@ class Relacion_Terminal_Recurso_Comunitario_ViewSet(viewsets.ModelViewSet):
         relacion_terminal_recurso_comunitario.save()
 
         # Devolvemos la relacion_terminal_recurso_comunitario
-        relacion_terminal_recurso_comunitario_serializer = Relacion_Terminal_Recurso_Comunitario_Serializer(relacion_terminal_recurso_comunitario)
+        relacion_terminal_recurso_comunitario_serializer = Relacion_Terminal_Recurso_Comunitario_Serializer \
+            (relacion_terminal_recurso_comunitario)
         return Response(relacion_terminal_recurso_comunitario_serializer.data)
 
     def update(self, request, *args, **kwargs):
@@ -1054,7 +1062,8 @@ class Paciente_ViewSet(viewsets.ModelViewSet):
         id_persona = request.data.get("id_persona")
         if id_persona is None:
             if request.data.get("persona") is not None:
-                persona = Asignar_Persona_Direccion(data=request.data.get("persona"), direccion=Direccion.objects.get(pk=request.data.get("persona")["id_direccion"]))
+                persona = Asignar_Persona_Direccion(data=request.data.get("persona"), direccion=Direccion.objects.get
+                    (pk=request.data.get("persona")["id_direccion"]))
             else:
                 return Response("Error: persona")
         else:
@@ -1173,7 +1182,8 @@ class Recursos_Comunitarios_En_Alarma_ViewSet(viewsets.ModelViewSet):
         recursos_comunitarios_en_alarma.save()
 
         # Devolvemos el recursos_comunitario_en_alarma creado
-        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer(recursos_comunitarios_en_alarma)
+        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer \
+            (recursos_comunitarios_en_alarma)
         return Response(recursos_comunitarios_en_alarma_serializer.data)
 
     def update(self, request, *args, **kwargs):
@@ -1200,7 +1210,8 @@ class Recursos_Comunitarios_En_Alarma_ViewSet(viewsets.ModelViewSet):
         recursos_comunitarios_en_alarma.save()
 
         # Devolvemos el recursos_comunitario_en_alarma modificado
-        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer(recursos_comunitarios_en_alarma)
+        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer \
+            (recursos_comunitarios_en_alarma)
         return Response(recursos_comunitarios_en_alarma_serializer.data)
 
 
@@ -1357,7 +1368,8 @@ class Dispositivos_Auxiliares_en_Terminal_ViewSet(viewsets.ModelViewSet):
         dispositivos_auxiliares_en_terminal.save()
 
         # Devolvemos el dispositivos_auxiliares_en_terminal creado
-        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer(dispositivos_auxiliares_en_terminal)
+        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer \
+            (dispositivos_auxiliares_en_terminal)
         return Response(dispositivos_auxiliares_en_terminal_serializer.data)
 
     def update(self, request, *args, **kwargs):
@@ -1378,7 +1390,8 @@ class Dispositivos_Auxiliares_en_Terminal_ViewSet(viewsets.ModelViewSet):
         dispositivos_auxiliares_en_terminal.save()
 
         # Devolvemos el dispositivos_auxiliares_en_terminal modificado
-        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer(dispositivos_auxiliares_en_terminal)
+        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer \
+            (dispositivos_auxiliares_en_terminal)
         return Response(dispositivos_auxiliares_en_terminal_serializer.data)
 
 
@@ -1596,6 +1609,88 @@ class Relacion_Usuario_Centro_ViewSet(viewsets.ModelViewSet):
         # Devolvemos la relacion_usuario_centro modificada
         relacion_usuario_centro_serializer = Relacion_Usuario_Centro_Serializer(relacion_usuario_centro)
         return Response(relacion_usuario_centro_serializer.data)
+
+class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
+    """
+    Gestion de la base de datos
+    """
+    queryset = Gestion_Base_Datos.objects.all().order_by('-fecha_copia')
+    serializer_class = Gestion_Base_Datos_Serializer
+
+    def create(self, request, *args, **kwargs):
+        base_datos = Gestion_Base_Datos(
+            ubicacion_copia = '',
+            fecha_copia = datetime.today().strftime('%Y-%m-%d'),
+            descripcion_copia = request.data.get("descripcion_copia")
+        )
+        #En caso de que el usuario no introduzca nada introducimos un mensaje por defecto.
+        if base_datos.descripcion_copia is None:
+            base_datos.descripcion_copia = 'Copia sin descripción.'
+        base_datos.save()
+
+        # Obtenemos la ruta que nos interesa y la pasamos a string para poder editarla facilmente
+        rutaAct = str(Path(__file__).resolve().parent.parent.parent)
+        rutaBackup = rutaAct+'\\backup\\'
+        #Obtenemos el ID, el cual usamos para el nombre de la copia.
+        id_b = str(base_datos.id)
+        #base_datos.ubicacion_copia =
+        base_datos.ubicacion_copia = '\\backup\\'+'db.sqlite3'+id_b
+        # Devolvemos la base_datos creada - base_datos_serializer = Gestion_Base_Datos_Serializer(base_datos)
+        base_datos.save()
+
+        #Comprobar si existe la base de datos original
+        if os.path.isfile(rutaAct+'\\db.sqlite3'):
+            #Obtenemos la ruta donde esta la base de datos y la que queremos original a partir de esta, shutil lo copia.
+            source = rutaAct+'\\db.sqlite3'
+            destination = rutaBackup+'db.sqlite3'+id_b
+            shutil.copy(source, destination)
+            return Response("Copia de la base de datos creada correctamente con id: "+id_b)
+
+        return Response("La copia de la base de datos no ha podido ser creada.", status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        #Conseguimos el parametro de la URL
+        parametro = ((kwargs["pk"]))
+        #En caso de que tenga alguna x se la quitamos
+        parametro_res = parametro.lstrip("x")
+        #Variables con las rutas por defecto, seran editadas en los condicionales, son dos para aclaración de la funcion shutil
+        source = str(Path(__file__).resolve().parent.parent.parent) + '\\backup\\db.sqlite3'
+        destination = str(Path(__file__).resolve().parent.parent.parent)
+
+        #Condicional, para que en caso de pasarle algo que no sea un id, como ara en 2/3 funcionalidades, no nos de fallo.
+        if parametro != 'restore':
+            base_datos = Gestion_Base_Datos.objects.all().get(pk=parametro_res)
+        else:
+            base_datos = Gestion_Base_Datos.objects.all()
+        #Si el parametro que le pasamos en la URL es restore, y existe la copia solo con el ADM(Se debe generar),
+        #entonces restauramos esta base de datos.
+        if str(parametro) == 'restore':
+            if os.path.isfile(source+'_adm'):
+                source_res = source+'_adm'
+                shutil.copy(source_res, destination+'\\db.sqlite3')
+                return Response("La base de datos ha sido restaurada solo con la cuenta de Administrador.")
+            else:
+                return Response("La copia de la base de datos con id: " + parametro + " seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
+        #En caso de que tengamos cualquier otra cosa que no sea una x+id, simplemente no entrara en el if
+        #En caso afirmativo, entrara y copiara la base de datos con el id indicadp.
+        if (kwargs["pk"])[:1] == 'x':
+            if os.path.isfile(source+parametro_res):
+                source_r = source+str(parametro_res)
+                shutil.copy(source_r, destination+'\\db.sqlite3')
+                return Response("La base de datos con id: "+parametro_res+" ha sido restaurada correctamente.")
+            else:
+                return Response("La copia de la base de datos con id: " + parametro + " seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
+        #Comprobamos si existe copia con el id pasado en la URL, si es asi, lo borramos.
+        if os.path.isfile(source+parametro_res):
+            os.remove(source+parametro_res)
+            # Borramos la entrada de la API-RES
+            base_datos.delete()
+            return Response("La copia de la base de datos con id: "+parametro+" ha sido borrada correctamente.")
+        else:
+            base_datos.delete()
+
+        #Respuesta de error por defecto.
+        return Response("La copia de la base de datos con id: "+parametro+" seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
 
 
 '''{

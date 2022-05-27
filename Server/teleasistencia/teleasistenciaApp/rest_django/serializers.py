@@ -217,6 +217,12 @@ class Desarrollador_Tecnologia_Serializer(serializers.ModelSerializer):
         fields = '__all__' #Indica todos los campos
         depth = 1
 
+class Gestion_Base_Datos_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gestion_Base_Datos
+        fields = '__all__'
+        depth = 1
+
 
 class Desarrollador_Serializer(serializers.ModelSerializer):
 

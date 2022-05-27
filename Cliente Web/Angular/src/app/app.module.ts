@@ -60,7 +60,6 @@ import {CargaRecursoComunitarioService} from './servicios/carga-recurso-comunita
 import {PantallaLoginComponent} from './componentes/pantalla-login/pantalla-login.component';
 import {HeaderComponent} from './componentes/header/header.component';
 import {FooterComponent} from './componentes/footer/footer.component';
-
 import {BotonesLoginComponent} from './componentes/botones-login/botones-login.component';
 import { AgendaComponent } from './componentes/agenda/lista-agenda/agenda.component';
 import {
@@ -68,7 +67,6 @@ import {
 } from "./componentes/historico-agenda/modificar-historico-agenda/modificar-historico-agenda.component";
 import {ModificarAgendaComponent} from "./componentes/agenda/modificar-agenda/modificar-agenda.component";
 import { CommonModule } from '@angular/common';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TipoAgendaComponent } from './componentes/tipo-agenda/lista-tipo-agenda/tipo-agenda.component';
 import { ListaRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios/lista-relacion-terminal-recursos-comunitarios.component';
 import { ItemRelacionTerminalRecursosComunitariosComponent } from './componentes/relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios/item-relacion-terminal-recursos-comunitarios.component';
@@ -93,6 +91,10 @@ import { ModificarTipoSituacionComponent } from './componentes/tipo-situacion/mo
 import { BorrarTipoViviendaComponent } from './componentes/tipo-vivienda/borrar-tipo-vivienda/borrar-tipo-vivienda.component';
 import { BorrarTipoSituacionComponent } from './componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component';
 import {InterceptorService} from "./interceptors/interceptor.service";
+import { ItemCopiaSeguridadComponent } from './componentes/copia-seguridad/item-copia-seguridad/item-copia-seguridad.component';
+import { ListaCopiaSeguridadComponent } from './componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component';
+import { CrearCopiaSeguridadComponent } from './componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component';
+import { RestaurarCopiaSeguridadComponent } from './componentes/copia-seguridad/restaurar-copia-seguridad/restaurar-copia-seguridad.component';
 import { NuevoTipoAgendaComponent } from './componentes/tipo-agenda/nuevo-tipo-agenda/nuevo-tipo-agenda.component';
 import { ItemTipoAgendaComponent } from './componentes/tipo-agenda/item-tipo-agenda/item-tipo-agenda.component';
 import { DetallesTipoAgendaComponent } from './componentes/tipo-agenda/detalles-tipo-agenda/detalles-tipo-agenda.component';
@@ -225,6 +227,11 @@ import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-
     ModificarTipoSituacionComponent,
     BorrarTipoViviendaComponent,
     BorrarTipoSituacionComponent,
+    ItemCopiaSeguridadComponent,
+    ListaCopiaSeguridadComponent,
+    CrearCopiaSeguridadComponent,
+    GruposComponent,
+    RestaurarCopiaSeguridadComponent,
     NuevoAgendaComponent,
     HistoricoTipoSituacionComponent,
     CrearHistoricoTipoSituacionComponent,
@@ -282,7 +289,6 @@ import { CrearAlarmaTerminalComponent } from './componentes/alarma/crear-alarma-
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModalModule,
     CommonModule,
     NgxPaginationModule,
   ],

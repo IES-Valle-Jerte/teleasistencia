@@ -78,6 +78,14 @@ import {BorrarTipoViviendaComponent} from "./componentes/tipo-vivienda/borrar-ti
 import {BorrarTipoViviendaService} from "./servicios/borrar-tipo-vivienda.service";
 import {BorrarTipoSituacionComponent} from "./componentes/tipo-situacion/borrar-tipo-situacion/borrar-tipo-situacion.component";
 import {BorrarTipoSituacionService} from "./servicios/borrar-tipo-situacion.service";
+import {ListaCopiaSeguridadComponent} from "./componentes/copia-seguridad/lista-copia-seguridad/lista-copia-seguridad.component";
+import {ListaCopiaSeguridadService} from "./servicios/lista-copia-seguridad.service";
+import {
+  CrearCopiaSeguridadComponent
+} from "./componentes/copia-seguridad/crear-copia-seguridad/crear-copia-seguridad.component";
+import {
+  RestaurarCopiaSeguridadComponent
+} from "./componentes/copia-seguridad/restaurar-copia-seguridad/restaurar-copia-seguridad.component";
 import {NuevoAgendaComponent} from "./componentes/agenda/nuevo-agenda/nuevo-agenda.component";
 import {ListaAgendaResolveService} from "./servicios/lista-agenda-resolve.service";
 import {ListaHistoricoTipoSituacionResolveService} from "./servicios/lista-historico-tipo-situacion-resolve.service";
@@ -1101,6 +1109,24 @@ const routes: Routes = [
     resolve: {
       relaciones_usuario_centro: ListaRelacionUsuarioCentroResolveService
     }
+  },
+  {
+    path: 'copia_seguridad',
+    component: ListaCopiaSeguridadComponent,
+    canActivate: [LoginGuard],
+    resolve: {
+      copia_seguridad: ListaCopiaSeguridadService
+    }
+  },
+  {
+    path: 'copia_seguridad/nueva',
+    component: CrearCopiaSeguridadComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'copia_seguridad/restaurar',
+    component: RestaurarCopiaSeguridadComponent,
+    canActivate: [LoginGuard],
   },
   {path: '', redirectTo: '/inicio', pathMatch: 'full'},
   {path: '**', redirectTo: '/inicio', pathMatch: 'full'}

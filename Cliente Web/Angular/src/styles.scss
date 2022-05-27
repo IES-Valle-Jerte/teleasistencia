@@ -84,12 +84,14 @@ table {
    td > .btn-modify {
     float: none;
   }
-  th{
-    cursor: pointer;
-  }
-  th:active{
-    color: #10022b;
-  }
+
+
+.ordenable{
+  cursor: pointer;
+}
+.ordenable:active{
+  color: black;
+}
 
 .btn-delete{
   margin-left: 20px;

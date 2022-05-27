@@ -3,6 +3,7 @@ import {IUsers} from '../../../interfaces/i-users';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-lista-users',
@@ -14,6 +15,7 @@ export class ListaUsersComponent implements OnInit {
   public users: IUsers[];
   numPaginacion: number = 1;
   inputBusqueda: any = '';
+  elementosPaginacion: number = environment.num_paginacion;
 
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) {
   }
