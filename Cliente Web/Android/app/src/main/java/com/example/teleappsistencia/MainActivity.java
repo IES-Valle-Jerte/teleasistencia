@@ -1,11 +1,18 @@
 package com.example.teleappsistencia;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.ExpandableListView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentInsertarCentroSanitario;
 import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentListarCentroSanitario;
 import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentModificarCentroSanitario;
@@ -24,14 +31,8 @@ import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.Fragme
 import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
 import com.example.teleappsistencia.ui.menu.MenuModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    // Declaración de atributos.
     private ExpandableListAdapter expandableListAdapter;
     private ExpandableListView expandableListView;
     private List<MenuModel> headerList = new ArrayList<>();
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setAction("Action", null).show();
             }
         });
+
+        //Iniciamos el token
+        Token.cargarToken("admin", "admin");
 
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
@@ -201,15 +206,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (headerList.get(groupPosition).isGroup()) {
                     if (!headerList.get(groupPosition).hasChildren()) {
-                        /*
-                        MenuModel model = headerList.get(groupPosition);
-                        Fragment fragment = new Fragment(model.getLayout());
-
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.main_fragment, fragment)
-                                .addToBackStack(null)
-                                .commit();
-                         */
                     }
                 }
                 return false;

@@ -1,25 +1,37 @@
 package com.example.teleappsistencia.ui.fragments.recurso_comunitario;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.modelos.Direccion;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
+import com.example.teleappsistencia.modelos.TipoRecursoComunitario;
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComunitarioAdapter.RecursoComunitarioViewHolder> {
+
+    // Declaración de atributos.
     private List<RecursoComunitario> items;
-    private Activity activity;
-    private RecyclerView recyclerView;
     private RecursoComunitarioViewHolder recursoComunitarioViewHolder;
 
     public static class RecursoComunitarioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -35,10 +47,20 @@ public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComun
         private ImageButton imageButtonBorrarRecursoComunitario;
         private RecursoComunitario recursoComunitario;
 
+        /**
+         * Método para establecer el recurso comunitario.
+         *
+         * @param recursoComunitario: Recibe por parámetros el recurso comunitario.
+         */
         public void setRecursoComunitario(RecursoComunitario recursoComunitario) {
             this.recursoComunitario = recursoComunitario;
         }
 
+        /**
+         * Se inicializan las variables.
+         *
+         * @param v: Recibe por parámetros la vista.
+         */
         public RecursoComunitarioViewHolder(View v) {
             super(v);
             this.context = v.getContext();
@@ -51,12 +73,20 @@ public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComun
             this.imageButtonBorrarRecursoComunitario = (ImageButton) v.findViewById(R.id.imageButtonBorrarRecursoComunitario);
         }
 
+        /**
+         * Se establece la acción de pulsar los botones.
+         */
         public void setOnClickListeners() {
             this.imageButtonModificarRecursoComunitario.setOnClickListener(this);
             this.imageButtonVerRecursoComunitario.setOnClickListener(this);
             this.imageButtonBorrarRecursoComunitario.setOnClickListener(this);
         }
 
+        /**
+         * Método para establecer las acciones de los botones, según sea un botón u otro.
+         *
+         * @param view: Recibe por parámetros la vista.
+         */
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
@@ -73,22 +103,77 @@ public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComun
                     activityVer.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fc).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrarRecursoComunitario:
+                    // Se llama al método que borra el recurso comunitario.
+                    borrarRecursoComunitario();
                     break;
             }
         }
+
+        /**
+         * Método Se que borra el recurso comunitario.
+         */
+        private void borrarRecursoComunitario() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+            Call<Response<String>> call = apiService.deleteRecursoComunitario(recursoComunitario.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            call.enqueue(new Callback<Response<String>>() {
+                @Override
+                public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, Constantes.MENSAJE_ELIMINAR_RECURSO_COMUNITARIO, Toast.LENGTH_SHORT).show();
+                        volver();
+                    } else {
+                        Toast.makeText(context, Constantes.ERROR_MENSAJE_ELIMINAR_RECURSO_COMUNITARIO, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response<String>> call, Throwable t) {
+                    t.printStackTrace();
+                    System.out.println(t.getMessage());
+                }
+            });
+        }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver() {
+            MainActivity activity = (MainActivity) context;
+            FragmentListarRecursoComunitario fragmentListarRecursoComunitario = new FragmentListarRecursoComunitario();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, fragmentListarRecursoComunitario)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
-    public RecursoComunitarioAdapter(List<RecursoComunitario> items, Activity activity, RecyclerView recycler) {
+    /**
+     * Inicializamos las variables en el constructor parametrizado.
+     *
+     * @param items
+     */
+    public RecursoComunitarioAdapter(List<RecursoComunitario> items) {
         this.items = items;
-        this.activity = activity;
-        this.recyclerView = recycler;
     }
 
+    /**
+     * Método para devolver el tamaño de la lista de recursos comunitarios.
+     *
+     * @return: Retorna el tamaño.
+     */
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+    /**
+     * Método que carga el layout de las card view.
+     *
+     * @param viewGroup
+     * @param i
+     * @return
+     */
     @Override
     public RecursoComunitarioViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
@@ -97,13 +182,24 @@ public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComun
         return recursoComunitarioViewHolder;
     }
 
+    /**
+     * Método que muestra los valores del recurso comunitario.
+     *
+     * @param viewHolder
+     * @param i
+     */
     @Override
     public void onBindViewHolder(RecursoComunitarioViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-        viewHolder.nombreRecursoComunitario.setText(items.get(i).getNombreRecursoComunitario());
-        viewHolder.telefonoRecursoComunitario.setText(items.get(i).getTelefonoRecursoComunitario());
-        viewHolder.tipoRecursoComunitarioRecursoComunitario.setText(items.get(i).getTipoRecursoComunitario().get(0));
-        viewHolder.direccionRecursoComunitario.setText(items.get(i).getDireccionRecursoComunitario());
+
+        RecursoComunitario recursoComunitario = items.get(i);
+        TipoRecursoComunitario tipoRecursoComunitario = (TipoRecursoComunitario) Utilidad.getObjeto(recursoComunitario, Constantes.TIPO_RECURSO_COMUNITARIO);
+        Direccion direccion = recursoComunitario.getDireccion();
+
+        viewHolder.nombreRecursoComunitario.setText(items.get(i).getNombre());
+        viewHolder.telefonoRecursoComunitario.setText(items.get(i).getTelefono());
+        viewHolder.tipoRecursoComunitarioRecursoComunitario.setText(tipoRecursoComunitario.getNombreTipoRecursoComunitario());
+        viewHolder.direccionRecursoComunitario.setText(direccion.getDireccion());
         this.recursoComunitarioViewHolder.setRecursoComunitario(items.get(i));
     }
 }

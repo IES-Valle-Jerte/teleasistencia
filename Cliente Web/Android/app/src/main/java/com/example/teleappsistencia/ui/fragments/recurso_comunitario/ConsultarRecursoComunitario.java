@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
+import com.example.teleappsistencia.modelos.TipoRecursoComunitario;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,15 +22,7 @@ import com.example.teleappsistencia.modelos.RecursoComunitario;
  */
 public class ConsultarRecursoComunitario extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Declaración de atributos.
     private TextView nombreRecursoComunitario;
     private TextView telefonoRecursoComunitario;
     private TextView tipoRecursoComunitarioRecursoComunitario;
@@ -45,29 +40,36 @@ public class ConsultarRecursoComunitario extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      * @return A new instance of fragment ConsultarRecursoComunitario.
+     * @param recursoComunitario: Recibe el objeto a consultar.
      */
-    // TODO: Rename and change types and number of parameters
     public static ConsultarRecursoComunitario newInstance(RecursoComunitario recursoComunitario) {
         ConsultarRecursoComunitario fragment = new ConsultarRecursoComunitario();
         Bundle args = new Bundle();
-        args.putSerializable("recursoComunitario", recursoComunitario);
+        args.putSerializable(Constantes.RECURSO_COMUNITARIO_OBJETO, recursoComunitario);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * Método que inicializa el objeto a consultar.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.recursoComunitario = (RecursoComunitario) getArguments().getSerializable("recursoComunitario");
+            this.recursoComunitario = (RecursoComunitario) getArguments().getSerializable(Constantes.RECURSO_COMUNITARIO_OBJETO);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Se guarda la vista.
         View root = inflater.inflate(R.layout.fragment_consultar_recurso_comunitario, container, false);
 
+        // Se inicializan las variables.
         this.nombreRecursoComunitario = (TextView) root.findViewById(R.id.nombreRecursoComunitario);
         this.telefonoRecursoComunitario = (TextView) root.findViewById(R.id.telefonoRecursoComunitario);
         this.tipoRecursoComunitarioRecursoComunitario = (TextView) root.findViewById(R.id.tipoRecursoComunitarioRecursoComunitario);
@@ -76,13 +78,16 @@ public class ConsultarRecursoComunitario extends Fragment {
         this.direccionRecursoComunitario = (TextView) root.findViewById(R.id.direccionRecursoComunitario);
         this.codigoPostalRecursoComunitario = (TextView) root.findViewById(R.id.codigoPostalRecursoComunitario);
 
-        this.nombreRecursoComunitario.setText(this.recursoComunitario.getNombreRecursoComunitario());
-        this.telefonoRecursoComunitario.setText(this.recursoComunitario.getTelefonoRecursoComunitario());
-        this.tipoRecursoComunitarioRecursoComunitario.setText(this.recursoComunitario.getTipoRecursoComunitario().get(0));
-        this.localidadRecursoComunitario.setText(this.recursoComunitario.getLocalidadRecursoComunitario());
-        this.provinciaRecursoComunitario.setText(this.recursoComunitario.getProvinciaRecursoComunitario());
-        this.direccionRecursoComunitario.setText(this.recursoComunitario.getDireccionRecursoComunitario());
-        this.codigoPostalRecursoComunitario.setText(this.recursoComunitario.getCodigoPostalRecursoComunitario());
+        // Método que muestra los valores del recurso comunitario.
+        TipoRecursoComunitario tipoRecursoComunitario = (TipoRecursoComunitario) Utilidad.getObjeto(recursoComunitario, Constantes.TIPO_RECURSO_COMUNITARIO);
+
+        this.nombreRecursoComunitario.setText(this.recursoComunitario.getNombre());
+        this.telefonoRecursoComunitario.setText(this.recursoComunitario.getTelefono());
+        this.tipoRecursoComunitarioRecursoComunitario.setText(tipoRecursoComunitario.getNombreTipoRecursoComunitario());
+        this.localidadRecursoComunitario.setText(this.recursoComunitario.getDireccion().getLocalidad());
+        this.provinciaRecursoComunitario.setText(this.recursoComunitario.getDireccion().getProvincia());
+        this.direccionRecursoComunitario.setText(this.recursoComunitario.getDireccion().getDireccion());
+        this.codigoPostalRecursoComunitario.setText(this.recursoComunitario.getDireccion().getCodigoPostal());
 
         // Inflate the layout for this fragment
         return root;

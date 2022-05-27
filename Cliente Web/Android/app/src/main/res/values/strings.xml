@@ -60,12 +60,44 @@
 
     <!-- Mensajes para AlertDialog. -->
     <string name="error_nombreVacio">El nombre es obligatorio.</string>
+    <string name="error_telefonoVacio">El teléfono es obligatorio.</string>
+    <string name="error_localidadVacio">La localidad es obligatoria.</string>
+    <string name="error_provinciaVacio">La provincia es obligatoria.</string>
+    <string name="error_direccionVacio">La dirección es obligatoria.</string>
+    <string name="error_codigoPostalVacio">El código postal es obligatorio.</string>
+    <string name="espacioEnBlanco"> </string>
 
     <!-- Mensajes para Toasts. -->
+    <string name="mensaje_insertar_tipo_centro_sanitario">Se ha insertado el tipo de centro sanitario satisfactoriamente.</string>
+    <string name="mensaje_insertar_tipo_modalidad_paciente">Se ha insertado el tipo de modalidad paciente satisfactoriamente.</string>
+    <string name="mensaje_insertar_centro_sanitario">Se ha insertado el centro sanitario satisfactoriamente.</string>
+    <string name="mensaje_insertar_tipo_recurso_comunitario">Se ha insertado el tipo de recurso comunitario satisfactoriamente.</string>
+    <string name="mensaje_insertar_recurso_comunitario">Se ha insertado el recurso comunitario satisfactoriamente.</string>
+    <string name="mensaje_modificar_tipo_centro_sanitario">Se ha modificado el tipo de centro sanitario satisfactoriamente.</string>
+    <string name="mensaje_modificar_tipo_modalidad_paciente">Se ha modificado el tipo de modalidad paciente satisfactoriamente.</string>
+    <string name="mensaje_modificar_centro_sanitario">Se ha modificado el centro sanitario satisfactoriamente.</string>
+    <string name="mensaje_modificar_tipo_recurso_comunitario">Se ha modificado el tipo de recurso comunitario satisfactoriamente.</string>
+    <string name="mensaje_modificar_recurso_comunitario">Se ha modificado el recurso comunitario satisfactoriamente.</string>
     <string name="mensaje_eliminar_tipo_centro_sanitario">Se ha eliminado el tipo de centro sanitario satisfactoriamente.</string>
     <string name="mensaje_eliminar_tipo_modalidad_paciente">Se ha eliminado el tipo de modalidad paciente satisfactoriamente.</string>
     <string name="mensaje_eliminar_centro_sanitario">Se ha eliminado el centro sanitario satisfactoriamente.</string>
     <string name="mensaje_eliminar_tipo_recurso_comunitario">Se ha eliminado el tipo de recurso comunitario satisfactoriamente.</string>
     <string name="mensaje_eliminar_recurso_comunitario">Se ha eliminado el recurso comunitario satisfactoriamente.</string>
+    <string name="error_mensaje_insertar_tipo_centro_sanitario">Error al insertar el tipo de centro sanitario.</string>
+    <string name="error_mensaje_insertar_tipo_modalidad_paciente">Error al insertar el tipo de modalidad paciente.</string>
+    <string name="error_mensaje_insertar_centro_sanitario">Error al insertar el centro sanitario.</string>
+    <string name="error_mensaje_insertar_tipo_recurso_comunitario">Error al insertar el tipo de recurso comunitario.</string>
+    <string name="error_mensaje_insertar_recurso_comunitario">Error al insertar el recurso comunitario.</string>
+    <string name="error_mensaje_modificar_tipo_centro_sanitario">Error al modificar el tipo de centro sanitario.</string>
+    <string name="error_mensaje_modificar_tipo_modalidad_paciente">Error al modificar el tipo de modalidad paciente.</string>
+    <string name="error_mensaje_modificar_centro_sanitario">Error al modificar el centro sanitario.</string>
+    <string name="error_mensaje_modificar_tipo_recurso_comunitario">Error al modificar el tipo de recurso comunitario.</string>
+    <string name="error_mensaje_modificar_recurso_comunitario">Error al modificar el recurso comunitario.</string>
+    <string name="error_mensaje_eliminar_tipo_centro_sanitario">Error al eliminar el tipo de centro sanitario.</string>
+    <string name="error_mensaje_eliminar_tipo_modalidad_paciente">Error al eliminar el tipo de modalidad paciente.</string>
+    <string name="error_mensaje_eliminar_centro_sanitario">Error al eliminar el centro sanitario.</string>
+    <string name="error_mensaje_eliminar_tipo_recurso_comunitario">Error al eliminar el tipo de recurso comunitario.</string>
+    <string name="error_mensaje_eliminar_recurso_comunitario">Error al eliminar el recurso comunitario.</string>
+    <string name="error_al_obtener_datos">Error al obtener los datos.</string>
 
 </resources>

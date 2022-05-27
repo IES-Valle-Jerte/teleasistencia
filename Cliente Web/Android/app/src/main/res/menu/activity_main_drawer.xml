@@ -7,11 +7,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_tipoCentroSanitario"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_tipoCentroSanitario" />
         <item
             android:id="@+id/nav_tipoModalidadPaciente"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_tipoModalidadPaciente" />
         <item
             android:id="@+id/nav_centroSanitario"

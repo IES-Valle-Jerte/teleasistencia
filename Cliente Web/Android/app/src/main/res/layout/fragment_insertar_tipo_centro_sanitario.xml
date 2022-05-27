@@ -19,6 +19,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineArriba" />
 
+    <TextView
+        android:id="@+id/textViewErrorPedirNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fondo_bordes_textviews"
+        android:minHeight="35dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/error_nombreVacio"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPedirNombre"
+        app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
+        app:layout_constraintTop_toTopOf="@+id/guidelineArriba2" />
+
     <EditText
         android:id="@+id/editTextPedirNombre"
         android:layout_width="0dp"
@@ -29,7 +43,6 @@
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColorHint="@color/black"
-        app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/guidelineArriba3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"

@@ -1,25 +1,34 @@
 package com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TipoModalidadPacienteAdapter extends RecyclerView.Adapter<TipoModalidadPacienteAdapter.TipoModalidadPacienteViewHolder> {
+
+    // Declaración de atributos.
     private List<TipoModalidadPaciente> items;
-    private Activity activity;
-    private RecyclerView recyclerView;
     private TipoModalidadPacienteViewHolder tipoModalidadPacienteViewHolder;
 
     public static class TipoModalidadPacienteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -32,10 +41,20 @@ public class TipoModalidadPacienteAdapter extends RecyclerView.Adapter<TipoModal
         private ImageButton imageButtonBorrarTipoModalidadPaciente;
         private TipoModalidadPaciente tipoModalidadPaciente;
 
+        /**
+         * Método para establecer el tipo de modalidad de paciente.
+         *
+         * @param tipoModalidadPaciente: Recibe por parámetros el tipo de modalidad de paciente.
+         */
         public void setTipoModalidadPaciente(TipoModalidadPaciente tipoModalidadPaciente) {
             this.tipoModalidadPaciente = tipoModalidadPaciente;
         }
 
+        /**
+         * Se inicializan las variables.
+         *
+         * @param v: Recibe por parámetros la vista.
+         */
         public TipoModalidadPacienteViewHolder(View v) {
             super(v);
             this.context = v.getContext();
@@ -45,12 +64,20 @@ public class TipoModalidadPacienteAdapter extends RecyclerView.Adapter<TipoModal
             this.imageButtonBorrarTipoModalidadPaciente = (ImageButton) v.findViewById(R.id.imageButtonBorrarTipoModalidadPaciente);
         }
 
+        /**
+         * Se establece la acción de pulsar los botones.
+         */
         public void setOnClickListeners() {
             this.imageButtonModificarTipoModalidadPaciente.setOnClickListener(this);
             this.imageButtonVerTipoModalidadPaciente.setOnClickListener(this);
             this.imageButtonBorrarTipoModalidadPaciente.setOnClickListener(this);
         }
 
+        /**
+         * Método para establecer las acciones de los botones, según sea un botón u otro.
+         *
+         * @param view: Recibe por parámetros la vista.
+         */
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
@@ -67,30 +94,91 @@ public class TipoModalidadPacienteAdapter extends RecyclerView.Adapter<TipoModal
                     activityVer.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fc).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrarTipoModalidadPaciente:
+                    // Se llama al método que borra el tipo de modalidad de paciente.
+                    borrarTipoModalidadPaciente();
                     break;
             }
         }
+
+        /**
+         * Método Se que borra el tipo de modalidad de paciente.
+         */
+        private void borrarTipoModalidadPaciente() {
+            APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+            Call<Response<String>> call = apiService.deleteTipoModalidadPaciente(tipoModalidadPaciente.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            call.enqueue(new Callback<Response<String>>() {
+                @Override
+                public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, Constantes.MENSAJE_ELIMINAR_TIPO_MODALIDAD_PACIENTE, Toast.LENGTH_SHORT).show();
+                        volver();
+                    } else {
+                        Toast.makeText(context, Constantes.ERROR_MENSAJE_ELIMINAR_TIPO_MODALIDAD_PACIENTE, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Response<String>> call, Throwable t) {
+                    t.printStackTrace();
+                    System.out.println(t.getMessage());
+                }
+            });
+        }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver() {
+            MainActivity activity = (MainActivity) context;
+            FragmentListarTipoModalidadPaciente fragmentListarTipoModalidadPaciente = new FragmentListarTipoModalidadPaciente();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, fragmentListarTipoModalidadPaciente)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
-    public TipoModalidadPacienteAdapter(List<TipoModalidadPaciente> items, Activity activity, RecyclerView recycler) {
+    /**
+     * Inicializamos las variables en el constructor parametrizado.
+     *
+     * @param items
+     */
+    public TipoModalidadPacienteAdapter(List<TipoModalidadPaciente> items) {
         this.items = items;
-        this.activity = activity;
-        this.recyclerView = recycler;
     }
 
+    /**
+     * Método para devolver el tamaño de la lista de tipos de modalidades de pacientes.
+     *
+     * @return: Retorna el tamaño.
+     */
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+    /**
+     * Método que carga el layout de las card view.
+     *
+     * @param viewGroup
+     * @param i
+     * @return
+     */
     @Override
     public TipoModalidadPacienteViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fragment_tipo_modalidad_paciente_card, viewGroup, false);
-        this.tipoModalidadPacienteViewHolder = new TipoModalidadPacienteAdapter.TipoModalidadPacienteViewHolder(v);
+        this.tipoModalidadPacienteViewHolder = new TipoModalidadPacienteViewHolder(v);
         return tipoModalidadPacienteViewHolder;
     }
 
+    /**
+     * Método que muestra los valores de los tipos de modalidades de pacientes.
+     *
+     * @param viewHolder
+     * @param i
+     */
     @Override
     public void onBindViewHolder(TipoModalidadPacienteViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
