@@ -5,8 +5,16 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Date;
 
+
+/**
+ * Clase POJO "Persona" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Persona implements Serializable {
 
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
@@ -16,15 +24,17 @@ public class Persona implements Serializable {
     @SerializedName("dni")
     private String dni;
     @SerializedName("fecha_nacimiento")
-    private Date fecha_nacimiento;
+    private String fechaNacimiento;
     @SerializedName("sexo")
     private String sexo;
     @SerializedName("telefono_fijo")
-    private String telefono_fijo;
+    private String telefonoFijo;
     @SerializedName("telefono_movil")
-    private String telefono_movil;
+    private String telefonoMovil;
     @SerializedName("id_direccion")
-    private Object id_direccion;
+    private Object direccion;
+
+    // Getters y Setters
 
     public int getId() {
         return id;
@@ -58,12 +68,12 @@ public class Persona implements Serializable {
         this.dni = dni;
     }
 
-    public Date getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getSexo() {
@@ -74,27 +84,29 @@ public class Persona implements Serializable {
         this.sexo = sexo;
     }
 
-    public String getTelefono_fijo() {
-        return telefono_fijo;
+    public String getTelefonoFijo() {
+        return telefonoFijo;
     }
 
-    public void setTelefono_fijo(String telefono_fijo) {
-        this.telefono_fijo = telefono_fijo;
+    public void setTelefonoFijo(String telefonoFijo) {
+        this.telefonoFijo = telefonoFijo;
     }
 
-    public String getTelefono_movil() {
-        return telefono_movil;
+    public String getTelefonoMovil() {
+        return telefonoMovil;
     }
 
-    public void setTelefono_movil(String telefono_movil) {
-        this.telefono_movil = telefono_movil;
+    public void setTelefonoMovil(String telefonoMovil) {
+        this.telefonoMovil = telefonoMovil;
     }
 
-    public Object getId_direccion() {
-        return id_direccion;
+    public Object getDireccion() {
+        return direccion;
     }
 
-    public void setId_direccion(Object id_direccion) {
-        this.id_direccion = id_direccion;
+    public void setDireccion(Object direccion) {
+        this.direccion = direccion;
     }
+
 }
+

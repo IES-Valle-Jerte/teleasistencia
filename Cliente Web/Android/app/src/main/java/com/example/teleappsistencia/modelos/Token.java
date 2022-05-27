@@ -8,13 +8,21 @@ import java.io.Serializable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Clase POJO "Token" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Token implements Serializable {
+
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
 
     private String refresh;
     private String access;
-    private static Token token;
 
+    // Getters y Setters
+    
     public String getRefresh() {
         return refresh;
     }

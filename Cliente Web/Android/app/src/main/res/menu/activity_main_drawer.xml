@@ -6,6 +6,30 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_terminal_recurso_comunitario"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_relacion_terminal_recurso_comunitario" />
+
+        <item
+            android:id="@+id/nav_terminal"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_terminal" />
+
+        <item
+            android:id="@+id/nav_paciente"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_paciente" />
+
+        <item
+            android:id="@+id/nav_paciente_persona"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_relacion_paciente_persona" />
+
+        <item
+            android:id="@+id/nav_usuario_centro"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_relacion_usuario_centro" />
+
             android:id="@+id/nav_tipo_alarma"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_tipo_alarma" />

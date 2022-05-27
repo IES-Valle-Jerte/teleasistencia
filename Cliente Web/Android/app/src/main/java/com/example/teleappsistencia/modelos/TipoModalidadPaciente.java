@@ -1,15 +1,39 @@
 package com.example.teleappsistencia.modelos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-
+/**
+ * Clase POJO "TipoModalidadPaciente" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class TipoModalidadPaciente implements Serializable {
-    private String nombreTipoModalidadPaciente;
 
-    public TipoModalidadPaciente(String nombreTipoModalidadPaciente) {
-        this.nombreTipoModalidadPaciente = nombreTipoModalidadPaciente;
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
+
+    @SerializedName("id")
+    private int id;
+    @SerializedName("nombre")
+    private String nombre;
+
+    // Getters y Setters
+
+    public int getId() {
+        return id;
     }
 
-    public String getNombreTipoModalidadPaciente() {
-        return nombreTipoModalidadPaciente;
+    public void setId(int id) {
+        this.id = id;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
 }

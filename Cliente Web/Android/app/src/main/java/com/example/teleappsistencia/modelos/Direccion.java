@@ -4,7 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase POJO "Direccion" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Direccion implements Serializable {
+
+    /**
+    * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+    * que se utilizan para mapear las JSON keys hacia campos Java.
+    */
 
     @SerializedName("id")
     private int id;
@@ -13,9 +21,11 @@ public class Direccion implements Serializable {
     @SerializedName("provincia")
     private String provincia;
     @SerializedName("direccion")
-    private String dirección;
+    private String direccion;
     @SerializedName("codigo_postal")
     private String codigoPostal;
+
+    //Getters y setters
 
     public int getId() {
         return id;
@@ -41,12 +51,12 @@ public class Direccion implements Serializable {
         this.provincia = provincia;
     }
 
-    public String getDirección() {
-        return dirección;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(String dirección) {
-        this.dirección = dirección;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCodigoPostal() {
@@ -56,5 +66,4 @@ public class Direccion implements Serializable {
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
-
 }

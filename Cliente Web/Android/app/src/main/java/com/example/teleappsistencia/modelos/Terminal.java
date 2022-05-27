@@ -1,25 +1,31 @@
 package com.example.teleappsistencia.modelos;
 
+import com.google.gson.annotations.SerializedName;
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+/**
+ * Clase POJO "Terminal" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Terminal implements Serializable {
 
-    @SerializedName("id")
-    private int id;
-    @SerializedName("numero_terminal")
-    private Object numero_terminal;
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
+    private String numeroTerminal;
     @SerializedName("modo_acceso_vivienda")
-    private String modo_acceso_vivienda;
-    @SerializedName("barreras_arquitectónicas")
-    private String barreras_arquitectónicas;
+    private String modoAccesoVivienda;
+    @SerializedName("barreras_arquitectonicas")
+    private String barrerasArquitectonicas;
     @SerializedName("id_titular")
-    private Object id_titular;
+    private Object titular;
     @SerializedName("id_tipo_vivienda")
-    private Object id_tipo_vivienda;
+    private Object tipoVivienda;
+
+    // Getters y Setters
 
     public int getId() {
         return id;
@@ -29,53 +35,44 @@ public class Terminal implements Serializable {
         this.id = id;
     }
 
-    public Object getNumero_terminal() {
-        return numero_terminal;
+    public String getNumeroTerminal() {
+        return numeroTerminal;
     }
 
-    public void setNumero_terminal(int numero_terminal) {
-        this.numero_terminal = numero_terminal;
+    public void setNumeroTerminal(String numeroTerminal) {
+        this.numeroTerminal = numeroTerminal;
     }
 
-    public String getModo_acceso_vivienda() {
-        return modo_acceso_vivienda;
+    public String getModoAccesoVivienda() {
+        return modoAccesoVivienda;
     }
 
-    public void setModo_acceso_vivienda(String modo_acceso_vivienda) {
-        this.modo_acceso_vivienda = modo_acceso_vivienda;
+    public void setModoAccesoVivienda(String modoAccesoVivienda) {
+        this.modoAccesoVivienda = modoAccesoVivienda;
     }
 
-    public String getBarreras_arquitectónicas() {
-        return barreras_arquitectónicas;
+    public String getBarrerasArquitectonicas() {
+        return barrerasArquitectonicas;
     }
 
-    public void setBarreras_arquitectónicas(String barreras_arquitectónicas) {
-        this.barreras_arquitectónicas = barreras_arquitectónicas;
+    public void setBarrerasArquitectonicas(String barrerasArquitectonicas) {
+        this.barrerasArquitectonicas = barrerasArquitectonicas;
     }
 
-    public Object getId_titular() {
-        return id_titular;
+    public Object getTitular() {
+        return titular;
     }
 
-    public void setId_titular(Object id_titular) {
-        this.id_titular = id_titular;
+    public void setTitular(Object titular) {
+        this.titular = titular;
     }
 
-    public Object getId_tipo_vivienda() {
-        return id_tipo_vivienda;
+    public Object getTipoVivienda() {
+        return tipoVivienda;
     }
 
-    public void setId_tipo_vivienda(int id_tipo_vivienda) {
-        this.id_tipo_vivienda = id_tipo_vivienda;
+    public void setTipoVivienda(Object tipoVivienda) {
+        this.tipoVivienda = tipoVivienda;
     }
 
-    /**
-     * Se retorna el número de terminal para usarlo en los Spinner y que el usuario lo identifique.
-     * @return
-     */
-    @NonNull
-    @Override
-    public String toString() {
-        return String.valueOf(getNumero_terminal());
-    }
 }
