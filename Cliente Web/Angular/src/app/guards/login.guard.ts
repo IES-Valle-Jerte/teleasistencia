@@ -16,9 +16,11 @@ export class LoginGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
     const token= localStorage.getItem('token')
     //console.log(this.router.url)
-    if(this.router.url=='/'){
-      return true
-    }
+    // if(this.router.url=='/'){
+    //   return true
+    // }
+
+
     // si no hay token retorno false y le redirijo al login
       if(!token){
       this.router.navigate(['/login']);

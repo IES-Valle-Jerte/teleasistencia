@@ -233,10 +233,15 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(user_serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        print(kwargs)
         user = User.objects.get(pk=kwargs["pk"])
-        image = Imagen_User.objects.get(user=user)
-        if image.imagen is not None:
-            os.remove(image.imagen.path)
+        try:
+          image = Imagen_User.objects.get(user=user)
+
+          if image.imagen is not None:
+             os.remove(image.imagen.path)
+        except:
+            print('error propio')
         user.delete()
         return Response('borrado')
 
@@ -871,7 +876,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Comprobamos que el tipo situacion existe
-        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("tipo_situacion"))
+        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("id_tipo_situacion"))
         if id_tipo_situacion is None:
             return Response("Error: id_tipo_situacion")
 
@@ -894,7 +899,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         # Comprobamos que el tipo situacion existe
-        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("tipo_situacion"))
+        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("id_tipo_situacion"))
         if id_tipo_situacion is None:
             return Response("Error: id_tipo_situacion")
 
@@ -907,6 +912,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
         historico_tipo_situacion = Historico_Tipo_Situacion.objects.get(pk=kwargs["pk"])
         historico_tipo_situacion.id_tipo_situacion = id_tipo_situacion
         historico_tipo_situacion.id_terminal = id_terminal
+        historico_tipo_situacion.fecha = request.data.get("fecha")
 
         historico_tipo_situacion.save()
 
@@ -957,7 +963,7 @@ class Relacion_Paciente_Persona_ViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Comprobamos que existe el paciente que recibimos como parametro get
-        id_paciente = Paciente.objects.get(pk=request.GET.get("id_paciente"))
+        id_paciente = Paciente.objects.get(pk=request.data.get("id_paciente"))
         if id_paciente is None:
             return Response("Error: id_paciente")
         # Comprobamos que existe la persona

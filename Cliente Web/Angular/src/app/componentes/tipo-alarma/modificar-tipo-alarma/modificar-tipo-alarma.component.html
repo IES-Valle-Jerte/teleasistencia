@@ -37,14 +37,14 @@
 
     <div class="form-group-check mb-3">
       <span>Es dispositivo &nbsp;</span>
-      <div class="form-check form-check-inline">
+      <div class="form-check form-check-inline" >
         <input class="form-check-input" type="radio" id="es_dispositivo_true"
-               name="es_dispositivo_true" [value]="true" [(ngModel)]="tipo_alarma.es_dispositivo">
+               name="es_dispositivo" [value]="true" [(ngModel)]="tipo_alarma.es_dispositivo" required>
         <label class="form-check-label" for="es_dispositivo_true">Sí</label>
       </div>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" id="es_dispositivo_false"
-               name="es_dispositivo_false" [value]="false" [(ngModel)]="tipo_alarma.es_dispositivo">
+               name="es_dispositivo" [value]="false" [(ngModel)]="tipo_alarma.es_dispositivo">
         <label class="form-check-label" for="es_dispositivo_false">No</label>
       </div>
     </div>

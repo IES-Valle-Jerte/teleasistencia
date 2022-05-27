@@ -22,6 +22,10 @@ export const environment = {
   //Frase de error al Crear del Toast
   fraseErrorCrear: 'Se ha producido un error inesperado',
   fraseRestaurarCopia: 'La copia seleccionada se ha restaurado.',
+  //Frase Para cuando te asignas una alarma
+  fraseAlarmaAceptada: 'Alarma asignada correptamente',
+  //Frase para cuando ocurre algun error al asignar una alarma
+  fraseErrorAsignarAlarma: 'Se ha Producido Un Error Inesperado',
 
 
   //Modal
@@ -31,6 +35,8 @@ export const environment = {
   colorCancelarModal: '#d33',
   //Frase de Confirmación para Eliminar
   fraseEliminarModal: '¿Estás seguro que deseas eliminarlo?',
+  // Ruta que utilizaremos comun para todas las peticiones de api-rest
+  urlWebsocket: 'ws://localhost:8000/ws/socket-server/',
   urlBase: 'http://localhost:8000/api-rest/',
   urlToken: 'http://localhost:8000/api/token/',
 };

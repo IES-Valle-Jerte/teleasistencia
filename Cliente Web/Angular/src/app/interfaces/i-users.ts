@@ -1,5 +1,5 @@
 export interface IUsers {
-  pk:          number;
+  id:          number;
   url:         string;
   last_login:  null;
   password : string;

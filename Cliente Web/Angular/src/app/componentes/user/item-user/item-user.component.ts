@@ -20,7 +20,7 @@ export class ItemUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user.pk = Number(this.user.url.substr(37));
+
   }
   //Toast para el Alert indicando que la operación fue exitosa
   alertExito() :void {
@@ -74,9 +74,10 @@ export class ItemUserComponent implements OnInit {
     })
   }
   eliminarUsuario(ruta :string  ) : void{
+    console.log(this.user)
     this.cargaUsuario.eliminarUsuario(this.user).subscribe(
       e=>{
-        this.router.navigateByUrl(ruta+'/borrado/'+this.user.pk, {skipLocationChange: true}).then(() => {
+        this.router.navigateByUrl(ruta+'/borrado/'+this.user.id, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);
         });
           //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito
