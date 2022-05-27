@@ -24,7 +24,7 @@
             android:id="@+id/nombreTipoRecursoComunitario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prueba"
+            android:text="@string/prueba"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />

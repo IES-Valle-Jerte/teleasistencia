@@ -12,7 +12,7 @@
         android:id="@+id/textViewTituloPCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Persona Contacto En Alarma"
+        android:text="@string/crear_persona_contacto_en_alarma"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="ID Alarma"
+        android:text="@string/id_alarma"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdAlarmaPCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="ID Persona Contacto"
+        android:text="@string/id_persona_contacto"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdPersonaPCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -66,7 +66,7 @@
         android:id="@+id/textViewFechaRegistroPCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha Registro"
+        android:text="@string/fecha_registro"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextFechaRegistroPCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -91,7 +91,7 @@
         android:id="@+id/textViewAcuerdoPCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Acuerdo alcanzado"
+        android:text="@string/acuerdo_alcanzado"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextAcuerdoPCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -210,7 +210,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="GUARDAR"
+        android:text="@string/guardar"
         android:textColor="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineCentro"
@@ -223,7 +223,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="VOLVER"
+        android:text="@string/volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
         app:layout_constraintStart_toStartOf="@+id/guidelineCentro"

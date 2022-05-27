@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="ID Alarma"
+                    android:text="@string/id_alarma"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Nombre"
+                    android:text="@string/nombre"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Código"
+                    android:text="@string/codigo"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Es dispositivo"
+                    android:text="@string/es_dispositivo"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Clasificación"
+                    android:text="@string/clasificacion"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="16sp"/>
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Nombre"
+                    android:text="@string/nombre"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Código"
+                    android:text="@string/codigo"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 

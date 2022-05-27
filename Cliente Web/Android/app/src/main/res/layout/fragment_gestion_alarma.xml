@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16sp"
                         android:layout_marginVertical="8sp"
-                        android:text="Paciente:"
+                        android:text="@string/paciente_dp"
                         android:textSize="20sp" />
 
                     <TextView
@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16sp"
                         android:layout_marginVertical="8sp"
-                        android:text="Teléfono:"
+                        android:text="@string/telefono_dp"
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16sp"
-                android:hint="Observaciones">
+                android:hint="@string/observaciones">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditTextObservaciones"
@@ -95,7 +95,7 @@
                 android:layout_marginEnd="16sp"
                 android:layout_marginBottom="20sp"
                 android:background="@drawable/button_shape"
-                android:text="Registrar Llamada"
+                android:text="@string/registrar_llamada"
                 android:textColor="@color/white" />
 
             <View
@@ -111,7 +111,7 @@
                 android:layout_marginHorizontal="16sp"
                 android:layout_marginTop="16sp"
                 android:layout_marginBottom="8sp"
-                android:text="LLamar a una persona de contacto:"
+                android:text="@string/llamar_a_una_persona_de_contacto_dp"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16sp"
-                android:hint="Acuerdo alcanzado">
+                android:hint="@string/acuerdo_alcanzado">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditTextAcuerdoContacto"
@@ -168,7 +168,7 @@
                 android:layout_marginEnd="16sp"
                 android:layout_marginBottom="20sp"
                 android:background="@drawable/button_shape"
-                android:text="Registrar Llamada"
+                android:text="@string/registrar_llamada"
                 android:textColor="@color/white" />
 
             <View
@@ -183,7 +183,7 @@
                 android:layout_marginHorizontal="16sp"
                 android:layout_marginTop="16sp"
                 android:layout_marginBottom="8sp"
-                android:text="LLamar a Centro Sanitario:"
+                android:text="@string/llamar_a_centro_sanitario_dp"
                 android:textSize="20sp" />
 
         <LinearLayout
@@ -215,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16sp"
-                android:hint="Persona que atendió la llamada">
+                android:hint="@string/persona_que_atendi_la_llamada">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditTextPersonaLlamadaCentroSanitario"
@@ -236,7 +236,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16sp"
-                android:hint="Acuerdo alcanzado">
+                android:hint="@string/acuerdo_alcanzado">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditTextAcuerdoCentroSanitario"
@@ -262,7 +262,7 @@
                 android:layout_marginEnd="16sp"
                 android:layout_marginBottom="20sp"
                 android:background="@drawable/button_shape"
-                android:text="Registrar Llamada"
+                android:text="@string/registrar_llamada"
                 android:textColor="@color/white" />
 
             <View
@@ -278,7 +278,7 @@
                 android:layout_marginHorizontal="16sp"
                 android:layout_marginTop="16sp"
                 android:layout_marginBottom="8sp"
-                android:text="LLamar a un recurso comunitario:"
+                android:text="@string/llamar_a_un_recurso_comunitario_dp"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -310,7 +310,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16sp"
-                android:hint="Persona que atendió la llamada">
+                android:hint="@string/persona_que_atendi_la_llamada">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditTextPersonaLlamadaRecursoComunitario"
@@ -331,7 +331,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16sp"
-                android:hint="Acuerdo alcanzado">
+                android:hint="@string/acuerdo_alcanzado">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditTextAcuerdoRecursoComunitario"
@@ -354,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16sp"
                 android:background="@drawable/button_shape"
-                android:text="Registrar Llamada"
+                android:text="@string/registrar_llamada"
                 android:textColor="@color/white" />
 
             <View
@@ -369,7 +369,7 @@
                 android:layout_marginHorizontal="16sp"
                 android:layout_marginTop="16sp"
                 android:layout_marginBottom="8sp"
-                android:text="Crear agenda:"
+                android:text="@string/crear_agenda_dp"
                 android:textSize="20sp" />
 
             <android.widget.Button
@@ -378,7 +378,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16sp"
                 android:background="@drawable/button_shape"
-                android:text="Registrar Agenda"
+                android:text="@string/registrar_agenda"
                 android:textColor="@color/white" />
 
             <View
@@ -394,7 +394,7 @@
                 android:layout_marginHorizontal="16sp"
                 android:layout_marginTop="16sp"
                 android:layout_marginBottom="8sp"
-                android:text="Resumen: "
+                android:text="@string/resumen_dp"
                 android:textSize="20sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -437,7 +437,7 @@
                     android:layout_weight="50"
                     android:background="@drawable/button_shape"
                     android:backgroundTint="#FF0000"
-                    android:text="CANCELAR"
+                    android:text="@string/cancelar"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -449,7 +449,7 @@
                     android:layout_weight="50"
                     android:background="@drawable/button_shape"
                     android:backgroundTint="#00D108"
-                    android:text="FINALIZAR"
+                    android:text="@string/finalizar"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 

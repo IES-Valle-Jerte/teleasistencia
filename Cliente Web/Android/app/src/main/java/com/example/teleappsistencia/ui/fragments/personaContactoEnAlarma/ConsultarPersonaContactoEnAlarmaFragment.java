@@ -13,6 +13,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.PersonaContactoEnAlarma;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
@@ -22,7 +23,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
  */
 public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
 
-    private static final String ARG_PERSONACONTACTOEA = "PCEA";
     private PersonaContactoEnAlarma personaContactoEnAlarma;
     private TextView textViewConsultarIdPCEA;
     private TextView textViewConsultarFechaPCEA;
@@ -45,7 +45,7 @@ public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
     public static ConsultarPersonaContactoEnAlarmaFragment newInstance(PersonaContactoEnAlarma personaContactoEnAlarma) {
         ConsultarPersonaContactoEnAlarmaFragment fragment = new ConsultarPersonaContactoEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PERSONACONTACTOEA, personaContactoEnAlarma);
+        args.putSerializable(Constantes.ARG_PERSONACONTACTOEA, personaContactoEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,7 +54,7 @@ public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.personaContactoEnAlarma = (PersonaContactoEnAlarma) getArguments().getSerializable(ARG_PERSONACONTACTOEA);
+            this.personaContactoEnAlarma = (PersonaContactoEnAlarma) getArguments().getSerializable(Constantes.ARG_PERSONACONTACTOEA);
         }
     }
 
@@ -76,6 +76,10 @@ public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.textViewConsultarIdPCEA = (TextView) view.findViewById(R.id.textViewConsultarIdPCEA);
         this.textViewConsultarFechaPCEA = (TextView) view.findViewById(R.id.textViewConsultarFechaPCEA);
@@ -84,9 +88,12 @@ public class ConsultarPersonaContactoEnAlarmaFragment extends Fragment {
         this.textViewConsultarIdAlarmaPCEA = (TextView) view.findViewById(R.id.textViewConsultarIdAlarmaPCEA);
     }
 
+    /**
+     * Este método carga los datos en el layout.
+     */
     private void cargarDatos() {
-        Alarma alarma = (Alarma) Utilidad.getObjeto(personaContactoEnAlarma.getIdAlarma(), "Alarma");
-        Persona persona = (Persona) Utilidad.getObjeto(personaContactoEnAlarma.getIdPersonaContacto(), "Persona");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(personaContactoEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        Persona persona = (Persona) Utilidad.getObjeto(personaContactoEnAlarma.getIdPersonaContacto(), Constantes.PERSONA);
 
         this.textViewConsultarIdPCEA.setText(String.valueOf(this.personaContactoEnAlarma.getId()));
         this.textViewConsultarFechaPCEA.setText(this.personaContactoEnAlarma.getFechaRegistro());

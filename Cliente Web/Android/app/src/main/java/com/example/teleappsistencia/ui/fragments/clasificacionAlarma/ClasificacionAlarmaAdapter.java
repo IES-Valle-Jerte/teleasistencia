@@ -14,6 +14,7 @@ import com.example.teleappsistencia.modelos.ClasificacionAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 import java.util.List;
 import okhttp3.ResponseBody;
@@ -39,6 +40,7 @@ public class ClasificacionAlarmaAdapter extends RecyclerView.Adapter<Clasificaci
         public ClasificacionAlarmaViewHolder(View v) {
             super(v);
             this.context = v.getContext();
+            // Capturamos los elementos del layout
             this.txtCardIdClasificacionAlarma = (TextView) v.findViewById(R.id.txtCardIdClasificacionAlarma);
             this.txtCardNombreClasificacionAlarma = (TextView) v.findViewById(R.id.txtCardNombreClasificacionAlarma);
             this.txtCardCodigoClasificacionAlarma = (TextView) v.findViewById(R.id.txtCardCodigoClasificacionAlarma);
@@ -46,7 +48,7 @@ public class ClasificacionAlarmaAdapter extends RecyclerView.Adapter<Clasificaci
             this.imageButtonModificarClasificacionAlarma = (ImageButton) v.findViewById(R.id.imageButtonModificarClasificacionAlarma);
             this.imageButtonBorrarClasificacionAlarma = (ImageButton) v.findViewById(R.id.imageButtonBorrarClasificacionAlarma);
         }
-
+        //Asignamos listeners
         public void setOnClickListeners() {
             this.imageButtonVerClasificacionAlarma.setOnClickListener(this);
             this.imageButtonModificarClasificacionAlarma.setOnClickListener(this);
@@ -77,32 +79,51 @@ public class ClasificacionAlarmaAdapter extends RecyclerView.Adapter<Clasificaci
             }
         }
 
+        // Setter para poder pasarle la alarma desde del Adapter
         public void setClasificacionAlarma(ClasificacionAlarma clasificacionAlarma){
             this.clasificacionAlarma = clasificacionAlarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar la clasificación de la alarma
+         */
         private void borrarClasificacionAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteClasificacionAlarmabyId(this.clasificacionAlarma.getId(), "Bearer "+ Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteClasificacionAlarmabyId(this.clasificacionAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, "Clasificacion de Alarma borrada correctamente.", Toast.LENGTH_LONG).show();
-                    MainActivity activity = (MainActivity) context;
-                    ListarClasificacionAlarmaFragment listarClasificacionAlarmaFragment = new ListarClasificacionAlarmaFragment();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, listarClasificacionAlarmaFragment)
-                            .addToBackStack(null)
-                            .commit();
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, Constantes.CLASIFICACION_ALARMA_BORRADA, Toast.LENGTH_LONG).show();
+                        volver();
+                    }else{
+                        Toast.makeText(context, Constantes.ERROR_BORRADO + response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, "Error al intentar borrar los datos.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver(){
+            MainActivity activity = (MainActivity) context;
+            ListarClasificacionAlarmaFragment listarClasificacionAlarmaFragment = new ListarClasificacionAlarmaFragment();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, listarClasificacionAlarmaFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
+    /**
+     * Se le carga la lista de items al Adapter, en este caso de Clasificaciones de Alarma
+     * @param items
+     */
     public ClasificacionAlarmaAdapter(List<ClasificacionAlarma> items) {
         this.items = items;
     }
@@ -122,12 +143,12 @@ public class ClasificacionAlarmaAdapter extends RecyclerView.Adapter<Clasificaci
     @Override
     public void onBindViewHolder(ClasificacionAlarmaAdapter.ClasificacionAlarmaViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-
+        // En el bind, le cargamos los atributos al layout de la tarjeta
         ClasificacionAlarma clasificacionAlarma = items.get(i);
         viewHolder.setClasificacionAlarma(clasificacionAlarma);
 
-        viewHolder.txtCardIdClasificacionAlarma.setText("ID: "+ String.valueOf(clasificacionAlarma.getId()));
-        viewHolder.txtCardNombreClasificacionAlarma.setText("Nombre: " + clasificacionAlarma.getNombre());
-        viewHolder.txtCardCodigoClasificacionAlarma.setText("Código: "+clasificacionAlarma.getCodigo());
+        viewHolder.txtCardIdClasificacionAlarma.setText(Constantes.ID_DP_SP + String.valueOf(clasificacionAlarma.getId()));
+        viewHolder.txtCardNombreClasificacionAlarma.setText(Constantes.NOMBRE_DP_SP + clasificacionAlarma.getNombre());
+        viewHolder.txtCardCodigoClasificacionAlarma.setText(Constantes.CODIGO_DP_SP + clasificacionAlarma.getCodigo());
     }
 }

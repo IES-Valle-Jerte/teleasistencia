@@ -69,6 +69,10 @@ public class Terminal implements Serializable {
         this.id_tipo_vivienda = id_tipo_vivienda;
     }
 
+    /**
+     * Se retorna el número de terminal para usarlo en los Spinner y que el usuario lo identifique.
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {

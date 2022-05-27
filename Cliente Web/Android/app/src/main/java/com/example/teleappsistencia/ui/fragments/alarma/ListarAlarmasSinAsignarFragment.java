@@ -1,15 +1,15 @@
 package com.example.teleappsistencia.ui.fragments.alarma;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Alarma;
@@ -28,17 +28,18 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ListarAlarmasFragment#newInstance} factory method to
+ * Use the {@link ListarAlarmasSinAsignarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListarAlarmasFragment extends Fragment {
+public class ListarAlarmasSinAsignarFragment extends Fragment {
 
     private List<Alarma> lAlarmas;
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
+    private TextView textViewTituloAlarmas;
 
-    public ListarAlarmasFragment() {
+    public ListarAlarmasSinAsignarFragment() {
         // Required empty public constructor
     }
 
@@ -48,8 +49,8 @@ public class ListarAlarmasFragment extends Fragment {
      *
      * @return A new instance of fragment ListarAlarmasFragment.
      */
-    public static ListarAlarmasFragment newInstance() {
-        ListarAlarmasFragment fragment = new ListarAlarmasFragment();
+    public static ListarAlarmasSinAsignarFragment newInstance() {
+        ListarAlarmasSinAsignarFragment fragment = new ListarAlarmasSinAsignarFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -76,12 +77,15 @@ public class ListarAlarmasFragment extends Fragment {
 
         //Cargamos un adaptador vacío mientras se carga la lista desde la API REST
         this.lAlarmas = new ArrayList<>();
-        adapter = new AlarmaAdapter(lAlarmas);
+        adapter = new AlarmaGestionAdapter(lAlarmas);
         recycler.setAdapter(adapter);
 
         //Cargamos lista desde la API REST
         cargarLista();
 
+        //Cambiamos el título
+        this.textViewTituloAlarmas = (TextView) root.findViewById(R.id.textViewTituloAlarmas);
+        this.textViewTituloAlarmas.setText(Constantes.ALARMAS_SIN_ASIGNAR);
 
         return root;
     }
@@ -92,14 +96,14 @@ public class ListarAlarmasFragment extends Fragment {
      */
     private void cargarLista(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getAlarmas(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getAlarmasSinAsignar(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if(response.isSuccessful()){
                     List<Object> lObjetos = response.body();
                     lAlarmas = (ArrayList<Alarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_ALARMA);
-                    adapter = new AlarmaAdapter(lAlarmas);
+                    adapter = new AlarmaGestionAdapter(lAlarmas);
                     recycler.setAdapter(adapter);
                 }else{
                     Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();

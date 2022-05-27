@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.ui.fragments.alarma.AlarmaAdapter;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.ArrayList;
@@ -34,7 +37,6 @@ public class ListarCentrosSanitariosEnAlarmaFragment extends Fragment {
 
 
     private ArrayList<CentroSanitarioEnAlarma> lCentrosEnAlarma;
-
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
@@ -45,11 +47,11 @@ public class ListarCentrosSanitariosEnAlarmaFragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * this fragment using the provided parameters.     *
      *
      * @return A new instance of fragment ListarCentrosSanitariosEnAlarmaFragment.
      */
-    public static ListarCentrosSanitariosEnAlarmaFragment newInstance(ArrayList<CentroSanitarioEnAlarma> lCentrosEnAlarma) {
+    public static ListarCentrosSanitariosEnAlarmaFragment newInstance() {
         ListarCentrosSanitariosEnAlarmaFragment fragment = new ListarCentrosSanitariosEnAlarmaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -86,21 +88,29 @@ public class ListarCentrosSanitariosEnAlarmaFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Este método carga la lista que vamos a mostrar desde la API REST y una vez que se ha cargada
+     * se las añade al adapter y se las cargamos al recycler.
+     */
     private void cargarLista(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getCentrosSanitariosEnAlarma("Bearer " + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getCentrosSanitariosEnAlarma(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lCentrosEnAlarma = (ArrayList<CentroSanitarioEnAlarma>) Utilidad.getObjeto(lObjetos, "ArrayList<CentroSanitarioEnAlarma>");
-                adapter = new CentroSanitarioEnAlarmaAdapter(lCentrosEnAlarma);
-                recycler.setAdapter(adapter);
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lCentrosEnAlarma = (ArrayList<CentroSanitarioEnAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CENTRO_SANITARIO_ALARMA);
+                    adapter = new CentroSanitarioEnAlarmaAdapter(lCentrosEnAlarma);
+                    recycler.setAdapter(adapter);
+                }else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Object>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al cargar los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

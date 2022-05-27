@@ -2,6 +2,7 @@ package com.example.teleappsistencia.modelos;
 
 import androidx.annotation.NonNull;
 
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.google.gson.annotations.SerializedName;
 
@@ -90,11 +91,15 @@ public class Contacto implements Serializable {
         this.personaEnContacto = personaEnContacto;
     }
 
+    /**
+     * Se retorna el nombre de la persona de contacto para identificarla en los ListView, Spinners, etc
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {
-        Persona persona = (Persona) Utilidad.getObjeto(this.getPersonaEnContacto(), "Persona");
-        String nombreContacto = persona.getNombre() + " " +persona.getApellidos();
+        Persona persona = (Persona) Utilidad.getObjeto(this.getPersonaEnContacto(), Constantes.PERSONA);
+        String nombreContacto = persona.getNombre() + Constantes.ESPACIO +persona.getApellidos();
         return nombreContacto;
     }
 }

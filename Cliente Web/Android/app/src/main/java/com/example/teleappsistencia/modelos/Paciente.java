@@ -1,5 +1,6 @@
 package com.example.teleappsistencia.modelos;
 
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.google.gson.annotations.SerializedName;
 
@@ -108,9 +109,13 @@ public class Paciente implements Serializable {
         this.id_tipo_modalidad_paciente = id_tipo_modalidad_paciente;
     }
 
+    /**
+     * Se retorna el nombre y los apellidos del paciente para identificarlo en los Spinners
+     * @return
+     */
     @Override
     public String toString() {
-        Persona persona = (Persona) Utilidad.getObjeto(getId_persona(), "Persona");
-        return persona.getNombre()+" "+persona.getApellidos();
+        Persona persona = (Persona) Utilidad.getObjeto(getId_persona(), Constantes.PERSONA);
+        return persona.getNombre()+Constantes.ESPACIO+persona.getApellidos();
     }
 }

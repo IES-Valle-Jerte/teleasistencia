@@ -24,7 +24,7 @@
             android:id="@+id/txtCardIdAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Alarma: "
+            android:text="@string/id_alarma"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:id="@+id/txtCardEstadoAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estado: "
+            android:text="@string/estado_dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerAlarma"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/imageButtonVerAlarma" />
@@ -42,7 +42,7 @@
             android:id="@+id/txtCardFechaRegistroAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha: "
+            android:text="@string/fecha_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardEstadoAlarma" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/txtCardTipoAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tipo: "
+            android:text="@string/tipo_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardFechaRegistroAlarma" />
 

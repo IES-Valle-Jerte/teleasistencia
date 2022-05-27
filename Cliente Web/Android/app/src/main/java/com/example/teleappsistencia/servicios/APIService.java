@@ -7,6 +7,9 @@ import com.example.teleappsistencia.modelos.PersonaContactoEnAlarma;
 import com.example.teleappsistencia.modelos.RecursoComunitarioEnAlarma;
 import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.modelos.Token;
+
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,15 +33,21 @@ public interface APIService {
     @POST("api/token/")
     public Call<Token> getToken(@Field("username") String username, @Field("password") String password);
 
-    //Peticiones de Alarma
+    /* Peticiones de Alarma */
     @GET("api-rest/alarma")
     public Call<List<Object>> getAlarmas(@Header("Authorization") String token);
 
     @GET("api-rest/alarma/{id}")
     public Call<Alarma> getAlarmabyId(@Path("id") int id, @Header("Authorization") String token);
 
+    @GET("/api-rest/alarma")
+    public Call<List<Object>> getAlarmasbyIdTeleoperador(@Query("id_teleoperador") int id, @Header("Authorization") String token);
+
     @GET("/api-rest/alarma?id_teleoperador__isnull=true")
     public Call<List<Object>> getAlarmasSinAsignar(@Header("Authorization") String token);
+
+    @GET("/api-rest/alarma")
+    public Call<List<Object>> getAlarmasDelDia(@Query("fecha_registro__gt") String fecha, @Header("Authorization") String token);
 
     @POST("api-rest/alarma")
     public Call<Alarma> addAlarma(@Body Alarma alarma, @Header("Authorization") String token);

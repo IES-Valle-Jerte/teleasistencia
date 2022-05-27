@@ -59,6 +59,10 @@ public class CentroSanitario implements Serializable {
         this.direccion = direccion;
     }
 
+    /**
+     * Se devuelve el nombre del centro sanitario para identificarlo en ListView, Spinners, etc
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {

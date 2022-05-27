@@ -11,7 +11,7 @@
         android:id="@+id/textViewTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Centro Sanitario en Alarma"
+        android:text="@string/crear_centro_sanitario_en_alarma"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:id="@+id/textViewIdAlarmaCSEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID Alarma"
+        android:text="@string/id_alarma"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdAlarmaCSEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/textViewIdCentroSanitarioCrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID Centro Sanitario"
+        android:text="@string/id_centro_sanitario"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdCentroSanitarioCSEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -63,7 +63,7 @@
         android:id="@+id/textViewFechaRegistroCSEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha Registro"
+        android:text="@string/fecha_registro"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextFechaRegistroCSEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -88,7 +88,7 @@
         android:id="@+id/textViewPersonaCSEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Persona"
+        android:text="@string/persona"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextPersonaCSEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -112,7 +112,7 @@
         android:id="@+id/textViewAcuerdoCSEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Acuerdo alcanzado"
+        android:text="@string/acuerdo_alcanzado"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextAcuerdoCSEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -231,7 +231,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="GUARDAR"
+        android:text="@string/guardar"
         android:textColor="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineCentro"
@@ -244,7 +244,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="VOLVER"
+        android:text="@string/volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
         app:layout_constraintStart_toStartOf="@+id/guidelineCentro"

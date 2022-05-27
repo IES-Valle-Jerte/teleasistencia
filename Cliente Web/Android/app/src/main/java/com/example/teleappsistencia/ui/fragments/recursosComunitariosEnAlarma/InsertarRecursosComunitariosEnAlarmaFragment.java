@@ -16,6 +16,7 @@ import com.example.teleappsistencia.modelos.RecursoComunitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import retrofit2.Call;
@@ -49,7 +50,7 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
      * @return A new instance of fragment InsertarRecursosComunitariosEnAlarmaFragment.
      */
     
-    public static InsertarRecursosComunitariosEnAlarmaFragment newInstance(String param1, String param2) {
+    public static InsertarRecursosComunitariosEnAlarmaFragment newInstance() {
         InsertarRecursosComunitariosEnAlarmaFragment fragment = new InsertarRecursosComunitariosEnAlarmaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -76,6 +77,10 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.editTextNumberIdAlarmaRCEACrear = (EditText) view.findViewById(R.id.editTextNumberIdAlarmaRCEACrear);
         this.editTextNumberIdRecursoComunitarioRCEACrear = (EditText) view.findViewById(R.id.editTextNumberIdRecursoComunitarioRCEACrear);
@@ -86,13 +91,41 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
         this.buttonVolverRCEA = (Button) view.findViewById(R.id.buttonVolverRCEA);
     }
 
+    /**
+     * En este método se asignan los lístner a los botones y al Edit Text de la fecha
+     */
     private void asignarListener() {
         this.buttonGuardarRCEAModificado.setOnClickListener(this);
         this.buttonVolverRCEA.setOnClickListener(this);
         this.editTextFechaRegistroRCEACrear.setOnClickListener(this);
     }
 
-    private void crearDatosRecursoComunitarioEnAlarma(){
+
+    /**
+     * Este método realiza las comprobaciones básicas imprescindibles
+     * TODO: se pueden mejorar estas comprobaciones
+     * @return
+     */
+    private boolean comprobaciones(){
+        if(this.editTextFechaRegistroRCEACrear.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_FECHA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNumberIdAlarmaRCEACrear.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_ALARMA, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(this.editTextNumberIdRecursoComunitarioRCEACrear.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_ID_RECURSO_COMUNITARIO, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Extraemos los datos del layout y los guardamos en un objeto del tipo RecursoComunitarioEnAlarma.
+     */
+    private void guardarDatos(){
         this.recursoComunitarioEnAlarma = new RecursoComunitarioEnAlarma();
         this.recursoComunitarioEnAlarma.setIdAlarma(Integer.parseInt(this.editTextNumberIdAlarmaRCEACrear.getText().toString()));
         this.recursoComunitarioEnAlarma.setIdRecursoComunitairo(Integer.parseInt(this.editTextNumberIdRecursoComunitarioRCEACrear.getText().toString()));
@@ -101,27 +134,34 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
         this.recursoComunitarioEnAlarma.setAcuerdoAlcanzado(this.editTextAcuerdoRCEACrear.getText().toString());
     }
 
+    /**
+     * Este método lanza la petición POST a la API REST para guardar los datos del Recurso Comunitario en Alarma
+     */
     private void persistirRecursoComunitarioAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<RecursoComunitarioEnAlarma> call = apiService.addRecursoComunitarioEnAlarma(this.recursoComunitarioEnAlarma, "Bearer "+ Token.getToken().getAccess());
+        Call<RecursoComunitarioEnAlarma> call = apiService.addRecursoComunitarioEnAlarma(this.recursoComunitarioEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<RecursoComunitarioEnAlarma>() {
             @Override
             public void onResponse(Call<RecursoComunitarioEnAlarma> call, Response<RecursoComunitarioEnAlarma> response) {
-                if(response.errorBody() == null){
-                    Toast.makeText(getContext(), "Guardado con éxito", Toast.LENGTH_SHORT).show();
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), Constantes.GUARDADO_CON_EXITO, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 }
                 else{
-                    Toast.makeText(getContext(), "Error en la creación: " + response.raw().message() + " (Pista: ¿existe Alarma y/o Recurso Comunitario con ese ID?)" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_CREACION + Constantes.PISTA_ALARMA_RECURSOCOMUNITARIO_ID , Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<RecursoComunitarioEnAlarma> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Este método vuelve a cargar el fragment con el listado.
+     */
     private void volver(){
         ListarRecursosComunitariosEnAlarmaFragment lRCEA = new ListarRecursosComunitariosEnAlarmaFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -130,21 +170,17 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
                 .commit();
     }
 
-    private boolean comprobaciones(){
-        if(this.editTextFechaRegistroRCEACrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir una fecha", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(this.editTextNumberIdAlarmaRCEACrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Alarma", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(this.editTextNumberIdRecursoComunitarioRCEACrear.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un ID de Recurso Comunitario", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+    /**
+     * Este método limpia los campos.
+     */
+    private void limpiarCampos(){
+        this.editTextNumberIdAlarmaRCEACrear.setText(Constantes.VACIO);
+        this.editTextNumberIdRecursoComunitarioRCEACrear.setText(Constantes.VACIO);
+        this.editTextFechaRegistroRCEACrear.setText(Constantes.VACIO);
+        this.editTextPersonaRCEACrear.setText(Constantes.VACIO);
+        this.editTextAcuerdoRCEACrear.setText(Constantes.VACIO);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -154,7 +190,7 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
                 break;
             case R.id.buttonGuardarRCEAModificado:
                 if(comprobaciones()){
-                    crearDatosRecursoComunitarioEnAlarma();
+                    guardarDatos();
                     persistirRecursoComunitarioAlarma();
                 }
                 break;

@@ -17,6 +17,7 @@ import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class TipoAlarmaAdapter extends RecyclerView.Adapter<TipoAlarmaAdapter.Ti
         public TipoAlarmaViewHolder(View v) {
             super(v);
             this.context = v.getContext();
+            // Capturamos los elementos del layout
             this.txtCardIdTipoAlarma = (TextView) v.findViewById(R.id.txtCardIdTipoAlarma);
             this.txtCardNombreTipoAlarma = (TextView) v.findViewById(R.id.txtCardNombreTipoAlarma);
             this.txtCardCodigoTipoAlarma = (TextView) v.findViewById(R.id.txtCardCodigoTipoAlarma);
@@ -55,7 +57,7 @@ public class TipoAlarmaAdapter extends RecyclerView.Adapter<TipoAlarmaAdapter.Ti
             this.imageButtonModificarTipoAlarma = (ImageButton) v.findViewById(R.id.imageButtonModificarTipoAlarma);
             this.imageButtonBorrarTipoAlarma = (ImageButton) v.findViewById(R.id.imageButtonBorrarTipoAlarma);
         }
-
+        //Asignamos listeners
         public void setOnClickListeners() {
             this.imageButtonVerTipoAlarma.setOnClickListener(this);
             this.imageButtonModificarTipoAlarma.setOnClickListener(this);
@@ -85,33 +87,51 @@ public class TipoAlarmaAdapter extends RecyclerView.Adapter<TipoAlarmaAdapter.Ti
                     break;
             }
         }
-
+        // Setter para poder pasarle el atributo desde del Adapter
         public void setTipoAlarma(TipoAlarma tipoAlarma){
             this.tipoAlarma = tipoAlarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar el Tipo de Alarma
+         */
         private void borrarTipoAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteTipoAlarmabyId(this.tipoAlarma.getId(), "Bearer "+ Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteTipoAlarmabyId(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, "Tipo de Alarma borrada correctamente.", Toast.LENGTH_LONG).show();
-                    MainActivity activity = (MainActivity) context;
-                    ListarTipoAlarmaFragment listarTipoAlarmaFragment = new ListarTipoAlarmaFragment();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, listarTipoAlarmaFragment)
-                            .addToBackStack(null)
-                            .commit();
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, Constantes.TIPO_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
+                        volver();
+                    }else{
+                        Toast.makeText(context, Constantes.ERROR_BORRADO + response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, "Error al intentar borrar los datos.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constantes.ERROR_BORRADO, Toast.LENGTH_LONG).show();
                 }
             });
         }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver(){
+            MainActivity activity = (MainActivity) context;
+            ListarTipoAlarmaFragment listarTipoAlarmaFragment = new ListarTipoAlarmaFragment();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, listarTipoAlarmaFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
+    /**
+     * Se le carga la lista de items al Adapter, en este caso, lista de Tipos de Alarma
+     * @param items
+     */
     public TipoAlarmaAdapter(List<TipoAlarma> items) {
         this.items = items;
     }
@@ -131,16 +151,16 @@ public class TipoAlarmaAdapter extends RecyclerView.Adapter<TipoAlarmaAdapter.Ti
     @Override
     public void onBindViewHolder(TipoAlarmaAdapter.TipoAlarmaViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-
+        // En el bind, le cargamos los atributos al layout de la tarjeta
         TipoAlarma tipoAlarma = items.get(i);
         viewHolder.setTipoAlarma(tipoAlarma);
 
-        ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(tipoAlarma.getClasificacionAlarma(), "ClasificacionAlarma");
+        ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(tipoAlarma.getClasificacionAlarma(), Constantes.CLASIFICACION_ALARMA);
 
-        viewHolder.txtCardIdTipoAlarma.setText("ID: "+String.valueOf(tipoAlarma.getId()));
-        viewHolder.txtCardNombreTipoAlarma.setText("Nombre: "+tipoAlarma.getNombre());
-        viewHolder.txtCardCodigoTipoAlarma.setText("Código: "+tipoAlarma.getCodigo());
-        viewHolder.txtCardEsDispositivoTipoAlarma.setText("Dispositivo: "+Utilidad.trueSifalseNo(tipoAlarma.isEsDispositivo()));
-        viewHolder.txtCardClasificacionTipoAlarma.setText("Clasificación: "+clasificacionAlarma.getNombre());
+        viewHolder.txtCardIdTipoAlarma.setText(Constantes.ID_DP_SP+String.valueOf(tipoAlarma.getId()));
+        viewHolder.txtCardNombreTipoAlarma.setText(Constantes.NOMBRE_DP_SP +tipoAlarma.getNombre());
+        viewHolder.txtCardCodigoTipoAlarma.setText(Constantes.CODIGO_DP_SP+tipoAlarma.getCodigo());
+        viewHolder.txtCardEsDispositivoTipoAlarma.setText(Constantes.DISPOSITIVO_DP_SP + Utilidad.trueSifalseNo(tipoAlarma.isEsDispositivo()));
+        viewHolder.txtCardClasificacionTipoAlarma.setText(Constantes.CLASIFICACION_DP_SP + clasificacionAlarma.getNombre());
     }
 }

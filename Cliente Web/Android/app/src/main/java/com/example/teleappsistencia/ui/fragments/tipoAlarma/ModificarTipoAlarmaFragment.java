@@ -20,6 +20,7 @@ import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ import retrofit2.Response;
  */
 public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_TIPOALARMA = "TipoAlarma";
     private TipoAlarma tipoAlarma;
     private List<ClasificacionAlarma> lClasificacionAlarma;
     private EditText editTextCodigoTipoAlarmaModificar;
@@ -62,7 +62,7 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
     public static ModificarTipoAlarmaFragment newInstance(TipoAlarma tipoAlarma) {
         ModificarTipoAlarmaFragment fragment = new ModificarTipoAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_TIPOALARMA, tipoAlarma);
+        args.putSerializable(Constantes.ARG_TIPOALARMA, tipoAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +71,7 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(ARG_TIPOALARMA);
+            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(Constantes.ARG_TIPOALARMA);
         }
     }
 
@@ -97,6 +97,10 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view){
         this.editTextCodigoTipoAlarmaModificar = (EditText) view.findViewById(R.id.editTextCodigoTipoAlarmaModificar);
         this.editTextNombreTipoAlarmaModificar = (EditText) view.findViewById(R.id.editTextNombreTipoAlarmaModificar);
@@ -107,11 +111,17 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         this.buttonVolverTipoAlarma = (Button) view.findViewById(R.id.buttonVolverTipoAlarma);
     }
 
+    /**
+     * Asignamos la propia clase como OnClickListener, ya que abajo tenemos el método implementado
+     */
     private void asignarListener(){
         this.buttonGuardarTipoAlarmaModificado.setOnClickListener(this);
         this.buttonVolverTipoAlarma.setOnClickListener(this);
     }
 
+    /**
+     * Este método carga los datos del Tipo de Alarma en el layout.
+     */
     private void cargarDatos(){
         this.editTextCodigoTipoAlarmaModificar.setText(this.tipoAlarma.getCodigo());
         this.editTextNombreTipoAlarmaModificar.setText(this.tipoAlarma.getNombre());
@@ -124,26 +134,41 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         cargarSpinner();
     }
 
+    /**
+     * Este método hace una petición a la API REST de la lista con todas las Clasificaciones de Alarma.
+     * Las carga en un spinner.
+     */
     private void cargarSpinner(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getListaClasificacionAlarma("Bearer " + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getListaClasificacionAlarma(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
-                List<Object> lObjetos = response.body();
-                lClasificacionAlarma = (ArrayList<ClasificacionAlarma>) Utilidad.getObjeto(lObjetos, "ArrayList<ClasificacionAlarma>");
-                ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lClasificacionAlarma);
-                spinnerClasificacionTipoAlarma.setAdapter(adapter);
-                seleccionarItem();
+                if(response.isSuccessful()){
+                    List<Object> lObjetos = response.body();
+                    lClasificacionAlarma = (ArrayList<ClasificacionAlarma>) Utilidad.getObjeto(lObjetos, Constantes.AL_CLASIFICACION_ALARMA);
+                    ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lClasificacionAlarma);
+                    spinnerClasificacionTipoAlarma.setAdapter(adapter);
+                    seleccionarItem();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message(), Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
             public void onFailure(Call<List<Object>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Este método busca la posición del objeto Clasificación Alarma en la lista y selecciona el item
+     * del spinner que corresponde a esa posición. Eso hace que el spinner carge de inicio con el la Clasificación
+     * de Alarma que trae el objeto a modificar.
+     */
     private void seleccionarItem(){
         boolean encontrado = false;
         ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(this.tipoAlarma.getClasificacionAlarma(), "ClasificacionAlarma");
@@ -159,19 +184,27 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         }
     }
 
+    /**
+     * Este método realiza las comprobaciones básicas imprescindibles
+     * TODO: se pueden mejorar estas comprobaciones
+     * @return
+     */
     private boolean comprobaciones(){
         if(this.editTextNombreTipoAlarmaModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un nombre", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_NOMBRE, Toast.LENGTH_SHORT).show();
             return false;
         }
         if(this.editTextCodigoTipoAlarmaModificar.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Debes introducir un Código.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), Constantes.DEBES_INTRODUCIR_CODIGO_TIPO_ALARMA, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    private void guardarDatos(){
+    /**
+     * Modificamos los datos del objeto alarma que nos llegó al crear el fragment
+     */
+    private void modificarDatosTipoAlarma(){
         ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) spinnerClasificacionTipoAlarma.getSelectedItem();
         this.tipoAlarma.setNombre(this.editTextNombreTipoAlarmaModificar.getText().toString());
         this.tipoAlarma.setCodigo(this.editTextCodigoTipoAlarmaModificar.getText().toString());
@@ -179,6 +212,33 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
         this.tipoAlarma.setClasificacionAlarma(clasificacionAlarma.getId());
     }
 
+    /**
+     * Este método lanza la petición PUT a la API REST para modificar el Tipo de Alarma
+     */
+    private void persistirTipoAlarma(){
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        Call<ResponseBody> call = apiService.actualizarTipoAlarma(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.tipoAlarma);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), Constantes.MODIFICADO_CON_EXITO, Toast.LENGTH_LONG).show();
+                    volver();
+                }
+                else{
+                    Toast.makeText(getContext(), Constantes.ERROR_ + response.message() , Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * Este método vuelve a cargar el fragment con el listado.
+     */
     private void volver(){
         ListarTipoAlarmaFragment listarTipoAlarmaFragment = new ListarTipoAlarmaFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -187,28 +247,12 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
                 .commit();
     }
 
-    private void persistirTipoAlarma(){
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarTipoAlarma(this.tipoAlarma.getId(), "Bearer "+ Token.getToken().getAccess(), this.tipoAlarma);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getContext(), "Tipo de Alarma modificada con éxito", Toast.LENGTH_LONG).show();
-                volver();
-            }
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.buttonGuardarTipoAlarmaModificado:
                 if(comprobaciones()){
-                    guardarDatos();
+                    modificarDatosTipoAlarma();
                     persistirTipoAlarma();
                 }
                 break;

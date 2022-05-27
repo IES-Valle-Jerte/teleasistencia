@@ -43,27 +43,12 @@ public class Token implements Serializable {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if(response.isSuccessful()){
                     token = response.body();
-                    System.out.println("\nToken: " + token + "\n");
-
-                } else{
-                    System.out.println(response.message());
-                    System.out.println(response.body());
-                    System.out.println(response.raw());
                 }
             }
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
                 t.printStackTrace();
-                System.out.println(t.getMessage());
             }
         });
-    }
-
-    @Override
-    public String toString() {
-        return "Token{" +
-                "refresh='" + refresh + '\'' +
-                ", access='" + access + '\'' +
-                '}';
     }
 }

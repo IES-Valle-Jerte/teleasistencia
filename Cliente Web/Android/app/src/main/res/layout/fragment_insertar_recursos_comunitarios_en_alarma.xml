@@ -12,7 +12,7 @@
         android:id="@+id/textViewTituloRCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Recurso Comunitario En Alarma"
+        android:text="@string/crear_recurso_comunitario_en_alarma"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="ID Alarma"
+        android:text="@string/id_alarma"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdAlarmaRCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="ID Recurso Comunitario"
+        android:text="@string/id_recurso_comunitario"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdRecursoComunitarioRCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -66,7 +66,7 @@
         android:id="@+id/textViewFechaRegistroRCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha Registro"
+        android:text="@string/fecha_registro"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextFechaRegistroRCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -91,7 +91,7 @@
         android:id="@+id/textViewPersonaRCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Persona"
+        android:text="@string/persona"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextPersonaRCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -115,7 +115,7 @@
         android:id="@+id/textViewAcuerdoRCEACrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Acuerdo alcanzado"
+        android:text="@string/acuerdo_alcanzado"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editTextAcuerdoRCEACrear"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -234,7 +234,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="GUARDAR"
+        android:text="@string/guardar"
         android:textColor="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineCentro"
@@ -247,7 +247,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="VOLVER"
+        android:text="@string/volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
         app:layout_constraintStart_toStartOf="@+id/guidelineCentro"

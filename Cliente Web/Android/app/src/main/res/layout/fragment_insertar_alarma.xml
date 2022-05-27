@@ -11,7 +11,7 @@
         android:id="@+id/textViewTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Alarma"
+        android:text="@string/crear_alarma"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:id="@+id/textViewTipoAlarmaCrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tipo Alarma"
+        android:text="@string/tipo_alarma"
         app:layout_constraintBottom_toTopOf="@+id/spinnerTipoAlarma"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -52,21 +52,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Terminal" />
+            android:text="@string/terminal" />
 
         <RadioButton
             android:id="@+id/radioButtonPaciente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Paciente" />
+            android:text="@string/paciente" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/textViewIdTerminalPacienteAlarmaCrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID Terminal"
+        android:text="@string/id_terminal"
         app:layout_constraintBottom_toTopOf="@+id/spinnerIdTerminalOPaciente"
         app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -174,7 +174,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="GUARDAR"
+        android:text="@string/guardar"
         android:textColor="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineCentro"
@@ -187,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:text="VOLVER"
+        android:text="@string/volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
         app:layout_constraintStart_toStartOf="@+id/guidelineCentro"

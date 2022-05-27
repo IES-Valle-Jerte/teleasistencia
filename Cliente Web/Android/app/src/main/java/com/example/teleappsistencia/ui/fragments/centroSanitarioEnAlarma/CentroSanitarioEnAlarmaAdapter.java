@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class CentroSanitarioEnAlarmaAdapter extends RecyclerView.Adapter<CentroS
         public CentroEnAlarmaViewHolder(View v) {
             super(v);
             this.context = v.getContext();
+            // Capturamos los elementos del layout
             this.txtCardIdCentroSanitarioEnAlarma = (TextView) v.findViewById(R.id.txtCardIdCentroSanitarioEnAlarma);
             this.txtCardFechaCentroEnAlarma = (TextView) v.findViewById(R.id.txtCardFechaCentroEnAlarma);
             this.txtCardPersonaCentroEnAlarma = (TextView) v.findViewById(R.id.txtCardPersonaCentroEnAlarma);
@@ -56,7 +58,7 @@ public class CentroSanitarioEnAlarmaAdapter extends RecyclerView.Adapter<CentroS
             this.imageButtonModificarCentroSanitarioEnAlarma = (ImageButton) v.findViewById(R.id.imageButtonModificarCentroSanitarioEnAlarma);
             this.imageButtonBorrarCentroSanitarioEnAlarma = (ImageButton) v.findViewById(R.id.imageButtonBorrarCentroSanitarioEnAlarma);
         }
-
+        //Asignamos listeners
         public void setOnClickListeners() {
             this.imageButtonVerCentroSanitarioEnAlarma.setOnClickListener(this);
             this.imageButtonModificarCentroSanitarioEnAlarma.setOnClickListener(this);
@@ -87,32 +89,52 @@ public class CentroSanitarioEnAlarmaAdapter extends RecyclerView.Adapter<CentroS
             }
         }
 
+        // Setter para poder pasarle el atributo desde del Adapter
         public void setCentroSanitarioEnAlarma(CentroSanitarioEnAlarma centroSanitarioEnAlarma){
             this.centroSanitarioEnAlarma = centroSanitarioEnAlarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar el Centro Sanitario en Alarma
+         */
         private void borrarCentroSanitarioEnAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteCentroSanitarioEnAlarmabyId(this.centroSanitarioEnAlarma.getId(), "Bearer "+ Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteCentroSanitarioEnAlarmabyId(this.centroSanitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, "Centro Sanitario en Alarma borrado correctamente.", Toast.LENGTH_LONG).show();
-                    MainActivity activity = (MainActivity) context;
-                    ListarCentrosSanitariosEnAlarmaFragment lCSEA = new ListarCentrosSanitariosEnAlarmaFragment();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, lCSEA)
-                            .addToBackStack(null)
-                            .commit();
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, Constantes.CENTRO_EN_ALARMA_BORRADO, Toast.LENGTH_LONG).show();
+                        volver();
+                    }else{
+                        Toast.makeText(context, Constantes.ERROR_BORRADO + response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, "Error al intentar borrar los datos.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver(){
+            MainActivity activity = (MainActivity) context;
+            ListarCentrosSanitariosEnAlarmaFragment lCSEA = new ListarCentrosSanitariosEnAlarmaFragment();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, lCSEA)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
     }
 
+    /**
+     * Se le carga la lista de items al Adapter, en este caso Centros Sanitarios en Alarma
+     * @param items
+     */
     public CentroSanitarioEnAlarmaAdapter(List<CentroSanitarioEnAlarma> items) {
         this.items = items;
     }
@@ -132,16 +154,17 @@ public class CentroSanitarioEnAlarmaAdapter extends RecyclerView.Adapter<CentroS
     @Override
     public void onBindViewHolder(CentroEnAlarmaViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
+        // En el bind, le cargamos los atributos al layout de la tarjeta
         CentroSanitarioEnAlarma centroSanitarioEnAlarma = items.get(i);
         viewHolder.setCentroSanitarioEnAlarma(centroSanitarioEnAlarma);
 
-        Alarma alarma = (Alarma) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdAlarma(), "Alarma");
-        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdCentroSanitario(), "CentroSanitario");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        CentroSanitario centroSanitario = (CentroSanitario) Utilidad.getObjeto(centroSanitarioEnAlarma.getIdCentroSanitario(), Constantes.CENTRO_SANITARIO);
 
-        viewHolder.txtCardIdCentroSanitarioEnAlarma.setText("ID: " + String.valueOf(centroSanitarioEnAlarma.getId()));
-        viewHolder.txtCardFechaCentroEnAlarma.setText("Fecha: " + centroSanitarioEnAlarma.getFechaRegistro());
-        viewHolder.txtCardPersonaCentroEnAlarma.setText("Persona: " + centroSanitarioEnAlarma.getPersona());
-        viewHolder.txtCardAlarmaCentroEnAlarma.setText("ID Alarma: " + String.valueOf(alarma.getId()));
-        viewHolder.txtCardNombreCentroEnAlarma.setText("Centro: " + centroSanitario.getNombre());
+        viewHolder.txtCardIdCentroSanitarioEnAlarma.setText(Constantes.ID_DP_SP + String.valueOf(centroSanitarioEnAlarma.getId()));
+        viewHolder.txtCardFechaCentroEnAlarma.setText(Constantes.FECHA_DP_SP + centroSanitarioEnAlarma.getFechaRegistro());
+        viewHolder.txtCardPersonaCentroEnAlarma.setText(Constantes.PERSONA_DP_SP + centroSanitarioEnAlarma.getPersona());
+        viewHolder.txtCardAlarmaCentroEnAlarma.setText(Constantes.ID_ALARMA_DP_SP + String.valueOf(alarma.getId()));
+        viewHolder.txtCardNombreCentroEnAlarma.setText(Constantes.CENTRO_DP_SP + centroSanitario.getNombre());
     }
 }

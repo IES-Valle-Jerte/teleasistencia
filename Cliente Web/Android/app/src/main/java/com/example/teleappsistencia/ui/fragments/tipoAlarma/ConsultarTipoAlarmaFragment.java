@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.ClasificacionAlarma;
 import com.example.teleappsistencia.modelos.TipoAlarma;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
@@ -22,7 +23,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
 public class ConsultarTipoAlarmaFragment extends Fragment {
 
 
-    private static final String ARG_TIPOALARMA = "TipoAlarma";
     private TipoAlarma tipoAlarma;
     private TextView textViewConsultarIdTipoAlarma;
     private TextView textViewConsultarNombreTipoAlarma;
@@ -46,7 +46,7 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
     public static ConsultarTipoAlarmaFragment newInstance(TipoAlarma tipoAlarma) {
         ConsultarTipoAlarmaFragment fragment = new ConsultarTipoAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_TIPOALARMA, tipoAlarma);
+        args.putSerializable(Constantes.ARG_TIPOALARMA, tipoAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +55,7 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(ARG_TIPOALARMA);
+            this.tipoAlarma = (TipoAlarma) getArguments().getSerializable(Constantes.ARG_TIPOALARMA);
         }
     }
 
@@ -77,6 +77,10 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view){
         this.textViewConsultarIdTipoAlarma = (TextView) view.findViewById(R.id.textViewConsultarIdTipoAlarma);
         this.textViewConsultarNombreTipoAlarma = (TextView) view.findViewById(R.id.textViewConsultarNombreTipoAlarma);
@@ -86,8 +90,11 @@ public class ConsultarTipoAlarmaFragment extends Fragment {
         this.textViewConsultarCodigoClasificacionTipoAlarma = (TextView) view.findViewById(R.id.textViewConsultarCodigoClasificacionTipoAlarma);
     }
 
+    /**
+     * Este método carga los datos en el layout.
+     */
     private void cargarDatos(){
-        ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(this.tipoAlarma.getClasificacionAlarma(), "ClasificacionAlarma");
+        ClasificacionAlarma clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(this.tipoAlarma.getClasificacionAlarma(), Constantes.CLASIFICACION_ALARMA);
         this.textViewConsultarIdTipoAlarma.setText(String.valueOf(this.tipoAlarma.getId()));
         this.textViewConsultarNombreTipoAlarma.setText(this.tipoAlarma.getNombre());
         this.textViewConsultarCodigoTipoAlarma.setText(this.tipoAlarma.getCodigo());

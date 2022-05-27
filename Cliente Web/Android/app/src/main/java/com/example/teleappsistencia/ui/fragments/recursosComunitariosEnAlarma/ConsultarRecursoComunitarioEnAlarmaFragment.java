@@ -13,6 +13,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Alarma;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.RecursoComunitarioEnAlarma;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
@@ -22,9 +23,6 @@ import com.example.teleappsistencia.utilidades.Utilidad;
  */
 public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_RCEA = "RCEA";
     private RecursoComunitarioEnAlarma recursoComunitarioEnAlarma;
     private TextView textViewConsultarIdRCEA;
     private TextView textViewConsultarFechaRCEA;
@@ -48,7 +46,7 @@ public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
     public static ConsultarRecursoComunitarioEnAlarmaFragment newInstance(RecursoComunitarioEnAlarma recursoComunitarioEnAlarma) {
         ConsultarRecursoComunitarioEnAlarmaFragment fragment = new ConsultarRecursoComunitarioEnAlarmaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_RCEA, recursoComunitarioEnAlarma);
+        args.putSerializable(Constantes.ARG_RCEA, recursoComunitarioEnAlarma);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +55,7 @@ public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-           this.recursoComunitarioEnAlarma = (RecursoComunitarioEnAlarma) getArguments().getSerializable(ARG_RCEA);
+           this.recursoComunitarioEnAlarma = (RecursoComunitarioEnAlarma) getArguments().getSerializable(Constantes.ARG_RCEA);
         }
     }
 
@@ -78,6 +76,10 @@ public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Este método captura los elementos que hay en el layout correspondiente.
+     * @param view
+     */
     private void capturarElementos(View view) {
         this.textViewConsultarIdRCEA = (TextView) view.findViewById(R.id.textViewConsultarIdRCEA);
         this.textViewConsultarFechaRCEA = (TextView) view.findViewById(R.id.textViewConsultarFechaRCEA);
@@ -87,9 +89,12 @@ public class ConsultarRecursoComunitarioEnAlarmaFragment extends Fragment {
         this.textViewConsultarRecursoComunitarioRCEA = (TextView) view.findViewById(R.id.textViewConsultarRecursoComunitarioRCEA);
     }
 
+    /**
+     * Este método carga los datos en el layout.
+     */
     private void cargarDatos() {
-        Alarma alarma = (Alarma) Utilidad.getObjeto(this.recursoComunitarioEnAlarma.getIdAlarma(), "Alarma");
-        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(this.recursoComunitarioEnAlarma.getIdRecursoComunitairo(), "RecursoComunitario");
+        Alarma alarma = (Alarma) Utilidad.getObjeto(this.recursoComunitarioEnAlarma.getIdAlarma(), Constantes.ALARMA);
+        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(this.recursoComunitarioEnAlarma.getIdRecursoComunitairo(), Constantes.RECURSO_COMUNITARIO);
 
         this.textViewConsultarIdRCEA.setText(String.valueOf(this.recursoComunitarioEnAlarma.getId()));
         this.textViewConsultarFechaRCEA.setText(this.recursoComunitarioEnAlarma.getFechaRegistro());

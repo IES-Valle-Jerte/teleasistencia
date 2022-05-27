@@ -17,6 +17,7 @@ import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class AlarmaAdapter extends RecyclerView.Adapter<AlarmaAdapter.AlarmaView
         public AlarmaViewHolder(View v) {
             super(v);
             this.context = v.getContext();
+            // Capturamos los elementos del layout
             this.idAlarma = (TextView) v.findViewById(R.id.txtCardIdAlarma);
             this.txtCardEstadoAlarma = (TextView) v.findViewById(R.id.txtCardEstadoAlarma);
             this.txtCardFechaRegistroAlarma = (TextView) v.findViewById(R.id.txtCardFechaRegistroAlarma);
@@ -53,7 +55,7 @@ public class AlarmaAdapter extends RecyclerView.Adapter<AlarmaAdapter.AlarmaView
             this.imageButtonModificarAlarma = (ImageButton) v.findViewById(R.id.imageButtonModificarAlarma);
             this.imageButtonBorrarAlarma = (ImageButton) v.findViewById(R.id.imageButtonBorrarAlarma);
         }
-
+        //Asignamos listeners
         public void setOnClickListeners() {
             this.imageButtonVerAlarma.setOnClickListener(this);
             this.imageButtonModificarAlarma.setOnClickListener(this);
@@ -84,32 +86,51 @@ public class AlarmaAdapter extends RecyclerView.Adapter<AlarmaAdapter.AlarmaView
             }
         }
 
+        // Setter para poder pasarle la alarma desde del Adapter
         public void setAlarma(Alarma alarma){
             this.alarma = alarma;
         }
 
+        /**
+         * Método que lanza la petición DELETE a la API REST para borrar la alarma
+         */
         private void borrarAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteAlarmabyId(this.alarma.getId(), "Bearer "+ Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteAlarmabyId(this.alarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(context, "Alarma borrada correctamente.", Toast.LENGTH_LONG).show();
-                    MainActivity activity = (MainActivity) context;
-                    ListarAlarmasFragment listarAlarmasFragment = new ListarAlarmasFragment();
-                    activity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment, listarAlarmasFragment)
-                            .addToBackStack(null)
-                            .commit();
+                    if(response.isSuccessful()){
+                        Toast.makeText(context, Constantes.ALARMA_BORRADA, Toast.LENGTH_LONG).show();
+                        volver();
+                    }else{
+                        Toast.makeText(context, Constantes.ERROR_BORRADO + response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(context, "Error al intentar borrar los datos.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, Constantes.ERROR_+t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
+
+        /**
+         * Este método vuelve a cargar el fragment con el listado.
+         */
+        private void volver(){
+            MainActivity activity = (MainActivity) this.context;
+            ListarAlarmasFragment listarAlarmasFragment = new ListarAlarmasFragment();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment, listarAlarmasFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
+    /**
+     * Se le carga la lista de items al Adapter, en este caso de Alarmas
+     * @param items
+     */
     public AlarmaAdapter(List<Alarma> items) {
         this.items = items;
     }
@@ -129,12 +150,13 @@ public class AlarmaAdapter extends RecyclerView.Adapter<AlarmaAdapter.AlarmaView
     @Override
     public void onBindViewHolder(AlarmaViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
+        // En el bind, le cargamos los atributos al layout de la tarjeta
         Alarma alarma = items.get(i);
         viewHolder.setAlarma(alarma);
-        TipoAlarma tipo = (TipoAlarma) Utilidad.getObjeto(alarma.getId_tipo_alarma(), "TipoAlarma");
-        viewHolder.idAlarma.setText("ID Alarma: " + String.valueOf(alarma.getId()));
-        viewHolder.txtCardEstadoAlarma.setText("Estado: " + alarma.getEstado_alarma());
-        viewHolder.txtCardFechaRegistroAlarma.setText("Fecha: " + alarma.getFecha_registro());
-        viewHolder.txtCardTipoAlarma.setText("Tipo: " + tipo.getNombre());
+        TipoAlarma tipo = (TipoAlarma) Utilidad.getObjeto(alarma.getId_tipo_alarma(), Constantes.TIPO_ALARMA);
+        viewHolder.idAlarma.setText(Constantes.ID_ALARMA_DP_SP + String.valueOf(alarma.getId()));
+        viewHolder.txtCardEstadoAlarma.setText(Constantes.ESTADO_DP_SP + alarma.getEstado_alarma());
+        viewHolder.txtCardFechaRegistroAlarma.setText(Constantes.FECHA_DP_SP + alarma.getFecha_registro());
+        viewHolder.txtCardTipoAlarma.setText(Constantes.TIPO_DP_SP + tipo.getNombre());
     }
 }

@@ -24,7 +24,7 @@
             android:id="@+id/txtCardIdCentroSanitarioEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID: "
+            android:text="@string/id"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:id="@+id/txtCardFechaCentroEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha registro: "
+            android:text="@string/fecha_registro_dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerCentroSanitarioEnAlarma"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/imageButtonVerCentroSanitarioEnAlarma" />
@@ -42,7 +42,7 @@
             android:id="@+id/txtCardPersonaCentroEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Persona: "
+            android:text="@string/persona_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardFechaCentroEnAlarma" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/txtCardAlarmaCentroEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Alarma: "
+            android:text="@string/id_alarma_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardPersonaCentroEnAlarma" />
 
@@ -59,7 +59,7 @@
             android:id="@+id/txtCardNombreCentroEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Centro Sanitario: "
+            android:text="@string/centro_sanitario_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardAlarmaCentroEnAlarma" />
 

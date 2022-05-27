@@ -24,7 +24,7 @@
             android:id="@+id/txtCardIdPersonaContactoEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID: "
+            android:text="@string/id_dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:id="@+id/txtCardFechaPersonaContactoEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha registro: "
+            android:text="@string/fecha_registro_dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageButtonVerPersonaContactoEnAlarma"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/imageButtonVerPersonaContactoEnAlarma" />
@@ -42,7 +42,7 @@
             android:id="@+id/txtCardIdAlarmaPersonaContactoEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Alarma: "
+            android:text="@string/id_alarma_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardFechaPersonaContactoEnAlarma" />
 
@@ -50,7 +50,7 @@
             android:id="@+id/txtCardNombrePersonaContactoEnAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contacto: "
+            android:text="@string/contacto_dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"
             app:layout_constraintTop_toBottomOf="@+id/txtCardIdAlarmaPersonaContactoEnAlarma" />
 

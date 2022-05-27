@@ -12,7 +12,7 @@
             android:id="@+id/textViewTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modificar Alarma"
+            android:text="@string/modificar_alarma"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -24,7 +24,7 @@
             android:id="@+id/textViewNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estado"
+            android:text="@string/estado"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/spinnerEstadoAlarma"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -43,7 +43,7 @@
             android:id="@+id/textViewObservacionesModificar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Observaciones"
+            android:text="@string/observaciones"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/editTextObservacionesAlarmaModificar"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -68,7 +68,7 @@
             android:id="@+id/textViewResumenModificar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Resumen"
+            android:text="@string/resumen"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/editTextResumenAlarmaModificar"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
@@ -93,7 +93,7 @@
             android:id="@+id/textViewIdTeleoperadorModificar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID Teleoperador"
+            android:text="@string/id_teleoperador"
             app:layout_constraintBottom_toTopOf="@+id/editTextNumberIdTeleoperadorModificar"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda" />
 
@@ -209,7 +209,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="GUARDAR"
+            android:text="@string/guardar"
             android:textColor="#4CAF50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guidelineCentro"
@@ -218,11 +218,11 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/buttonVolver"
+            android:id="@+id/buttonVolverAlarma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="VOLVER"
+            android:text="@string/volver"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guidelineDerecha"
             app:layout_constraintStart_toStartOf="@+id/guidelineCentro"

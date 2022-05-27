@@ -1,6 +1,5 @@
 package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +23,8 @@ public class Alarma implements Serializable {
     private Object id_paciente_ucr;
     @SerializedName("id_terminal")
     private Object id_terminal;
+
+    //Getters y Setters a continucación
 
     public int getId() {
         return id;
