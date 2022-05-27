@@ -1,8 +1,9 @@
 export interface IProfileUser {
-  pk:          number;
+  id:          number;
   url:         string;
   last_login:  null;
   username:    string;
+  password : string;
   first_name:  string;
   last_name:   string;
   email:       string;

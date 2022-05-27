@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de un Grupo.
+ */
 public class Grupo implements Serializable {
 
     /**
@@ -11,29 +14,12 @@ public class Grupo implements Serializable {
      */
     @SerializedName("pk")
     private int pk;
+    @SerializedName("id")
+    private int id;
     @SerializedName("name")
     private String name;
 
     /**
-     * Constructor para mostrar un Grupo.
-     * @param pk
-     * @param name
-     */
-    public Grupo(int pk, String name) {
-        this.pk = pk;
-        this.name = name;
-    }
-
-    /**
-     * Constructor para modicar o insertar un nuevo Grupo.
-     * @param name
-     */
-    public Grupo(String name) {
-        this.name = name;
-    }
-
-
-    /*
      * Getters y setters
      */
     public int getPk() {
@@ -44,6 +30,14 @@ public class Grupo implements Serializable {
         this.pk = pk;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -52,6 +46,11 @@ public class Grupo implements Serializable {
         this.name = name;
     }
 
+
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return name;

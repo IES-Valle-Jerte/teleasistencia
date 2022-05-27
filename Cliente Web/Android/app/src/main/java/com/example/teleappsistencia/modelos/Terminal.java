@@ -1,9 +1,20 @@
 package com.example.teleappsistencia.modelos;
 
 import com.google.gson.annotations.SerializedName;
+import androidx.annotation.NonNull;
 
-public class Terminal {
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+/**
+ * Clase POJO "Terminal" utilizada para parsear la respuesta JSON del servidor.
+ */
+public class Terminal implements Serializable {
+
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("numero_terminal")
@@ -16,6 +27,8 @@ public class Terminal {
     private Object titular;
     @SerializedName("id_tipo_vivienda")
     private Object tipoVivienda;
+
+    // Getters y Setters
 
     public int getId() {
         return id;
