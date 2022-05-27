@@ -101,7 +101,8 @@
                 android:background="@drawable/fondo_bordes_textviews"
                 android:gravity="center"
                 android:minHeight="35dp"
-                android:text="@string/textview_password_obligatoria" />
+                android:text="@string/textview_password_obligatoria"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
     </LinearLayout>

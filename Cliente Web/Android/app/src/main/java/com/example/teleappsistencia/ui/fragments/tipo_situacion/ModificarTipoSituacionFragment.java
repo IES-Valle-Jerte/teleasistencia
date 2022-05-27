@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.TipoSituacion;
 
@@ -51,7 +52,7 @@ public class ModificarTipoSituacionFragment extends Fragment {
     public static ModificarTipoSituacionFragment newInstance(TipoSituacion tipoSituacion) {
         ModificarTipoSituacionFragment fragment = new ModificarTipoSituacionFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, tipoSituacion);
+        args.putSerializable(Constantes.TIPO_SITUACION, tipoSituacion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +62,7 @@ public class ModificarTipoSituacionFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            tipoSituacion = (TipoSituacion) getArguments().getSerializable(Utils.OBJECT);
+            tipoSituacion = (TipoSituacion) getArguments().getSerializable(Constantes.TIPO_SITUACION);
         }
     }
 
@@ -105,17 +106,18 @@ public class ModificarTipoSituacionFragment extends Fragment {
     private void modificarTipoSituacion() {
         String nombre = this.editText_nombre_tipo_situacion.getText().toString();
 
-        TipoSituacion tipoSituacion = new TipoSituacion(nombre);
+        TipoSituacion tipoSituacion = new TipoSituacion();
+        tipoSituacion.setNombre(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<Object> call = apiService.modifyTipoSituacion(this.tipoSituacion.getId(), tipoSituacion, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.modifyTipoSituacion(this.tipoSituacion.getId(), tipoSituacion, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object tipoSituacion = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_modificado_tipoSituacion));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_MODIFICADO_TIPO_SITUACION);
                     getActivity().onBackPressed();
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
@@ -166,9 +168,14 @@ public class ModificarTipoSituacionFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para validar el campo nombre.
+     * @param nombre
+     * @return
+     */
     public boolean validarNombre(String nombre) {
         boolean valid = false;
-        if ((nombre.isEmpty()) || (nombre.trim().equals(""))) {     // Reviso si el nombre está vacio.
+        if ((nombre.isEmpty()) || (nombre.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si el nombre está vacio.
             textView_error_nombre.setText(R.string.textview_nombre_obligatorio);
             textView_error_nombre.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatorio y devuelvo false.

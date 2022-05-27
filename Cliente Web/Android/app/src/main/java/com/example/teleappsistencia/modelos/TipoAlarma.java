@@ -2,8 +2,14 @@ package com.example.teleappsistencia.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Clase encargada del modelo de un TipoAlarma.
+ */
 public class TipoAlarma {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
@@ -15,6 +21,10 @@ public class TipoAlarma {
     @SerializedName("id_clasificacion_alarma")
     private Object clasificacionAlarma;
 
+
+    /**
+     * Getters y setters
+     */
     public int getId() {
         return id;
     }
@@ -55,6 +65,10 @@ public class TipoAlarma {
         this.clasificacionAlarma = clasificacionAlarma;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return nombre + " - " + codigo;

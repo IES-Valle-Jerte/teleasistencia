@@ -15,8 +15,9 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.TipoSituacion;
 
@@ -87,16 +88,17 @@ public class InsertarTipoSituacionFragment extends Fragment {
     private void insertarTipoSituacion() {
         String nombre = this.editText_nombre_tipo_situacion.getText().toString();
 
-        TipoSituacion tipoSituacion = new TipoSituacion(nombre);
+        TipoSituacion tipoSituacion = new TipoSituacion();
+        tipoSituacion.setNombre(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.addTipoSituacion(tipoSituacion, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.addTipoSituacion(tipoSituacion, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object tipoSituacion = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_insertado_tipoSituacion));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_CREADO_TIPO_SITUACION);
                     borrarEditTexts();
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
@@ -115,7 +117,7 @@ public class InsertarTipoSituacionFragment extends Fragment {
      * Método que borra todos los datos de los EditText y quita los mensajes de error.
      */
     private void borrarEditTexts() {
-        this.editText_nombre_tipo_situacion.setText(getString(R.string.string_vacio));
+        this.editText_nombre_tipo_situacion.setText(Constantes.STRING_VACIO);
         this.textView_error_nombre.setVisibility(View.GONE);
     }
 
@@ -155,9 +157,14 @@ public class InsertarTipoSituacionFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para validar el campo nombre.
+     * @param nombre
+     * @return
+     */
     public boolean validarNombre(String nombre) {
         boolean valid = false;
-        if ((nombre.isEmpty()) || (nombre.trim().equals(""))) {     // Reviso si el nombre está vacio.
+        if ((nombre.isEmpty()) || (nombre.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si el nombre está vacio.
             textView_error_nombre.setText(R.string.textview_nombre_obligatorio);
             textView_error_nombre.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatorio y devuelvo false.

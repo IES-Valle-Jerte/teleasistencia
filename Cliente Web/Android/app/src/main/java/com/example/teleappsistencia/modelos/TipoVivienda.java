@@ -4,32 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de un TipoVivienda.
+ */
 public class TipoVivienda implements Serializable {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
     private String nombre;
 
     /**
-     * Constructor para mostrar un TipoVivienda.
-     * @param id
-     * @param nombre
+     * Getters y setters
      */
-    public TipoVivienda(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-
-    /**
-     * CDonstructor para modificar o insertar un nuevo TipoVivienda.
-     * @param nombre
-     */
-    public TipoVivienda(String nombre){
-        this.nombre = nombre;
-    }
-
-
     public int getId() {
         return id;
     }
@@ -46,6 +36,10 @@ public class TipoVivienda implements Serializable {
         this.nombre = nombre;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "Tipo_vivienda{" +

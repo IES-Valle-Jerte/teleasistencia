@@ -2,8 +2,14 @@ package com.example.teleappsistencia.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Clase encargada del modelo de un Terminal.
+ */
 public class Terminal {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("numero_terminal")
@@ -17,6 +23,10 @@ public class Terminal {
     @SerializedName("id_tipo_vivienda")
     private Object tipoVivienda;
 
+
+    /**
+     * Getters y setters
+     */
     public int getId() {
         return id;
     }
@@ -65,6 +75,10 @@ public class Terminal {
         this.tipoVivienda = tipoVivienda;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "Terminal{" +

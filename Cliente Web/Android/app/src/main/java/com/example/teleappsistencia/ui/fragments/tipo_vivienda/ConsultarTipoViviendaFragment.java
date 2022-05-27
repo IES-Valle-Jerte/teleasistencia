@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.TipoVivienda;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,8 +19,6 @@ import com.example.teleappsistencia.modelos.TipoVivienda;
  * create an instance of this fragment.
  */
 public class ConsultarTipoViviendaFragment extends Fragment {
-
-    private static final String OBJECT = "OBJECT";
 
     private TipoVivienda tipoVivienda;
 
@@ -40,7 +39,7 @@ public class ConsultarTipoViviendaFragment extends Fragment {
     public static ConsultarTipoViviendaFragment newInstance(TipoVivienda tipoVivienda) {
         ConsultarTipoViviendaFragment fragment = new ConsultarTipoViviendaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(OBJECT, tipoVivienda);
+        args.putSerializable(Constantes.TIPO_VIVIENDA, tipoVivienda);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +48,7 @@ public class ConsultarTipoViviendaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipoVivienda = (TipoVivienda) getArguments().getSerializable(OBJECT);
+            tipoVivienda = (TipoVivienda) getArguments().getSerializable(Constantes.TIPO_VIVIENDA);
         }
     }
 

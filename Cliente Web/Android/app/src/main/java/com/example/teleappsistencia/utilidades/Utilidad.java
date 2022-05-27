@@ -12,12 +12,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-public class Utils {
-
-    /**
-     * Constante utilizada en la recogida del parámetro objeto de las nuevas instancias de los fragments modificar y consultar.
-     */
-    public final static String OBJECT = "OBJECT";
+/**
+ * Clase que contiene atributos y métodos utilizados por varias clases.
+ */
+public class Utilidad {
 
     /**
      * Token para poder realizar las peticiones a la API.
@@ -56,22 +54,22 @@ public class Utils {
         Type type = null;
         Object objeto = null;
         switch(tipo){
-            case "Usuario":
+            case Constantes.USUARIO:
                 type = new TypeToken<Usuario>(){}.getType();
                 break;
-            case "Grupo":
+            case Constantes.GRUPO:
                 type = new TypeToken<Grupo>(){}.getType();
                 break;
-            case "Direccion":
+            case Constantes.DIRECCION:
                 type = new TypeToken<Direccion>(){}.getType();
                 break;
-            case "Terminal":
+            case Constantes.TERMINAL:
                 type = new TypeToken<Terminal>(){}.getType();
                 break;
-            case "TipoSituacion":
+            case Constantes.TIPO_SITUACION:
                 type = new TypeToken<TipoSituacion>(){}.getType();
                 break;
-            case "TipoAlarma":
+            case Constantes.TIPO_ALARMA:
                 type = new TypeToken<TipoAlarma>(){}.getType();
                 break;
         }
@@ -81,14 +79,16 @@ public class Utils {
         return objeto;
     }
 
-    /* Getters y Setters */
+    /**
+     * Getters y Setters
+     */
 
     public static Token getToken() {
         return token;
     }
 
     public static void setToken(Token token) {
-        Utils.token = token;
+        Utilidad.token = token;
     }
 
     public static Usuario getUserLogged() {
@@ -96,7 +96,7 @@ public class Utils {
     }
 
     public static void setUserLogged(Usuario userLogged) {
-        Utils.userLogged = userLogged;
+        Utilidad.userLogged = userLogged;
     }
 
     public static boolean isAdmin() {
@@ -104,6 +104,6 @@ public class Utils {
     }
 
     public static void setIsAdmin(boolean isAdmin) {
-        Utils.isAdmin = isAdmin;
+        Utilidad.isAdmin = isAdmin;
     }
 }

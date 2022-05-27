@@ -16,10 +16,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.HistoricoTipoSituacion;
 import com.example.teleappsistencia.modelos.Terminal;
@@ -104,29 +106,38 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método encargado de inicializar un DatePickerFragment para poder recoger una fecha.
+     */
     private void mostrarDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String selectedDate = year + "-" + Utils.twoDigitsDate(month+1) + "-" + Utils.twoDigitsDate(day);
+                String selectedDate = year + "-" + Utilidad.twoDigitsDate(month+1) + "-" + Utilidad.twoDigitsDate(day); // Formateo la fecha.
                 editText_fecha.setText(selectedDate);
             }
         });
 
-        newFragment.show(getActivity().getSupportFragmentManager(), getString(R.string.tag_date_picker));
+        newFragment.show(getActivity().getSupportFragmentManager(), Constantes.TAG_DATEPICKER);
     }
 
+    /**
+     * Método encargado de realizar una petición a la API y inicializar el spinnerTerminal
+     * con los terminales recibidos por la petición.
+     */
     private void inicializarSpinnerTerminal(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Terminal>> call = apiService.getTerminales("Bearer " + Utils.getToken().getAccess());
+        Call<List<Terminal>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
                 if (response.isSuccessful()) {
                     List<Terminal> terminalList = response.body();
                     System.out.println(terminalList);
-                    spinner_terminal.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, terminalList));
+                    ArrayAdapter<Terminal> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, terminalList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_terminal.setAdapter(adapter);
                 }
             }
 
@@ -138,17 +149,22 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
         });
     }
 
+    /**
+     * Método encargado de realizar una petición a la API y inicializar el spinnerTipoSituacion
+     * con los tipoSituaciones recibidos por la petición.
+     */
     private void inicializarSpinnerTipoSituacion(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<TipoSituacion>> call = apiService.getTipoSituacion("Bearer " + Utils.getToken().getAccess());
+        Call<List<TipoSituacion>> call = apiService.getTipoSituacion(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoSituacion>>() {
             @Override
             public void onResponse(Call<List<TipoSituacion>> call, Response<List<TipoSituacion>> response) {
                 if (response.isSuccessful()) {
                     List<TipoSituacion> tipoSituacionList = response.body();
-                    System.out.println(tipoSituacionList);
-                    spinner_tipoSituacion.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, tipoSituacionList));
+                    ArrayAdapter<TipoSituacion> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tipoSituacionList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_tipoSituacion.setAdapter(adapter);
                 }
             }
 
@@ -169,16 +185,19 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
         TipoSituacion tipoSituacion = (TipoSituacion) this.spinner_tipoSituacion.getSelectedItem();
         Terminal terminal = (Terminal) this.spinner_terminal.getSelectedItem();
 
-        HistoricoTipoSituacion historicoTipoSituacion = new HistoricoTipoSituacion(fecha, tipoSituacion.getId(), terminal.getId());
+        HistoricoTipoSituacion historicoTipoSituacion = new HistoricoTipoSituacion();
+        historicoTipoSituacion.setFecha(fecha);
+        historicoTipoSituacion.setTipoSituacion(tipoSituacion.getId());
+        historicoTipoSituacion.setTerminal(terminal.getId());
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.addHistoricoTipoSituacion(historicoTipoSituacion, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.addHistoricoTipoSituacion(historicoTipoSituacion, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object historicoTipoSituacion = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_insertado_historicoTipoSituacion));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_CREADO_HISTORICO_TIPO_SITUACION);
                     borrarEditTexts();
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
@@ -197,7 +216,7 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
      * Método que borra todos los datos de los EditText y quita los mensajes de error.
      */
     private void borrarEditTexts() {
-        this.editText_fecha.setText(getString(R.string.string_vacio));
+        this.editText_fecha.setText(Constantes.STRING_VACIO);
         this.textView_error_fecha.setVisibility(View.GONE);
     }
 
@@ -239,9 +258,14 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
         });
     }
 
-    public boolean validarFecha(String nombre) {
+    /**
+     * Método para validar el campo nombre.
+     * @param fecha
+     * @return
+     */
+    public boolean validarFecha(String fecha) {
         boolean valid = false;
-        if ((nombre.isEmpty()) || (nombre.trim().equals(""))) {     // Reviso si la fecha está vacia.
+        if ((fecha.isEmpty()) || (fecha.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si la fecha está vacia.
             textView_error_fecha.setText(R.string.textview_fecha_obligatoria);
             textView_error_fecha.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
@@ -252,6 +276,10 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo terminal.
+     * @return
+     */
     private boolean validarTerminal() {
         if(spinner_terminal.getSelectedItem() != null) {
             return true;
@@ -260,6 +288,10 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
         }
     }
 
+    /**
+     * Método para validar el campo tipoSituacion.
+     * @return
+     */
     private boolean validarTipoSituacion() {
         if(spinner_tipoSituacion.getSelectedItem() != null) {
             return true;

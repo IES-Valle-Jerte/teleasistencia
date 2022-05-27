@@ -1,5 +1,6 @@
 package com.example.teleappsistencia.servicios;
 
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -9,13 +10,18 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Clase que se encarga de crear una única instancia de la APIService.
+ */
 public class ClienteRetrofit {
 
     private static ClienteRetrofit clienteRetrofit = null;
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
-
     private APIService apiService;
 
+    /**
+     * Método que devuelve una instancia de esta clase y si no existe la crea.
+     * @return
+     */
     public static ClienteRetrofit getInstance() {
         if (clienteRetrofit == null) {
             clienteRetrofit = new ClienteRetrofit();
@@ -25,28 +31,35 @@ public class ClienteRetrofit {
     }
 
     private ClienteRetrofit() {
-        buildRetrofit(BASE_URL);
+        buildRetrofit(Constantes.API_BASE_URL);
     }
 
+    /**
+     * Método encargado de crear Retrofit.
+     * @param urlAPI
+     */
     private void buildRetrofit(String urlAPI) {
 
+        // Creación del clienteHttp para asignarlo a Retrofit.
         OkHttpClient clienteHttp =
                 new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
                         .readTimeout(30, TimeUnit.SECONDS)
-                        //Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
+                        // Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
                         .retryOnConnectionFailure(Boolean.FALSE)
                         .build();
 
+        // Creación del formateador de fechas de GSON.
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+                .setDateFormat(Constantes.FORMATEADOR_API).create();
 
+        // Creación del Retrofit encargado de realizar las peticiones a la API.
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlAPI)
                 .client(clienteHttp)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        // Build your services once
+        // Creación del servicio a base de Retrofit.
         this.apiService = retrofit.create(APIService.class);
 
     }

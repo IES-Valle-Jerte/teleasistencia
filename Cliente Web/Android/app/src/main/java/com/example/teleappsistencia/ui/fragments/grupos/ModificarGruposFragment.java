@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Grupo;
 
@@ -51,7 +52,7 @@ public class ModificarGruposFragment extends Fragment {
     public static ModificarGruposFragment newInstance(Grupo grupo) {
         ModificarGruposFragment fragment = new ModificarGruposFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, grupo);
+        args.putSerializable(Constantes.GRUPO, grupo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +62,7 @@ public class ModificarGruposFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            grupo = (Grupo) getArguments().getSerializable(Utils.OBJECT);
+            grupo = (Grupo) getArguments().getSerializable(Constantes.GRUPO);
         }
     }
 
@@ -109,16 +110,17 @@ public class ModificarGruposFragment extends Fragment {
     private void modificarGrupo() {
         String nombre = this.editText_nombre.getText().toString();
 
-        Grupo grupo = new Grupo(nombre);
+        Grupo grupo = new Grupo();
+        grupo.setName(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.modifyGrupo(this.grupo.getPk(), grupo, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.modifyGrupo(this.grupo.getPk(), grupo, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object grupo = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_modificado_grupo));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_MODIFICADO_GRUPO);
                     getActivity().onBackPressed();
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
@@ -137,7 +139,7 @@ public class ModificarGruposFragment extends Fragment {
      * Método que borra todos los datos de los EditText y quita los mensajes de error.
      */
     private void borrarEditTexts() {
-        this.editText_nombre.setText(getString(R.string.string_vacio));
+        this.editText_nombre.setText(Constantes.STRING_VACIO);
         this.textView_error_nombre.setVisibility(View.GONE);
     }
 
@@ -177,9 +179,14 @@ public class ModificarGruposFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para validar el campo nombre.
+     * @param nombre
+     * @return
+     */
     public boolean validarNombre(String nombre) {
         boolean valid = false;
-        if ((nombre.isEmpty()) || (nombre.trim().equals(""))) {     // Reviso si el nombre está vacio.
+        if ((nombre.isEmpty()) || (nombre.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si el nombre está vacio.
             textView_error_nombre.setText(R.string.textview_nombre_obligatorio);
             textView_error_nombre.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatorio y devuelvo false.

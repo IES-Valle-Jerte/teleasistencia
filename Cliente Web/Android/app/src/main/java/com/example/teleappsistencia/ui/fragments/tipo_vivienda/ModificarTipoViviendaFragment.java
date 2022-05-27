@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.TipoVivienda;
 
@@ -51,7 +52,7 @@ public class ModificarTipoViviendaFragment extends Fragment {
     public static ModificarTipoViviendaFragment newInstance(TipoVivienda tipoVivienda) {
         ModificarTipoViviendaFragment fragment = new ModificarTipoViviendaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, tipoVivienda);
+        args.putSerializable(Constantes.TIPO_VIVIENDA, tipoVivienda);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +62,7 @@ public class ModificarTipoViviendaFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            this.tipoVivienda = (TipoVivienda) getArguments().getSerializable(Utils.OBJECT);
+            this.tipoVivienda = (TipoVivienda) getArguments().getSerializable(Constantes.TIPO_VIVIENDA);
         }
     }
 
@@ -106,16 +107,17 @@ public class ModificarTipoViviendaFragment extends Fragment {
     private void modificarTipoVivienda() {
         String nombre = this.editText_nombre_tipo_vivienda.getText().toString();
 
-        TipoVivienda tipoVivienda = new TipoVivienda(nombre);
+        TipoVivienda tipoVivienda = new TipoVivienda();
+        tipoVivienda.setNombre(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.modifyTipoVivienda(this.tipoVivienda.getId(), tipoVivienda, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.modifyTipoVivienda(this.tipoVivienda.getId(), tipoVivienda, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object tipo_vivienda = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_modificado_tipoVivienda));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_MODIFICADO_TIPO_VIVIENDA);
                     getActivity().onBackPressed();
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
@@ -166,9 +168,14 @@ public class ModificarTipoViviendaFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para validar el campo nombre.
+     * @param nombre
+     * @return
+     */
     public boolean validarNombre(String nombre) {
         boolean valid = false;
-        if ((nombre.isEmpty()) || (nombre.trim().equals(""))) {     // Reviso si el nombre está vacio.
+        if ((nombre.isEmpty()) || (nombre.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si el nombre está vacio.
             textView_error_nombre.setText(R.string.textview_nombre_obligatorio);
             textView_error_nombre.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatorio y devuelvo false.

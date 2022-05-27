@@ -1,6 +1,8 @@
 package com.example.teleappsistencia.ui.fragments.grupos;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +12,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.modelos.Grupo;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -70,21 +74,50 @@ public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GruposView
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragmentConsultar).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrar:
-                    borrarGrupo();
+                    // Creo un alertDialog para preguntar si se desea eliminar el modelo.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(Constantes.ELIMINAR_ELEMENTO);
+                    builder.setMessage(Constantes.ESTAS_SEGURO_ELIMINAR);
+                    builder.setPositiveButton(Constantes.SI, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            borrarGrupo();
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.setNegativeButton(Constantes.NO, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.show();
                     break;
             }
         }
 
+        /**
+         * Método que realiza una petición a la API para borrar un Grupo.
+         */
         private void borrarGrupo() {
+            int id;
+
+            if(grupo.getId() == 0){
+                id = grupo.getPk();
+            } else {
+                id = grupo.getId();
+            }
+
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteGrupo(grupo.getPk(), "Bearer " + Utils.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteGrupo(id, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
                     if (response.isSuccessful()) {
                         Response<String> respuesta = response.body();
-                        AlertDialogBuilder.crearInfoAlerDialog(context, context.getString(R.string.infoAlertDialog_eliminado_grupo));
+                        AlertDialogBuilder.crearInfoAlerDialog(context, Constantes.INFO_ALERTDIALOG_ELIMINADO_GRUPO);
+                        recargarFragment();
                     } else {
                         AlertDialogBuilder.crearErrorAlerDialog(context, Integer.toString(response.code()));
                     }
@@ -96,6 +129,19 @@ public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GruposView
                     System.out.println(t.getMessage());
                 }
             });
+        }
+
+        /**
+         * Método para recargar el fragment listar.
+         */
+        private void recargarFragment() {
+            MainActivity activity = (MainActivity) this.context;
+            ListarGruposFragment fragment = new ListarGruposFragment();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         public void setGrupo(Grupo grupo) {

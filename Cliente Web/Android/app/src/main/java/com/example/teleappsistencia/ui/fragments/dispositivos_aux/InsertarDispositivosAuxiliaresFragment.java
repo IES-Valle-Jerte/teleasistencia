@@ -11,10 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.DispositivoAuxiliar;
 import com.example.teleappsistencia.modelos.Terminal;
@@ -74,28 +76,33 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
         this.btn_insertar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertarDispositivoAuxiliar();
-                /*
                 if(validarDispositivoAuxiliar()) {
                     insertarDispositivoAuxiliar();
-                }*/
+                }
             }
         });
 
         return view;
     }
 
+    /**
+     * Método encargado de realizar una petición a la API y inicializar el spinnerTerminal
+     * con los terminales recibidos por la petición.
+     */
     private void inicializarSpinnerTerminal() {
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService(); // Recogo la instancia APIService de la clase ClienteRetrofit.
 
-        Call<List<Terminal>> call = apiService.getTerminales("Bearer " + Utils.getToken().getAccess());
+        Call<List<Terminal>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
                 if (response.isSuccessful()) {
-                    List<Terminal> terminalList = response.body();
-                    System.out.println(terminalList);
-                    spinner_terminal.setAdapter(new ArrayAdapter<Terminal>(getContext(), R.layout.support_simple_spinner_dropdown_item, terminalList));
+                    List<Terminal> terminalList = response.body(); // Recogo la lista de Terminales.
+                    // Creo el adapter y le asigno la lista.
+                    ArrayAdapter<Terminal> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, terminalList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    // Le asigno el adapter al spinner.
+                    spinner_terminal.setAdapter(adapter);
                 }
             }
 
@@ -107,17 +114,24 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
         });
     }
 
+    /**
+     * Método encargado de realizar una petición a la API y inicializar el spinnerTipoAlarma
+     * con los tipoAlarma recibidos por la petición y con el terminal del dispositivoAuxiliar como principal.
+     */
     private void inicializarSpinnerTipoAlarma() {
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService(); // Recogo la instancia APIService de la clase ClienteRetrofit.
 
-        Call<List<TipoAlarma>> call = apiService.getTiposAlarmas("Bearer " + Utils.getToken().getAccess());
+        Call<List<TipoAlarma>> call = apiService.getTiposAlarmas(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoAlarma>>() {
             @Override
             public void onResponse(Call<List<TipoAlarma>> call, Response<List<TipoAlarma>> response) {
                 if (response.isSuccessful()) {
-                    List<TipoAlarma> tipoAlarmaList = response.body();
-                    System.out.println(tipoAlarmaList);
-                    spinner_tipoAlarma.setAdapter(new ArrayAdapter<TipoAlarma>(getContext(), R.layout.support_simple_spinner_dropdown_item, tipoAlarmaList));
+                    List<TipoAlarma> tipoAlarmaList = response.body(); // Recogo la lista de Tipos de Alarmas.
+                    // Creo el adapter y le asigno la lista.
+                    ArrayAdapter<TipoAlarma> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tipoAlarmaList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    // Le asigno el adapter al spinner.
+                    spinner_tipoAlarma.setAdapter(adapter);
                 }
             }
 
@@ -137,17 +151,19 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
         Terminal terminal = (Terminal) this.spinner_terminal.getSelectedItem();
         TipoAlarma tipoAlarma = (TipoAlarma) this.spinner_tipoAlarma.getSelectedItem();
 
-        DispositivoAuxiliar dispositivoAuxiliar = new DispositivoAuxiliar(terminal.getId(),  1/* tipoAlarma.getId() */);
+        DispositivoAuxiliar dispositivoAuxiliar = new DispositivoAuxiliar();
+        dispositivoAuxiliar.setTerminal(terminal.getId());
+        dispositivoAuxiliar.setTipoAlarma(tipoAlarma.getId());
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<Object> call = apiService.addDispositivoAuxiliar(dispositivoAuxiliar, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.addDispositivoAuxiliar(dispositivoAuxiliar, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object dispositivoAuxiliar = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_insertado_dispositivoAuxiliar));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_CREADO_DISPOSITIVO_AUXILIAR);
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
                 }
@@ -178,6 +194,10 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
         }
     }
 
+    /**
+     * Método para validar el campo terminal.
+     * @return
+     */
     private boolean validarTerminal() {
         if(spinner_terminal.getSelectedItem() != null) {
             return true;
@@ -186,6 +206,10 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
         }
     }
 
+    /**
+     * Método para validar el campo tipoAlarma.
+     * @return
+     */
     private boolean validarTipoAlarma() {
         if(spinner_tipoAlarma.getSelectedItem() != null) {
             return true;

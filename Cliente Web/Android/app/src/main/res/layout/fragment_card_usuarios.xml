@@ -54,7 +54,7 @@
             android:id="@+id/textView_grupo_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/grupo_class"
+            android:text="@string/grupo"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/imageButtonModificar"
             app:layout_constraintStart_toStartOf="@+id/guidelineIzquierda"

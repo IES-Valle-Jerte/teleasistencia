@@ -13,7 +13,8 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.DispositivoAuxiliar;
 import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoAlarma;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +44,7 @@ public class ConsultarDispositivosAuxiliaresFragment extends Fragment {
     public static ConsultarDispositivosAuxiliaresFragment newInstance(DispositivoAuxiliar dispositivoAuxiliar) {
         ConsultarDispositivosAuxiliaresFragment fragment = new ConsultarDispositivosAuxiliaresFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, dispositivoAuxiliar);
+        args.putSerializable(Constantes.DISPOSITIVO_AUXILIAR, dispositivoAuxiliar);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +53,7 @@ public class ConsultarDispositivosAuxiliaresFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            dispositivoAuxiliar = (DispositivoAuxiliar) getArguments().getSerializable(Utils.OBJECT);
+            dispositivoAuxiliar = (DispositivoAuxiliar) getArguments().getSerializable(Constantes.DISPOSITIVO_AUXILIAR);
         }
     }
 
@@ -65,8 +66,8 @@ public class ConsultarDispositivosAuxiliaresFragment extends Fragment {
         this.textView_idTerminal = view.findViewById(R.id.textView_consultar_idTerminal_dispositivoAuxiliar);
         this.textView_idTipoAlarma = view.findViewById(R.id.textView_consultar_idTipoAlarma_dispositivoAuxiliar);
 
-        Terminal terminal = (Terminal) Utils.getObjeto(dispositivoAuxiliar.getTerminal(), getString(R.string.terminal_class));
-        TipoAlarma tipoAlarma = (TipoAlarma) Utils.getObjeto(dispositivoAuxiliar.getTipoAlarma(), getString(R.string.tipoAlarma_class));
+        Terminal terminal = (Terminal) Utilidad.getObjeto(dispositivoAuxiliar.getTerminal(), Constantes.TERMINAL);
+        TipoAlarma tipoAlarma = (TipoAlarma) Utilidad.getObjeto(dispositivoAuxiliar.getTipoAlarma(), Constantes.TIPO_ALARMA);
 
         this.textView_id.setText(Integer.toString(dispositivoAuxiliar.getId()));
         this.textView_idTerminal.setText(terminal.getNumeroTerminal());

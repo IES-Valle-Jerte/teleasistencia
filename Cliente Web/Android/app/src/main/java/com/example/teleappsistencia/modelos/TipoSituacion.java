@@ -4,31 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de un TipoSituacion.
+ */
 public class TipoSituacion implements Serializable {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
     private String nombre;
 
     /**
-     * Constructor para mostrar un TipoSituacion.
-     * @param nombre
+     * Getters y setters
      */
-    public TipoSituacion(Integer id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-
-    /**
-     * Constructor para modificar o insertar un nuevo TipoSituacion.
-     * @param nombre
-     */
-    public TipoSituacion(String nombre) {
-        this.nombre = nombre;
-    }
-
-
     public int getId() {
         return id;
     }
@@ -45,6 +36,10 @@ public class TipoSituacion implements Serializable {
         this.nombre = nombre;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return nombre;

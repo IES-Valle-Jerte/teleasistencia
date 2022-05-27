@@ -33,20 +33,38 @@ import com.example.teleappsistencia.ui.fragments.usuarios.InsertarUsuariosFragme
 import com.example.teleappsistencia.ui.fragments.usuarios.ListarUsuariosFragment;
 import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
 import com.example.teleappsistencia.ui.menu.MenuModel;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Esta clase aparte de ser la clase principal, contendrá el menu con un fragment, el cual cambiará según las necesidades del usuario.
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    /**
+     * Atributo con el adapter de la lista expandible (menú).
+     */
     private ExpandableListAdapter expandableListAdapter;
+
+    /**
+     * Atributo con la vista de la lista expandible (menú).
+     */
     private ExpandableListView expandableListView;
+
+    /**
+     * Atributo con una lista de opciones principales (Estas opciones son las que se mostrarán primero en el menú).
+     */
     private List<MenuModel> headerList = new ArrayList<>();
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
@@ -73,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setVisibility(View.INVISIBLE);
 
         expandableListView = findViewById(R.id.expandableListView);
-        prepareMenuData();
+        prepareMenuData();  // Preparo los datos que irán en la cabezera del menú.
         populateExpandableList();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -102,18 +120,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textView_email_usuarioLogged = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textView_email_usuarioLogged);
         imageView_fotoPerfil = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_usuario);
 
-        Usuario usuario = Utils.getUserLogged();    // Recogo el usuario de la clase Utils.
-        String espacio = getString(R.string.espacio_en_blanco);
+        Usuario usuario = Utilidad.getUserLogged();    // Recogo el usuario de la clase Utils.
         if (usuario != null) {  // Si existe el usuario.
             // Le asigno el nombre y apellidos.
-            textView_nombre_usuarioLogged.setText(usuario.getFirstName() + espacio + usuario.getLastName());
+            textView_nombre_usuarioLogged.setText(usuario.getFirstName() + Constantes.ESPACIO_EN_BLANCO + usuario.getLastName());
             textView_email_usuarioLogged.setText(usuario.getEmail());
+
             if(usuario.getImagen() != null) {  // Si el usuario cuenta con una imagen.
                 String img_url = usuario.getImagen().getUrl(); // Recogo la imagen del usuario.
+
                 Picasso.get()       // LLamo a Picasso para poder asignar una imagen por URL.
                         .load(img_url)  // Cargo la URL.
                         .error(R.drawable.rounded_default_user) // Si sucede un error se utiliza la imagen por defecto.
-                        .into(imageView_fotoPerfil); // Carga la imagen en el imageView.
+                        .resize(78, 80)
+                        .centerCrop()
+                        .memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(imageView_fotoPerfil, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                System.out.println("\nPerfe\n");
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                System.out.println("\nError\n");
+                                e.printStackTrace();
+                            }
+                        }); // Carga la imagen en el imageView.
             }
         }
     }
@@ -157,22 +190,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * Método que se encarga de añadir las opciones y sub-opciones al menú.
+     */
     private void prepareMenuData() {
-        String[] childNames = {getResources().getString(R.string.insertar), getResources().getString(R.string.listar)};
-        List<MenuModel> childModelsList;
-        MenuModel menuModel;
+        String[] childNames = {Constantes.SUBMENU_INSERTAR, Constantes.SUBMENU_LISTAR}; // Nombres de las sub-opciones
+        List<MenuModel> childModelsList; // Lista para las sub-opciones
+        MenuModel menuModel; // Modelo de la opción.
 
         // Menu Personas.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_persona), true, true, null);
-        headerList.add(menuModel);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_persona), true, true, null); // Se crea una opción pricipal.
+        headerList.add(menuModel);  // Se añe a la lista de opciones principales.
+        // Se crean las dos sub-opciones insertar y listar.
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPersonaFragment()));
         childModelsList.add(new MenuModel(childNames[1], false, false, new ListarPersonaFragment()));
 
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
+        if (menuModel.hasChildren()) { // Si la opción principal tiene sub-opciones.
+            childList.put(menuModel, childModelsList); // Se le añade al atributo con todas las opciones,
+                                                       // la opción principal y sus sub-opciones.
         } else {
-            childList.put(menuModel, null);
+            childList.put(menuModel, null);            // De lo contrario se le añade solo la opción principal.
         }
 
         // Menu Dirección.
@@ -188,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, null);
         }
 
-        if(Utils.isAdmin()) {
+        if(Utilidad.isAdmin()) {  // Si el usuario es admin se mostrarán todas las demás opciones.
             // Menu Usuarios.
             childModelsList = new ArrayList<>();
             menuModel = new MenuModel(getResources().getString(R.string.menu_usuarios), true, true, null);
@@ -269,26 +307,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Método que define que se hará cuando el ususario pulse una opción.
+     */
     private void populateExpandableList() {
 
         expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
+        // Aquí se define que pasará cuando el usuario pulse en una de las opciones principales.
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
                 if (headerList.get(groupPosition).isGroup()) {
                     if (!headerList.get(groupPosition).hasChildren()) {
-                        /*
-                        MenuModel model = headerList.get(groupPosition);
-                        Fragment fragment = new Fragment(model.getLayout());
-
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.main_fragment, fragment)
-                                .addToBackStack(null)
-                                .commit();
-                         */
+                        // En este caso no hay nada que hacer al pulsar en una opción principal.
                     }
                 }
 
@@ -296,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        // Aquí se define que pasará cuando el usuario pulse en una de las sub-opciones.
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {

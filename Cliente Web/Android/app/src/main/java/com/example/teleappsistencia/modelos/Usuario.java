@@ -5,6 +5,9 @@ import java.util.Date;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Clase encargada del modelo de un Usuario.
+ */
 public class Usuario implements Serializable {
 
     private final static long serialVersionUID = 2592565805411682085L;
@@ -35,7 +38,6 @@ public class Usuario implements Serializable {
     private Object groups;
     @SerializedName("imagen")
     private Imagen imagen;
-
 
     /**
      * Getters y setters
@@ -128,6 +130,10 @@ public class Usuario implements Serializable {
         this.imagen = imagen;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "UsuarioSistema{" +

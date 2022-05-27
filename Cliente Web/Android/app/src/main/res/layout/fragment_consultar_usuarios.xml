@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="255dp"
-                android:text="@string/grupo_class"
+                android:text="@string/grupo"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="276dp"
-                android:text="@string/grupo_class"
+                android:text="@string/grupo"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

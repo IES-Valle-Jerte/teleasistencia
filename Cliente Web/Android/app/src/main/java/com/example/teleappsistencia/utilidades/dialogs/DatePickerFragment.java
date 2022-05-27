@@ -8,16 +8,31 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
+/**
+ * Clase encargada de crear un Dialog para elegir una fecha.
+ */
 public class DatePickerFragment extends DialogFragment {
 
+    /**
+     * Listener OnDateSetListener del DatePickerDialog.
+     */
     private DatePickerDialog.OnDateSetListener listener;
 
+    /**
+     * Método para crear una nueva instancia del DatePickerFragment.
+     * @param listener
+     * @return
+     */
     public static DatePickerFragment newInstance(DatePickerDialog.OnDateSetListener listener) {
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.setListener(listener);
         return fragment;
     }
 
+    /**
+     * Setter para asignar el listener.
+     * @param listener
+     */
     private void setListener(DatePickerDialog.OnDateSetListener listener) {
         this.listener = listener;
     }

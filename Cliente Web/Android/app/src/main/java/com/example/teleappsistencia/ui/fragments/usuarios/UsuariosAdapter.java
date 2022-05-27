@@ -1,6 +1,8 @@
 package com.example.teleappsistencia.ui.fragments.usuarios;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +12,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.ui.fragments.tipo_vivienda.ListarTipoViviendaFragment;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
 import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.modelos.Usuario;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -77,21 +82,43 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragmentConsultar).addToBackStack(null).commit();
                     break;
                 case R.id.imageButtonBorrar:
-                    borrarUsuario();
+                    // Creo un alertDialog para preguntar si se desea eliminar el modelo.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(Constantes.ELIMINAR_ELEMENTO);
+                    builder.setMessage(Constantes.ESTAS_SEGURO_ELIMINAR);
+                    builder.setPositiveButton(Constantes.SI, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            borrarUsuario();
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.setNegativeButton(Constantes.NO, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.show();
+
                     break;
             }
         }
 
+        /**
+         * Método que realiza una petición a la API para borrar un Usuario.
+         */
         private void borrarUsuario() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteUser(usuario.getPk(), "Bearer " + Utils.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteUser(usuario.getPk(), Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
                     if (response.isSuccessful()) {
                         Response<String> respuesta = response.body();
-                        AlertDialogBuilder.crearInfoAlerDialog(context, context.getString(R.string.infoAlertDialog_eliminado_persona));
+                        AlertDialogBuilder.crearInfoAlerDialog(context, Constantes.INFO_ALERTDIALOG_ELIMINADO_USUARIO);
+                        recargarFragment();
                     } else {
                         AlertDialogBuilder.crearErrorAlerDialog(context, Integer.toString(response.code()));
                     }
@@ -103,6 +130,19 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                     System.out.println(t.getMessage());
                 }
             });
+        }
+
+        /**
+         * Método para recargar el fragment listar.
+         */
+        private void recargarFragment() {
+            MainActivity activity = (MainActivity) this.context;
+            ListarUsuariosFragment fragment = new ListarUsuariosFragment();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         public void setUsuario(Usuario usuario) {
@@ -132,15 +172,15 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
         List<Grupo> grupos = (List<Grupo>) items.get(i).getGroups();
         Grupo grupo;
         if(!grupos.isEmpty()) {
-           grupo = (Grupo) Utils.getObjeto(grupos.get(0), viewHolder.context.getString(R.string.grupo_class));
+           grupo = (Grupo) Utilidad.getObjeto(grupos.get(0), Constantes.GRUPO);
            viewHolder.textView_grupo.setText(grupo.getName());
         } else {
-            viewHolder.textView_grupo.setText(viewHolder.context.getString(R.string.string_vacio));
+            viewHolder.textView_grupo.setText(Constantes.STRING_VACIO);
         }
 
         viewHolder.setOnClickListeners();
         viewHolder.textView_nombreUsuario.setText(items.get(i).getUsername());
-        viewHolder.textView_nombreApellidos.setText(items.get(i).getFirstName() + viewHolder.context.getString(R.string.espacio_en_blanco) + items.get(i).getLastName());
+        viewHolder.textView_nombreApellidos.setText(items.get(i).getFirstName() + Constantes.ESPACIO_EN_BLANCO + items.get(i).getLastName());
         viewHolder.textView_email.setText(items.get(i).getEmail());
         usuariosViewHolder.setUsuario(items.get(i));
     }

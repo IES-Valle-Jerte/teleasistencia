@@ -12,7 +12,8 @@ import android.widget.TextView;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.modelos.Usuario;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ConsultarUsuariosFragment extends Fragment {
     public static ConsultarUsuariosFragment newInstance(Usuario usuario) {
         ConsultarUsuariosFragment fragment = new ConsultarUsuariosFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, usuario);
+        args.putSerializable(Constantes.USUARIO, usuario);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +56,7 @@ public class ConsultarUsuariosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            usuario = (Usuario) getArguments().getSerializable(Utils.OBJECT);
+            usuario = (Usuario) getArguments().getSerializable(Constantes.USUARIO);
         }
     }
 
@@ -78,10 +79,10 @@ public class ConsultarUsuariosFragment extends Fragment {
         List<Grupo> grupos = (List<Grupo>) usuario.getGroups();
         Grupo grupo;
         if(!grupos.isEmpty()) {
-            grupo = (Grupo) Utils.getObjeto(grupos.get(0), "Grupo");
+            grupo = (Grupo) Utilidad.getObjeto(grupos.get(0), "Grupo");
             this.textView_grupo.setText(grupo.getName());
         } else {
-            this.textView_grupo.setText("");
+            this.textView_grupo.setText(Constantes.STRING_VACIO);
         }
 
         return view;

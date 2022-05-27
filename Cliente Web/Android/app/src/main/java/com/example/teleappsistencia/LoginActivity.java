@@ -16,8 +16,9 @@ import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.Usuario;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,12 +119,14 @@ public class LoginActivity extends AppCompatActivity {
         if ((userName.isEmpty() || (userName.trim().equals("")))) {    // Reviso si el nombre de usuario está vacio.
             textView_error_usuario.setText(getResources().getString(R.string.textview_nombre_usuario_obligatorio));
             textView_error_usuario.setVisibility(View.VISIBLE);
-            valid = false;                  // Si está vacio entonces le asigno al textView_error_usuario el texto de que es obligatorio el nombre de usuario y devuelvo false.
+            valid = false;                  // Si está vacio entonces le asigno al textView_error_usuario
+                                            // el texto de que es obligatorio el nombre de usuario y devuelvo false.
         } else {
             if (userName.length() < 4) {    // Si no está vacio reviso si el nombre de usuario tiene menos de 4 carácteres.
                 textView_error_usuario.setText(getResources().getString(R.string.textview_longitud_minima_nombre_usuario));
                 textView_error_usuario.setVisibility(View.VISIBLE);
-                valid = false;              // Si tiene menos de 4, le asigno al textView_error_usuario el texto de la longitud que tiene que tener el nombre del usuario y devuelvo false.
+                valid = false;              // Si tiene menos de 4, le asigno al textView_error_usuario
+                                            // el texto de la longitud que tiene que tener el nombre del usuario y devuelvo false.
             } else {
                 textView_error_usuario.setVisibility(View.GONE);
                 valid = true;               // Si tiene más de 4, entonces devuelvo true.
@@ -143,8 +146,9 @@ public class LoginActivity extends AppCompatActivity {
         if ((password.isEmpty()) || (password.trim().equals(""))) {     // Reviso si la contraseña está vacia.
             textView_error_password.setText(R.string.textview_password_obligatoria);
             textView_error_password.setVisibility(View.VISIBLE);
-            valid = false;                                              // Si está vacia entonces le asigno al textView_error_password el texto de que es obligatoria y devuelvo false.
-        } else {                                                        // De lo contrario devuelvo true y hago que el textView_error_password desaparezca.
+            valid = false;                                      // Si está vacia entonces le asigno al textView_error_password
+                                                                // el texto de que es obligatoria y devuelvo false.
+        } else {                                                // De lo contrario devuelvo true y hago que el textView_error_password desaparezca.
             textView_error_password.setVisibility(View.GONE);
             valid = true;
         }
@@ -163,12 +167,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
-                    Utils.setToken(response.body());
+                    Utilidad.setToken(response.body());
 
                     peticionUsuarioLogueado();
                 } else {
-                    if (response.message().equalsIgnoreCase(getString(R.string.unauthorized))) {
-                        AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, getString(R.string.infoAlertDialog_credenciales_incorrectas_login));
+                    if (response.message().equalsIgnoreCase(Constantes.UNAUTHORIZED)) {
+                        AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, Constantes.INFO_ALERTDIALOG_CREDENCIALES_INCORRECTOS_LOGIN);
                     } else {
                         AlertDialogBuilder.crearErrorAlerDialog(LoginActivity.this, Integer.toString(response.code()));
                     }
@@ -179,14 +183,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<Token> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
-                AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, getString(R.string.error_al_conectarse_al_servidor));
+                AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, Constantes.ERROR_AL_CONECTARSE_AL_SERVIDOR);
             }
         });
     }
 
+    /**
+     * Método que realiza una petición a la API, para guardar al usuario que haya iniciado sesión.
+     * Este método a su vez llamará al método asignarUsuarioALaClaseUtilidad y cambiará a la MainActivity.
+     */
     private void peticionUsuarioLogueado() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Usuario>> call = apiService.getUsuarioLogueado("Bearer " + Utils.getToken().getAccess());
+        Call<List<Usuario>> call = apiService.getUsuarioLogueado(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
@@ -195,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                     Usuario usuario = usuariosList.get(0);
 
                     // Para reducir el tamaño del método peticionUsuarioLogueado(), se ha separado en otro método la signación del usuario de la clase Utils.
-                    asignarUsuarioAlUtils(usuario);
+                    asignarUsuarioALaClaseUtilidad(usuario);
 
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
@@ -207,7 +215,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 t.printStackTrace();
-                AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, getString(R.string.error_al_conectarse_al_servidor));
+                AlertDialogBuilder.crearInfoAlerDialog(LoginActivity.this, Constantes.ERROR_AL_CONECTARSE_AL_SERVIDOR);
             }
         });
     }
@@ -217,17 +225,18 @@ public class LoginActivity extends AppCompatActivity {
      * Además mira si el usuario tiene permisos de admin y lo asigna a la variable isAdmin de la clase Utils.
      * @param usuario
      */
-    private void asignarUsuarioAlUtils(Usuario usuario){
+    private void asignarUsuarioALaClaseUtilidad(Usuario usuario){
         // Asigno el usuario logueado.
-        Utils.setUserLogged(usuario);
+        Utilidad.setUserLogged(usuario);
 
         List<Grupo> gruposList= (ArrayList) usuario.getGroups();  // Recogo su lista de grupos para ver a cual pertenece.
-        Grupo grupo = (Grupo) Utils.getObjeto(gruposList.get(0), getString(R.string.grupo_class));  // LLamo al método Utils.getObjeto() para evitar el error al castear una LinkedTreeMap a un Object
+        Grupo grupo = (Grupo) Utilidad.getObjeto(gruposList.get(0), Constantes.GRUPO);  // LLamo al método Utils.getObjeto() para evitar
+                                                                                        // el error al castear una LinkedTreeMap a un Object.
 
-        if (grupo.getName().equalsIgnoreCase(getString(R.string.profesor))) {
-            Utils.setIsAdmin(true); // Si pertenece a el grupo con el nombre "Profesor" entonces se asigna la variable isAdmin a true.
+        if (grupo.getName().equalsIgnoreCase(Constantes.PROFESOR)) {
+            Utilidad.setIsAdmin(true); // Si pertenece a el grupo con el nombre "Profesor" entonces se asigna la variable isAdmin a true.
         } else {
-            Utils.setIsAdmin(false);  // De lo contrario se le asigna false.
+            Utilidad.setIsAdmin(false);  // De lo contrario se le asigna false.
         }
     }
 }

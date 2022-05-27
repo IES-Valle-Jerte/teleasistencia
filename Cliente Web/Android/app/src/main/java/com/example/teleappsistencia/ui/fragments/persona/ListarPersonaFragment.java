@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Persona;
 
@@ -76,10 +77,14 @@ public class ListarPersonaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todas las Personas.
+     * Añadiendo también el adapter de las Personas.
+     */
     private void listarPersonas() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Persona>> call = apiService.getPersonas("Bearer " + Utils.getToken().getAccess());
+        Call<List<Persona>> call = apiService.getPersonas(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Persona>>() {
             @Override
             public void onResponse(Call<List<Persona>> call, Response<List<Persona>> response) {

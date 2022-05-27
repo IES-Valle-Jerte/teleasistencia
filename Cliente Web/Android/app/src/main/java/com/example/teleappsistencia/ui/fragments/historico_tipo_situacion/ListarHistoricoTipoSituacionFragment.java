@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.HistoricoTipoSituacion;
 
@@ -76,10 +77,14 @@ public class ListarHistoricoTipoSituacionFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todos los HistoricoTipoSituaciones.
+     * Añadiendo también el adapter de los HistoricoTipoSituaciones.
+     */
     private void listarHistoricoTipoSituacion() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<HistoricoTipoSituacion>> call = apiService.getHistoricoTipoSituacion("Bearer " + Utils.getToken().getAccess());
+        Call<List<HistoricoTipoSituacion>> call = apiService.getHistoricoTipoSituacion(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<HistoricoTipoSituacion>>() {
             @Override
             public void onResponse(Call<List<HistoricoTipoSituacion>> call, Response<List<HistoricoTipoSituacion>> response) {

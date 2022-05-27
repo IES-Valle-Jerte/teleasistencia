@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Grupo;
 
@@ -76,10 +77,14 @@ public class ListarGruposFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todos los Grupos.
+     * Añadiendo también el adapter de los Grupos.
+     */
     private void listarGrupos() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Grupo>> call = apiService.getGrupos("Bearer " + Utils.getToken().getAccess());
+        Call<List<Grupo>> call = apiService.getGrupos(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Grupo>>() {
             @Override
             public void onResponse(Call<List<Grupo>> call, Response<List<Grupo>> response) {

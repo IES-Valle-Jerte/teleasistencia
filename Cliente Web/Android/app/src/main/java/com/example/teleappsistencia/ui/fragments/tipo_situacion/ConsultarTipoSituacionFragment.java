@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.TipoSituacion;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +39,7 @@ public class ConsultarTipoSituacionFragment extends Fragment {
     public static ConsultarTipoSituacionFragment newInstance(TipoSituacion tipoSituacion) {
         ConsultarTipoSituacionFragment fragment = new ConsultarTipoSituacionFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, tipoSituacion);
+        args.putSerializable(Constantes.TIPO_SITUACION, tipoSituacion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,7 +48,7 @@ public class ConsultarTipoSituacionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tipoSituacion = (TipoSituacion) getArguments().getSerializable(Utils.OBJECT);
+            tipoSituacion = (TipoSituacion) getArguments().getSerializable(Constantes.TIPO_SITUACION);
         }
     }
 

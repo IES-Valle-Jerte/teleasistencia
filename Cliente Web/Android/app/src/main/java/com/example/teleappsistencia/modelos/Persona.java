@@ -4,7 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de una Persona.
+ */
 public class Persona implements Serializable {
+
+    /**
+     * Atributos de la clase
+     */
 
     @SerializedName("id")
     private int id;
@@ -26,51 +33,8 @@ public class Persona implements Serializable {
     private Object direccion;
 
     /**
-     * Constructor para mostrar una Persona.
-     * @param id
-     * @param nombre
-     * @param apellidos
-     * @param dni
-     * @param fechaNacimiento
-     * @param sexo
-     * @param telefonoFijo
-     * @param telefonoMovil
-     * @param direccion
+     * Getters y setters
      */
-    public Persona(int id, String nombre, String apellidos, String dni, String fechaNacimiento, String sexo, String telefonoFijo, String telefonoMovil, Object direccion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
-        this.sexo = sexo;
-        this.telefonoFijo = telefonoFijo;
-        this.telefonoMovil = telefonoMovil;
-        this.direccion = direccion;
-    }
-
-    /**
-     * Constructor parainsertar una nueva Persona.
-     * @param nombre
-     * @param apellidos
-     * @param dni
-     * @param fechaNacimiento
-     * @param sexo
-     * @param telefonoFijo
-     * @param telefonoMovil
-     * @param direccion
-     */
-    public Persona(String nombre, String apellidos, String dni, String fechaNacimiento, String sexo, String telefonoFijo, String telefonoMovil, Object direccion) {
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
-        this.sexo = sexo;
-        this.telefonoFijo = telefonoFijo;
-        this.telefonoMovil = telefonoMovil;
-        this.direccion = direccion;
-    }
-
     public int getId() {
         return id;
     }
@@ -143,6 +107,10 @@ public class Persona implements Serializable {
         this.direccion = direccion;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "Persona{" +

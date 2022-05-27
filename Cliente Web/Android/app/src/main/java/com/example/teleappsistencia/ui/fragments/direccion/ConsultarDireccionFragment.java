@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Direccion;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +42,7 @@ public class ConsultarDireccionFragment extends Fragment {
     public static ConsultarDireccionFragment newInstance(Direccion direccion) {
         ConsultarDireccionFragment fragment = new ConsultarDireccionFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, direccion);
+        args.putSerializable(Constantes.DIRECCION, direccion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +51,7 @@ public class ConsultarDireccionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            direccion = (Direccion) getArguments().getSerializable(Utils.OBJECT);
+            direccion = (Direccion) getArguments().getSerializable(Constantes.DIRECCION);
         }
     }
 

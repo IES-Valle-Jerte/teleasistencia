@@ -4,8 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de una Dirección.
+ */
 public class Direccion implements Serializable {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("localidad")
@@ -18,36 +24,8 @@ public class Direccion implements Serializable {
     private String codigoPostal;
 
     /**
-     * Constructor para mostrar una Direccion.
-     * @param id
-     * @param localidad
-     * @param provincia
-     * @param direccion
-     * @param codigoPostal
+     * Getters y setters
      */
-    public Direccion(int id, String localidad, String provincia, String direccion, String codigoPostal) {
-        this.id = id;
-        this.localidad = localidad;
-        this.provincia = provincia;
-        this.direccion = direccion;
-        this.codigoPostal = codigoPostal;
-    }
-
-    /**
-     * Constructor para modificar o insertar una nueva Direccion.
-     * @param localidad
-     * @param provincia
-     * @param direccion
-     * @param codigoPostal
-     */
-    public Direccion(String localidad, String provincia, String direccion, String codigoPostal) {
-        this.localidad = localidad;
-        this.provincia = provincia;
-        this.direccion = direccion;
-        this.codigoPostal = codigoPostal;
-    }
-
-
     public int getId() {
         return id;
     }
@@ -88,6 +66,10 @@ public class Direccion implements Serializable {
         this.codigoPostal = codigoPostal;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "Direccion{" +

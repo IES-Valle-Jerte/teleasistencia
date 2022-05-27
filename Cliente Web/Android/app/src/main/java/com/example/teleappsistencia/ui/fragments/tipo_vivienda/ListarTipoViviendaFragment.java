@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.TipoVivienda;
 
@@ -78,10 +79,14 @@ public class ListarTipoViviendaFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todos los TipoViviendas.
+     * Añadiendo también el adapter de los TipoViviendas.
+     */
     private void listarTipoVivienda() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<TipoVivienda>> call = apiService.getTipoVivienda("Bearer " + Utils.getToken().getAccess());
+        Call<List<TipoVivienda>> call = apiService.getTipoVivienda(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoVivienda>>() {
             @Override
             public void onResponse(Call<List<TipoVivienda>> call, Response<List<TipoVivienda>> response) {

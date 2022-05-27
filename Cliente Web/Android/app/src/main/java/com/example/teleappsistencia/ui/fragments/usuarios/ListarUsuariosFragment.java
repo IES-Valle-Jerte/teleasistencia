@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Usuario;
 
@@ -77,10 +78,14 @@ public class ListarUsuariosFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todos los Usuarios.
+     * Añadiendo también el adapter de los Usuarios.
+     */
     private void listarUsuarios() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Usuario>> call = apiService.getUsuarios("Bearer " + Utils.getToken().getAccess());
+        Call<List<Usuario>> call = apiService.getUsuarios(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {

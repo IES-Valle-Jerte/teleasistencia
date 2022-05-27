@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Direccion;
 
@@ -76,10 +77,14 @@ public class ListarDireccionFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todas las Direcciones.
+     * Añadiendo también el adapter de las Direcciones.
+     */
     private void listarDireccion() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Direccion>> call = apiService.getDirecciones("Bearer " + Utils.getToken().getAccess());
+        Call<List<Direccion>> call = apiService.getDirecciones(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Direccion>>() {
             @Override
             public void onResponse(Call<List<Direccion>> call, Response<List<Direccion>> response) {

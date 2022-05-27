@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Direccion;
 
@@ -58,7 +59,7 @@ public class ModificarDireccionFragment extends Fragment {
     public static ModificarDireccionFragment newInstance(Direccion direccion) {
         ModificarDireccionFragment fragment = new ModificarDireccionFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, direccion);
+        args.putSerializable(Constantes.DIRECCION, direccion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +69,7 @@ public class ModificarDireccionFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            direccion = (Direccion) getArguments().getSerializable(Utils.OBJECT);
+            direccion = (Direccion) getArguments().getSerializable(Constantes.DIRECCION);
         }
     }
 
@@ -129,16 +130,20 @@ public class ModificarDireccionFragment extends Fragment {
         String direc = this.editText_direccion.getText().toString();
         String codigoPostal = this.editText_codigoPostal.getText().toString();
 
-        Direccion direccion = new Direccion(localidad, provincia, direc, codigoPostal);
+        Direccion direccion = new Direccion();
+        direccion.setLocalidad(localidad);
+        direccion.setProvincia(provincia);
+        direccion.setDireccion(direc);
+        direccion.setCodigoPostal(codigoPostal);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.modifyDireccion(this.direccion.getId(), direccion, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.modifyDireccion(this.direccion.getId(), direccion, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object direccion = response.body();
-                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_modificado_direccion));
+                    AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_MODIFICADO_DIRECCION);
                     getActivity().onBackPressed();
                 } else {
                     AlertDialogBuilder.crearErrorAlerDialog(getContext(), Integer.toString(response.code()));
@@ -232,9 +237,14 @@ public class ModificarDireccionFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para validar el campo localidad.
+     * @param localidad
+     * @return
+     */
     public boolean validarLocalidad(String localidad) {
         boolean valid = false;
-        if ((localidad.isEmpty()) || (localidad.trim().equals(""))) {     // Reviso si la localidad está vacia.
+        if ((localidad.isEmpty()) || (localidad.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si la localidad está vacia.
             textView_error_localidad.setText(R.string.textview_localidad_obligatoria);
             textView_error_localidad.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
@@ -245,9 +255,14 @@ public class ModificarDireccionFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo provincia.
+     * @param provincia
+     * @return
+     */
     public boolean validarProvincia(String provincia) {
         boolean valid = false;
-        if ((provincia.isEmpty()) || (provincia.trim().equals(""))) {     // Reviso si la provincia está vacia.
+        if ((provincia.isEmpty()) || (provincia.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si la provincia está vacia.
             textView_error_provincia.setText(R.string.textview_provincia_obligatoria);
             textView_error_provincia.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
@@ -258,9 +273,14 @@ public class ModificarDireccionFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo direccion.
+     * @param direccion
+     * @return
+     */
     public boolean validarDir(String direccion) {
         boolean valid = false;
-        if ((direccion.isEmpty()) || (direccion.trim().equals(""))) {     // Reviso si la dirección está vacia.
+        if ((direccion.isEmpty()) || (direccion.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si la dirección está vacia.
             textView_error_direccion.setText(R.string.textview_direccion_obligatoria);
             textView_error_direccion.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
@@ -271,9 +291,14 @@ public class ModificarDireccionFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo codigoPostal.
+     * @param codigoPostal
+     * @return
+     */
     public boolean validarCodigoPostal(String codigoPostal) {
         boolean valid = false;
-        if ((codigoPostal.isEmpty()) || (codigoPostal.trim().equals(""))) {     // Reviso si la dirección está vacia.
+        if ((codigoPostal.isEmpty()) || (codigoPostal.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si la dirección está vacia.
             textView_error_codigoPostal.setText(R.string.textview_codigoPostal_obligatoria);
             textView_error_codigoPostal.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.

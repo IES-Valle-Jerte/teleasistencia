@@ -12,7 +12,8 @@ import android.widget.TextView;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Direccion;
 import com.example.teleappsistencia.modelos.Persona;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +48,7 @@ public class ConsultarPersonaFragment extends Fragment {
     public static ConsultarPersonaFragment newInstance(Persona persona) {
         ConsultarPersonaFragment fragment = new ConsultarPersonaFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, persona);
+        args.putSerializable(Constantes.PERSONA, persona);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +57,7 @@ public class ConsultarPersonaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            persona = (Persona) getArguments().getSerializable(Utils.OBJECT);
+            persona = (Persona) getArguments().getSerializable(Constantes.PERSONA);
         }
     }
 
@@ -82,9 +83,12 @@ public class ConsultarPersonaFragment extends Fragment {
         this.textView_telefonoFijo.setText(persona.getTelefonoFijo());
         this.textView_telefonoMovil.setText(persona.getTelefonoMovil());
 
-        Direccion direccion = (Direccion) Utils.getObjeto(persona.getDireccion(), getString(R.string.direccion_class));
-        this.textView_idDireccion.setText(Integer.toString(direccion.getId()));
-
+        Direccion direccion = (Direccion) Utilidad.getObjeto(persona.getDireccion(), Constantes.DIRECCION);
+        if(direccion != null) {
+            this.textView_idDireccion.setText(Integer.toString(direccion.getId()));
+        } else{
+            this.textView_idDireccion.setText(Constantes.ERROR);
+        }
         return view;
     }
 }

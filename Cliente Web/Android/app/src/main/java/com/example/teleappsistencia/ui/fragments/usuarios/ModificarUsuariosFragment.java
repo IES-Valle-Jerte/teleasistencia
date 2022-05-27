@@ -16,8 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.modelos.Usuario;
@@ -63,7 +64,7 @@ public class ModificarUsuariosFragment extends Fragment {
     public static ModificarUsuariosFragment newInstance(Usuario usuario) {
         ModificarUsuariosFragment fragment = new ModificarUsuariosFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, usuario);
+        args.putSerializable(Constantes.USUARIO, usuario);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,7 +74,7 @@ public class ModificarUsuariosFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
-            usuario = (Usuario) getArguments().getSerializable(Utils.OBJECT);
+            usuario = (Usuario) getArguments().getSerializable(Constantes.USUARIO);
         }
     }
 
@@ -118,26 +119,36 @@ public class ModificarUsuariosFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método encargado de rellenar los editText con los datos del modelo.
+     */
     private void rellenarDatos(){
         this.editText_nombreUsuario.setText(this.usuario.getUsername());
         this.editText_password.setText(this.usuario.getPassword());
         this.editText_email.setText(this.usuario.getEmail());
     }
 
+    /**
+     * Método encargado de realizar una petición a la API y inicializar el spinnerGrupos
+     * con los grupos recibidos por la petición y con el grupo del usuario como principal.
+     */
     private void inicializarSpinnerGrupos() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Grupo>> call = apiService.getGrupos("Bearer " + Utils.getToken().getAccess());
+        Call<List<Grupo>> call = apiService.getGrupos(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Grupo>>() {
             @Override
             public void onResponse(Call<List<Grupo>> call, Response<List<Grupo>> response) {
                 if (response.isSuccessful()) {
                     List<Grupo> grupos = response.body();
                     List<Grupo> gruposUsuario = (List<Grupo>) usuario.getGroups();
+                    Grupo grupo = (Grupo) Utilidad.getObjeto(gruposUsuario.get(0), Constantes.GRUPO);
                     if(!gruposUsuario.isEmpty()){
-                        grupos.add(0, (Grupo) Utils.getObjeto(gruposUsuario.get(0), "Grupo"));
+                        grupos.add(0, grupo);  // Asigno el grupo del usuario en la posición 0.
                     }
-                    spinner_grupo.setAdapter(new ArrayAdapter<Grupo>(getContext(), R.layout.support_simple_spinner_dropdown_item, grupos));
+                    ArrayAdapter<Grupo> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, grupos);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_grupo.setAdapter(adapter);
                 }
             }
 
@@ -148,6 +159,7 @@ public class ModificarUsuariosFragment extends Fragment {
             }
         });
     }
+
 
     /**
      * Método para modificar un usuario de la base de datos.
@@ -164,11 +176,16 @@ public class ModificarUsuariosFragment extends Fragment {
         usuario.setPassword(password);
         usuario.setUsername(username);
         usuario.setEmail(email);
-        usuario.setGroups(group.getPk());
+
+        if(group.getId() == 0){
+            usuario.setGroups(group.getPk());
+        } else {
+            usuario.setGroups(group.getId());
+        }
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<Object> call = apiService.modifyUsuario(this.usuario.getPk(), usuario, "Bearer " + Utils.getToken().getAccess());
+        Call<Object> call = apiService.modifyUsuario(this.usuario.getPk(), usuario, Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
@@ -178,7 +195,7 @@ public class ModificarUsuariosFragment extends Fragment {
                     if(usuario instanceof String){
                         AlertDialogBuilder.crearInfoAlerDialog(getContext(), usuario.toString());
                     } else {
-                        AlertDialogBuilder.crearInfoAlerDialog(getContext(), getString(R.string.infoAlertDialog_modificado_usuario));;
+                        AlertDialogBuilder.crearInfoAlerDialog(getContext(), Constantes.INFO_ALERTDIALOG_MODIFICADO_USUARIO);;
                         getActivity().onBackPressed();
                     }
                 } else {
@@ -259,9 +276,14 @@ public class ModificarUsuariosFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para validar el campo userName.
+     * @param userName
+     * @return
+     */
     public boolean validarNombreUsuario(String userName) {
         boolean valid = false;
-        if ((userName.isEmpty() || (userName.trim().equals("")))) {    // Reviso si el nombre de usuario está vacio.
+        if ((userName.isEmpty() || (userName.trim().equals(Constantes.STRING_VACIO)))) {    // Reviso si el nombre de usuario está vacio.
             textView_error_nombreUsuario.setText(getResources().getString(R.string.textview_nombre_usuario_obligatorio));
             textView_error_nombreUsuario.setVisibility(View.VISIBLE);
             valid = false;                  // Si está vacio entonces el texto de que es obligatorio y devuelvo false.
@@ -278,9 +300,14 @@ public class ModificarUsuariosFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo password.
+     * @param password
+     * @return
+     */
     public boolean validarPassword(String password) {
         boolean valid = false;
-        if ((password.isEmpty()) || (password.trim().equals(""))) {     // Reviso si la contraseña está vacia.
+        if ((password.isEmpty()) || (password.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si la contraseña está vacia.
             textView_error_password.setText(R.string.textview_password_obligatoria);
             textView_error_password.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacia entonces le asigno el texto de que es obligatoria y devuelvo false.
@@ -291,9 +318,14 @@ public class ModificarUsuariosFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo email.
+     * @param email
+     * @return
+     */
     public boolean validarEmail(String email) {
         boolean valid = false;
-        if ((email.isEmpty()) || (email.trim().equals(""))) {     // Reviso si el email está vacio.
+        if ((email.isEmpty()) || (email.trim().equals(Constantes.STRING_VACIO))) {     // Reviso si el email está vacio.
             textView_error_email.setText(R.string.textview_email_obligatorio);
             textView_error_email.setVisibility(View.VISIBLE);
             valid = false;                                              // Si está vacio entonces le asigno el texto de que es obligatorio y devuelvo false.
@@ -304,6 +336,10 @@ public class ModificarUsuariosFragment extends Fragment {
         return valid;
     }
 
+    /**
+     * Método para validar el campo grupo.
+     * @return
+     */
     private boolean validarGrupo() {
         if(spinner_grupo.getSelectedItem() != null) {
             return true;

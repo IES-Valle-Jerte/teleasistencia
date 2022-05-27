@@ -13,7 +13,8 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.HistoricoTipoSituacion;
 import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoSituacion;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +45,7 @@ public class ConsultarHistoricoTipoSituacionFragment extends Fragment {
     public static ConsultarHistoricoTipoSituacionFragment newInstance(HistoricoTipoSituacion historicoTipoSituacion) {
         ConsultarHistoricoTipoSituacionFragment fragment = new ConsultarHistoricoTipoSituacionFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, historicoTipoSituacion);
+        args.putSerializable(Constantes.HISTORICO_TIPO_SITUACION, historicoTipoSituacion);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +54,7 @@ public class ConsultarHistoricoTipoSituacionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            historicoTipoSituacion = (HistoricoTipoSituacion) getArguments().getSerializable(Utils.OBJECT);
+            historicoTipoSituacion = (HistoricoTipoSituacion) getArguments().getSerializable(Constantes.HISTORICO_TIPO_SITUACION);
         }
     }
 
@@ -67,8 +68,8 @@ public class ConsultarHistoricoTipoSituacionFragment extends Fragment {
         this.textView_idTerminal = view.findViewById(R.id.textView_consultar_idTerminal_historicoTipoSituacion);
         this.textView_idTipoSituacion = view.findViewById(R.id.textView_consultar_idTipoSituacion_historicoTipoSituacion);
 
-        Terminal terminal = (Terminal) Utils.getObjeto(historicoTipoSituacion.getTerminal(), getString(R.string.terminal_class));
-        TipoSituacion tipoSituacion = (TipoSituacion) Utils.getObjeto(historicoTipoSituacion.getIdTipoSituacion(), getString(R.string.tipoSituacion_class));
+        Terminal terminal = (Terminal) Utilidad.getObjeto(historicoTipoSituacion.getTerminal(), Constantes.TERMINAL);
+        TipoSituacion tipoSituacion = (TipoSituacion) Utilidad.getObjeto(historicoTipoSituacion.getIdTipoSituacion(), Constantes.TIPO_SITUACION);
 
         this.textView_id.setText(Integer.toString(historicoTipoSituacion.getId()));
         this.textView_fecha.setText(historicoTipoSituacion.getFecha());

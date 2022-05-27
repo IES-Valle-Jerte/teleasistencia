@@ -4,9 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de un HistoricoTipoSituacion.
+ */
 public class HistoricoTipoSituacion implements Serializable {
 
-
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("fecha")
@@ -19,31 +24,8 @@ public class HistoricoTipoSituacion implements Serializable {
     private Object terminal;
 
     /**
-     * Constructor para mostrar un HistoricoTipoSituacion.
-     * @param id
-     * @param fecha
-     * @param idTipoSituacion
-     * @param terminal
+     * Getters y setters
      */
-    public HistoricoTipoSituacion(int id, String fecha, int idTipoSituacion, int terminal) {
-        this.id = id;
-        this.fecha = fecha;
-        this.idTipoSituacion = idTipoSituacion;
-        this.terminal = terminal;
-    }
-
-    /**
-     * Constructor para insertar un HistoricoTipoSituacion.
-     * @param fecha
-     * @param tipoSituacion
-     * @param terminal
-     */
-    public HistoricoTipoSituacion(String fecha, Object tipoSituacion, Object terminal) {
-        this.fecha = fecha;
-        this.tipoSituacion = tipoSituacion;
-        this.terminal = terminal;
-    }
-
     public int getId() {
         return id;
     }
@@ -84,6 +66,10 @@ public class HistoricoTipoSituacion implements Serializable {
         this.terminal = terminal;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "HistoricoTipoSituacion{" +

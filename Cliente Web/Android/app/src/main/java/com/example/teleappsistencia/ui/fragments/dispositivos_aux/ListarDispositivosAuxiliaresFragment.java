@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.dialogs.AlertDialogBuilder;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.modelos.DispositivoAuxiliar;
 
@@ -76,10 +77,14 @@ public class ListarDispositivosAuxiliaresFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Método que realiza una petición a la API y recoge todos los DispositivosAuxiliares.
+     * Añadiendo también el adapter de los DispositivosAuxiliares.
+     */
     private void listarDispositivosAuxiliares() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<DispositivoAuxiliar>> call = apiService.getDispositivosAuxiliares("Bearer " + Utils.getToken().getAccess());
+        Call<List<DispositivoAuxiliar>> call = apiService.getDispositivosAuxiliares(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<DispositivoAuxiliar>>() {
             @Override
             public void onResponse(Call<List<DispositivoAuxiliar>> call, Response<List<DispositivoAuxiliar>> response) {

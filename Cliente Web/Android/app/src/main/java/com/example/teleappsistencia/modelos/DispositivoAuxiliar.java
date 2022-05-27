@@ -4,8 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de un DispositivoAuxiliar.
+ */
 public class DispositivoAuxiliar implements Serializable {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("id_terminal")
@@ -13,18 +19,9 @@ public class DispositivoAuxiliar implements Serializable {
     @SerializedName("id_tipo_alarma")
     private Object tipoAlarma;
 
-
-    public DispositivoAuxiliar(int id, Object terminal, Object tipoAlarma) {
-        this.id = id;
-        this.terminal = terminal;
-        this.tipoAlarma = tipoAlarma;
-    }
-
-    public DispositivoAuxiliar(Object terminal, Object tipoAlarma) {
-        this.terminal = terminal;
-        this.tipoAlarma = tipoAlarma;
-    }
-
+    /**
+     * Getters y setters
+     */
     public int getId() {
         return id;
     }
@@ -49,6 +46,10 @@ public class DispositivoAuxiliar implements Serializable {
         this.tipoAlarma = tipoAlarma;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return "DispositivoAuxiliar{" +

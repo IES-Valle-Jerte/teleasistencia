@@ -28,6 +28,9 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Intefaz encargada de contener todas las peticiones a las API.
+ */
 public interface APIService {
 
     // Peticiones del Token y Usuario Logueado

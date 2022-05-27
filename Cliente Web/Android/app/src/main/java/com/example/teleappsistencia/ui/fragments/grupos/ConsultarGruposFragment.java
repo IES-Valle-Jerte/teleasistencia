@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Grupo;
-import com.example.teleappsistencia.utilidades.Utils;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +39,7 @@ public class ConsultarGruposFragment extends Fragment {
     public static ConsultarGruposFragment newInstance(Grupo grupo) {
         ConsultarGruposFragment fragment = new ConsultarGruposFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Utils.OBJECT, grupo);
+        args.putSerializable(Constantes.GRUPO, grupo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,7 +48,7 @@ public class ConsultarGruposFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            grupo = (Grupo) getArguments().getSerializable(Utils.OBJECT);
+            grupo = (Grupo) getArguments().getSerializable(Constantes.GRUPO);
         }
     }
 
