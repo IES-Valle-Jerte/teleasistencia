@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import Swal from 'sweetalert2';
 import {environment} from "../../../../environments/environment";
+
 @Component({
   selector: 'app-item-direccion, [app-item-direccion]',
   templateUrl: './item-direccion.component.html',
@@ -21,7 +22,7 @@ export class ItemDireccionComponent implements OnInit {
   }
 
   //Toast para el Alert indicando que la operación fue exitosa
-  alertExito() :void {
+  alertExito(): void {
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -40,8 +41,9 @@ export class ItemDireccionComponent implements OnInit {
       title: environment.fraseEliminar,
     })
   }
+
   //Toast para el alert indicando que hubo algún error en la operación
-  alertError() :void {
+  alertError(): void {
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -71,7 +73,7 @@ export class ItemDireccionComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.eliminarDireccion('direcciones')
-   }
+      }
     })
   }
 
@@ -79,7 +81,7 @@ export class ItemDireccionComponent implements OnInit {
   eliminarDireccion(ruta: string): void {
     this.cargaDirecciones.eliminarDireccion(this.direccion).subscribe(
       e => {
-        this.router.navigateByUrl(ruta+'/borrado/'+this.direccion.id, {skipLocationChange: true}).then(() => {
+        this.router.navigateByUrl(ruta + '/borrado/' + this.direccion.id, {skipLocationChange: true}).then(() => {
           this.router.navigate([ruta]);
         });
         //Si el elemento se ha borrado con exito, llama al método que muestra el alert de Exito
