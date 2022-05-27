@@ -12,10 +12,11 @@ class ImagenUserSerializer(serializers.ModelSerializer):
        fields = ['imagen']
 
 class UserSerializer(serializers.ModelSerializer):
+
    imagen = ImagenUserSerializer(source='imagen_user', read_only=True)
    class Meta:
        model = User
-       fields = ['pk', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups','imagen']
+       fields = ['id', 'url', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'groups', 'imagen']
        depth = 1
 
 class PermissionSerializer(serializers.ModelSerializer):
@@ -81,11 +82,21 @@ class Persona_Serializer(serializers.ModelSerializer):
         depth = 1
 
 
+class Historico_Agenda_Llamadas_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Historico_Agenda_Llamadas
+        fields = '__all__'
+        depth = 2
+
+
 class Agenda_Serializer(serializers.ModelSerializer):
+    historico_agenda = Historico_Agenda_Llamadas_Serializer(
+        many=True,
+        read_only=True)
     class Meta:
         model = Agenda
         fields = '__all__' #Indica todos los campos
-        depth = 1
+        depth = 2
 
 
 class Tipo_Agenda_Serializer(serializers.ModelSerializer):
@@ -94,25 +105,18 @@ class Tipo_Agenda_Serializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class Historico_Agenda_Llamadas_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model = Historico_Agenda_Llamadas
-        fields = '__all__'
-        depth = 1
-
-
 class Relacion_Terminal_Recurso_Comunitario_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Relacion_Terminal_Recurso_Comunitario
         fields = '__all__'
-        depth = 2
+        depth = 3
 
 
 class Terminal_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Terminal
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Historico_Tipo_Situación_Serializer(serializers.ModelSerializer):
@@ -138,14 +142,14 @@ class Relacion_Paciente_Persona_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Relacion_Paciente_Persona
         fields = '__all__'
-        depth = 1
+        depth = 3
 
 
 class Paciente_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Paciente
         fields = '__all__'
-        depth = 2
+        depth = 3
 
 
 class Tipo_Modalidad_Paciente_Serializer(serializers.ModelSerializer):
@@ -186,7 +190,7 @@ class Persona_Contacto_En_Alarma_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Persona_Contacto_En_Alarma
         fields = '__all__'
-        depth = 1
+        depth = 2
 
 
 class Relacion_Usuario_Centro_Serializer(serializers.ModelSerializer):
@@ -195,3 +199,51 @@ class Relacion_Usuario_Centro_Serializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 2
 
+class Tecnologia_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tecnologia
+        fields = '__all__' #Indica todos los campos
+        depth = 2
+
+class Desarrollador_Tecnologia_Serializer(serializers.ModelSerializer):
+
+    # Devuelve también los datos de los datos de las tecnologias del Desarrollador_tecnologia
+    tecnologias = Tecnologia_Serializer(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = Desarrollador_Tecnologia
+        fields = '__all__' #Indica todos los campos
+        depth = 1
+
+class Gestion_Base_Datos_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gestion_Base_Datos
+        fields = '__all__'
+        depth = 1
+
+
+class Desarrollador_Serializer(serializers.ModelSerializer):
+
+    # Devuelve también los datos de los datos de desarrolladores_tecnologias del Desarrollador
+    desarrollador_tecnologias = Desarrollador_Tecnologia_Serializer(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = Desarrollador
+        fields = '__all__' #Indica todos los campos
+        depth = 1
+
+class Convocatoria_Proyecto_Serializer(serializers.ModelSerializer):
+
+    # Devuelve también los datos de los desarrolladores de la convocatoria
+    desarrolladores = Desarrollador_Serializer(
+        many=True,
+        read_only=True)
+
+    class Meta:
+        model = Convocatoria_Proyecto
+        fields = '__all__' #Indica todos los campos
+        depth = 1
