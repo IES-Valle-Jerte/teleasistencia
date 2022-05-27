@@ -1,14 +1,14 @@
 package com.example.teleappsistencia.modelos;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 /**
- * Clase encargada del modelo de un Usuario.
+ * Clase POJO "Usuario" utilizada para parsear la respuesta JSON del servidor.
  */
-public class Usuario implements Serializable {
+public class Usuario implements Serializable{
 
     private final static long serialVersionUID = 2592565805411682085L;
 
@@ -136,16 +136,6 @@ public class Usuario implements Serializable {
      */
     @Override
     public String toString() {
-        return "UsuarioSistema{" +
-                "pk=" + pk +
-                ", url='" + url + '\'' +
-                ", lastLogin='" + lastLogin + '\'' +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", dateJoined=" + dateJoined +
-                ", groups=" + groups +
-                '}';
+        return this.firstName+" "+this.lastName;
     }
 }

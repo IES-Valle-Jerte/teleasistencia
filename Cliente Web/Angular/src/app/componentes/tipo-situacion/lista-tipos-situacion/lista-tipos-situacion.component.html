@@ -14,12 +14,12 @@
       <table id="tableList" class="table table-hover text-center">
         <thead>
         <tr class="table-purple">
-          <th (click)="ordenacionTabla(0, 'string')" scope="col">Nombre <i class="fas fa-sort"></i></th>
+          <th class="ordenable" (click)="ordenacionTabla(0, 'string')" scope="col">Nombre <i class="fas fa-sort"></i></th>
           <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let tipo_situacion of tipos_situaciones | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
+        <tr *ngFor="let tipo_situacion of tipos_situaciones | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: elementosPaginacion, currentPage: numPaginacion }"
             app-item-tipo-situacion [tipo_situacion]="tipo_situacion">
         </tr>
         </tbody>

@@ -3,6 +3,7 @@ import {ITipoSituacion} from "../../../interfaces/i-tipo-situacion";
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-lista-tipos-situacion',
@@ -13,6 +14,7 @@ export class ListaTiposSituacionComponent implements OnInit {
   public tipos_situaciones: ITipoSituacion[];
   numPaginacion: number = 1;
   inputBusqueda: any = '';
+  elementosPaginacion: number = environment.num_paginacion;
 
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) {
   }

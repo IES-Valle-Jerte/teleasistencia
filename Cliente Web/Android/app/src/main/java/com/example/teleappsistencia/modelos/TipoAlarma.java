@@ -1,11 +1,14 @@
 package com.example.teleappsistencia.modelos;
 
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Clase encargada del modelo de un TipoAlarma.
  */
-public class TipoAlarma {
+public class TipoAlarma implements Serializable {
 
     /**
      * Atributos de la clase
@@ -71,6 +74,6 @@ public class TipoAlarma {
      */
     @Override
     public String toString() {
-        return nombre + " - " + codigo;
+        return getCodigo()+ Constantes.ESPACIO_GUION_ESPACIO +getNombre();
     }
 }
