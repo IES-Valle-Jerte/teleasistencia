@@ -3,6 +3,8 @@ package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
+
 
 /**
  * Clase POJO "Persona" utilizada para parsear la respuesta JSON del servidor.
@@ -13,7 +15,6 @@ public class Persona implements Serializable {
      * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
      * que se utilizan para mapear las JSON keys hacia campos Java.
      */
-
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")

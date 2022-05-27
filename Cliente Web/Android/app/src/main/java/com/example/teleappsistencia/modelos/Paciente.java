@@ -1,5 +1,7 @@
 package com.example.teleappsistencia.modelos;
 
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;

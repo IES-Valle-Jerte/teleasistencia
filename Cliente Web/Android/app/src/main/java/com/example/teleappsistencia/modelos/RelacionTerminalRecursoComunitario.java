@@ -3,16 +3,22 @@ package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+
+import androidx.annotation.NonNull;
+
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 /**
  * Clase POJO "RelacionTerminalRecursoComunitario" utilizada para parsear la respuesta JSON del servidor.
  */
 public class RelacionTerminalRecursoComunitario implements Serializable {
-
-    /**
+        /**
      * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
      * que se utilizan para mapear las JSON keys hacia campos Java.
      */
-
     @SerializedName("id")
     private int id;
     @SerializedName("id_terminal")

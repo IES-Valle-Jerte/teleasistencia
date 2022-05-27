@@ -1,22 +1,23 @@
 package com.example.teleappsistencia.modelos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 /**
  * Clase POJO "Usuario" utilizada para parsear la respuesta JSON del servidor.
  */
-public class Usuario implements Serializable
-{
+public class Usuario implements Serializable{
+
+    private final static long serialVersionUID = 2592565805411682085L;
 
     /**
-     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
-     * que se utilizan para mapear las JSON keys hacia campos Java.
+     * Atributos de la clase
      */
 
-    @SerializedName("id")
-    private int id;
+    @SerializedName("pk")
+    private int pk;
     @SerializedName("url")
     private String url;
     @SerializedName("last_login")
@@ -32,16 +33,17 @@ public class Usuario implements Serializable
     @SerializedName("date_joined")
     private Date dateJoined;
     @SerializedName("groups")
-    private Object groups = null;
+    private List<Grupo> groups = null;
 
-    // Getters y Setters
-
-    public int getId() {
-        return id;
+    /**
+     * Getters y setters
+     */
+    public int getPk() {
+        return pk;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPk(int pk) {
+        this.pk = pk;
     }
 
     public String getUrl() {
@@ -100,12 +102,16 @@ public class Usuario implements Serializable
         this.dateJoined = dateJoined;
     }
 
-    public Object getGroups() {
+    public List<Grupo> getGroups() {
         return groups;
     }
 
-    public void setGroups(Object groups) {
+    public void setGroups(List<Grupo> groups) {
         this.groups = groups;
     }
 
+    @Override
+    public String toString() {
+        return this.firstName+" "+this.lastName;
+    }
 }

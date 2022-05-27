@@ -3,16 +3,19 @@ package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import androidx.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 /**
  * Clase POJO "RecursoComunitario" utilizada para parsear la respuesta JSON del servidor.
  */
 public class RecursoComunitario implements Serializable {
-
-    /**
+        /**
      * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
      * que se utilizan para mapear las JSON keys hacia campos Java.
      */
-
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
@@ -64,5 +67,15 @@ public class RecursoComunitario implements Serializable {
 
     public void setDirección(Object dirección) {
         this.dirección = dirección;
+    }
+
+    /**
+     * Se devuelve el nombre del Recurso Comunitario para identificarlo en ListViews, Spinners etc.
+     * @return
+     */
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nombre;
     }
 }

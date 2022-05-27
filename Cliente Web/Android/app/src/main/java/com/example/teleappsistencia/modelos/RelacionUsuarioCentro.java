@@ -1,6 +1,11 @@
 package com.example.teleappsistencia.modelos;
 
 import com.google.gson.annotations.SerializedName;
+import androidx.annotation.NonNull;
+
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 /**
@@ -83,5 +88,16 @@ public class RelacionUsuarioCentro implements Serializable {
 
     public void setIdCentroSanitario(Object idCentroSanitario) {
         this.idCentroSanitario = idCentroSanitario;
+    }
+
+    /**
+     * Se devuelve el nombre del Centro de usuario en la relación para identificarlo en ListViews, Spinners etc.
+     * @return
+     */
+    @NonNull
+    @Override
+    public String toString() {
+        CentroSanitario centro = (CentroSanitario) Utilidad.getObjeto(this.getIdCentroSanitario(), Constantes.CENTRO_SANITARIO);
+        return centro.getNombre();
     }
 }

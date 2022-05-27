@@ -14,14 +14,15 @@
       <table id="tableList" class="table table-hover text-center sortable">
         <thead>
         <tr class="table-purple">
-          <th (click)="ordenacionTabla(0, 'string')" scope="col">Nombre <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(1, 'number')" scope="col">Código <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(2, 'string')" scope="col">Dispositivo <i class="fas fa-sort"></i></th>
-          <th (click)="ordenacionTabla(3, 'string')" scope="col">Clasificación alarma <i class="fas fa-sort"></i></th>
+          <th class="ordenable" (click)="ordenacionTabla(0, 'string')" scope="col">Nombre <i class="fas fa-sort"></i></th>
+          <th class="ordenable" (click)="ordenacionTabla(1, 'number')" scope="col">Código <i class="fas fa-sort"></i></th>
+          <th class="ordenable" (click)="ordenacionTabla(2, 'string')" scope="col">Dispositivo <i class="fas fa-sort"></i></th>
+          <th class="ordenable" (click)="ordenacionTabla(3, 'string')" scope="col">Clasificación alarma <i class="fas fa-sort"></i></th>
           <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
+
         <tr *ngFor="let tipo_alarma of tipos_alarmas | filtroBusqueda: inputBusqueda | paginate: { itemsPerPage: 10, currentPage: numPaginacion }"
             app-item-tipo-alarma [tipo_alarma]="tipo_alarma">
         </tr>

@@ -2,16 +2,21 @@ package com.example.teleappsistencia.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 /**
  * Clase POJO "CentroSanitario" utilizada para parsear la respuesta JSON del servidor.
  */
-public class CentroSanitario {
+public class CentroSanitario implements Serializable {
+
 
     /**
     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
     * que se utilizan para mapear las JSON keys hacia campos Java.
     */
-
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
@@ -65,4 +70,13 @@ public class CentroSanitario {
         this.direccion = direccion;
     }
 
+    /**
+     * Se devuelve el nombre del centro sanitario para identificarlo en ListView, Spinners, etc
+     * @return
+     */
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
 }
