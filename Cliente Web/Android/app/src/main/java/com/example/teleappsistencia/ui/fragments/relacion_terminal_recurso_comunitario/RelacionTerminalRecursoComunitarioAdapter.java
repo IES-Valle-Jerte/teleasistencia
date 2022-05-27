@@ -16,6 +16,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
@@ -82,15 +83,15 @@ public class RelacionTerminalRecursoComunitarioAdapter extends RecyclerView.Adap
 
         private void accionBorrarTerminalRecursoComunitario() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteRelacionTerminalRecursoComunitario(String.valueOf(this.relacionTerminalRecursoComunitario.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteRelacionTerminalRecursoComunitario(String.valueOf(this.relacionTerminalRecursoComunitario.getId()), Constantes.BEARER + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(context, "Relación Terminal Recurso Comunitario borrada correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.RELACIÓN_TERMINAL_RECURSO_COMUNITARIO_BORRADA_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
                         recargarFragment();
                     } else {
-                        Toast.makeText(context, "Error al borrar Relación Terminal Recurso Comunitario borrada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.ERROR_AL_BORRAR_RELACIÓN_TERMINAL_RECURSO_COMUNITARIO_BORRADA, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -139,8 +140,12 @@ public class RelacionTerminalRecursoComunitarioAdapter extends RecyclerView.Adap
         viewHolder.setRelacionTerminalRecursoComunitario(items.get(i));
         viewHolder.idRelacionTerminalRecursoComunitario.setText("ID: " + String.valueOf(items.get(i).getId()));
         Terminal terminal = (Terminal) Utilidad.getObjeto(items.get(i).getIdTerminal(), "Terminal");
-        viewHolder.numeroTerminalCard.setText("Nº de terminal: " + terminal.getNumeroTerminal());
+        if(terminal != null) {
+            viewHolder.numeroTerminalCard.setText("Nº de terminal: " + terminal.getNumeroTerminal());
+        }
         RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(items.get(i).getIdRecursoComunitario(), "RecursoComunitario");
-        viewHolder.recursoComunitarioCard.setText("Nombre: " + recursoComunitario.getNombre());
+        if(recursoComunitario != null) {
+            viewHolder.recursoComunitarioCard.setText("Nombre: " + recursoComunitario.getNombre());
+        }
     }
 }

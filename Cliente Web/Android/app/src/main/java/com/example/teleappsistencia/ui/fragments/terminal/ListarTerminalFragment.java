@@ -16,6 +16,7 @@ import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.ui.fragments.paciente.PacienteAdapter;
@@ -109,7 +110,7 @@ public class ListarTerminalFragment extends Fragment {
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + MainActivity.token.getAccess());
+        Call<List<Terminal>> call = apiService.getListadoTerminal(Constantes.BEARER + MainActivity.token.getAccess());
         call.enqueue(new Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
@@ -120,7 +121,7 @@ public class ListarTerminalFragment extends Fragment {
                     recycler.setAdapter(adapter);
 
                 } else {
-                    Toast.makeText(getContext(), "Error al listar las direcciones. Código de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_LISTAR_LAS_DIRECCIONES, Toast.LENGTH_SHORT).show();
                 }
             }
 

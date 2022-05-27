@@ -90,6 +90,7 @@ public class ConsultarPacienteFragment extends Fragment{
                              Bundle savedInstanceState) {
         
         View root = inflater.inflate(R.layout.fragment_consultar_paciente, container, false);
+        // Inicialización de los atributos de la interfaz de usuario (UI).
         textViewConsultarIdTerminal = root.findViewById(R.id.textViewConsultarIdTerminal);
         textViewConsultarIdPersona = root.findViewById(R.id.textViewConsultarIdPersona);
         textViewConsultarTieneUCR = root.findViewById(R.id.textViewConsultarTieneUCR);
@@ -98,6 +99,7 @@ public class ConsultarPacienteFragment extends Fragment{
         textViewConsultarPrestacionOtrosServiciosSociales = root.findViewById(R.id.textViewConsultarPrestacionOtrosServiciosSociales);
         textViewConsultarObservacionesMedicas = root.findViewById(R.id.textViewConsultarObservacionesMedicas);
         textViewConsultarInteresesActividades = root.findViewById(R.id.textViewConsultarInteresesActividades);
+        // Se establece el valor de los atributos de la interfaz de usuario (UI).
         textViewConsultarIdTerminal.setText(String.valueOf(paciente.getId()));
         if (paciente.isTieneUcr()) {
             textViewConsultarTieneUCR.setText("El paciente tiene UCR");
@@ -109,9 +111,6 @@ public class ConsultarPacienteFragment extends Fragment{
         textViewConsultarPrestacionOtrosServiciosSociales.setText(paciente.getPrestacionOtrosServiciosSociales());
         textViewConsultarObservacionesMedicas.setText(paciente.getObservacionesMedicas());
         textViewConsultarInteresesActividades.setText(paciente.getInteresesYActividades());
-
-
-        // Inflate the layout for this fragment
         return root;
     }
 

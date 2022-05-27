@@ -17,6 +17,7 @@ import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.MainActivity;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -123,7 +124,7 @@ public class ListarPacienteFragment extends Fragment {
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + MainActivity.token.getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + MainActivity.token.getAccess());
         call.enqueue(new Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
@@ -138,7 +139,7 @@ public class ListarPacienteFragment extends Fragment {
                     recycler.setAdapter(adapter);
 
                 } else {
-                    Toast.makeText(getContext(), "Error al listar las direcciones. Código de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_LISTAR_LAS_DIRECCIONES, Toast.LENGTH_SHORT).show();
                 }
             }
 

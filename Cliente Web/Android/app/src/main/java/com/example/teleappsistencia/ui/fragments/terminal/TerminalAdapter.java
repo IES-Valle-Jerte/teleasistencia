@@ -19,6 +19,7 @@ import com.example.teleappsistencia.modelos.TipoVivienda;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.ui.fragments.paciente.ListarPacienteFragment;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
@@ -88,15 +89,15 @@ public class TerminalAdapter extends RecyclerView.Adapter<TerminalAdapter.Termin
 
         private void accionBorrarTerminal() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteTerminal(String.valueOf(this.terminal.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteTerminal(String.valueOf(this.terminal.getId()), Constantes.BEARER + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(context, "Terminal borrado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.TERMINAL_BORRADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
                         recargarFragment();
                     } else {
-                        Toast.makeText(context, "Error al borrar el terminal", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.ERROR_AL_BORRAR_EL_TERMINAL, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -146,9 +147,13 @@ public class TerminalAdapter extends RecyclerView.Adapter<TerminalAdapter.Termin
         viewHolder.numTerminalCard.setText("Nº Terminal: " +items.get(i).getNumeroTerminal());
         viewHolder.modoAccesoViviendaCard.setText(items.get(i).getModoAccesoVivienda());
         Paciente paciente = (Paciente) Utilidad.getObjeto(items.get(i).getTitular(), "Paciente");
-        viewHolder.titularTermianlCard.setText("Nº de expediente del titular: " + paciente.getNumeroExpediente());
+        if (paciente != null) {
+            viewHolder.titularTermianlCard.setText("Nº de expediente del titular: " + paciente.getNumeroExpediente());
+        }
         TipoVivienda tipoVivienda = (TipoVivienda) Utilidad.getObjeto(items.get(i).getTipoVivienda(), "TipoVivienda");
-        viewHolder.tipoViviendaCard.setText("Tipo de vivienda: " + tipoVivienda.getNombre());
+        if (tipoVivienda != null) {
+            viewHolder.tipoViviendaCard.setText("Tipo de vivienda: " + tipoVivienda.getNombre());
+        }
     }
 
 

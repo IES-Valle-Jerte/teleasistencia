@@ -147,6 +147,7 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
             public void onResponse(Call<Terminal> call, Response<Terminal> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), Constantes.TERMINAL_INSERTADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 } else {
                     Toast.makeText(getContext(), Constantes.ERROR_INSERTANDO_TERMINAL, Toast.LENGTH_SHORT).show();
@@ -240,5 +241,11 @@ public class InsertarTerminalFragment extends Fragment implements View.OnClickLi
                 .replace(R.id.main_fragment, listarTerminalFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void limpiarCampos(){
+        editTextBarrerasArquitectonicasInsertar.setText("");
+        editTextNumeroTerminalInsertar.setText("");
+        editTextModoAccesoViviendaInsertar.setText("");
     }
 }

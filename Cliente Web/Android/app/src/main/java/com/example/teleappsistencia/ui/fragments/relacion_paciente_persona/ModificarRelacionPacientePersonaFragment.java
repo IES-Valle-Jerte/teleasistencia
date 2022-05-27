@@ -133,11 +133,11 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPacientes(listadoPacientes));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Paciente paciente = (Paciente) Utilidad.getObjeto(relacionPacientePersona.getIdPaciente(), "Paciente");
+                    spinnerPacienteModificarRelacionPacientePersona.setAdapter(adapter);
                     if (relacionPacientePersona.getIdPaciente() != null) {
-                        spinnerPacienteModificarRelacionPacientePersona.setAdapter(adapter);
                         spinnerPacienteModificarRelacionPacientePersona.setSelection(buscarPosicionSpinnerPaciente(listadoPacientes, paciente.getId()));
                     } else {
-                        spinnerPacienteModificarRelacionPacientePersona.setAdapter(adapter);
+                        spinnerPacienteModificarRelacionPacientePersona.setSelection(0);
                     }
                 }
             }
@@ -201,7 +201,9 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
             @Override
             public void onResponse(Call<RelacionPacientePersona> call, Response<RelacionPacientePersona> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Relación Paciente-Persona modificado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.RELACIÓN_PACIENTE_PERSONA_MODIFICADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
+                    //Cargamos de nuevo la lista de pacientes y cerramos el fragment
                     volver();
                 }
             }
@@ -211,6 +213,14 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
 
             }
         });
+    }
+
+    public void limpiarCampos() {
+        editTextTieneLlaveViviendaModificar.setText("");
+        editTextTipoRelacionModificar.setText("");
+        editTextDisponibilidadModificar.setText("");
+        editTextObservacionesModificar.setText("");
+        editTextPrioridadModificar.setText("");
     }
 
     private void volver() {
@@ -223,7 +233,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
 
     private void inicializarSpinnerPersona() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Persona>> call = apiService.getListadoPersona(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<Persona>>() {
             @Override
             public void onResponse(Call<List<Persona>> call, Response<List<Persona>> response) {
@@ -233,9 +243,13 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Persona persona = (Persona) Utilidad.getObjeto(relacionPacientePersona.getIdPersona(), "Persona");
                     spinnerPersonaModificar.setAdapter(adapter);
-                    spinnerPersonaModificar.setSelection(buscarPosicionSpinnerPersona(listadoPersona, persona.getId()));
+                    if (persona != null) {
+                        spinnerPersonaModificar.setSelection(buscarPosicionSpinnerPersona(listadoPersona, persona.getId()));
+                    } else {
+                        spinnerPersonaModificar.setSelection(0);
+                    }
                 } else {
-                    Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -249,7 +263,7 @@ public class ModificarRelacionPacientePersonaFragment extends Fragment implement
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getId() + "-" + persona.getNombre() + " " + persona.getApellidos());
+            listadoPersonaString.add(persona.getId() + Constantes.REGEX_SEPARADOR_GUION + persona.getNombre() + " " + persona.getApellidos());
         }
         return listadoPersonaString;
     }

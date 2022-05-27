@@ -142,16 +142,17 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
             @Override
             public void onResponse(Call<RelacionUsuarioCentro> call, Response<RelacionUsuarioCentro> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Relacion de usuario centro insertada correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.RELACION_DE_USUARIO_CENTRO_INSERTADA_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 } else {
-                    Toast.makeText(getContext(), "Error al insertar la relacion de usuario centro", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_INSERTAR_LA_RELACION_DE_USUARIO_CENTRO, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RelacionUsuarioCentro> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al insertar la relacion de usuario centro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.RELACION_DE_USUARIO_CENTRO_INSERTADA_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -176,7 +177,7 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
 
     private void inicializarSpinnerPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
@@ -194,7 +195,7 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
 
             @Override
             public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -210,7 +211,7 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
 
     private void inicializarSpinnerCentroSanitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<CentroSanitario>> call = apiService.getListadoCentroSanitario("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<CentroSanitario>> call = apiService.getListadoCentroSanitario(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<CentroSanitario>>() {
             @Override
             public void onResponse(Call<List<CentroSanitario>> call, Response<List<CentroSanitario>> response) {
@@ -224,7 +225,7 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
 
             @Override
             public void onFailure(Call<List<CentroSanitario>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -233,7 +234,7 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
     private List<String> convertirListaCentrosSanitarios(List<CentroSanitario> lCentrosSanitarios) {
         List<String> listadoCentrosSanitariosString = new ArrayList<>();
         for (CentroSanitario centroSanitario : lCentrosSanitarios) {
-            listadoCentrosSanitariosString.add(centroSanitario.getId() + "-" + centroSanitario.getNombre());
+            listadoCentrosSanitariosString.add(centroSanitario.getId() + Constantes.REGEX_SEPARADOR_GUION + centroSanitario.getNombre());
         }
         return listadoCentrosSanitariosString;
     }
@@ -244,6 +245,13 @@ public class InsertarRelacionUsuarioCentroFragment extends Fragment implements V
                 .replace(R.id.main_fragment, listarRelacionUsuarioCentroFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void limpiarCampos(){
+        editTextDistanciaInsertar.setText("");
+        editTextObservacionesInsertar.setText("");
+        editTextPersonaContactoInsertar.setText("");
+        editTextTiempoInsertar.setText("");
     }
 
 

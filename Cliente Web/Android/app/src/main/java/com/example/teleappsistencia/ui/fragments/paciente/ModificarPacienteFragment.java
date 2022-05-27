@@ -1,9 +1,6 @@
 package com.example.teleappsistencia.ui.fragments.paciente;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +10,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
-import com.example.teleappsistencia.servicios.APIService;
-import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import androidx.fragment.app.Fragment;
+
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.utilidades.Constantes;
-import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +60,10 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
     public ModificarPacienteFragment() {
     }
 
-    
+
     /**
      * Esta función crea una nueva instancia del fragmento y pasa el objeto al fragmento.
-     * 
+     *
      * @param paciente es el objeto que quiero pasar al fragmento
      * @return Una nueva instancia del fragmento.
      */
@@ -78,9 +77,9 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
 
     /**
      * La función se llama cuando se crea el fragmento.
-     * 
+     *
      * @param savedInstanceState El estado guardado del fragmento, o nulo si se trata de un fragmento
-     * recién creado.
+     *                           recién creado.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,13 +91,13 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
 
     /**
      * La función onCreateView() se llama cuando se crea el fragmento
-     * 
-     * @param inflater El objeto LayoutInflater que se puede usar para inflar cualquier vista en el
-     * fragmento,
-     * @param container La vista principal a la que se debe adjuntar la interfaz de usuario del
-     * fragmento.
+     *
+     * @param inflater           El objeto LayoutInflater que se puede usar para inflar cualquier vista en el
+     *                           fragmento,
+     * @param container          La vista principal a la que se debe adjuntar la interfaz de usuario del
+     *                           fragmento.
      * @param savedInstanceState Si el fragmento se vuelve a crear a partir de un estado guardado
-     * anterior, este es el estado.
+     *                           anterior, este es el estado.
      * @return La vista del fragmento.
      */
     @Override
@@ -153,7 +152,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
 
     private void inicializarSpinnerTipoModalidadPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<TipoModalidadPaciente>> call = apiService.getListadoTipoModalidadPaciente("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<TipoModalidadPaciente>> call = apiService.getListadoTipoModalidadPaciente(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoModalidadPaciente>>() {
             @Override
             public void onResponse(Call<List<TipoModalidadPaciente>> call, Response<List<TipoModalidadPaciente>> response) {
@@ -162,9 +161,9 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
                     if (listadoTipoModalidadPaciente != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaTipoModalidadPaciente(listadoTipoModalidadPaciente));
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        TipoModalidadPaciente tipoModalidadPaciente = (TipoModalidadPaciente) Utilidad.getObjeto(paciente.getTipoModalidadPaciente(),"TipoModalidadPaciente");
+                        TipoModalidadPaciente tipoModalidadPaciente = (TipoModalidadPaciente) Utilidad.getObjeto(paciente.getTipoModalidadPaciente(), "TipoModalidadPaciente");
                         spinnerTipoModalidadPacienteModificar.setAdapter(adapter);
-                        spinnerTipoModalidadPacienteModificar.setSelection(buscarPosicionSpinnerTipoModalidadPaciente(listadoTipoModalidadPaciente,tipoModalidadPaciente.getId()));
+                        spinnerTipoModalidadPacienteModificar.setSelection(buscarPosicionSpinnerTipoModalidadPaciente(listadoTipoModalidadPaciente, tipoModalidadPaciente.getId()));
                     }
                 }
             }
@@ -179,7 +178,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
     private List<String> convertirListaTipoModalidadPaciente(List<TipoModalidadPaciente> listadoTipoModalidadPaciente) {
         List<String> listadoString = new ArrayList<>();
         for (TipoModalidadPaciente tipoModalidadPaciente : listadoTipoModalidadPaciente) {
-            listadoString.add(tipoModalidadPaciente.getId() + "-" + tipoModalidadPaciente.getNombre());
+            listadoString.add(tipoModalidadPaciente.getId() + Constantes.REGEX_SEPARADOR_GUION + tipoModalidadPaciente.getNombre());
         }
         return listadoString;
     }
@@ -193,7 +192,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
             }
             i++;
         }
-        return i-1;
+        return i - 1;
     }
 
     private void obtenerDatosFormulario() {
@@ -202,7 +201,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         //Obtenemos el numero de terminal seleccionado y recogemos sus datos
         terminalSeleccionado = terminalSplit[1].replaceAll("\\s+", "");
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Terminal>> call = apiService.getTerminalByNumeroTerminal(terminalSeleccionado, "Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Terminal>> call = apiService.getTerminalByNumeroTerminal(terminalSeleccionado, Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
@@ -212,7 +211,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
                     pacienteModificar.setTerminal(terminales.get(0).getId());
                     //Obtemos el id de la persona seleccionada desde el Spinner esta vez, ya que incluye el ID
                     String personaSeleccionada = spinnerPersona.getSelectedItem().toString();
-                    String[] personaSplit = personaSeleccionada.split("-");
+                    String[] personaSplit = personaSeleccionada.split(Constantes.REGEX_SEPARADOR_GUION);
                     personaSeleccionada = personaSplit[0].replaceAll("\\s+", "");
                     //Obtenemos el resto de los datos del paciente a insertar
                     pacienteModificar.setPersona(personaSeleccionada);
@@ -228,13 +227,13 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
                     }
                     //Obtemos el id del tipo de modalidad de paciente
                     String tipoModalidadPacienteSeleccionado = spinnerTipoModalidadPacienteModificar.getSelectedItem().toString();
-                    String[] tipoModalidadPacienteSplit = tipoModalidadPacienteSeleccionado.split("-");
+                    String[] tipoModalidadPacienteSplit = tipoModalidadPacienteSeleccionado.split(Constantes.REGEX_SEPARADOR_GUION);
                     tipoModalidadPacienteSeleccionado = tipoModalidadPacienteSplit[0].replaceAll("\\s+", "");
                     pacienteModificar.setTipoModalidadPaciente(tipoModalidadPacienteSeleccionado);
-                    modificarPacienteBD(paciente.getId(),pacienteModificar);
+                    modificarPacienteBD(paciente.getId(), pacienteModificar);
                     personaSeleccionada = personaSplit[0].replaceAll("\\s+", "");
                 } else {
-                    Toast.makeText(getContext(), "Error al obtener datos de la terminal", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -247,15 +246,16 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
 
     private void modificarPacienteBD(int id, Paciente pacienteModificar) {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Paciente> call = apiService.updatePaciente(id,pacienteModificar,"Bearer "+Utilidad.getToken().getAccess());
+        Call<Paciente> call = apiService.updatePaciente(id, pacienteModificar, Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Paciente>() {
             @Override
             public void onResponse(Call<Paciente> call, Response<Paciente> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Paciente modificado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.PACIENTE_MODIFICADO, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 } else {
-                    Toast.makeText(getContext(), "Error al modificar el paciente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_MODIFICAR_EL_PACIENTE, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -290,7 +290,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
      */
     private void inicializarSpinnerPersona() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Persona>> call = apiService.getListadoPersona(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<Persona>>() {
             @Override
             public void onResponse(Call<List<Persona>> call, Response<List<Persona>> response) {
@@ -300,9 +300,13 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Persona persona = (Persona) Utilidad.getObjeto(paciente.getPersona(), "Persona");
                     spinnerPersona.setAdapter(adapter);
-                    spinnerPersona.setSelection(buscarPosicionSpinnerPersona(listadoPersona,persona.getId()));
+                    if (persona != null) {
+                        spinnerPersona.setSelection(buscarPosicionSpinnerPersona(listadoPersona, persona.getId()));
+                    } else {
+                        spinnerPersona.setSelection(0);
+                    }
                 } else {
-                    Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -323,14 +327,14 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getId() + "-" + persona.getNombre() + " " + persona.getApellidos());
+            listadoPersonaString.add(persona.getId() + Constantes.REGEX_SEPARADOR_GUION + persona.getNombre() + " " + persona.getApellidos());
         }
         return listadoPersonaString;
     }
 
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Terminal>> call = apiService.getListadoTerminal(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
@@ -340,13 +344,17 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Terminal terminal = (Terminal) Utilidad.getObjeto(paciente.getTerminal(), "Terminal");
                     spinnerTerminal.setAdapter(adapter);
-                    spinnerTerminal.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales,terminal.getId()), true);
+                    if (terminal != null) {
+                        spinnerTerminal.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales, terminal.getId()), true);
+                    } else {
+                        spinnerTerminal.setSelection(0, true);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Terminal>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -367,8 +375,6 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
     }
 
 
-
-
     private int buscarPosicionSpinnerTerminal(List<Terminal> listadoTerminales, int id) {
         boolean encontrado = false;
         int i = 0;
@@ -378,10 +384,10 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
             }
             i++;
         }
-        return i-1;
+        return i - 1;
     }
 
-    private int buscarPosicionSpinnerPersona(List<Persona> listadoPersonas,int id) {
+    private int buscarPosicionSpinnerPersona(List<Persona> listadoPersonas, int id) {
         boolean encontrado = false;
         int i = 0;
         while (!encontrado) {
@@ -390,13 +396,13 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
             }
             i++;
         }
-        return i-1;
+        return i - 1;
     }
 
-   /**
-    * Método que obtiene los componentes de la interfaz de usuario (UI) del fragment.
-    *
-    * @param root La vista del fragmento.
+    /**
+     * Método que obtiene los componentes de la interfaz de usuario (UI) del fragment.
+     *
+     * @param root La vista del fragmento.
      */
     private void obtenerComponentes(View root) {
         this.btnVolverPacienteModificar = (Button) root.findViewById(R.id.btnVolverPacienteModificar);
@@ -415,7 +421,7 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
 
     /**
      * Una función que se llama cuando se hace clic en un botón.
-     * 
+     *
      * @param view La vista en la que se hizo clic.
      */
     @Override
@@ -442,4 +448,12 @@ public class ModificarPacienteFragment extends Fragment implements View.OnClickL
         }
     }
 
+    public void limpiarCampos() {
+        this.editTextTieneUCR.setText("");
+        this.editTextNumeroExpediente.setText("");
+        this.editTextNumeroSeguridadSocial.setText("");
+        this.editTextPrestacionOtrosServicios.setText("");
+        this.editTextObservacionesMedicas.setText("");
+        this.editTextInteresesActividades.setText("");
+    }
 }

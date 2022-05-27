@@ -68,9 +68,13 @@ public class ConsultarTerminalFragment extends Fragment {
         textViewConsultarModoAccesoVivienda.setText(terminal.getModoAccesoVivienda());
         textViewConsultarBarrerasArquitectonicas.setText(terminal.getBarrerasArquitectonicas());
         Paciente paciente = (Paciente) Utilidad.getObjeto(terminal.getTitular(), "Paciente");
-        textViewNumeroSeguridadSocialTerminalConsultar.setText(paciente.getNumeroSeguridadSocial());
+        if (paciente != null) {
+            textViewNumeroSeguridadSocialTerminalConsultar.setText(paciente.getNumeroSeguridadSocial());
+        }
         TipoVivienda tipoVivienda = (TipoVivienda) Utilidad.getObjeto(terminal.getTipoVivienda(), "TipoVivienda");
-        textViewTipoViviendaConsultar.setText(tipoVivienda.getNombre());
+        if (tipoVivienda != null) {
+            textViewNumeroSeguridadSocialTerminalConsultar.setText(paciente.getNumeroSeguridadSocial());
+        }
         return root;
     }
 

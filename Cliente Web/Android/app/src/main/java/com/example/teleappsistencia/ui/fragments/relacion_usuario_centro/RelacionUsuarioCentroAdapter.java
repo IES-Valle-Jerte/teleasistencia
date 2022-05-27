@@ -19,6 +19,7 @@ import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.ui.fragments.relacion_terminal_recurso_comunitario.ListarRelacionTerminalRecursoComunitarioFragment;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
@@ -86,15 +87,15 @@ public class RelacionUsuarioCentroAdapter extends RecyclerView.Adapter<RelacionU
 
         private void accionBorrarRelacionUsuarioCentro() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteRelacionUsuarioCentro(String.valueOf(this.relacionUsuarioCentro.getId()), "Bearer " + Utilidad.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteRelacionUsuarioCentro(String.valueOf(this.relacionUsuarioCentro.getId()), Constantes.BEARER + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(context, "Relación Usuario-Centro borrado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.RELACIÓN_USUARIO_CENTRO_BORRADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
                         recargarFragment();
                     } else {
-                        Toast.makeText(context, "Error al borrar la Relación Usuario-Centro", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.ERROR_AL_BORRAR_LA_RELACIÓN_USUARIO_CENTRO, Toast.LENGTH_SHORT).show();
                     }
                 }
 

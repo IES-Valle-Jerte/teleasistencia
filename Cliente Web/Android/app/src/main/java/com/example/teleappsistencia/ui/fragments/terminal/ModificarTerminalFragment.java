@@ -16,6 +16,7 @@ import com.example.teleappsistencia.modelos.TipoVivienda;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.Persona;
@@ -95,7 +96,7 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
 
     private void inicializarSpinnerTitular() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
@@ -109,13 +110,17 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Paciente paciente = (Paciente) Utilidad.getObjeto(terminal.getTitular(), "Paciente");
                     spinnerTitularModificar.setAdapter(adapter);
-                    spinnerTitularModificar.setSelection(buscarPosicionSpinnerTitular(listadoPacientesCompleto,paciente.getId()));
+                    if (paciente != null) {
+                        spinnerTitularModificar.setSelection(buscarPosicionSpinnerTitular(listadoPacientesCompleto,paciente.getId()));
+                    } else {
+                        spinnerTitularModificar.setSelection(0);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -124,7 +129,7 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoTerminalesString.add(paciente.getId() + "-" + "Exp: " + paciente.getNumeroExpediente());
+            listadoTerminalesString.add(paciente.getId() + Constantes.REGEX_SEPARADOR_GUION + "Exp: " + paciente.getNumeroExpediente());
         }
         return listadoTerminalesString;
     }
@@ -142,7 +147,11 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
                     TipoVivienda tipoVivienda = (TipoVivienda) Utilidad.getObjeto(terminal.getTipoVivienda(), "TipoVivienda");
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerTipoViviendaModificar.setAdapter(adapter);
-                    spinnerTipoViviendaModificar.setSelection(buscarPosicionSpinnerTipoVivienda(listadoTipoVivienda,tipoVivienda.getId()));
+                    if (tipoVivienda != null) {
+                        spinnerTipoViviendaModificar.setSelection(buscarPosicionSpinnerTipoVivienda(listadoTipoVivienda,tipoVivienda.getId()));
+                    }else{
+                        spinnerTipoViviendaModificar.setSelection(0);
+                    }
                 }
             }
 
@@ -156,7 +165,7 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
     private List<String> convertirListaTipoVivienda(List<TipoVivienda> listadoTipoVivienda) {
         List<String> listadoTipoViviendaString = new ArrayList<>();
         for (TipoVivienda tipoVivienda : listadoTipoVivienda) {
-            listadoTipoViviendaString.add(tipoVivienda.getId() + "-" + tipoVivienda.getNombre());
+            listadoTipoViviendaString.add(tipoVivienda.getId() + Constantes.REGEX_SEPARADOR_GUION + tipoVivienda.getNombre());
         }
         return listadoTipoViviendaString;
     }
@@ -211,11 +220,11 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
     private void accionBotonGuardar() {
         Terminal terminalModificar = new Terminal();
         String titularInsertado = spinnerTitularModificar.getSelectedItem().toString();
-        String[] titularInsertadoSplit = titularInsertado.split("-");
+        String[] titularInsertadoSplit = titularInsertado.split(Constantes.REGEX_SEPARADOR_GUION);
         titularInsertado = titularInsertadoSplit[0];
         terminalModificar.setTitular(titularInsertado);
         String tipoViviendaInsertado = spinnerTipoViviendaModificar.getSelectedItem().toString();
-        String[] tipoViviendaInsertadoSplit = tipoViviendaInsertado.split("-");
+        String[] tipoViviendaInsertadoSplit = tipoViviendaInsertado.split(Constantes.REGEX_SEPARADOR_GUION);
         tipoViviendaInsertado = tipoViviendaInsertadoSplit[0];
         terminalModificar.setTipoVivienda(tipoViviendaInsertado);
         terminalModificar.setNumeroTerminal(editTextNumeroTerminalModificar.getText().toString());
@@ -226,21 +235,22 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
 
     private void modificarTerminal(int id, Terminal terminalModificar) {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Terminal> call = apiService.updateTerminal(id,terminalModificar,"Bearer "+Utilidad.getToken().getAccess());
+        Call<Terminal> call = apiService.updateTerminal(id,terminalModificar, Constantes.BEARER +Utilidad.getToken().getAccess());
         call.enqueue(new Callback <Terminal>() {
             @Override
             public void onResponse(Call<Terminal> call, Response<Terminal> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(),"Terminal modificada",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.TERMINAL_MODIFICADA,Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 } else {
-                    Toast.makeText(getContext(),"Error al modificar terminal",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_MODIFICAR_TERMINAL,Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Terminal> call, Throwable t) {
-                Toast.makeText(getContext(),"Error al modificar terminal",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),Constantes.ERROR_AL_MODIFICAR_TERMINAL,Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -253,5 +263,11 @@ public class ModificarTerminalFragment extends Fragment implements View.OnClickL
                 .replace(R.id.main_fragment, listarTerminalFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void limpiarCampos(){
+        editTextBarrerasArquitectonicasModificar.setText("");
+        editTextNumeroTerminalModificar.setText("");
+        editTextModoAccesoViviendaModificar.setText("");
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -107,7 +108,7 @@ public class ListarRelacionPacientePersonaFragment extends Fragment {
 
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<LinkedTreeMap>> call = apiService.getListadoPacientesPersona("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getListadoPacientesPersona(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {

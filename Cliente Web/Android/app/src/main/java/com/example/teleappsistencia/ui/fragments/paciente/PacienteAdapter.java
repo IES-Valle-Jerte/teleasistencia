@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.Paciente;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
@@ -119,10 +120,10 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.Pacien
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(context, "Paciente borrado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.PACIENTE_BORRADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
                         recargarFragment();
                     } else {
-                        Toast.makeText(context, "Error al borrar el paciente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.ERROR_AL_BORRAR_EL_PACIENTE, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -213,7 +214,10 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.Pacien
             viewHolder.tieneUCRCard.setTextColor(Color.GREEN);
         }
         TipoModalidadPaciente tipoModalidadPaciente = (TipoModalidadPaciente) Utilidad.getObjeto(items.get(i).getTipoModalidadPaciente(), "TipoModalidadPaciente");
-        viewHolder.tipoModalidadPacienteCard.setText(tipoModalidadPaciente.getNombre());
-        pacienteViewHolder.setPaciente(items.get(i));
+        if (tipoModalidadPaciente != null) {
+            viewHolder.tipoModalidadPacienteCard.setText(tipoModalidadPaciente.getNombre());
+        } else {
+            viewHolder.tipoModalidadPacienteCard.setText("");
+        }
     }
 }

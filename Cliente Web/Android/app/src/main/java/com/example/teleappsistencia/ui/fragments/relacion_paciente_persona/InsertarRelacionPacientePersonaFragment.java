@@ -131,17 +131,18 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
         relacionPacientePersonaInsertar.setDisponibilidad(editTextDisponibilidadInsertar.getText().toString());
         relacionPacientePersonaInsertar.setObservaciones(editTextObservacionesInsertar.getText().toString());
         relacionPacientePersonaInsertar.setPrioridad(Integer.parseInt(editTextPrioridadInsertar.getText().toString()));
-        insertarRelacionPacientePersona(pacienteSeleccionado,relacionPacientePersonaInsertar);
+        insertarRelacionPacientePersona(pacienteSeleccionado, relacionPacientePersonaInsertar);
     }
 
     private void insertarRelacionPacientePersona(String pacienteSeleccionado, RelacionPacientePersona relacionPacientePersona) {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<RelacionPacientePersona> call = apiService.addRelacionPacientePersonaSeleccionadoPaciente(Integer.parseInt(pacienteSeleccionado),relacionPacientePersona,"Bearer "+Utilidad.getToken().getAccess());
+        Call<RelacionPacientePersona> call = apiService.addRelacionPacientePersonaSeleccionadoPaciente(Integer.parseInt(pacienteSeleccionado), relacionPacientePersona, Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<RelacionPacientePersona>() {
             @Override
             public void onResponse(Call<RelacionPacientePersona> call, Response<RelacionPacientePersona> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(getContext(), "Relación Paciente-Persona insertada correctamente", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), Constantes.RELACIÓN_PACIENTE_PERSONA_INSERTADA_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 }
             }
@@ -151,6 +152,14 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
 
             }
         });
+    }
+
+    public void limpiarCampos() {
+        editTextTieneLlaveViviendaInsertar.setText("");
+        editTextTipoRelacionInsertar.setText("");
+        editTextDisponibilidadInsertar.setText("");
+        editTextObservacionesInsertar.setText("");
+        editTextPrioridadInsertar.setText("");
     }
 
     private void volver() {
@@ -187,7 +196,7 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
 
     private void inicializarSpinnerPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
@@ -205,7 +214,7 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
 
             @Override
             public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -214,14 +223,14 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoPacientesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoPacientesString.add(paciente.getId() + "-" +"Nº expediente: " + paciente.getNumeroExpediente());
+            listadoPacientesString.add(paciente.getId() + Constantes.REGEX_SEPARADOR_GUION + "Nº expediente: " + paciente.getNumeroExpediente());
         }
         return listadoPacientesString;
     }
 
     private void inicializarSpinnerPersona() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Persona>> call = apiService.getListadoPersona("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Persona>> call = apiService.getListadoPersona(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<Persona>>() {
             @Override
             public void onResponse(Call<List<Persona>> call, Response<List<Persona>> response) {
@@ -231,7 +240,7 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerPersonaInsertar.setAdapter(adapter);
                 } else {
-                    Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -252,7 +261,7 @@ public class InsertarRelacionPacientePersonaFragment extends Fragment implements
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getId() + "-" + persona.getNombre() + " " + persona.getApellidos());
+            listadoPersonaString.add(persona.getId() + Constantes.REGEX_SEPARADOR_GUION + persona.getNombre() + " " + persona.getApellidos());
         }
         return listadoPersonaString;
     }

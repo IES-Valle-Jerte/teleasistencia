@@ -6,21 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.teleappsistencia.modelos.RecursoComunitario;
-import com.example.teleappsistencia.servicios.APIService;
-import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
-import com.example.teleappsistencia.utilidades.Utilidad;
-import com.example.teleappsistencia.modelos.Paciente;
-import com.example.teleappsistencia.modelos.Persona;
+import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +83,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
 
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Terminal>> call = apiService.getListadoTerminal(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
@@ -95,13 +93,17 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Terminal terminal = (Terminal) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdTerminal(), "Terminal");
                     spinnerTerminalModificarRelacionTerminalRecursoComunitario.setAdapter(adapter);
-                    spinnerTerminalModificarRelacionTerminalRecursoComunitario.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales,terminal.getId()), true);
+                    if (terminal != null) {
+                        spinnerTerminalModificarRelacionTerminalRecursoComunitario.setSelection(buscarPosicionSpinnerTerminal(listadoTerminales, terminal.getId()), true);
+                    } else {
+                        spinnerTerminalModificarRelacionTerminalRecursoComunitario.setSelection(0, true);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Terminal>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -110,7 +112,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
     private List<String> convertirListaTerminales(List<Terminal> listadoTerminales) {
         List<String> listadoTerminalesString = new ArrayList<>();
         for (Terminal terminal : listadoTerminales) {
-            listadoTerminalesString.add(terminal.getId() + "-" + "Nº de terminal: " + terminal.getNumeroTerminal());
+            listadoTerminalesString.add(terminal.getId() + Constantes.REGEX_SEPARADOR_GUION + "Nº de terminal: " + terminal.getNumeroTerminal());
         }
         return listadoTerminalesString;
     }
@@ -124,12 +126,12 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
             }
             i++;
         }
-        return i-1;
+        return i - 1;
     }
 
     private void inicializarSpinnerRecursoComunitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<RecursoComunitario>> call = apiService.getListadoRecursoComunitario("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<RecursoComunitario>> call = apiService.getListadoRecursoComunitario(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<RecursoComunitario>>() {
             @Override
             public void onResponse(Call<List<RecursoComunitario>> call, Response<List<RecursoComunitario>> response) {
@@ -139,13 +141,17 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
                     RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdRecursoComunitario(), "RecursoComunitario");
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.setAdapter(adapter);
-                    spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.setSelection(buscarPosicionSpinnerRecursoComunitario(listadoRecursoComunitario,recursoComunitario.getId()));
+                    if (recursoComunitario != null) {
+                        spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.setSelection(buscarPosicionSpinnerRecursoComunitario(listadoRecursoComunitario, recursoComunitario.getId()));
+                    } else {
+                        spinnerRecursoComunitarioModificarRelacionTerminalRecursoComunitario.setSelection(0);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecursoComunitario>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -160,7 +166,7 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
             }
             i++;
         }
-        return i-1;
+        return i - 1;
     }
 
     private List<String> convertirListaRecursoComunitario(List<RecursoComunitario> listadoRecursoComunitario) {
@@ -207,24 +213,24 @@ public class ModificarRelacionTerminalRecursoComunitarioFragment extends Fragmen
         RelacionTerminalRecursoComunitario relacionTerminalRecursoComunitarioModificado = new RelacionTerminalRecursoComunitario();
         relacionTerminalRecursoComunitarioModificado.setIdTerminal(Integer.parseInt(terminalSeleccionado));
         relacionTerminalRecursoComunitarioModificado.setIdRecursoComunitario(Integer.parseInt(recursoComunitarioSeleccionado));
-        Call<RelacionTerminalRecursoComunitario> call = apiService.updateRelacionTerminalRecursoComunitario(relacionTerminalRecursoComunitario.getId(),relacionTerminalRecursoComunitarioModificado,"Bearer "+ Utilidad.getToken().getAccess() );
+        Call<RelacionTerminalRecursoComunitario> call = apiService.updateRelacionTerminalRecursoComunitario(relacionTerminalRecursoComunitario.getId(), relacionTerminalRecursoComunitarioModificado, Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<RelacionTerminalRecursoComunitario>() {
             @Override
             public void onResponse(Call<RelacionTerminalRecursoComunitario> call, Response<RelacionTerminalRecursoComunitario> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Relacion modificada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.RELACION_MODIFICADA, Toast.LENGTH_SHORT).show();
                     volver();
                 } else {
-                    Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_MODIFICAR_LA_RELACION, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RelacionTerminalRecursoComunitario> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_MODIFICAR_LA_RELACION, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
-        } );
+        });
     }
 
     private boolean validarCampos() {

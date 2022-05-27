@@ -17,6 +17,7 @@ import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 import com.example.teleappsistencia.modelos.Paciente;
 import com.google.gson.internal.LinkedTreeMap;
@@ -147,16 +148,17 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
             @Override
             public void onResponse(Call<RelacionUsuarioCentro> call, Response<RelacionUsuarioCentro> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Relacion modificada correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.RELACION_MODIFICADA_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 } else {
-                    Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_MODIFICAR_LA_RELACION, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RelacionUsuarioCentro> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al modificar la relacion", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_MODIFICAR_LA_RELACION, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -170,7 +172,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
 
     private void inicializarSpinnerCentroSanitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<CentroSanitario>> call = apiService.getListadoCentroSanitario("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<CentroSanitario>> call = apiService.getListadoCentroSanitario(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<CentroSanitario>>() {
             @Override
             public void onResponse(Call<List<CentroSanitario>> call, Response<List<CentroSanitario>> response) {
@@ -186,7 +188,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
 
             @Override
             public void onFailure(Call<List<CentroSanitario>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -216,7 +218,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
 
     private void inicializarSpinnerPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
@@ -229,8 +231,8 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPacientes(listadoPacientes));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Paciente paciente = (Paciente) Utilidad.getObjeto(relacionUsuarioCentro.getIdPaciente(), "Paciente");
+                    spinnerPacienteModificar.setAdapter(adapter);
                     if(relacionUsuarioCentro.getIdPaciente() != null) {
-                        spinnerPacienteModificar.setAdapter(adapter);
                         spinnerPacienteModificar.setSelection(buscarPosicionSpinnerPaciente(listadoPacientes, paciente.getId()));
                     } else {
                         spinnerPacienteModificar.setAdapter(adapter);
@@ -240,7 +242,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
 
             @Override
             public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -249,7 +251,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
     private List<String> convertirListaPacientes(List<Paciente> listadoPacientes) {
         List<String> listadoPacientesString = new ArrayList<>();
         for (Paciente paciente : listadoPacientes) {
-            listadoPacientesString.add(paciente.getId() + "-" +"Nº expediente: " + paciente.getNumeroExpediente());
+            listadoPacientesString.add(paciente.getId() + Constantes.REGEX_SEPARADOR_GUION +"Nº expediente: " + paciente.getNumeroExpediente());
         }
         return listadoPacientesString;
     }
@@ -272,5 +274,12 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
                 .replace(R.id.main_fragment, listarRelacionUsuarioCentroFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void limpiarCampos(){
+        editTextObservacionesModificarRelacionUsuarioCentro.setText("");
+        editTextTiempoModificar.setText("");
+        editTextDistanciaModificar.setText("");
+        editTextPersonaContactoModificar.setText("");
     }
 }

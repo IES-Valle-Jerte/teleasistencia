@@ -162,6 +162,13 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
         btnVolverPacienteInsertar.setOnClickListener(this);
     }
 
+    public void limpiarCampos(){
+        editTextNumeroExpediente.setText("");
+        editTextNumeroSeguridadSocial.setText("");
+        editTextPrestacionOtrosServicios.setText("");
+        editTextObservacionesMedicas.setText("");
+        editTextInteresesActividades.setText("");
+    }
 
     /**
      * Una función que se llama cuando se presiona un botón.
@@ -269,15 +276,16 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
     private void insertarPacienteBD(Paciente pacienteInsertar) {
         //Insertamos el paciente en la BD
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Paciente> call = apiService.addPaciente(pacienteInsertar, "Bearer " + Utilidad.getToken().getAccess());
+        Call<Paciente> call = apiService.addPaciente(pacienteInsertar, Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Paciente>() {
             @Override
             public void onResponse(Call<Paciente> call, Response<Paciente> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Paciente insertado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.PACIENTE_INSERTADO_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
                     volver();
                 } else {
-                    Toast.makeText(getContext(), "Error al insertar paciente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_INSERTAR_PACIENTE, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -293,7 +301,7 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
      */
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Terminal>> call = apiService.getListadoTerminal("Bearer " + Utilidad.getToken().getAccess());
+        Call<List<Terminal>> call = apiService.getListadoTerminal(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new retrofit2.Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
@@ -307,7 +315,7 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
 
             @Override
             public void onFailure(Call<List<Terminal>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -343,7 +351,7 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerPersona.setAdapter(adapter);
                 } else {
-                    Toast.makeText(getContext(), "Error al obtener listado de personas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -364,7 +372,7 @@ public class InsertarPacienteFragment extends Fragment implements View.OnClickLi
     private List<String> convertirListaPersonas(List<Persona> listadoPersona) {
         List<String> listadoPersonaString = new ArrayList<>();
         for (Persona persona : listadoPersona) {
-            listadoPersonaString.add(persona.getId() + "-" + persona.getNombre() + " " + persona.getApellidos());
+            listadoPersonaString.add(persona.getId() + Constantes.REGEX_SEPARADOR_GUION + persona.getNombre() + " " + persona.getApellidos());
         }
         return listadoPersonaString;
     }

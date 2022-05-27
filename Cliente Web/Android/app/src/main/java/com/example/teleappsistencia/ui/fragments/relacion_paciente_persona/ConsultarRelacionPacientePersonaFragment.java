@@ -56,6 +56,7 @@ public class ConsultarRelacionPacientePersonaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_consultar_relacion_paciente_persona, container, false);
+        // Obtener los elementos del layout
         textViewConsultarTipoRelacion = root.findViewById(R.id.textViewConsultarTipoRelacion);
         textViewConsultarTieneLlaveViviendas = root.findViewById(R.id.textViewConsultarTieneLlaveViviendas);
         textViewConsultarDisponibilidad = root.findViewById(R.id.textViewConsultarDisponibilidad);
@@ -63,7 +64,7 @@ public class ConsultarRelacionPacientePersonaFragment extends Fragment {
         textViewConsultarPrioridad = root.findViewById(R.id.textViewConsultarPrioridad);
         textViewConsultarNumeroSeguridadSocialPaciente = root.findViewById(R.id.textViewConsultarNumeroSeguridadSocialPaciente);
         textViewConsultarNombrePersona = root.findViewById(R.id.textViewConsultarNombrePersona);
-
+        // Mostrar los datos del objeto en los elementos del layout
         textViewConsultarTipoRelacion.setText(relacionPacientePersona.getTipoRelacion());
         if (relacionPacientePersona.isTieneLlavesVivienda()) {
             textViewConsultarTieneLlaveViviendas.setText("Sí");
@@ -72,14 +73,21 @@ public class ConsultarRelacionPacientePersonaFragment extends Fragment {
             textViewConsultarTieneLlaveViviendas.setText("No");
             textViewConsultarTieneLlaveViviendas.setTextColor(Color.RED);
         }
-
         textViewConsultarDisponibilidad.setText(relacionPacientePersona.getDisponibilidad());
         textViewConsultarObservaciones.setText(relacionPacientePersona.getObservaciones());
         textViewConsultarPrioridad.setText(String.valueOf(relacionPacientePersona.getPrioridad()));
         Paciente paciente = (Paciente) Utilidad.getObjeto(relacionPacientePersona.getIdPaciente(), "Paciente");
-        textViewConsultarNumeroSeguridadSocialPaciente.setText(paciente.getNumeroSeguridadSocial());
+        if (paciente != null) {
+            textViewConsultarNumeroSeguridadSocialPaciente.setText(paciente.getNumeroSeguridadSocial());
+        } else {
+            textViewConsultarNumeroSeguridadSocialPaciente.setText("");
+        }
         Persona persona = (Persona) Utilidad.getObjeto(relacionPacientePersona.getIdPersona(), "Persona");
-        textViewConsultarNombrePersona.setText(persona.getNombre()+" "+persona.getApellidos());
+        if (persona != null) {
+            textViewConsultarNombrePersona.setText(persona.getNombre()+" "+persona.getApellidos());
+        } else {
+            textViewConsultarNombrePersona.setText("");
+        }
         // Inflate the layout for this fragment
         return root;
     }

@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.Persona;
 import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
@@ -89,15 +90,15 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
             double idSeleccionadoDouble = (double) this.relacionPacientePersona.getId();
             int idSeleccionado = (int) idSeleccionadoDouble;
-            Call<ResponseBody> call = apiService.deleteRelacionPacientePersona(idSeleccionado, "Bearer " + Utilidad.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteRelacionPacientePersona(idSeleccionado, Constantes.BEARER + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(context, "Relación Paciente Persona borrada correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.RELACION_PACIENTE_PERSONA_BORRADA_CORRECTAMENTE, Toast.LENGTH_SHORT).show();
                         recargarFragment();
                     } else {
-                        Toast.makeText(context, "Error al borrar Relación Paciente Persona", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, Constantes.ERROR_AL_BORRAR_RELACION_PACIENTE_PERSONA, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -148,11 +149,17 @@ public class RelacionPacientePersonaAdapter extends RecyclerView.Adapter<Relacio
         viewHolder.tipoRelacionCard.setText(items.get(i).getTipoRelacion());
         viewHolder.prioridadCard.setText("Prioridad: " + String.valueOf(items.get(i).getPrioridad()));
         viewHolder.disponibilidadCard.setText(items.get(i).getDisponibilidad());
+        Paciente paciente = (Paciente) Utilidad.getObjeto(items.get(i).getIdPaciente(), "Paciente");
         if (items.get(i).getIdPaciente() != null) {
-            Paciente paciente = (Paciente) Utilidad.getObjeto(items.get(i).getIdPaciente(), "Paciente");
             viewHolder.pacienteRelacionCard.setText("SS del paciente: " + paciente.getNumeroSeguridadSocial());
+        } else {
+            viewHolder.pacienteRelacionCard.setText("Paciente: ");
         }
         Persona persona = (Persona) Utilidad.getObjeto(items.get(i).getIdPersona(), "Persona");
-        viewHolder.personaRelacionCard.setText("Persona de contacto: " + persona.getNombre() + " " + persona.getApellidos());
+        if (persona != null) {
+            viewHolder.personaRelacionCard.setText("Persona de contacto: " + persona.getNombre() + " " + persona.getApellidos());
+        }else {
+            viewHolder.personaRelacionCard.setText("Persona de contacto: ");
+        }
     }
 }

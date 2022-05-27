@@ -61,9 +61,13 @@ public class ConsultarRelacionTerminalRecursoComunitarioFragment extends Fragmen
         textViewConsultarNombreRecursoComunitario = root.findViewById(R.id.textViewConsultarNombreRecursoComunitario);
         textViewConsultarIdRelacionTerminalRecursoComunitario.setText(String.valueOf(relacionTerminalRecursoComunitario.getId()));
         Terminal terminal = (Terminal) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdTerminal(), "Terminal");
-        textViewConsultarNumeroTerminal.setText(terminal.getNumeroTerminal());
+        if (terminal != null) {
+            textViewConsultarNumeroTerminal.setText(terminal.getNumeroTerminal());
+        }
         RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdRecursoComunitario(), "RecursoComunitario");
-        textViewConsultarNombreRecursoComunitario.setText(recursoComunitario.getNombre());
+        if (recursoComunitario != null) {
+            textViewConsultarNombreRecursoComunitario.setText(recursoComunitario.getNombre());
+        }
         return root;
     }
 

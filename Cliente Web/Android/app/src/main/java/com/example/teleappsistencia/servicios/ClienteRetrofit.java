@@ -1,5 +1,6 @@
 package com.example.teleappsistencia.servicios;
 
+import com.example.teleappsistencia.utilidades.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,8 +20,6 @@ public class ClienteRetrofit {
 
     // Instancia de la clase
     private static ClienteRetrofit clienteRetrofit = null;
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
-    //public static final String BASE_URL = "http://localhost:8000/";
 
     // Instancia de la interfaz
     private APIService apiService;
@@ -42,7 +41,7 @@ public class ClienteRetrofit {
 
     // Un constructor privado para evitar que se pueda crear una instancia de la clase desde fuera.
     private ClienteRetrofit() {
-        buildRetrofit(BASE_URL);
+        buildRetrofit(Constantes.BASE_URL);
     }
 
 
@@ -64,7 +63,7 @@ public class ClienteRetrofit {
                         .retryOnConnectionFailure(Boolean.FALSE)
                         .build();
 
-        // Configuración de la serialización de los objetos.
+        // Configuración del formato de fechas.
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
