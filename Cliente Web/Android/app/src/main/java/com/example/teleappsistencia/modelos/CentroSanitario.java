@@ -1,7 +1,5 @@
 package com.example.teleappsistencia.modelos;
 
-import com.google.gson.annotations.SerializedName;
-
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;

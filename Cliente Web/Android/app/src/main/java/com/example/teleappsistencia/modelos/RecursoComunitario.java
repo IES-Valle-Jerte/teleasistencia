@@ -25,7 +25,7 @@ public class RecursoComunitario implements Serializable {
     @SerializedName("id_ripos_recurso_comunitario")
     private Object tipoRecursoComunitario;
     @SerializedName("id_direccion")
-    private Object dirección;
+    private Object direccion;
 
     // Getters y Setters
 
@@ -61,12 +61,12 @@ public class RecursoComunitario implements Serializable {
         this.tipoRecursoComunitario = tipoRecursoComunitario;
     }
 
-    public Object getDirección() {
-        return dirección;
+    public Object getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(Object dirección) {
-        this.dirección = dirección;
+    public void setDireccion(Object direccion) {
+        this.direccion = direccion;
     }
 
     /**

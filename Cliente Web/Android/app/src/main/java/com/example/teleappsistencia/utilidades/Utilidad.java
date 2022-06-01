@@ -1,5 +1,11 @@
 package com.example.teleappsistencia.utilidades;
 
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.modelos.CentroSanitario;
+import com.example.teleappsistencia.modelos.RecursoComunitario;
+import com.example.teleappsistencia.modelos.TipoCentroSanitario;
+import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
+import com.example.teleappsistencia.modelos.TipoRecursoComunitario;
 import com.example.teleappsistencia.modelos.Direccion;
 import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.modelos.Terminal;
@@ -214,6 +220,19 @@ public class Utilidad {
                 type = new TypeToken<CentroSanitario>() {
                 }.getType();
                 break;
+            case "TipoCentroSanitario":
+                type = new TypeToken<TipoCentroSanitario>() {
+                }.getType();
+                break;
+            case "TipoModalidadPaciente":
+                type = new TypeToken<TipoModalidadPaciente>() {
+                }.getType();
+                break;
+
+            case "TipoRecursoComunitario":
+                type = new TypeToken<TipoRecursoComunitario>() {
+                }.getType();
+                break;
             case "Direccion":
                 type = new TypeToken<Direccion>() {
                 }.getType();
@@ -240,6 +259,14 @@ public class Utilidad {
                 break;
             case "RecursoComunitario":
                 type = new TypeToken<RecursoComunitario>() {
+                }.getType();
+                break;
+            case "ArrayList<TipoCentroSanitario>":
+                type = new TypeToken<ArrayList<TipoCentroSanitario>>() {
+                }.getType();
+                break;
+            case "ArrayList<TipoRecursoComunitario>":
+                type = new TypeToken<ArrayList<TipoRecursoComunitario>>() {
                 }.getType();
                 break;
             case "RelacionUsuarioCentro":

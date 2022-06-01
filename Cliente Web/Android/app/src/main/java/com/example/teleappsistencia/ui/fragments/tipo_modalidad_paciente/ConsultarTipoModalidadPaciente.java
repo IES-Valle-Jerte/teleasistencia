@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
+import com.example.teleappsistencia.utilidades.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,15 +20,7 @@ import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
  */
 public class ConsultarTipoModalidadPaciente extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Declaración de atributos.
     private TextView nombreTipoModalidadPaciente;
     private TipoModalidadPaciente tipoModalidadPaciente;
 
@@ -39,30 +32,39 @@ public class ConsultarTipoModalidadPaciente extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      * @return A new instance of fragment ConsultarTipoModalidadPaciente.
+     * @param tipoModalidadPaciente: Recibe el objeto a consultar.
      */
-    // TODO: Rename and change types and number of parameters
     public static ConsultarTipoModalidadPaciente newInstance(TipoModalidadPaciente tipoModalidadPaciente) {
         ConsultarTipoModalidadPaciente fragment = new ConsultarTipoModalidadPaciente();
         Bundle args = new Bundle();
-        args.putSerializable("tipoModalidadPaciente", tipoModalidadPaciente);
+        args.putSerializable(Constantes.TIPO_MODALIDAD_PACIENTE_OBJETO, tipoModalidadPaciente);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * Método que inicializa el objeto a consultar.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.tipoModalidadPaciente = (TipoModalidadPaciente) getArguments().getSerializable("tipoModalidadPaciente");
+            this.tipoModalidadPaciente = (TipoModalidadPaciente) getArguments().getSerializable(Constantes.TIPO_MODALIDAD_PACIENTE_OBJETO);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Se guarda la vista.
         View root = inflater.inflate(R.layout.fragment_consultar_tipo_modalidad_paciente, container, false);
 
+        // Se inicializan las variables.
         this.nombreTipoModalidadPaciente = (TextView) root.findViewById(R.id.nombreTipoModalidadPaciente);
+
+        // Método que muestra los valores del tipo de modalidad de paciente.
         this.nombreTipoModalidadPaciente.setText(this.tipoModalidadPaciente.getNombreTipoModalidadPaciente());
 
         // Inflate the layout for this fragment

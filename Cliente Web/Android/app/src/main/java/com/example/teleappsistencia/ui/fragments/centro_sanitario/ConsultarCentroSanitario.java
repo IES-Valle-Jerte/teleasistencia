@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.CentroSanitario;
+import com.example.teleappsistencia.modelos.TipoCentroSanitario;
+import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,15 +22,7 @@ import com.example.teleappsistencia.modelos.CentroSanitario;
  */
 public class ConsultarCentroSanitario extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Declaración de atributos.
     private TextView nombreCentroSanitario;
     private TextView telefonoCentroSanitario;
     private TextView tipoCentroSanitarioCentroSanitario;
@@ -45,29 +40,36 @@ public class ConsultarCentroSanitario extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      * @return A new instance of fragment ConsultarCentroSanitario.
+     * @param centroSanitario: Recibe el objeto a consultar.
      */
-    // TODO: Rename and change types and number of parameters
     public static ConsultarCentroSanitario newInstance(CentroSanitario centroSanitario) {
         ConsultarCentroSanitario fragment = new ConsultarCentroSanitario();
         Bundle args = new Bundle();
-        args.putSerializable("centroSanitario", centroSanitario);
+        args.putSerializable(Constantes.CENTRO_SANITARIO_OBJETO, centroSanitario);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * Método que inicializa el objeto a consultar.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.centroSanitario = (CentroSanitario) getArguments().getSerializable("centroSanitario");
+            this.centroSanitario = (CentroSanitario) getArguments().getSerializable(Constantes.CENTRO_SANITARIO_OBJETO);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Se guarda la vista.
         View root = inflater.inflate(R.layout.fragment_consultar_centro_sanitario, container, false);
 
+        // Se inicializan las variables.
         this.nombreCentroSanitario = (TextView) root.findViewById(R.id.nombreCentroSanitario);
         this.telefonoCentroSanitario = (TextView) root.findViewById(R.id.telefonoCentroSanitario);
         this.tipoCentroSanitarioCentroSanitario = (TextView) root.findViewById(R.id.tipoCentroSanitarioCentroSanitario);
@@ -76,15 +78,16 @@ public class ConsultarCentroSanitario extends Fragment {
         this.direccionCentroSanitario = (TextView) root.findViewById(R.id.direccionCentroSanitario);
         this.codigoPostalCentroSanitario = (TextView) root.findViewById(R.id.codigoPostalCentroSanitario);
 
+        // Método que muestra los valores del centro sanitario.
+        TipoCentroSanitario tipoCentroSanitario = (TipoCentroSanitario) Utilidad.getObjeto(centroSanitario, Constantes.TIPO_CENTRO_SANITARIO);
 
         this.nombreCentroSanitario.setText(this.centroSanitario.getNombre());
         this.telefonoCentroSanitario.setText(this.centroSanitario.getTelefono());
-        /* Hay que revisar el modelo para adaptarlo (hablar con Aaron) */
-        //this.tipoCentroSanitarioCentroSanitario.setText(this.centroSanitario.getTipoCentroSanitario().get(0));
-        //this.localidadCentroSanitario.setText(this.centroSanitario.getLocalidadCentroSanitario());
-        //this.provinciaCentroSanitario.setText(this.centroSanitario.getProvinciaCentroSanitario());
-        //this.direccionCentroSanitario.setText(this.centroSanitario.getDireccionCentroSanitario());
-        //this.codigoPostalCentroSanitario.setText(this.centroSanitario.getCodigoPostalCentroSanitario());
+        this.tipoCentroSanitarioCentroSanitario.setText(tipoCentroSanitario.getNombreTipoCentroSanitario());
+        this.localidadCentroSanitario.setText(this.centroSanitario.getDireccion().getLocalidad());
+        this.provinciaCentroSanitario.setText(this.centroSanitario.getDireccion().getProvincia());
+        this.direccionCentroSanitario.setText(this.centroSanitario.getDireccion().getDireccion());
+        this.codigoPostalCentroSanitario.setText(this.centroSanitario.getDireccion().getCodigoPostal());
 
         // Inflate the layout for this fragment
         return root;

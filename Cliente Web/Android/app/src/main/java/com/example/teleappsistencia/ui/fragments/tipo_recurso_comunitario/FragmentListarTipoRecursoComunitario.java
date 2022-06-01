@@ -9,12 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.TipoRecursoComunitario;
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
+import com.example.teleappsistencia.utilidades.Constantes;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,18 +31,11 @@ import java.util.List;
  */
 public class FragmentListarTipoRecursoComunitario extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Declaración de atributos.
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
+    private List<TipoRecursoComunitario> items;
 
     public FragmentListarTipoRecursoComunitario() {
         // Required empty public constructor
@@ -43,17 +44,11 @@ public class FragmentListarTipoRecursoComunitario extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment FragmentListarTipoRecursoComunitario.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentListarTipoRecursoComunitario newInstance(String param1, String param2) {
+    public static FragmentListarTipoRecursoComunitario newInstance() {
         FragmentListarTipoRecursoComunitario fragment = new FragmentListarTipoRecursoComunitario();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,20 +56,13 @@ public class FragmentListarTipoRecursoComunitario extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Se guarda la vista.
         View root = inflater.inflate(R.layout.fragment_listar_tipo_recurso_comunitario, container, false);
-        // Inicializar Tipos de Recursos Comunitarios.
-        List items = new ArrayList();
-
-        items.add(new TipoRecursoComunitario("Policía"));
 
         // Obtener el Recycler.
         recycler = (RecyclerView) root.findViewById(R.id.listRecyclerView);
@@ -84,11 +72,39 @@ public class FragmentListarTipoRecursoComunitario extends Fragment {
         lManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(lManager);
 
-        // Crear un nuevo adaptador.
-        adapter = new TipoRecursoComunitarioAdapter(items, getActivity(), recycler);
-        recycler.setAdapter(adapter);
+        // Se llama al método que lista los tipos de recursos comunitarios.
+        listarTipoRecursoComunitario();
 
         // Inflate the layout for this fragment
         return root;
+    }
+
+    /**
+     * Método que lista los tipos de centros sanitarios.
+     */
+    private void listarTipoRecursoComunitario() {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+        Call<List<TipoRecursoComunitario>> call = apiService.getTipoRecursoComunitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        call.enqueue(new Callback<List<TipoRecursoComunitario>>() {
+            @Override
+            public void onResponse(Call<List<TipoRecursoComunitario>> call, Response<List<TipoRecursoComunitario>> response) {
+                if (response.isSuccessful()) {
+                    items = response.body();
+
+                    // Crear un nuevo adaptador.
+                    adapter = new TipoRecursoComunitarioAdapter(items);
+                    recycler.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(getContext(), Integer.toString(response.code()), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TipoRecursoComunitario>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

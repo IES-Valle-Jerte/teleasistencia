@@ -1,6 +1,7 @@
 package com.example.teleappsistencia;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -120,6 +121,12 @@ import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.Fragmen
 import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentInsertarTipoRecursoComunitario;
 import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentListarTipoRecursoComunitario;
 import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentModificarTipoRecursoComunitario;
+import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
+import com.example.teleappsistencia.ui.menu.MenuModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
@@ -175,6 +182,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(rol.equals("Teleoperador")) {
             Utilidad.iniciarEscuchaAlarmas(this);
         }
+
+        //Iniciamos el token
+        Token.cargarToken("admin", "admin");
 
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
