@@ -1,5 +1,12 @@
 package com.example.teleappsistencia.utilidades;
 
+import com.example.teleappsistencia.modelos.Direccion;
+import com.example.teleappsistencia.modelos.Grupo;
+import com.example.teleappsistencia.modelos.Terminal;
+import com.example.teleappsistencia.modelos.TipoAlarma;
+import com.example.teleappsistencia.modelos.TipoSituacion;
+import com.example.teleappsistencia.modelos.Token;
+import com.example.teleappsistencia.modelos.Usuario;
 import android.os.Handler;
 import android.view.View;
 
@@ -69,12 +76,25 @@ public class Utilidad {
      */
     private static Token token;
 
-    public static Token getToken() {
-        return token;
-    }
+    /**
+     * Usuario logueado en el sistema.
+     */
+    private static Usuario userLogged;
 
-    public static void setToken(Token token) {
-        Utilidad.token = token;
+    /**
+     * Si isAdmin está en true se podrá acceder a todas las opciones del menu.
+     * Si es false algunas opciones se ocultarán.
+     */
+    private static boolean isAdmin;
+
+    /**
+     * Método que recibe un número y si se encuentra entre 1 y 9 le añade un 0 delante.
+     * Este método es utilizado para los meses y días de las fechas.
+     * @param number Número al que hay que añadirle el 0 si cumple con los requisitos.
+     * @return Devuelve el número como un String y con el 0 delante si cumple con los requisitos.
+     */
+    public static String twoDigitsDate(int number) {
+        return (number<=9) ? ("0"+number) : String.valueOf(number);
     }
 
     /**
@@ -101,11 +121,23 @@ public class Utilidad {
         Type type = null;
         Object objeto = null;
         switch(tipo){
+            case Constantes.USUARIO:
+                type = new TypeToken<Usuario>(){}.getType();
+                break;
+            case Constantes.GRUPO:
+                type = new TypeToken<Grupo>(){}.getType();
+                break;
+            case Constantes.DIRECCION:
+                type = new TypeToken<Direccion>(){}.getType();
+                break;
             case Constantes.TELEOPERADOR:
                 type = new TypeToken<Teleoperador>(){}.getType();
                 break;
             case Constantes.TERMINAL:
                 type = new TypeToken<Terminal>(){}.getType();
+                break;
+            case Constantes.TIPO_SITUACION:
+                type = new TypeToken<TipoSituacion>(){}.getType();
                 break;
             case Constantes.PACIENTE:
                 type = new TypeToken<Paciente>(){}.getType();
@@ -225,7 +257,7 @@ public class Utilidad {
         return objeto;
     }
 
-    /**
+    /*
      * Método para mostrar una capa de espera mientras se obtienen los datos de la API.
      *
      * @param view Vista
@@ -261,6 +293,7 @@ public class Utilidad {
         }, 2500);
     }
 
+    /*
      * Este método devuelve un String con Sí cuando le pasamos un true, y No si es false
      * @param condicion
      * @return
@@ -305,4 +338,31 @@ public class Utilidad {
     }
 
 
+    /**
+     * Getters y Setters
+     */
+
+    public static Token getToken() {
+        return token;
+    }
+
+    public static void setToken(Token token) {
+        Utilidad.token = token;
+    }
+
+    public static Usuario getUserLogged() {
+        return userLogged;
+    }
+
+    public static void setUserLogged(Usuario userLogged) {
+        Utilidad.userLogged = userLogged;
+    }
+
+    public static boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public static void setIsAdmin(boolean isAdmin) {
+        Utilidad.isAdmin = isAdmin;
+    }
 }

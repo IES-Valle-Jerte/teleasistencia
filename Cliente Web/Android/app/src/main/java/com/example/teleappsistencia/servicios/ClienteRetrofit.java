@@ -58,13 +58,13 @@ public class ClienteRetrofit {
                         .connectTimeout(30, TimeUnit.SECONDS)
                         // Se configura el tiempo de espera de la respuesta.
                         .readTimeout(30, TimeUnit.SECONDS)
-                        //Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
+                        // Si la conexión del servidor es lenta, no intenta de nuevo y evita una nueva petición (OKHTTP si la conexión es lenta, intenta de nuevo)
                         .retryOnConnectionFailure(Boolean.FALSE)
                         .build();
 
         // Configuración del formato de fechas.
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+                .setDateFormat(Constantes.FORMATEADOR_API).create();
 
         /*
          * Se crea un objeto Retrofit, que se encarga de la conexión con la API.

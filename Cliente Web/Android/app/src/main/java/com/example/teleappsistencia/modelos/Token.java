@@ -39,24 +39,15 @@ public class Token implements Serializable {
         this.access = access;
     }
 
-    public static Token getToken(){
-        return token;
-    }
-
-    public static void cargarToken(String user, String password){
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Token> call = apiService.getToken(user, password);
-        call.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if(response.isSuccessful()){
-                    token = response.body();
-                }
-            }
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    /**
+     * Método toString
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Token{" +
+                "refresh='" + refresh + '\'' +
+                ", access='" + access + '\'' +
+                '}';
     }
 }

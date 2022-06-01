@@ -66,4 +66,19 @@ public class Direccion implements Serializable {
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
+
+    /**
+     * Método toString
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Direccion{" +
+                "id=" + id +
+                ", localidad='" + localidad + '\'' +
+                ", provincia='" + provincia + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", codigoPostal='" + codigoPostal + '\'' +
+                '}';
+    }
 }

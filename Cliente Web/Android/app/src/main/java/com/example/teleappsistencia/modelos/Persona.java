@@ -108,5 +108,22 @@ public class Persona implements Serializable {
         this.direccion = direccion;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", dni='" + dni + '\'' +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", sexo='" + sexo + '\'' +
+                ", telefonoFijo='" + telefonoFijo + '\'' +
+                ", telefonoMovil='" + telefonoMovil + '\'' +
+                ", direccion=" + direccion +
+                '}';
+    }
 }
-

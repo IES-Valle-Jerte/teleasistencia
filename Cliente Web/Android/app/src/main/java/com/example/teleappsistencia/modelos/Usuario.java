@@ -24,6 +24,8 @@ public class Usuario implements Serializable{
     private String lastLogin;
     @SerializedName("username")
     private String username;
+    @SerializedName("password")
+    private String password;
     @SerializedName("first_name")
     private String firstName;
     @SerializedName("last_name")
@@ -33,7 +35,9 @@ public class Usuario implements Serializable{
     @SerializedName("date_joined")
     private Date dateJoined;
     @SerializedName("groups")
-    private List<Grupo> groups = null;
+    private Object groups;
+    @SerializedName("imagen")
+    private Imagen imagen;
 
     /**
      * Getters y setters
@@ -102,14 +106,34 @@ public class Usuario implements Serializable{
         this.dateJoined = dateJoined;
     }
 
-    public List<Grupo> getGroups() {
+    public Object getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Grupo> groups) {
+    public void setGroups(Object groups) {
         this.groups = groups;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Imagen getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Imagen imagen) {
+        this.imagen = imagen;
+    }
+
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return this.firstName+" "+this.lastName;

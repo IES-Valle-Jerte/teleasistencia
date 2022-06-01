@@ -15,6 +15,9 @@ public class Terminal implements Serializable {
      * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
      * que se utilizan para mapear las JSON keys hacia campos Java.
      */
+    @SerializedName("id")
+    private int id;
+    @SerializedName("numero_terminal")
     private String numeroTerminal;
     @SerializedName("modo_acceso_vivienda")
     private String modoAccesoVivienda;
@@ -75,4 +78,19 @@ public class Terminal implements Serializable {
         this.tipoVivienda = tipoVivienda;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Terminal{" +
+                "id=" + id +
+                ", numeroTerminal='" + numeroTerminal + '\'' +
+                ", modoAccesoVivienda='" + modoAccesoVivienda + '\'' +
+                ", barrerasArquitectonicas='" + barrerasArquitectonicas + '\'' +
+                ", titular=" + titular +
+                ", tipoVivienda=" + tipoVivienda +
+                '}';
+    }
 }
