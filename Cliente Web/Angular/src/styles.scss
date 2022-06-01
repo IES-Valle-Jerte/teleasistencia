@@ -9,6 +9,10 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.flatpickr-calendar, .hasTime, .animate {
+  display: none;
+}
 .cabecera {
   background: linear-gradient(0deg, rgba(248, 228, 221, 0.5) 0%, rgba(117, 89, 125, 0.5) 100%);
   padding: 1rem;
@@ -80,12 +84,14 @@ table {
    td > .btn-modify {
     float: none;
   }
-  th{
-    cursor: pointer;
-  }
-  th:active{
-    color: #10022b;
-  }
+
+
+.ordenable{
+  cursor: pointer;
+}
+.ordenable:active{
+  color: black;
+}
 
 .btn-delete{
   margin-left: 20px;
@@ -479,13 +485,18 @@ footer {
     text-align: initial;
   }
 }
+.imgColaboradores{
+  height: 400px;
+}
 //Alert
 #swal2-title{
   margin:0;
   padding-top: 10px;
 }
 
-
+.left {
+  text-align: left;
+}
 
 
 .pointer{
@@ -493,4 +504,71 @@ footer {
 }
 .imagenUsuario{
   object-fit: cover;
+}
+
+
+//botones
+.btn-delete {
+  background-color: transparent;
+}
+.divDesarrolladores{
+  margin: 10px 0;
+  width: 100%;
+
+}
+.divImagenesDesarrollador{
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  text-align: center;
+  align-items: center;
+}
+
+.divTitulosDesarrollador, .divDatosDesarrolladores{
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+}
+.divTitulosDesarrollador, .divDatosDesarrolladores span{
+  font-size: 20px;
+}
+
+.imagenDesarrollador{
+  margin-top: 20px;
+  height: 150px;
+  margin-bottom: 20px;
+}
+ .imagenTecnologia{
+  height:75px;
+  margin: 0 20px;
+
+}
+.botonMas {
+  font-size: 40px;
+  font-weight: lighter;
+  height: 50px;
+  width: 50px;
+}
+.botonMas:hover{
+  cursor: pointer;
+}
+.d-none{
+  display: none;
+}
+
+.tecnologias > div >.tituloConvocatoria{
+  font-size: 30px;
+  color:#75597D;
+  text-align: center;
+  text-decoration: underline;
+}
+
+
+.table-purple{
+  vertical-align: top;
+}
+
+.table>:not(:last-child)>:last-child>* {
+  white-space: nowrap;
 }

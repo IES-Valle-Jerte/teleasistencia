@@ -8,13 +8,21 @@ import java.io.Serializable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Clase POJO "Token" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Token implements Serializable {
+
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
 
     private String refresh;
     private String access;
-    private static Token token;
 
+    // Getters y Setters
+    
     public String getRefresh() {
         return refresh;
     }
@@ -31,33 +39,15 @@ public class Token implements Serializable {
         this.access = access;
     }
 
-    public static Token getToken() {
-        return token;
-    }
-
-    public static void setToken(Token token) {
-        Token.token = token;
-    }
-
-    public static void cargarToken(String user, String password) {
-        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Token> call = apiService.getToken(user, password);
-        call.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if (response.isSuccessful()) {
-                    token = response.body();
-                } else {
-                    System.out.println(response.message());
-                    System.out.println(response.body());
-                    System.out.println(response.raw());
-                }
-            }
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                t.printStackTrace();
-                System.out.println(t.getMessage());
-            }
-        });
+    /**
+     * Método toString
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Token{" +
+                "refresh='" + refresh + '\'' +
+                ", access='" + access + '\'' +
+                '}';
     }
 }

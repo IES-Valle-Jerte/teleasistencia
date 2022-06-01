@@ -3,25 +3,22 @@ package com.example.teleappsistencia.modelos;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+/**
+ * Clase POJO "TipoModalidadPaciente" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class TipoModalidadPaciente implements Serializable {
 
-    // Declaración de atributos.
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
+
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
-    private String nombreTipoModalidadPaciente;
+    private String nombre;
 
-    /**
-     * Inicializamos las variables en el constructor parametrizado.
-     *
-     * @param nombreTipoModalidadPaciente
-     */
-    public TipoModalidadPaciente(String nombreTipoModalidadPaciente) {
-        this.nombreTipoModalidadPaciente = nombreTipoModalidadPaciente;
-    }
-
-    // Establecemos y obtenemos los atributos de la clase con sus getters y setters.
+    // Getters y Setters
 
     public int getId() {
         return id;
@@ -31,11 +28,12 @@ public class TipoModalidadPaciente implements Serializable {
         this.id = id;
     }
 
-    public String getNombreTipoModalidadPaciente() {
-        return nombreTipoModalidadPaciente;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreTipoModalidadPaciente(String nombreTipoModalidadPaciente) {
-        this.nombreTipoModalidadPaciente = nombreTipoModalidadPaciente;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
 }

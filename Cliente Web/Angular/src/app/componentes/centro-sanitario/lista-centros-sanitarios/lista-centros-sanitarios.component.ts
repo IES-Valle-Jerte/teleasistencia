@@ -3,6 +3,7 @@ import {ICentroSanitario} from '../../../interfaces/i-centro-sanitario';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-lista-centros-sanitarios',
@@ -14,6 +15,7 @@ export class ListaCentrosSanitariosComponent implements OnInit {
   public centros_sanitarios: ICentroSanitario[];
   numPaginacion: number = 1;
   inputBusqueda: any = '';
+  elementosPaginacion: number = environment.num_paginacion;
 
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) {
   }
