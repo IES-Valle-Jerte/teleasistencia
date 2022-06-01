@@ -9,12 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.TipoCentroSanitario;
+import com.example.teleappsistencia.utilidades.Constantes;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,18 +31,11 @@ import java.util.List;
  */
 public class FragmentListarTipoCentroSanitario extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    // Declaración de atributos.
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
+    private List<TipoCentroSanitario> items;
 
     public FragmentListarTipoCentroSanitario() {
         // Required empty public constructor
@@ -43,17 +44,11 @@ public class FragmentListarTipoCentroSanitario extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment FragmentListarTipoCentroSanitario.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentListarTipoCentroSanitario newInstance(String param1, String param2) {
+    public static FragmentListarTipoCentroSanitario newInstance() {
         FragmentListarTipoCentroSanitario fragment = new FragmentListarTipoCentroSanitario();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,20 +56,13 @@ public class FragmentListarTipoCentroSanitario extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Se guarda la vista.
         View root = inflater.inflate(R.layout.fragment_listar_tipo_centro_sanitario, container, false);
-        // Inicializar Tipos de Centros Sanitarios.
-        List items = new ArrayList();
-
-        items.add(new TipoCentroSanitario("Centro de salud"));
 
         // Obtener el Recycler.
         recycler = (RecyclerView) root.findViewById(R.id.listRecyclerView);
@@ -84,11 +72,39 @@ public class FragmentListarTipoCentroSanitario extends Fragment {
         lManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(lManager);
 
-        // Crear un nuevo adaptador.
-        adapter = new TipoCentroSanitarioAdapter(items, getActivity(), recycler);
-        recycler.setAdapter(adapter);
+        // Se llama al método que lista los tipos de centros sanitarios.
+        listarTipoCentroSanitario();
 
         // Inflate the layout for this fragment
         return root;
+    }
+
+    /**
+     * Método que lista los tipos de centros sanitarios.
+     */
+    private void listarTipoCentroSanitario() {
+        APIService apiService = ClienteRetrofit.getInstance().getAPIService();
+
+        Call<List<TipoCentroSanitario>> call = apiService.getTipoCentroSanitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        call.enqueue(new Callback<List<TipoCentroSanitario>>() {
+            @Override
+            public void onResponse(Call<List<TipoCentroSanitario>> call, Response<List<TipoCentroSanitario>> response) {
+                if (response.isSuccessful()) {
+                    items = response.body();
+
+                    // Crear un nuevo adaptador.
+                    adapter = new TipoCentroSanitarioAdapter(items);
+                    recycler.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(getContext(), Integer.toString(response.code()), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TipoCentroSanitario>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

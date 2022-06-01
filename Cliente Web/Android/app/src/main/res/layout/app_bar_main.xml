@@ -15,12 +15,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#914D95"
             app:popupTheme="@style/Theme.Teleappsistencia.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
+    <!-- <include layout="@layout/fragment_insertar_tipo_centro_sanitario" /> -->
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

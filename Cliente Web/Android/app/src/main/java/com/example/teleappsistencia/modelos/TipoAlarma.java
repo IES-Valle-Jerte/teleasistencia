@@ -5,8 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase encargada del modelo de un TipoAlarma.
+ */
 public class TipoAlarma implements Serializable {
 
+    /**
+     * Atributos de la clase
+     */
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
@@ -18,6 +24,10 @@ public class TipoAlarma implements Serializable {
     @SerializedName("id_clasificacion_alarma")
     private Object clasificacionAlarma;
 
+
+    /**
+     * Getters y setters
+     */
     public int getId() {
         return id;
     }
@@ -54,10 +64,14 @@ public class TipoAlarma implements Serializable {
         return clasificacionAlarma;
     }
 
-    public void setClasificacionAlarma (int clasificacionAlarma) {
+    public void setClasificacionAlarma(Object clasificacionAlarma) {
         this.clasificacionAlarma = clasificacionAlarma;
     }
 
+    /**
+     * Método toString
+     * @return
+     */
     @Override
     public String toString() {
         return getCodigo()+ Constantes.ESPACIO_GUION_ESPACIO +getNombre();

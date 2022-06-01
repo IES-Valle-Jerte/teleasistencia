@@ -1,6 +1,216 @@
 package com.example.teleappsistencia.utilidades;
 
 public class Constantes {
+    /* Direcciones */
+    public static final String BASE_URL = "http://10.0.2.2:8000/";
+
+    /* Constantes comunes */
+    public final static String BEARER_ESPACIO = "Bearer ";
+    public static final String FORMATO_FECHAS_RETROFIT = "yyyy-MM-dd'T'HH:mm:ssZ";
+
+    /* Constantes Simbolos Varios */
+    public static final String VACIO = "";
+
+    /* Nombres de los Modelos */
+    public final static String TIPO_CENTRO_SANITARIO = "TipoCentroSanitario";
+    public final static String TIPO_RECURSO_COMUNITARIO = "TipoRecursoComunitario";
+    public final static String TIPO_CENTRO_SANITARIO_OBJETO = "tipoCentroSanitario";
+    public final static String TIPO_MODALIDAD_PACIENTE_OBJETO = "tipoModalidadPaciente";
+    public final static String TIPO_RECURSO_COMUNITARIO_OBJETO = "tipoRecursoComunitario";
+    public final static String CENTRO_SANITARIO_OBJETO = "centroSanitario";
+    public final static String RECURSO_COMUNITARIO_OBJETO = "recursoComunitario";
+    public final static String ARRAYLIST_TIPO_CENTRO_SANITARIO = "ArrayList<TipoCentroSanitario>";
+    public final static String ARRAYLIST_TIPO_RECURSO_COMUNITARIO = "ArrayList<TipoRecursoComunitario>";
+
+    /* Constantes Mensajes Peticiones */
+    public static final String MENSAJE_INSERTAR_TIPO_CENTRO_SANITARIO = "Se ha insertado el tipo de centro sanitario satisfactoriamente.";
+    public static final String MENSAJE_INSERTAR_TIPO_MODALIDAD_PACIENTE = "Se ha insertado el tipo de modalidad paciente satisfactoriamente.";
+    public static final String MENSAJE_INSERTAR_CENTRO_SANITARIO = "Se ha insertado el centro sanitario satisfactoriamente.";
+    public static final String MENSAJE_INSERTAR_TIPO_RECURSO_COMUNITARIO = "Se ha insertado el tipo de recurso comunitario satisfactoriamente.";
+    public static final String MENSAJE_INSERTAR_RECURSO_COMUNITARIO = "Se ha insertado el recurso comunitario satisfactoriamente.";
+    public static final String MENSAJE_MODIFICAR_TIPO_CENTRO_SANITARIO = "Se ha modificado el tipo de centro sanitario satisfactoriamente.";
+    public static final String MENSAJE_MODIFICAR_TIPO_MODALIDAD_PACIENTE = "Se ha modificado el tipo de modalidad paciente satisfactoriamente.";
+    public static final String MENSAJE_MODIFICAR_CENTRO_SANITARIO = "Se ha modificado el centro sanitario satisfactoriamente.";
+    public static final String MENSAJE_MODIFICAR_TIPO_RECURSO_COMUNITARIO = "Se ha modificado el tipo de recurso comunitario satisfactoriamente.";
+    public static final String MENSAJE_MODIFICAR_RECURSO_COMUNITARIO = "Se ha modificado el recurso comunitario satisfactoriamente.";
+    public static final String MENSAJE_ELIMINAR_TIPO_CENTRO_SANITARIO = "Se ha eliminado el tipo de centro sanitario satisfactoriamente.";
+    public static final String MENSAJE_ELIMINAR_TIPO_MODALIDAD_PACIENTE = "Se ha eliminado el tipo de modalidad paciente satisfactoriamente.";
+    public static final String MENSAJE_ELIMINAR_CENTRO_SANITARIO = "Se ha eliminado el centro sanitario satisfactoriamente.";
+    public static final String MENSAJE_ELIMINAR_TIPO_RECURSO_COMUNITARIO = "Se ha eliminado el tipo de recurso comunitario satisfactoriamente.";
+    public static final String MENSAJE_ELIMINAR_RECURSO_COMUNITARIO = "Se ha eliminado el recurso comunitario satisfactoriamente.";
+    public static final String ERROR_MENSAJE_INSERTAR_TIPO_CENTRO_SANITARIO = "Error al insertar el tipo de centro sanitario.";
+    public static final String ERROR_MENSAJE_INSERTAR_TIPO_MODALIDAD_PACIENTE = "Error al insertar el tipo de modalidad paciente.";
+    public static final String ERROR_MENSAJE_INSERTAR_CENTRO_SANITARIO = "Error al insertar el centro sanitario.";
+    public static final String ERROR_MENSAJE_INSERTAR_TIPO_RECURSO_COMUNITARIO = "Error al insertar el tipo de recurso comunitario.";
+    public static final String ERROR_MENSAJE_INSERTAR_RECURSO_COMUNITARIO = "Error al insertar el recurso comunitario.";
+    public static final String ERROR_MENSAJE_MODIFICAR_TIPO_CENTRO_SANITARIO = "Error al modificar el tipo de centro sanitario.";
+    public static final String ERROR_MENSAJE_MODIFICAR_TIPO_MODALIDAD_PACIENTE = "Error al modificar el tipo de modalidad paciente.";
+    public static final String ERROR_MENSAJE_MODIFICAR_CENTRO_SANITARIO = "Error al modificar el centro sanitario.";
+    public static final String ERROR_MENSAJE_MODIFICAR_TIPO_RECURSO_COMUNITARIO = "Error al modificar el tipo de recurso comunitario.";
+    public static final String ERROR_MENSAJE_MODIFICAR_RECURSO_COMUNITARIO = "Error al modificar el recurso comunitario.";
+    public static final String ERROR_MENSAJE_ELIMINAR_TIPO_CENTRO_SANITARIO = "Error al eliminar el tipo de centro sanitario.";
+    public static final String ERROR_MENSAJE_ELIMINAR_TIPO_MODALIDAD_PACIENTE = "Error al eliminar el tipo de modalidad paciente.";
+    public static final String ERROR_MENSAJE_ELIMINAR_CENTRO_SANITARIO = "Error al eliminar el centro sanitario.";
+    public static final String ERROR_MENSAJE_ELIMINAR_TIPO_RECURSO_COMUNITARIO = "Error al eliminar el tipo de recurso comunitario.";
+    public static final String ERROR_MENSAJE_ELIMINAR_RECURSO_COMUNITARIO = "Error al eliminar el recurso comunitario.";
+    public static final String ERROR_AL_OBTENER_DATOS = "Error al obtener los datos.";
+
+    /* Constantes Comprobaciones */
+    public static final String ERROR_NOMBRE_VACIO = "El nombre es obligatorio.";
+    public static final String ERROR_TELEFONO_VACIO = "El teléfono es obligatorio.";
+    public static final String ERROR_LOCALIDAD_VACIO = "La localidad es obligatoria.";
+    public static final String ERROR_PROVINCIA_VACIO = "La provincia es obligatoria.";
+    public static final String ERROR_DIRECCION_VACIO = "La dirección es obligatoria.";
+    public static final String ERROR_CODIGO_POSTAL_VACIO = "El código postal es obligatorio.";
+/**
+ * Clase que almacena todas las constantes utilizadas en las clases java.
+ */
+public class Constantes {
+
+    /**
+     * Constantes de la API.
+     */
+    public static final String API_BASE_URL = "http://10.0.2.2:8000/";
+    // Se utiliza "http://localhost:8000/" con dispositivos físicos y con el emulador se ha de utilizar "http://10.0.2.2:8000/"
+    public static final String TOKEN_BEARER = "Bearer ";
+    public static final String FORMATEADOR_API = "yyyy-MM-dd'T'HH:mm:ssZ";
+
+
+    /**
+     * Constantes de autorización.
+     */
+    public static final String UNAUTHORIZED = "Unauthorized";
+    public static final String PROFESOR = "Profesor";
+
+    /**
+     * Constantes de los parámetros de los fragments consultar y modificar.
+     */
+    public static final String DIRECCION = "Direccion";
+    public static final String DISPOSITIVO_AUXILIAR = "Dispositivo auxiliar";
+    public static final String GRUPO = "Grupo";
+    public static final String HISTORICO_TIPO_SITUACION = "Historico tipo situacion";
+    public static final String PERSONA = "Persona";
+    public static final String TIPO_SITUACION = "Tipo situacion";
+    public static final String TIPO_VIVIENDA = "Tipo vivienda";
+    public static final String USUARIO = "Usuario";
+    public static final String TERMINAL = "Terminal";
+    public static final String TIPO_ALARMA = "Tipo alarma";
+
+    /**
+     * Constantes con los nombres de los submenus.
+     */
+    public static final String SUBMENU_INSERTAR = "Insertar";
+    public static final String SUBMENU_LISTAR = "Listar";
+
+    /**
+     * Constantes de uso general.
+     */
+    public static final String ID_CON_DOS_PUNTOS = "ID: ";
+    public static final String STRING_VACIO = "";
+    public static final String ESPACIO_EN_BLANCO = " ";
+
+    /**
+     * Constantes para los infoAlertDialogs
+     */
+    public static final String ELIMINAR_ELEMENTO = "Eliminar datos";
+    public static final String ESTAS_SEGURO_ELIMINAR = "¿Deseas realmente eliminar los datos?";
+    public static final String SI = "SI";
+    public static final String NO = "NO";
+
+    public static final String INFORMACION = "Información";
+    public static final String INFO_ALERTDIALOG_CREDENCIALES_INCORRECTOS_LOGIN = "Nombre de usuario o contraseña incorrectos.";
+    public static final String INFO_ALERTDIALOG_USUARIO_YA_EXISTENTE = "Ya existe un usuario con el nombre de usuario indicado.";
+
+    public static final String INFO_ALERTDIALOG_CREADO_USUARIO = "Se ha creado correctamente un nuevo usuario.";
+    public static final String INFO_ALERTDIALOG_CREADO_TIPO_VIVIENDA = "Se ha creado correctamente un nuevo tipo de vivienda.";
+    public static final String INFO_ALERTDIALOG_CREADO_TIPO_SITUACION = "Se ha creado correctamente un nuevo tipo de situación.";
+    public static final String INFO_ALERTDIALOG_CREADO_PERSONA = "Se ha creado correctamente una nueva persona.";
+    public static final String INFO_ALERTDIALOG_CREADO_HISTORICO_TIPO_SITUACION = "Se ha creado correctamente un nuevo hístorico tipo de situación.";
+    public static final String INFO_ALERTDIALOG_CREADO_GRUPO = "Se ha creado correctamente un nuevo grupo.";
+    public static final String INFO_ALERTDIALOG_CREADO_DISPOSITIVO_AUXILIAR = "Se ha creado correctamente un nuevo dispositivo auxiliar en terminal.";
+    public static final String INFO_ALERTDIALOG_CREADO_DIRECCION = "Se ha creado correctamente una nueva dirección.";
+
+    public static final String INFO_ALERTDIALOG_MODIFICADO_USUARIO = "Se ha modificado correctamente el usuario.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_TIPO_VIVIENDA = "Se ha modificado correctamente el tipo de vivienda.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_TIPO_SITUACION = "Se ha modificado correctamente el tipo de situación.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_PERSONA = "Se ha modificado correctamente la persona.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_HISTORICO_TIPO_SITUACION = "Se ha modificado correctamente el hístorico tipo de situación.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_GRUPO = "Se ha modificado correctamente el grupo.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_DISPOSITIVO_AUXILIAR = "Se ha modificado correctamente el dispositivo auxiliar en terminal.";
+    public static final String INFO_ALERTDIALOG_MODIFICADO_DIRECCION = "Se ha modificado correctamente la dirección.";
+
+    public static final String INFO_ALERTDIALOG_ELIMINADO_USUARIO = "Se ha eliminado correctamente el usuario.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_TIPO_VIVIENDA = "Se ha eliminado correctamente el tipo de vivienda.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_TIPO_SITUACION = "Se ha eliminado correctamente el tipo de situación.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_PERSONA = "Se ha eliminado correctamente la persona.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_HISTORICO_TIPO_SITUACION = "Se ha eliminado correctamente el hístorico tipo de situación.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_GRUPO = "Se ha eliminado correctamente el grupo.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_DISPOSITIVO_AUXILIAR = "Se ha eliminado correctamente el dispositivo auxiliar en terminal.";
+    public static final String INFO_ALERTDIALOG_ELIMINADO_DIRECCION = "Se ha eliminado correctamente la dirección.";
+
+    /**
+     * Constantes para los errorAlertDialogs
+     */
+    public static final String ERROR = "Error";
+    public static final String ERROR_AL_CONECTARSE_AL_SERVIDOR = "Ha ocurrido un error al conectarse al servidor, intentelo más tarde.";
+    public static final String ERROR_ALERTDIALOG = "Ha ocurrido un error. Código de error: ";
+
+    /**
+     * Constantes de los DatePicker
+     */
+    public static final String TAG_DATEPICKER = "datePicker";
+
+    /**
+     * Constantes para el spinner del modelo Persona
+     */
+    public static final String SEXO_MASCULINO = "Hombre";
+    public static final String SEXO_FEMENINO = "Mujer";
+
+    /**
+     * Constantes de comprobaciones.
+     */
+    public static final String PATRON_DNI = "[0-9]{8}[A-Z]";
+    public static final String LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
+    public static final String PATRON_TELEFONO = "[+-]?\\d*(\\.\\d+)?";
+
+    public static final String CAMPO_VACIO = "El campo no puede estar vacío";
+    public static final String NUMERO_CARACTERES = "El número de caracteres debe ser de ";
+    public static final String DEBE_INGRESAR_LAS_BARRERAS_ARQUITECTÓNICAS = "Debe ingresar las barreras arquitectónicas";
+    public static final String DEBE_INGRESAR_EL_MODO_DE_ACCESO_A_LA_VIVIENDA = "Debe ingresar el modo de acceso a la vivienda";
+    public static final String DEBE_INGRESAR_EL_NUMERO_DE_TERMINAL = "Debe ingresar el número de terminal";
+    public static final String TERMINAL_INSERTADO_CORRECTAMENTE = "Terminal insertado correctamente";
+    public static final String BASE_URL = "http://10.0.2.2:8000/";
+    public static final String ERROR_INSERTANDO_TERMINAL = "Error insertando terminal";
+
+    public static final String TERMINAL_MODIFICADA = "Terminal modificada";
+    public static final String ERROR_AL_MODIFICAR_TERMINAL = "Error al modificar terminal";
+    public static final String BEARER = "Bearer ";
+    public static final String REGEX_SEPARADOR_GUION = "-";
+    public static final String ERROR_AL_OBTENER_LOS_DATOS = "Error al obtener los datos";
+    public static final String ERROR_AL_LISTAR_LAS_DIRECCIONES = "Error al listar las direcciones";
+    public static final String TERMINAL_BORRADO_CORRECTAMENTE = "Terminal borrado correctamente";
+    public static final String ERROR_AL_BORRAR_EL_TERMINAL = "Error al borrar el terminal";
+    public static final String RELACION_DE_USUARIO_CENTRO_INSERTADA_CORRECTAMENTE = "Relacion de usuario centro insertada correctamente";
+    public static final String ERROR_AL_INSERTAR_LA_RELACION_DE_USUARIO_CENTRO = "Error al insertar la relacion de usuario centro";
+    public static final String RELACION_MODIFICADA_CORRECTAMENTE = "Relacion modificada correctamente";
+    public static final String ERROR_AL_MODIFICAR_LA_RELACION = "Error al modificar la relacion";
+    public static final String RELACIÓN_USUARIO_CENTRO_BORRADO_CORRECTAMENTE = "Relación Usuario-Centro borrado correctamente";
+    public static final String ERROR_AL_BORRAR_LA_RELACIÓN_USUARIO_CENTRO = "Error al borrar la Relación Usuario-Centro";
+    public static final String ERROR_AL_GUARDAR_RELACIÓN = "Error al guardar relación";
+    public static final String RELACION_GUARDADA = "Relación guardada";
+    public static final String RELACION_MODIFICADA = "Relacion modificada";
+    public static final String RELACIÓN_TERMINAL_RECURSO_COMUNITARIO_BORRADA_CORRECTAMENTE = "Relación Terminal Recurso Comunitario borrada correctamente";
+    public static final String ERROR_AL_BORRAR_RELACIÓN_TERMINAL_RECURSO_COMUNITARIO_BORRADA = "Error al borrar Relación Terminal Recurso Comunitario borrada";
+    public static final String RELACIÓN_PACIENTE_PERSONA_INSERTADA_CORRECTAMENTE = "Relación Paciente-Persona insertada correctamente";
+    public static final String RELACIÓN_PACIENTE_PERSONA_MODIFICADO_CORRECTAMENTE = "Relación Paciente-Persona modificado correctamente";
+    public static final String RELACION_PACIENTE_PERSONA_BORRADA_CORRECTAMENTE = "Relación Paciente Persona borrada correctamente";
+    public static final String ERROR_AL_BORRAR_RELACION_PACIENTE_PERSONA = "Error al borrar Relación Paciente Persona";
+    public static final String PACIENTE_BORRADO_CORRECTAMENTE = "Paciente borrado correctamente";
+    public static final String ERROR_AL_BORRAR_EL_PACIENTE = "Error al borrar el paciente";
+    public static final String PACIENTE_MODIFICADO = "Paciente modificado";
+    public static final String ERROR_AL_MODIFICAR_EL_PACIENTE = "Error al modificar el paciente";
+    public static final String PACIENTE_INSERTADO_CORRECTAMENTE = "Paciente insertado correctamente";
+    public static final String ERROR_AL_INSERTAR_PACIENTE = "Error al insertar paciente";
 
     /* Direcciones */
     public static final String DIRECCION_WEBSOCKET = "ws://10.0.2.2:8000/ws/socket-server/";

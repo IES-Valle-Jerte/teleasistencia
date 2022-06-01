@@ -6,28 +6,38 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase POJO "Paciente" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Paciente implements Serializable {
+    
+    /**
+     * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+     * que se utilizan para mapear las JSON keys hacia campos Java.
+     */
 
     @SerializedName("id")
     private int id;
     @SerializedName("tiene_ucr")
-    private boolean tiene_ucr;
+    private boolean tieneUcr;
     @SerializedName("numero_expediente")
-    private String numero_expediente;
+    private String numeroExpediente;
     @SerializedName("numero_seguridad_social")
-    private String numero_seguridad_social;
+    private String numeroSeguridadSocial;
     @SerializedName("prestacion_otros_servicios_sociales")
-    private String prestacion_otros_servicios_sociales;
+    private String prestacionOtrosServiciosSociales;
     @SerializedName("observaciones_medicas")
-    private String observaciones_medicas;
+    private String observacionesMedicas;
     @SerializedName("intereses_y_actividades")
-    private String intereses_y_actividades;
+    private String interesesYActividades;
     @SerializedName("id_terminal")
-    private Object id_terminal;
+    private Object idTerminal;
     @SerializedName("id_persona")
-    private Object id_persona;
+    private Object persona;
     @SerializedName("id_tipo_modalidad_paciente")
-    private Object id_tipo_modalidad_paciente;
+    private Object tipoModalidadPaciente;
+
+    //Getters y setters
 
     public int getId() {
         return id;
@@ -37,85 +47,76 @@ public class Paciente implements Serializable {
         this.id = id;
     }
 
-    public boolean isTiene_ucr() {
-        return tiene_ucr;
+    public boolean isTieneUcr() {
+        return tieneUcr;
     }
 
-    public void setTiene_ucr(boolean tiene_ucr) {
-        this.tiene_ucr = tiene_ucr;
+    public void setTieneUcr(boolean tieneUcr) {
+        this.tieneUcr = tieneUcr;
     }
 
-    public String getNumero_expediente() {
-        return numero_expediente;
+    public String getNumeroExpediente() {
+        return numeroExpediente;
     }
 
-    public void setNumero_expediente(String numero_expediente) {
-        this.numero_expediente = numero_expediente;
+    public void setNumeroExpediente(String numeroExpediente) {
+        this.numeroExpediente = numeroExpediente;
     }
 
-    public String getNumero_seguridad_social() {
-        return numero_seguridad_social;
+    public String getNumeroSeguridadSocial() {
+        return numeroSeguridadSocial;
     }
 
-    public void setNumero_seguridad_social(String numero_seguridad_social) {
-        this.numero_seguridad_social = numero_seguridad_social;
+    public void setNumeroSeguridadSocial(String numeroSeguridadSocial) {
+        this.numeroSeguridadSocial = numeroSeguridadSocial;
     }
 
-    public String getPrestacion_otros_servicios_sociales() {
-        return prestacion_otros_servicios_sociales;
+    public String getPrestacionOtrosServiciosSociales() {
+        return prestacionOtrosServiciosSociales;
     }
 
-    public void setPrestacion_otros_servicios_sociales(String prestacion_otros_servicios_sociales) {
-        this.prestacion_otros_servicios_sociales = prestacion_otros_servicios_sociales;
+    public void setPrestacionOtrosServiciosSociales(String prestacionOtrosServiciosSociales) {
+        this.prestacionOtrosServiciosSociales = prestacionOtrosServiciosSociales;
     }
 
-    public String getObservaciones_medicas() {
-        return observaciones_medicas;
+    public String getObservacionesMedicas() {
+        return observacionesMedicas;
     }
 
-    public void setObservaciones_medicas(String observaciones_medicas) {
-        this.observaciones_medicas = observaciones_medicas;
+    public void setObservacionesMedicas(String observacionesMedicas) {
+        this.observacionesMedicas = observacionesMedicas;
     }
 
-    public String getIntereses_y_actividades() {
-        return intereses_y_actividades;
+    public String getInteresesYActividades() {
+        return interesesYActividades;
     }
 
-    public void setIntereses_y_actividades(String intereses_y_actividades) {
-        this.intereses_y_actividades = intereses_y_actividades;
+    public void setInteresesYActividades(String interesesYActividades) {
+        this.interesesYActividades = interesesYActividades;
     }
 
-    public Object getId_terminal() {
-        return id_terminal;
+    public Object getTerminal() {
+        return idTerminal;
     }
 
-    public void setId_terminal(int id_terminal) {
-        this.id_terminal = id_terminal;
+    public void setTerminal(Object idTerminal) {
+        this.idTerminal = idTerminal;
     }
 
-    public Object getId_persona() {
-        return id_persona;
+    public Object getPersona() {
+        return persona;
     }
 
-    public void setId_persona(int id_persona) {
-        this.id_persona = id_persona;
+    public void setPersona(Object persona) {
+        this.persona = persona;
     }
 
-    public Object getId_tipo_modalidad_paciente() {
-        return id_tipo_modalidad_paciente;
+    public Object getTipoModalidadPaciente() {
+        return tipoModalidadPaciente;
     }
 
-    public void setId_tipo_modalidad_paciente(int id_tipo_modalidad_paciente) {
-        this.id_tipo_modalidad_paciente = id_tipo_modalidad_paciente;
+    public void setTipoModalidadPaciente(Object tipoModalidadPaciente) {
+        this.tipoModalidadPaciente = tipoModalidadPaciente;
     }
 
-    /**
-     * Se retorna el nombre y los apellidos del paciente para identificarlo en los Spinners
-     * @return
-     */
-    @Override
-    public String toString() {
-        Persona persona = (Persona) Utilidad.getObjeto(getId_persona(), Constantes.PERSONA);
-        return persona.getNombre()+Constantes.ESPACIO+persona.getApellidos();
-    }
 }
