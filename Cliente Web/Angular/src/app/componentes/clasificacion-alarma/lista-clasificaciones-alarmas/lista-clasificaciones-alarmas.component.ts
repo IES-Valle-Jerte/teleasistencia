@@ -3,6 +3,7 @@ import {IClasificacionAlarma} from "../../../interfaces/i-clasificacion-alarma";
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {OrdenacionTablasService} from "../../../servicios/ordenacion-tablas.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-lista-clasificaciones-alarmas',
@@ -14,6 +15,7 @@ export class ListaClasificacionesAlarmasComponent implements OnInit {
   public clasificaciones_alarmas: IClasificacionAlarma[];
   numPaginacion: number = 1;
   inputBusqueda: any = '';
+  elementosPaginacion: number = environment.num_paginacion;
 
   constructor(private route: ActivatedRoute, private titleService: Title, private ordTabla: OrdenacionTablasService) {
   }

@@ -5,10 +5,16 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+/**
+ * Clase POJO "CentroSanitario" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class CentroSanitario implements Serializable {
 
-    // Declaración de atributos.
+
+    /**
+    * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+    * que se utilizan para mapear las JSON keys hacia campos Java.
+    */
     @SerializedName("id")
     private int id;
     @SerializedName("nombre")
@@ -18,10 +24,10 @@ public class CentroSanitario implements Serializable {
     @SerializedName("id_tipos_centro_sanitario")
     private Object tipoCentroSanitario;
     @SerializedName("id_direccion")
-    private Direccion direccion;
+    private Object direccion;
 
-    // Establecemos y obtenemos los atributos de la clase con sus getters y setters.
-
+    // Getters y Setters
+    
     public int getId() {
         return id;
     }
@@ -54,11 +60,11 @@ public class CentroSanitario implements Serializable {
         this.tipoCentroSanitario = tipoCentroSanitario;
     }
 
-    public Direccion getDireccion() {
+    public Object getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(Direccion direccion) {
+    public void setDireccion(Object direccion) {
         this.direccion = direccion;
     }
 

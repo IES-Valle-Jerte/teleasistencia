@@ -1,45 +1,55 @@
+from http.client import HTTPResponse
+from pathlib import Path
 import os
-from locale import str
-from tokenize import String
 
 from django.shortcuts import _get_queryset
 from requests import request
 
 from django.contrib.auth.models import User, Group, Permission
 
-from rest_framework import viewsets
+import os
+import shutil
+# Imports necesarios para la gestion de la base de datos
+from datetime import datetime
+
+from django.contrib.auth.models import User, Group, Permission
 from rest_framework import permissions
+from rest_framework import viewsets
+from rest_framework import status
 # Serializadores generales
 from rest_framework.response import Response
-from rest_framework.templatetags.rest_framework import data
 
 from .utils import getQueryAnd
-from ..rest_django.serializers import UserSerializer, GroupSerializer
-
-# Serializadores propios
-from ..rest_django.serializers import *
 # Modelos propios
 from ..models import *
+# Serializadores propios
+from ..rest_django.serializers import *
 from django.http import JsonResponse
+
+# Alarmas
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 # Comprobamos si el usuario es profesor. Se utiliza para la discernir entre solicitudes de Profesor y Teleoperador
 class IsTeacherMember(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return True
+        #return True
         if request.user.groups.filter(name="profesor").exists():
             return True
 
-
+# Creamos la vista Recurso Comunitario Personal de tipo viewSet que retorna un JSON
 class Recurso_comunitario_personalViewSet(viewsets.ViewSet):
     def list(self,request, *args, **kwargs):
         data=[
 
         ]
-        pacientes = Paciente.objects.all().order_by('-id_persona')
-        tipos_centro_santario = Tipo_Centro_Sanitario.objects.all().order_by('-nombre')
-
+        #Obtenemos los pacientes y los tipos de centro sanitario y de recurso comuniatario
+        pacientes = Paciente.objects.all().order_by('id_persona')
+        tipos_centro_santario = Tipo_Centro_Sanitario.objects.all().order_by('nombre')
+        tipos_recurso_comunitario=Tipo_Recurso_Comunitario.objects.all().order_by('nombre')
+        #Recorremos los pacientes y obetensmos loas datos que deseesmos
         for paciente in pacientes:
             dataPaciente={
                 "id_paciente": paciente.id,
@@ -59,27 +69,40 @@ class Recurso_comunitario_personalViewSet(viewsets.ViewSet):
                     dataPaciente[tipo_centro_santario.nombre]=""
                     #sino
                 else:
-                    print("---------------")
-                    print(paciente.id)
-                    print(tipo_centro_santario.nombre)
-                    print(centro_sanitario)
                     # obtengo la relacion usuario centro segun el id de centro y el id de paciente
                     relaciones_usuario_centro = Relacion_Usuario_Centro.objects.filter(id_paciente=paciente.id).filter(id_centro_sanitario__in=centro_sanitario).first()
                     if relaciones_usuario_centro is not None:
                         #si no es null muestro elnombre del centro sanitario
-                        dataPaciente[tipo_centro_santario.nombre]=relaciones_usuario_centro.id_centro_sanitario.nombre
-                        print("Coincide *************")
+
+                        dataPaciente[tipo_centro_santario.nombre] = relaciones_usuario_centro.id_centro_sanitario.nombre
+
                     else:
-                        dataPaciente[tipo_centro_santario.nombre]=""
-
-
+                            dataPaciente[tipo_centro_santario.nombre]=""
+            # recorro los tipo de recurso comunitario
+            for tipo_recurso_comunitario in tipos_recurso_comunitario:
+                # obtengo los recursos segun el id de tipos recursos comunitarios
+                recurso_comunitario=Recurso_Comunitario.objects.filter(id_tipos_recurso_comunitario=tipo_recurso_comunitario)
+                # si el array es nulo comillas vacías
+                if not recurso_comunitario:
+                    dataPaciente[tipo_recurso_comunitario.nombre] = ""
+                else:
+                    # obtengo la relacion terminal recurso segun el id de terminal y el id del recurso comunitario
+                    relacion_terminal_recurso_comunitario= Relacion_Terminal_Recurso_Comunitario.objects.filter(id_terminal=paciente.id_terminal).filter(id_recurso_comunitario__in=recurso_comunitario).first()
+                    if relacion_terminal_recurso_comunitario is not None:
+                        dataPaciente[tipo_recurso_comunitario.nombre] =relacion_terminal_recurso_comunitario.id_recurso_comunitario.nombre
+                    else:
+                        # sino tienen nada comillas vacías
+                        dataPaciente[tipo_recurso_comunitario.nombre] = ""
+            #Incluimos los datos en el Array principal y lo retornamos
             data.append(dataPaciente)
         return JsonResponse(data,safe=False)
 
+# Creamos la vista Profile que  modificara los datos y retornara la informacion del usuario activo en la aplicación
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     def list(self, request, *args, **kwargs):
+        #Obtenemos el usuario filtrando por el usuario de la request
         queryset = User.objects.filter(username=request.user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -92,14 +115,18 @@ class ProfileViewSet(viewsets.ModelViewSet):
             # Encriptamos la contraseña
             user.set_password(request.data.get("password"))
         user.save()
+        # si se modifican Files es decir la imagen
         if request.FILES:
+            #obtengo la imagem eue me modifican
             img = request.FILES["imagen"]
             image = Imagen_User.objects.filter(user=user).first()
+            #Si ya tenia imagen borro la anterior y la guardo add al usuario
             if image:
                 if (image.imagen) is not None:
                     os.remove(image.imagen.path)
                 image.imagen = img
                 image.save()
+            #Si no tenia imagen se la añado al usuario
             else:
                 image = Imagen_User(
                     user=user,
@@ -107,7 +134,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
                 )
             image.save()
 
-        # Devolvemos el user creado
+        # Devolvemos el user modificado con su imagen
         user_serializer = self.get_serializer(user, many=False)
         return Response(user_serializer.data)
 
@@ -206,10 +233,15 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(user_serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        print(kwargs)
         user = User.objects.get(pk=kwargs["pk"])
-        image = Imagen_User.objects.get(user=user)
-        if image.imagen is not None:
-            os.remove(image.imagen.path)
+        try:
+          image = Imagen_User.objects.get(user=user)
+
+          if image.imagen is not None:
+             os.remove(image.imagen.path)
+        except:
+            print('error propio')
         user.delete()
         return Response('borrado')
 
@@ -221,7 +253,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
     permission_classes = [IsTeacherMember]
-    #permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -284,7 +316,8 @@ class Recurso_Comunitario_ViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         # Comprobamos que el tipo de centro sanitario existe
-        tipos_recurso_comunitario = Tipo_Recurso_Comunitario.objects.get(pk=request.data.get("id_tipos_recurso_comunitario"))
+        tipos_recurso_comunitario = Tipo_Recurso_Comunitario.objects.get \
+            (pk=request.data.get("id_tipos_recurso_comunitario"))
         if tipos_recurso_comunitario is None:
             return Response("Error: tipos_recurso_comunitario")
 
@@ -440,7 +473,7 @@ class Clasificacion_Alarma_ViewSet(viewsets.ModelViewSet):
     queryset = Clasificacion_Alarma.objects.all()
     serializer_class = Clasificacion_Alarma_Serializer
     permission_classes = [IsTeacherMember]
-    #permission_classes = [permissions.IsAdminUser] # Si quieriéramos para todos los registrados: IsAuthenticated]
+    # permission_classes = [permissions.IsAdminUser] # Si quieriéramos para todos los registrados: IsAuthenticated]
 
 
 class Direccion_ViewSet(viewsets.ModelViewSet):
@@ -696,6 +729,18 @@ class Relacion_Terminal_Recurso_Comunitario_ViewSet(viewsets.ModelViewSet):
     serializer_class = Relacion_Terminal_Recurso_Comunitario_Serializer
     # permission_classes = [permissions.IsAdminUser] # Si quisieramos para todos los registrados: IsAuthenticated]
 
+    # Obtenemos el listado de relacion_terminal_recurso_comunitario filtrado por los parametros GET
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # Hacemos una búsqueda por los valores introducidos por parámetros
+        query = getQueryAnd(request.GET)
+        if query:
+            queryset = Relacion_Terminal_Recurso_Comunitario.objects.filter(query)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def create(self, request, *args, **kwargs):
         # Comprobamos que exite el terminal
         id_terminal = Terminal.objects.get(pk=request.data.get("id_terminal"))
@@ -715,7 +760,8 @@ class Relacion_Terminal_Recurso_Comunitario_ViewSet(viewsets.ModelViewSet):
         relacion_terminal_recurso_comunitario.save()
 
         # Devolvemos la relacion_terminal_recurso_comunitario
-        relacion_terminal_recurso_comunitario_serializer = Relacion_Terminal_Recurso_Comunitario_Serializer(relacion_terminal_recurso_comunitario)
+        relacion_terminal_recurso_comunitario_serializer = Relacion_Terminal_Recurso_Comunitario_Serializer \
+            (relacion_terminal_recurso_comunitario)
         return Response(relacion_terminal_recurso_comunitario_serializer.data)
 
     def update(self, request, *args, **kwargs):
@@ -830,7 +876,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Comprobamos que el tipo situacion existe
-        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("tipo_situacion"))
+        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("id_tipo_situacion"))
         if id_tipo_situacion is None:
             return Response("Error: id_tipo_situacion")
 
@@ -853,7 +899,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         # Comprobamos que el tipo situacion existe
-        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("tipo_situacion"))
+        id_tipo_situacion = Tipo_Situacion.objects.get(pk=request.data.get("id_tipo_situacion"))
         if id_tipo_situacion is None:
             return Response("Error: id_tipo_situacion")
 
@@ -866,6 +912,7 @@ class Historico_Tipo_Situacion_ViewSet(viewsets.ModelViewSet):
         historico_tipo_situacion = Historico_Tipo_Situacion.objects.get(pk=kwargs["pk"])
         historico_tipo_situacion.id_tipo_situacion = id_tipo_situacion
         historico_tipo_situacion.id_terminal = id_terminal
+        historico_tipo_situacion.fecha = request.data.get("fecha")
 
         historico_tipo_situacion.save()
 
@@ -916,7 +963,7 @@ class Relacion_Paciente_Persona_ViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Comprobamos que existe el paciente que recibimos como parametro get
-        id_paciente = Paciente.objects.get(pk=request.GET.get("id_paciente"))
+        id_paciente = Paciente.objects.get(pk=request.data.get("id_paciente"))
         if id_paciente is None:
             return Response("Error: id_paciente")
         # Comprobamos que existe la persona
@@ -1015,7 +1062,8 @@ class Paciente_ViewSet(viewsets.ModelViewSet):
         id_persona = request.data.get("id_persona")
         if id_persona is None:
             if request.data.get("persona") is not None:
-                persona = Asignar_Persona_Direccion(data=request.data.get("persona"), direccion=Direccion.objects.get(pk=request.data.get("persona")["id_direccion"]))
+                persona = Asignar_Persona_Direccion(data=request.data.get("persona"), direccion=Direccion.objects.get
+                    (pk=request.data.get("persona")["id_direccion"]))
             else:
                 return Response("Error: persona")
         else:
@@ -1134,7 +1182,8 @@ class Recursos_Comunitarios_En_Alarma_ViewSet(viewsets.ModelViewSet):
         recursos_comunitarios_en_alarma.save()
 
         # Devolvemos el recursos_comunitario_en_alarma creado
-        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer(recursos_comunitarios_en_alarma)
+        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer \
+            (recursos_comunitarios_en_alarma)
         return Response(recursos_comunitarios_en_alarma_serializer.data)
 
     def update(self, request, *args, **kwargs):
@@ -1161,17 +1210,33 @@ class Recursos_Comunitarios_En_Alarma_ViewSet(viewsets.ModelViewSet):
         recursos_comunitarios_en_alarma.save()
 
         # Devolvemos el recursos_comunitario_en_alarma modificado
-        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer(recursos_comunitarios_en_alarma)
+        recursos_comunitarios_en_alarma_serializer = Recursos_Comunitarios_En_Alarma_Serializer \
+            (recursos_comunitarios_en_alarma)
         return Response(recursos_comunitarios_en_alarma_serializer.data)
 
 
 class Alarma_ViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para las empresas
+    API endpoint para las alarmas
     """
+    #Constantes de notificación
+    ACTION_NEW_ALARM = 'new_alarm'
+    ACTION_ALARM_ASSIGNMENT = 'alarm_assignment'
+
     queryset = Alarma.objects.all()
     serializer_class = Alarma_Serializer
     # permission_classes = [permissions.IsAdminUser] # Si quisieramos para todos los registrados: IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # Hacemos una búsqueda por los valores introducidos por parámetros
+        query = getQueryAnd(request.GET)
+        if query:
+            queryset = Alarma.objects.filter(query)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     # Definimos el metodo para crear la alarma
     def create(self, request, *args, **kwargs):
@@ -1195,6 +1260,9 @@ class Alarma_ViewSet(viewsets.ModelViewSet):
 
             alarma.save()
 
+            # Enviamos notificación a los teleoperadores a través de la app alarmas
+            self.notify(alarma, self.ACTION_NEW_ALARM)
+
             # Devolvemos la alarma creada
             alarma_serializer = Alarma_Serializer(alarma)
             return Response(alarma_serializer.data)
@@ -1212,13 +1280,20 @@ class Alarma_ViewSet(viewsets.ModelViewSet):
 
             alarma.save()
 
-            # Devolvemos la alarma creada
+            # Enviamos notificación a los teleoperadores a través de la app alarmas
+            self.notify(alarma, self.ACTION_NEW_ALARM)
+
+            # Devolvemos la alarma creada y notificamos a los clientes
             alarma_serializer = Alarma_Serializer(alarma)
             return Response(alarma_serializer.data)
+
     # TODO id_teleoperador se añade por JSON
     def update(self, request, *args, **kwargs):
         # Obtenemos la alarma a modificar
         alarma = Alarma.objects.get(pk=kwargs["pk"])
+
+        # Guardamos teleoperador antiguo
+        old_id = alarma.id_teleoperador
 
         # Obtenemos el id_teleoperador que ateiende la alarma
         # Este id sera el del usuario
@@ -1236,11 +1311,22 @@ class Alarma_ViewSet(viewsets.ModelViewSet):
 
         alarma.save()
 
+        # Notificamos si es una asignación (el id_teleoperador era null y ahora no)
+        if old_id is None and id_teleoperador is not None:
+            self.notify(alarma, self.ACTION_ALARM_ASSIGNMENT)
+
         # Devolvemos la alarma modificada
         alarma_serializer = Alarma_Serializer(alarma)
         return Response(alarma_serializer.data)
 
 
+    def notify(self, alarma, accion):
+        alarma_serializer = Alarma_Serializer(alarma)
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'teleoperadores',
+            {"type": "notify.clients", "action": accion, "alarma": alarma_serializer.data},
+        )
 
 
 class Dispositivos_Auxiliares_en_Terminal_ViewSet(viewsets.ModelViewSet):
@@ -1282,7 +1368,8 @@ class Dispositivos_Auxiliares_en_Terminal_ViewSet(viewsets.ModelViewSet):
         dispositivos_auxiliares_en_terminal.save()
 
         # Devolvemos el dispositivos_auxiliares_en_terminal creado
-        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer(dispositivos_auxiliares_en_terminal)
+        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer \
+            (dispositivos_auxiliares_en_terminal)
         return Response(dispositivos_auxiliares_en_terminal_serializer.data)
 
     def update(self, request, *args, **kwargs):
@@ -1303,7 +1390,8 @@ class Dispositivos_Auxiliares_en_Terminal_ViewSet(viewsets.ModelViewSet):
         dispositivos_auxiliares_en_terminal.save()
 
         # Devolvemos el dispositivos_auxiliares_en_terminal modificado
-        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer(dispositivos_auxiliares_en_terminal)
+        dispositivos_auxiliares_en_terminal_serializer = Dispositivos_Auxiliares_en_Terminal_Serializer \
+            (dispositivos_auxiliares_en_terminal)
         return Response(dispositivos_auxiliares_en_terminal_serializer.data)
 
 
@@ -1522,6 +1610,88 @@ class Relacion_Usuario_Centro_ViewSet(viewsets.ModelViewSet):
         relacion_usuario_centro_serializer = Relacion_Usuario_Centro_Serializer(relacion_usuario_centro)
         return Response(relacion_usuario_centro_serializer.data)
 
+class Gestion_Base_Datos_ViewSet(viewsets.ModelViewSet):
+    """
+    Gestion de la base de datos
+    """
+    queryset = Gestion_Base_Datos.objects.all().order_by('-fecha_copia')
+    serializer_class = Gestion_Base_Datos_Serializer
+
+    def create(self, request, *args, **kwargs):
+        base_datos = Gestion_Base_Datos(
+            ubicacion_copia = '',
+            fecha_copia = datetime.today().strftime('%Y-%m-%d'),
+            descripcion_copia = request.data.get("descripcion_copia")
+        )
+        #En caso de que el usuario no introduzca nada introducimos un mensaje por defecto.
+        if base_datos.descripcion_copia is None:
+            base_datos.descripcion_copia = 'Copia sin descripción.'
+        base_datos.save()
+
+        # Obtenemos la ruta que nos interesa y la pasamos a string para poder editarla facilmente
+        rutaAct = str(Path(__file__).resolve().parent.parent.parent)
+        rutaBackup = rutaAct+'\\backup\\'
+        #Obtenemos el ID, el cual usamos para el nombre de la copia.
+        id_b = str(base_datos.id)
+        #base_datos.ubicacion_copia =
+        base_datos.ubicacion_copia = '\\backup\\'+'db.sqlite3'+id_b
+        # Devolvemos la base_datos creada - base_datos_serializer = Gestion_Base_Datos_Serializer(base_datos)
+        base_datos.save()
+
+        #Comprobar si existe la base de datos original
+        if os.path.isfile(rutaAct+'\\db.sqlite3'):
+            #Obtenemos la ruta donde esta la base de datos y la que queremos original a partir de esta, shutil lo copia.
+            source = rutaAct+'\\db.sqlite3'
+            destination = rutaBackup+'db.sqlite3'+id_b
+            shutil.copy(source, destination)
+            return Response("Copia de la base de datos creada correctamente con id: "+id_b)
+
+        return Response("La copia de la base de datos no ha podido ser creada.", status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        #Conseguimos el parametro de la URL
+        parametro = ((kwargs["pk"]))
+        #En caso de que tenga alguna x se la quitamos
+        parametro_res = parametro.lstrip("x")
+        #Variables con las rutas por defecto, seran editadas en los condicionales, son dos para aclaración de la funcion shutil
+        source = str(Path(__file__).resolve().parent.parent.parent) + '\\backup\\db.sqlite3'
+        destination = str(Path(__file__).resolve().parent.parent.parent)
+
+        #Condicional, para que en caso de pasarle algo que no sea un id, como ara en 2/3 funcionalidades, no nos de fallo.
+        if parametro != 'restore':
+            base_datos = Gestion_Base_Datos.objects.all().get(pk=parametro_res)
+        else:
+            base_datos = Gestion_Base_Datos.objects.all()
+        #Si el parametro que le pasamos en la URL es restore, y existe la copia solo con el ADM(Se debe generar),
+        #entonces restauramos esta base de datos.
+        if str(parametro) == 'restore':
+            if os.path.isfile(source+'_adm'):
+                source_res = source+'_adm'
+                shutil.copy(source_res, destination+'\\db.sqlite3')
+                return Response("La base de datos ha sido restaurada solo con la cuenta de Administrador.")
+            else:
+                return Response("La copia de la base de datos con id: " + parametro + " seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
+        #En caso de que tengamos cualquier otra cosa que no sea una x+id, simplemente no entrara en el if
+        #En caso afirmativo, entrara y copiara la base de datos con el id indicadp.
+        if (kwargs["pk"])[:1] == 'x':
+            if os.path.isfile(source+parametro_res):
+                source_r = source+str(parametro_res)
+                shutil.copy(source_r, destination+'\\db.sqlite3')
+                return Response("La base de datos con id: "+parametro_res+" ha sido restaurada correctamente.")
+            else:
+                return Response("La copia de la base de datos con id: " + parametro + " seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
+        #Comprobamos si existe copia con el id pasado en la URL, si es asi, lo borramos.
+        if os.path.isfile(source+parametro_res):
+            os.remove(source+parametro_res)
+            # Borramos la entrada de la API-RES
+            base_datos.delete()
+            return Response("La copia de la base de datos con id: "+parametro+" ha sido borrada correctamente.")
+        else:
+            base_datos.delete()
+
+        #Respuesta de error por defecto.
+        return Response("La copia de la base de datos con id: "+parametro+" seleccionada no existe.", status=status.HTTP_400_BAD_REQUEST)
+
 
 '''{
                "id": "1",
@@ -1558,3 +1728,12 @@ class Relacion_Usuario_Centro_ViewSet(viewsets.ModelViewSet):
 
                },
                '''
+class DesarrolladorTecnologiaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint para las empresas
+    """
+    authentication_classes = []
+    permission_classes = (permissions.AllowAny, )
+    queryset = Convocatoria_Proyecto.objects.all()
+    serializer_class = Convocatoria_Proyecto_Serializer
+    http_method_names=['get']

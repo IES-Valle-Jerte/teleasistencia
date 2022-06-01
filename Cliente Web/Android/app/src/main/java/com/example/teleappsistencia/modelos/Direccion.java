@@ -4,9 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Clase POJO "Direccion" utilizada para parsear la respuesta JSON del servidor.
+ */
 public class Direccion implements Serializable {
 
-    // Declaración de atributos.
+    /**
+    * Atributos de la clase POJO con sus anotaciones GSON correspondientes,
+    * que se utilizan para mapear las JSON keys hacia campos Java.
+    */
+
     @SerializedName("id")
     private int id;
     @SerializedName("localidad")
@@ -18,7 +25,7 @@ public class Direccion implements Serializable {
     @SerializedName("codigo_postal")
     private String codigoPostal;
 
-    // Establecemos y obtenemos los atributos de la clase con sus getters y setters.
+    //Getters y setters
 
     public int getId() {
         return id;
@@ -48,8 +55,8 @@ public class Direccion implements Serializable {
         return direccion;
     }
 
-    public void setDireccion(String dirección) {
-        this.direccion = dirección;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCodigoPostal() {
@@ -58,5 +65,20 @@ public class Direccion implements Serializable {
 
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
+    }
+
+    /**
+     * Método toString
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Direccion{" +
+                "id=" + id +
+                ", localidad='" + localidad + '\'' +
+                ", provincia='" + provincia + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", codigoPostal='" + codigoPostal + '\'' +
+                '}';
     }
 }

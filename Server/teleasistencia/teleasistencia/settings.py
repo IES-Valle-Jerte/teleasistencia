@@ -29,9 +29,9 @@ SECRET_KEY = 'django-insecure-6f@aenc^c_ba5@tqk@um!!areq#0f7ml#*2usa1t91ha(m3*_3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.2', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['10.0.2.2','localhost','127.0.0.1','192.168.0.12']
 
-
+#Definimos el media root y medias url para que el servidor pueda mostrar la imagen
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'/teleasistenciaApp')
 
@@ -40,6 +40,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'/teleasistenciaApp')
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'teleasistenciaApp.apps.TeleasistenciaappConfig' ,
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,10 +59,30 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     # Para certificado https:
-    "django_extensions"
+    "django_extensions",
 
-
+    #App para la notificación de alarmas
+    'alarmasApp'
 ]
+
+ASGI_APPLICATION = 'teleasistencia.asgi.application'
+
+# Para probar las alarmas sin necesidad del servidor Redis (sólo pruebas)
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
+
+# En producción hay que usar un motor de almacenamiento Redis para alamacenar el Channel Layer
+#CHANNEL_LAYERS = {
+#    "default": {
+#        "BACKEND": "channels_redis.core.RedisChannelLayer",
+#        "CONFIG": {
+#            "hosts": [("127.0.0.1", 6379)],
+#        },
+#    },
+#}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,6 +94,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
+
+#Definimos las  variables de configuración del CORS
+#	CORS_ALLOW_ALL_ORIGINS: En verdadero true permite que se hagan peticiones HTTP desde todos los orígenes
+#	CORS_ALLOW_CREDENTIALS: en verdadero permite incluir cookies en las peticiones HTTP
+#	CORS_ALLOWED_ORIGINS: Permite especificar desde que dominios se permiten las peticiones HTTP
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
@@ -127,15 +153,18 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ),
 
-     'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.IsAuthenticated',
-     ]
+      'DEFAULT_PERMISSION_CLASSES': [
+          'rest_framework.permissions.IsAuthenticated',
+      ]
 }
 
+# Especificamos los timpos de validez del token
+# Tambien el tipo de cabecera de ese token Bearer
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
+
 
 }
 
