@@ -18,6 +18,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 #Django-Rest:
 from rest_framework import routers
@@ -47,6 +49,28 @@ router.register(r'tipo_alarma', views_rest.Tipo_Alarma_ViewSet)
 router.register(r'clasificacion_alarma', views_rest.Clasificacion_Alarma_ViewSet)
 router.register(r'direccion', views_rest.Direccion_ViewSet)
 router.register(r'persona', views_rest.Persona_ViewSet)
+router.register(r'agenda', views_rest.Agenda_ViewSet)
+router.register(r'tipo_agenda', views_rest.Tipo_Agenda_ViewSet)
+router.register(r'historico_agenda_llamadas', views_rest.Historico_Agenda_Llamadas_ViewSet)
+router.register(r'relacion_terminal_recurso_comunitario', views_rest.Relacion_Terminal_Recurso_Comunitario_ViewSet)
+router.register(r'terminal', views_rest.Terminal_ViewSet)
+router.register(r'historico_tipo_situacion', views_rest.Historico_Tipo_Situacion_ViewSet)
+router.register(r'tipo_situacion', views_rest.Tipo_Situacion_ViewSet)
+router.register(r'tipo_vivienda', views_rest.Tipo_Vivienda_ViewSet)
+router.register(r'relacion_paciente_persona', views_rest.Relacion_Paciente_Persona_ViewSet)
+router.register(r'paciente', views_rest.Paciente_ViewSet)
+router.register(r'tipo_modalidad_paciente', views_rest.Tipo_Modalidad_Paciente_ViewSet)
+router.register(r'recursos_comunitarios_en_alarma', views_rest.Recursos_Comunitarios_En_Alarma_ViewSet)
+router.register(r'alarma', views_rest.Alarma_ViewSet)
+router.register(r'dispositivos_auxiliares_en_terminal', views_rest.Dispositivos_Auxiliares_en_Terminal_ViewSet)
+router.register(r'centro_sanitario_en_alarma', views_rest.Centro_Sanitario_En_Alarma_ViewSet)
+router.register(r'persona_contacto_en_alarma', views_rest.Persona_Contacto_En_Alarma_ViewSet)
+router.register(r'relacion_usuario_centro', views_rest.Relacion_Usuario_Centro_ViewSet)
+router.register(r'gestion_base_datos', views_rest.Gestion_Base_Datos_ViewSet)
+router.register(r'profile', views_rest.ProfileViewSet)
+router.register(r'recurso_comunitario_personal', views_rest.Recurso_comunitario_personalViewSet, basename="recurso_comunitario_personal")
+router.register(r'desarrollador_tecnologia', views_rest.DesarrolladorTecnologiaViewSet)
+
 
 
 
@@ -68,3 +92,5 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+# añadimos el media url y el media root para poder visualizar las imagenes de usuario
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
