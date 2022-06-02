@@ -36,9 +36,9 @@ export const environment = {
   //Frase de Confirmación para Eliminar
   fraseEliminarModal: '¿Estás seguro que deseas eliminarlo?',
   // Ruta que utilizaremos comun para todas las peticiones de api-rest
-  urlWebsocket: 'ws://localhost:8000/ws/socket-server/',
-  urlBase: 'http://localhost:8000/api-rest/',
-  urlToken: 'http://localhost:8000/api/token/',
+  urlWebsocket: 'ws://teleasistencia.iesvjp.es/ws/socket-server/',
+  urlBase: 'https://teleasistencia.iesvjp.es/api-rest/',
+  urlToken: 'https://teleasistencia.iesvjp.es/api/token/',
 };
 
 /*
