@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -106,7 +107,7 @@ public class TipoModalidadPacienteAdapter extends RecyclerView.Adapter<TipoModal
         private void borrarTipoModalidadPaciente() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteTipoModalidadPaciente(tipoModalidadPaciente.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteTipoModalidadPaciente(tipoModalidadPaciente.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
@@ -182,7 +183,7 @@ public class TipoModalidadPacienteAdapter extends RecyclerView.Adapter<TipoModal
     @Override
     public void onBindViewHolder(TipoModalidadPacienteViewHolder viewHolder, int i) {
         viewHolder.setOnClickListeners();
-        viewHolder.nombreTipoModalidadPaciente.setText(items.get(i).getNombreTipoModalidadPaciente());
+        viewHolder.nombreTipoModalidadPaciente.setText(items.get(i).getNombre());
         this.tipoModalidadPacienteViewHolder.setTipoModalidadPaciente(items.get(i));
     }
 }

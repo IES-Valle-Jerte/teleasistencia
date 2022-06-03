@@ -20,6 +20,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,10 +121,11 @@ public class FragmentInsertarTipoModalidadPaciente extends Fragment implements V
     private void insertarTipoModalidadPaciente() {
         String nombre = this.editTextPedirNombre.getText().toString();
 
-        TipoModalidadPaciente tipoModalidadPaciente = new TipoModalidadPaciente(nombre);
+        TipoModalidadPaciente tipoModalidadPaciente = new TipoModalidadPaciente();
+        tipoModalidadPaciente.setNombre(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.postTipoModalidadPaciente(tipoModalidadPaciente, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Object> call = apiService.postTipoModalidadPaciente(tipoModalidadPaciente, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

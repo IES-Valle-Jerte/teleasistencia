@@ -17,6 +17,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class FragmentListarCentroSanitario extends Fragment {
     private void listarCentroSanitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<CentroSanitario>> call = apiService.getCentroSanitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<CentroSanitario>> call = apiService.getCentroSanitario(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<CentroSanitario>>() {
             @Override
             public void onResponse(Call<List<CentroSanitario>> call, Response<List<CentroSanitario>> response) {

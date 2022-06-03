@@ -20,6 +20,7 @@ import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.utilidades.Utilidad;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -107,12 +108,14 @@ public class ModificarDispositivosAuxiliaresFragment extends Fragment {
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Terminal>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
-        call.enqueue(new Callback<List<Terminal>>() {
+        Call<List<Object>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
+            public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if (response.isSuccessful()) {
-                    List<Terminal> terminalList = response.body();
+                    List<Object> objectList = response.body(); // Recogo la lista de Terminales.
+                    // Creo el adapter y le asigno la lista.
+                    List<Terminal> terminalList = (ArrayList<Terminal>) Utilidad.getObjeto(objectList, Constantes.AL_TERMINAL);
                     Terminal terminal = (Terminal) Utilidad.getObjeto(dispositivoAuxiliar.getTerminal(), Constantes.TERMINAL);
                     if(terminal != null) {
                         terminalList.add(0, terminal);  // Asigno el terminal del dispositivoAuxiliar en la posición 0.
@@ -124,7 +127,7 @@ public class ModificarDispositivosAuxiliaresFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
@@ -144,7 +147,7 @@ public class ModificarDispositivosAuxiliaresFragment extends Fragment {
             public void onResponse(Call<List<TipoAlarma>> call, Response<List<TipoAlarma>> response) {
                 if (response.isSuccessful()) {
                     List<TipoAlarma> tipoAlarmaList = response.body();
-                    TipoAlarma tipoAlarma = (TipoAlarma) Utilidad.getObjeto(dispositivoAuxiliar.getTipoAlarma(), Constantes.TIPO_ALARMA);
+                    TipoAlarma tipoAlarma = (TipoAlarma) Utilidad.getObjeto(dispositivoAuxiliar.getTipoAlarma(), Constantes.TIPOALARMA);
                     tipoAlarmaList.add(0, tipoAlarma);
                     ArrayAdapter<TipoAlarma> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tipoAlarmaList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

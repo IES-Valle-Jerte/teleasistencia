@@ -140,7 +140,7 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
      */
     private void cargarSpinner(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getListaClasificacionAlarma(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getListaClasificacionAlarma(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
@@ -217,7 +217,7 @@ public class ModificarTipoAlarmaFragment extends Fragment implements View.OnClic
      */
     private void persistirTipoAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarTipoAlarma(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.tipoAlarma);
+        Call<ResponseBody> call = apiService.actualizarTipoAlarma(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), this.tipoAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

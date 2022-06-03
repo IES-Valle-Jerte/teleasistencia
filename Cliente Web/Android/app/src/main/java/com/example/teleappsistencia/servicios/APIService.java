@@ -15,25 +15,17 @@ import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.modelos.TipoSituacion;
 import com.example.teleappsistencia.modelos.TipoVivienda;
-import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.Usuario;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import com.example.teleappsistencia.modelos.CentroSanitario;
+
 import com.example.teleappsistencia.modelos.Paciente;
-import com.example.teleappsistencia.modelos.Persona;
-import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionPacientePersona;
 import com.example.teleappsistencia.modelos.RelacionTerminalRecursoComunitario;
 import com.example.teleappsistencia.modelos.RelacionUsuarioCentro;
-import com.example.teleappsistencia.modelos.Terminal;
-import com.example.teleappsistencia.modelos.TipoModalidadPaciente;
-import com.example.teleappsistencia.modelos.TipoVivienda;
-import com.example.teleappsistencia.modelos.Token;
-import com.example.teleappsistencia.modelos.Usuario;
 import com.google.gson.internal.LinkedTreeMap;
 
 import com.example.teleappsistencia.modelos.Alarma;
@@ -41,14 +33,8 @@ import com.example.teleappsistencia.modelos.CentroSanitarioEnAlarma;
 import com.example.teleappsistencia.modelos.ClasificacionAlarma;
 import com.example.teleappsistencia.modelos.PersonaContactoEnAlarma;
 import com.example.teleappsistencia.modelos.RecursoComunitarioEnAlarma;
-import com.example.teleappsistencia.modelos.TipoAlarma;
-import com.example.teleappsistencia.modelos.Token;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -144,7 +130,7 @@ public interface APIService {
 
     @DELETE("/api-rest/tipo_recurso_comunitario/{id_dato}")
     public Call<Response<String>> deleteTipoRecursoComunitario(@Path ("id_dato") int id_dato, @Header("Authorization") String token);
-}
+
     @GET("api-rest/profile")
     public Call<List<Usuario>> getUsuarioLogueado(@Header("Authorization") String token);
 
@@ -274,28 +260,6 @@ public interface APIService {
     Call<Response<String>> deleteTipoVivienda(@Path("id") int id, @Header("Authorization") String token);
 
 
-    // Peticiones de Usuarios
-
-    @GET("api-rest/users")
-    public Call<List<Usuario>> getUsuarios(@Header("Authorization") String token);
-
-    @GET("api-rest/users")
-    Call<List<Usuario>> getUserByUsername(@Query("username") String username, @Header("Authorization") String token);
-
-    @POST("api-rest/users")
-    public Call<Object> addUsuario(@Body Usuario usuario, @Header("Authorization") String token);
-
-    @PUT("api-rest/users/{id}")
-    public Call<Object> modifyUsuario(@Path("id") int id, @Body Usuario usuario, @Header("Authorization") String token);
-
-    @DELETE("api-rest/users/{id}")
-    Call<Response<String>> deleteUser(@Path("id") int id, @Header("Authorization") String token);
-
-    // Peticiones de Terminal
-
-    @GET("api-rest/terminal")
-    Call<List<Terminal>> getTerminales(@Header("Authorization") String token);
-
     // Peticiones de Tipo Alarma
 
     @GET("api-rest/tipo_alarma")
@@ -311,7 +275,7 @@ public interface APIService {
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor
      */
     @GET("api-rest/paciente")
-    Call<List<LinkedTreeMap>> getPacientes(@Header("Authorization") String token);
+    Call<List<Object>> getPacientes(@Header("Authorization") String token);
 
     
     /**
@@ -368,13 +332,12 @@ public interface APIService {
      * Esta función enviará una solicitud POST al servidor siendo el cuerpo de la solicitud el objeto
      * relacionPacientePersona y el encabezado de la solicitud el token
      *
-     * @param idPaciente El id del paciente que se desea relacionar con la persona
      * @param relacionPacientePersona es el objeto que quiero enviar al servidor.
      * @param token el token que obtengo del inicio de sesión
      * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
      */
     @POST("api-rest/relacion_paciente_persona")
-    Call<RelacionPacientePersona> addRelacionPacientePersonaSeleccionadoPaciente(@Query("id_paciente") int idPaciente,@Body RelacionPacientePersona relacionPacientePersona, @Header("Authorization") String token);
+    Call<RelacionPacientePersona> addRelacionPacientePersonaSeleccionadoPaciente(@Body RelacionPacientePersona relacionPacientePersona, @Header("Authorization") String token);
 
     /**
      * Esta función elimina un objeto RelaciónPacientePersona del servidor
@@ -572,7 +535,15 @@ public interface APIService {
     * @return Devuelve una llamada a Retrofit, que se utiliza para realizar la llamada al servidor.
     */
     @POST("api-rest/users")
-    public Call<Usuario> addUsuario(@Body Usuario usuario, @Header("Authorization") String token);
+    public Call<Object> addUsuario(@Body Usuario usuario, @Header("Authorization") String token);
+
+
+    @PUT("api-rest/users/{id}")
+    public Call<Object> modifyUsuario(@Path("id") int id, @Body Usuario usuario, @Header("Authorization") String token);
+
+    @DELETE("api-rest/users/{id}")
+    Call<Response<String>> deleteUser(@Path("id") int id, @Header("Authorization") String token);
+
 
     //Peticiones de Personas
 
@@ -715,7 +686,6 @@ public interface APIService {
     public Call<ResponseBody> deletePersonaContactoEnAlarmabyId(@Path("id") int id, @Header("Authorization") String token);
 
 
-
     /* Peticiones Recurso_comunitario_en_alarma*/
     @GET("/api-rest/recursos_comunitarios_en_alarma")
     public Call<List<Object>> getRecursosComunitariosEnAlarma(@Header("Authorization") String token);
@@ -729,16 +699,9 @@ public interface APIService {
     @DELETE("/api-rest/recursos_comunitarios_en_alarma/{id}")
     public Call<ResponseBody> deleteRecursoComunitarioEnAlarmabyId(@Path("id") int id, @Header("Authorization") String token);
 
-
-
     /* Peticiones Terminal */
     @GET("/api-rest/terminal")
     public Call<List<Object>> getTerminales(@Header("Authorization") String token);
-
-    /* Peticiones Paciente */
-    @GET("/api-rest/paciente")
-    public Call<List<Object>> getPacientes(@Header("Authorization") String token);
-
 
     // Peticiones Relacion Paciente - Persona
     @GET("/api-rest/relacion_paciente_persona")

@@ -139,7 +139,7 @@ public class InsertarCentroSanitarioEnAlarmaFragment extends Fragment implements
      */
     private void persistirCentroSanitarioEnAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<CentroSanitarioEnAlarma> call = apiService.addCentroSanitarioEnAlarma(this.centroSanitarioEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<CentroSanitarioEnAlarma> call = apiService.addCentroSanitarioEnAlarma(this.centroSanitarioEnAlarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<CentroSanitarioEnAlarma>() {
             @Override
             public void onResponse(Call<CentroSanitarioEnAlarma> call, Response<CentroSanitarioEnAlarma> response) {

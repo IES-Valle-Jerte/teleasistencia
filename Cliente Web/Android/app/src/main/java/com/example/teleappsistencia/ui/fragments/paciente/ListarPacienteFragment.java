@@ -51,7 +51,7 @@ public class ListarPacienteFragment extends Fragment {
     private String mParam2;
 
     // Lista de pacientes que se van a mostrar.
-    static List<LinkedTreeMap> lPacientes;
+    static List<Object> lPacientes;
 
     // Constructor por defecto.
     public ListarPacienteFragment() {
@@ -124,16 +124,14 @@ public class ListarPacienteFragment extends Fragment {
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + MainActivity.token.getAccess());
-        call.enqueue(new Callback<List<LinkedTreeMap>>() {
+        Call<List<Object>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
+            public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if (response.isSuccessful()) {
                     lPacientes = response.body();
-                    List<Paciente> listadoPacientes = new ArrayList<>();
-                    for (LinkedTreeMap paciente : lPacientes) {
-                        listadoPacientes.add((Paciente) Utilidad.getObjeto(paciente, "Paciente"));
-                    }
+                    List<Paciente> listadoPacientes = (ArrayList<Paciente>) Utilidad.getObjeto(lPacientes, Constantes.AL_PACIENTE);
+
                     //Adaptador
                     adapter = new PacienteAdapter(listadoPacientes);
                     recycler.setAdapter(adapter);
@@ -144,7 +142,7 @@ public class ListarPacienteFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
@@ -157,7 +155,7 @@ public class ListarPacienteFragment extends Fragment {
      * 
      * @param listado Lista de objetos LinkedTreeMap
      */
-    private static void fijarListado(List<LinkedTreeMap> listado) {
+    private static void fijarListado(List<Object> listado) {
         lPacientes = listado;
     }
 

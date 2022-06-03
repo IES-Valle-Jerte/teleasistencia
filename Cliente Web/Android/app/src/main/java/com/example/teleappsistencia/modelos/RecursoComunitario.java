@@ -22,7 +22,7 @@ public class RecursoComunitario implements Serializable {
     private String nombre;
     @SerializedName("telefono")
     private String telefono;
-    @SerializedName("id_ripos_recurso_comunitario")
+    @SerializedName("id_tipos_recurso_comunitario")
     private Object tipoRecursoComunitario;
     @SerializedName("id_direccion")
     private Object direccion;

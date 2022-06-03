@@ -152,17 +152,17 @@ public class AlarmAlertFragment extends DialogFragment implements View.OnClickLi
         if(alarmaNotificada.getId_paciente_ucr() != null){
             this.color = getResources().getColor(R.color.azul, getActivity().getTheme());
             paciente = (Paciente) Utilidad.getObjeto(alarmaNotificada.getId_paciente_ucr(), Constantes.PACIENTE);
-            terminal = (Terminal) Utilidad.getObjeto(paciente.getId_terminal(), Constantes.TERMINAL);
+            terminal = (Terminal) Utilidad.getObjeto(paciente.getTerminal(), Constantes.TERMINAL);
         }
         else{
             this.color = getResources().getColor(R.color.verde, getActivity().getTheme());
             terminal = (Terminal) Utilidad.getObjeto(alarmaNotificada.getId_terminal(), Constantes.TERMINAL);
-            paciente = (Paciente) Utilidad.getObjeto(terminal.getId_titular(), Constantes.PACIENTE);
+            paciente = (Paciente) Utilidad.getObjeto(terminal.getTitular(), Constantes.PACIENTE);
         }
-        persona = (Persona) Utilidad.getObjeto(paciente.getId_persona(), Constantes.PERSONA);
+        persona = (Persona) Utilidad.getObjeto(paciente.getPersona(), Constantes.PERSONA);
         this.numTerminal = terminal.getId();
         this.nombrePaciente = persona.getNombre()+Constantes.ESPACIO+persona.getApellidos();
-        this.numeroTelefono = persona.getTelefono_movil() + Constantes.SLASH + persona.getTelefono_fijo();
+        this.numeroTelefono = persona.getTelefonoMovil() + Constantes.SLASH + persona.getTelefonoFijo();
     }
 
     /**
@@ -204,7 +204,7 @@ public class AlarmAlertFragment extends DialogFragment implements View.OnClickLi
      */
     private void comprobarAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Alarma> callAlarma = apiService.getAlarmabyId(this.alarmaNotificada.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Alarma> callAlarma = apiService.getAlarmabyId(this.alarmaNotificada.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         callAlarma.enqueue(new Callback<Alarma>() {
             @Override
             public void onResponse(Call<Alarma> callAlarma, Response<Alarma> response) {
@@ -235,14 +235,11 @@ public class AlarmAlertFragment extends DialogFragment implements View.OnClickLi
      * @param alarmaRecibida
      */
     private void modificarAlarma(Alarma alarmaRecibida){
-        /* Cuando la aplicación funcione me imagino que ya habrá un usuario con su id al que se pueda acceder*/
-        /* TODO: Cuando tengamos la parte del Usuario, los roles etc., hay que arreglar esto */
-
         /* Siempre que hagamos un PUT tenemos que darle a la petición los datatos de la forma
            que requiere. En este caso, idTeleoperador SIEMPRE tiene que ser un intger. */
-        alarmaRecibida.setId_teleoperador(Teleoperador.id_teleoperador);
+        alarmaRecibida.setId_teleoperador(Utilidad.getUserLogged().getPk());
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarAlarma(alarmaRecibida.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), alarmaRecibida);
+        Call<ResponseBody> call = apiService.actualizarAlarma(alarmaRecibida.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), alarmaRecibida);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -304,7 +304,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void recuperarListaCentrosSanitarios() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getCentrosbyIdPaciente(this.paciente.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getCentrosbyIdPaciente(this.paciente.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
@@ -348,7 +348,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void recuperarListaRecursosComunitarios() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getRecursosComunitariosbyIdTerminal(this.terminal.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getRecursosComunitariosbyIdTerminal(this.terminal.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
@@ -448,7 +448,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void registrarPersonaContactoEnAlarma(PersonaContactoEnAlarma personaContactoEnAlarma){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<PersonaContactoEnAlarma> call = apiService.addPersonaContactoEnAlarma(personaContactoEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<PersonaContactoEnAlarma> call = apiService.addPersonaContactoEnAlarma(personaContactoEnAlarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<PersonaContactoEnAlarma>() {
             @Override
             public void onResponse(Call<PersonaContactoEnAlarma> call, Response<PersonaContactoEnAlarma> response) {
@@ -513,7 +513,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void registrarCentroSanitarioEnAlarma(CentroSanitarioEnAlarma centroSanitarioEnAlarma) {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<CentroSanitarioEnAlarma> call = apiService.addCentroSanitarioEnAlarma(centroSanitarioEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<CentroSanitarioEnAlarma> call = apiService.addCentroSanitarioEnAlarma(centroSanitarioEnAlarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<CentroSanitarioEnAlarma>() {
             @Override
             public void onResponse(Call<CentroSanitarioEnAlarma> call, Response<CentroSanitarioEnAlarma> response) {
@@ -550,7 +550,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
             if(!acuerdoAlcanzado.isEmpty() && acuerdoAlcanzado.length() >= 10) {
                 // Recuperamos el Recurso Comunitario del Spinner
                 relacionTerminalRecursoComunitario = (RelacionTerminalRecursoComunitario) this.spinnerRecursosComunitarios.getSelectedItem();
-                recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getRecursoComunitario(), Constantes.RECURSO_COMUNITARIO);
+                recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(relacionTerminalRecursoComunitario.getIdRecursoComunitario(), Constantes.RECURSO_COMUNITARIO);
 
                 // Creamos el Recurso Comunitario en Alarma con sus datos
                 recursoComunitarioEnAlarma = new RecursoComunitarioEnAlarma();
@@ -580,7 +580,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void registrarRecursoComunitarioEnAlarma(RecursoComunitarioEnAlarma recursoComunitarioEnAlarma) {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<RecursoComunitarioEnAlarma> call = apiService.addRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<RecursoComunitarioEnAlarma> call = apiService.addRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<RecursoComunitarioEnAlarma>() {
             @Override
             public void onResponse(Call<RecursoComunitarioEnAlarma> call, Response<RecursoComunitarioEnAlarma> response) {
@@ -613,9 +613,9 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
     private void dialogoInfoPaciente() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(Constantes.INFORMACION_DEL_PACIENTE);
-        builder.setMessage(Constantes.NUMERO_EXPEDIENTE_DP_SP+this.paciente.getNumero_expediente() + Constantes.SALTO_LINEA +
-                           Constantes.NUMERO_DE_LA_SS_DP_SP+this.paciente.getNumero_seguridad_social() + Constantes.SALTO_LINEA +
-                           Constantes.OBSERVACIONES_MEDDICAS_DP_SP+this.paciente.getObservaciones_medicas());
+        builder.setMessage(Constantes.NUMERO_EXPEDIENTE_DP_SP+this.paciente.getNumeroExpediente()+ Constantes.SALTO_LINEA +
+                           Constantes.NUMERO_DE_LA_SS_DP_SP+this.paciente.getNumeroSeguridadSocial() + Constantes.SALTO_LINEA +
+                           Constantes.OBSERVACIONES_MEDDICAS_DP_SP+this.paciente.getObservacionesMedicas());
         builder.setNeutralButton(Constantes.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -635,8 +635,8 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(Constantes.INFORMACION_CONTACTO);
         builder.setMessage(Constantes.NOMBRE_DP_SP + personaEnContacto.getNombre() + Constantes.ESPACIO + personaEnContacto.getApellidos() + Constantes.SALTO_LINEA +
-                           Constantes.TELEFONO_MOVIL_DP_SP + personaEnContacto.getTelefono_movil() + Constantes.SALTO_LINEA +
-                           Constantes.TELEFONO_FIJO_DP_SP + personaEnContacto.getTelefono_fijo() + Constantes.SALTO_LINEA +
+                           Constantes.TELEFONO_MOVIL_DP_SP + personaEnContacto.getTelefonoMovil() + Constantes.SALTO_LINEA +
+                           Constantes.TELEFONO_FIJO_DP_SP + personaEnContacto.getTelefonoFijo() + Constantes.SALTO_LINEA +
                            Constantes.RELACION_CON_PACIENTE_DP_SP + contacto.getTipo_relacion() + Constantes.SALTO_LINEA +
                            Constantes.DISPONIBILIDAD_DP_SP + contacto.getDisponibilidad() + Constantes.SALTO_LINEA +
                            Constantes.OBSERVACIONES_DP_SP + contacto.getObservaciones() + Constantes.SALTO_LINEA +
@@ -663,7 +663,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
         builder.setMessage(Constantes.NOMBRE_DP_SP + centroSanitario.getNombre() + Constantes.SALTO_LINEA +
                 Constantes.TELEFONO_DP_SP + centroSanitario.getTelefono() + Constantes.SALTO_LINEA +
                 Constantes.LOCALIDAD_DP_SP + direccion.getLocalidad()+Constantes.ESPACIO_PARENTESIS_AP + direccion.getProvincia() + Constantes.PARENTESIS_CIERRE + Constantes.SALTO_LINEA +
-                Constantes.DIRECCION_DP_SP + direccion.getDirección());
+                Constantes.DIRECCION_DP_SP + direccion.getDireccion());
         builder.setNeutralButton(Constantes.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -679,14 +679,14 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void dialogoInfoRecursoComunitario(){
         RelacionTerminalRecursoComunitario rTRC = (RelacionTerminalRecursoComunitario) this.spinnerRecursosComunitarios.getSelectedItem();
-        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(rTRC.getRecursoComunitario(), Constantes.RECURSO_COMUNITARIO);
-        Direccion direccion = (Direccion) Utilidad.getObjeto(recursoComunitario.getDirección(), Constantes.DIRECCION);
+        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(rTRC.getIdRecursoComunitario(), Constantes.RECURSO_COMUNITARIO);
+        Direccion direccion = (Direccion) Utilidad.getObjeto(recursoComunitario.getDireccion(), Constantes.DIRECCION);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(Constantes.INFORMACION_RECURSO_COMUNITARIO);
         builder.setMessage(Constantes.NOMBRE_DP_SP + recursoComunitario.getNombre() + Constantes.SALTO_LINEA +
                            Constantes.TELEFONO_DP_SP + recursoComunitario.getTelefono() + Constantes.SALTO_LINEA +
                            Constantes.LOCALIDAD_DP_SP + direccion.getLocalidad() + Constantes.ESPACIO_PARENTESIS_AP + direccion.getProvincia() + Constantes.PARENTESIS_CIERRE + Constantes.SALTO_LINEA +
-                           Constantes.DIRECCION_DP_SP + direccion.getDirección());
+                           Constantes.DIRECCION_DP_SP + direccion.getDireccion());
         builder.setNeutralButton(Constantes.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -728,7 +728,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
             if(resumen.length() > 10){
                 /* Siempre que hagamos un PUT tenemos que darle a la petición los datatos de la forma
                  que requiere. En este caso, idTeleoperador SIEMPRE tiene que ser un intger. */
-                this.alarma.setId_teleoperador(Teleoperador.id_teleoperador); //TODO: aquí habría que poner el id del usuario que esté logueado.
+                this.alarma.setId_teleoperador(Utilidad.getUserLogged().getPk());
                 this.alarma.setResumen(resumen);
                 this.alarma.setEstado_alarma(Constantes.CERRADA);
                 guardarAlarma();
@@ -750,7 +750,7 @@ public class GestionAlarmaFragment extends Fragment implements View.OnClickListe
      */
     private void guardarAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarAlarma(this.alarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.alarma);
+        Call<ResponseBody> call = apiService.actualizarAlarma(this.alarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), this.alarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

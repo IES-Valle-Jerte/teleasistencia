@@ -136,7 +136,7 @@ public class InsertarPersonaContactoEnAlarmaFragment extends Fragment implements
      */
     private void persistirPersonaContactoEnAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<PersonaContactoEnAlarma> call = apiService.addPersonaContactoEnAlarma(this.personaContactoEnAlarma, Constantes.BEARER_ESPACIO+ Token.getToken().getAccess());
+        Call<PersonaContactoEnAlarma> call = apiService.addPersonaContactoEnAlarma(this.personaContactoEnAlarma, Constantes.BEARER_ESPACIO+ Utilidad.getToken().getAccess());
         call.enqueue(new Callback<PersonaContactoEnAlarma>() {
             @Override
             public void onResponse(Call<PersonaContactoEnAlarma> call, Response<PersonaContactoEnAlarma> response) {

@@ -97,7 +97,7 @@ public class PersonaContactoEnAlarmaAdapter extends RecyclerView.Adapter<Persona
          */
         private void borrarPersonaContactoEnAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deletePersonaContactoEnAlarmabyId(this.personaContactoEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deletePersonaContactoEnAlarmabyId(this.personaContactoEnAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
