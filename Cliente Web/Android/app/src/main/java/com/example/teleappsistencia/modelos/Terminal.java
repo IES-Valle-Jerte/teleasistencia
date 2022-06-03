@@ -84,13 +84,6 @@ public class Terminal implements Serializable {
      */
     @Override
     public String toString() {
-        return "Terminal{" +
-                "id=" + id +
-                ", numeroTerminal='" + numeroTerminal + '\'' +
-                ", modoAccesoVivienda='" + modoAccesoVivienda + '\'' +
-                ", barrerasArquitectonicas='" + barrerasArquitectonicas + '\'' +
-                ", titular=" + titular +
-                ", tipoVivienda=" + tipoVivienda +
-                '}';
+        return getNumeroTerminal();
     }
 }

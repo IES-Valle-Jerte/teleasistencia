@@ -110,7 +110,7 @@ public class ListarTerminalFragment extends Fragment {
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Terminal>> call = apiService.getListadoTerminal(Constantes.BEARER + MainActivity.token.getAccess());
+        Call<List<Terminal>> call = apiService.getListadoTerminal(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Terminal>>() {
             @Override
             public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {

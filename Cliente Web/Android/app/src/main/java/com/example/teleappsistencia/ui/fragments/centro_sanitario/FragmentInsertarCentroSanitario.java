@@ -24,6 +24,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -119,7 +120,7 @@ public class FragmentInsertarCentroSanitario extends Fragment implements View.On
     public void inicializarSpinnerTipoCentroSanitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<TipoCentroSanitario>> call = apiService.getTipoCentroSanitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<TipoCentroSanitario>> call = apiService.getTipoCentroSanitario(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoCentroSanitario>>() {
             @Override
             public void onResponse(Call<List<TipoCentroSanitario>> call, Response<List<TipoCentroSanitario>> response) {
@@ -194,7 +195,7 @@ public class FragmentInsertarCentroSanitario extends Fragment implements View.On
         centroSanitario.setDireccion(direccion);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.postCentroSanitario(centroSanitario, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Object> call = apiService.postCentroSanitario(centroSanitario, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

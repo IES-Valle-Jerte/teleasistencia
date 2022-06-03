@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.example.teleappsistencia.modelos.Grupo;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.utilidades.Constantes;
@@ -22,6 +21,7 @@ import com.example.teleappsistencia.modelos.DispositivoAuxiliar;
 import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoAlarma;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -92,13 +92,14 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
     private void inicializarSpinnerTerminal() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService(); // Recogo la instancia APIService de la clase ClienteRetrofit.
 
-        Call<List<Terminal>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
-        call.enqueue(new Callback<List<Terminal>>() {
+        Call<List<Object>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
+            public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if (response.isSuccessful()) {
-                    List<Terminal> terminalList = response.body(); // Recogo la lista de Terminales.
+                    List<Object> objectList = response.body(); // Recogo la lista de Terminales.
                     // Creo el adapter y le asigno la lista.
+                    List<Terminal> terminalList = (ArrayList<Terminal>) Utilidad.getObjeto(objectList, Constantes.AL_TERMINAL);
                     ArrayAdapter<Terminal> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, terminalList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     // Le asigno el adapter al spinner.
@@ -107,7 +108,7 @@ public class InsertarDispositivosAuxiliaresFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }

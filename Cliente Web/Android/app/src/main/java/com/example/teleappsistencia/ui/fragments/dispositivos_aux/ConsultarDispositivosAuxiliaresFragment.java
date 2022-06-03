@@ -67,7 +67,7 @@ public class ConsultarDispositivosAuxiliaresFragment extends Fragment {
         this.textView_idTipoAlarma = view.findViewById(R.id.textView_consultar_idTipoAlarma_dispositivoAuxiliar);
 
         Terminal terminal = (Terminal) Utilidad.getObjeto(dispositivoAuxiliar.getTerminal(), Constantes.TERMINAL);
-        TipoAlarma tipoAlarma = (TipoAlarma) Utilidad.getObjeto(dispositivoAuxiliar.getTipoAlarma(), Constantes.TIPO_ALARMA);
+        TipoAlarma tipoAlarma = (TipoAlarma) Utilidad.getObjeto(dispositivoAuxiliar.getTipoAlarma(), Constantes.TIPOALARMA);
 
         this.textView_id.setText(Integer.toString(dispositivoAuxiliar.getId()));
         this.textView_idTerminal.setText(terminal.getNumeroTerminal());

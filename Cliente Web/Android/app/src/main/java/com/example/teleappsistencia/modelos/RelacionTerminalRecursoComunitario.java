@@ -52,4 +52,9 @@ public class RelacionTerminalRecursoComunitario implements Serializable {
         this.idRecursoComunitario = idRecursoComunitario;
     }
 
+    @Override
+    public String toString() {
+        RecursoComunitario recursoComunitario = (RecursoComunitario) Utilidad.getObjeto(getIdRecursoComunitario(), Constantes.RECURSO_COMUNITARIO);
+        return recursoComunitario.getNombre();
+    }
 }

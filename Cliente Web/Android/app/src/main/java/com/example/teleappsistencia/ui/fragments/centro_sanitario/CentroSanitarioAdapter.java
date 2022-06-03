@@ -115,7 +115,7 @@ public class CentroSanitarioAdapter extends RecyclerView.Adapter<CentroSanitario
         private void borrarCentroSanitario() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteCentroSanitario(centroSanitario.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteCentroSanitario(centroSanitario.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
@@ -194,7 +194,7 @@ public class CentroSanitarioAdapter extends RecyclerView.Adapter<CentroSanitario
 
         CentroSanitario centroSanitario = items.get(i);
         TipoCentroSanitario tipoCentroSanitario = (TipoCentroSanitario) Utilidad.getObjeto(centroSanitario, Constantes.TIPO_CENTRO_SANITARIO);
-        Direccion direccion = centroSanitario.getDireccion();
+        Direccion direccion = (Direccion) Utilidad.getObjeto(centroSanitario.getDireccion(), Constantes.DIRECCION);
 
         viewHolder.nombreCentroSanitario.setText(items.get(i).getNombre());
         viewHolder.telefonoCentroSanitario.setText(items.get(i).getTelefono());

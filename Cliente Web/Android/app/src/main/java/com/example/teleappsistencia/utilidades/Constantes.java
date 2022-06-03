@@ -3,13 +3,10 @@ package com.example.teleappsistencia.utilidades;
 public class Constantes {
     /* Direcciones */
     public static final String BASE_URL = "http://10.0.2.2:8000/";
+    public static final String DIRECCION_WEBSOCKET = "ws://10.0.2.2:8000/ws/socket-server/";
 
     /* Constantes comunes */
     public final static String BEARER_ESPACIO = "Bearer ";
-    public static final String FORMATO_FECHAS_RETROFIT = "yyyy-MM-dd'T'HH:mm:ssZ";
-
-    /* Constantes Simbolos Varios */
-    public static final String VACIO = "";
 
     /* Nombres de los Modelos */
     public final static String TIPO_CENTRO_SANITARIO = "TipoCentroSanitario";
@@ -62,10 +59,6 @@ public class Constantes {
     public static final String ERROR_PROVINCIA_VACIO = "La provincia es obligatoria.";
     public static final String ERROR_DIRECCION_VACIO = "La dirección es obligatoria.";
     public static final String ERROR_CODIGO_POSTAL_VACIO = "El código postal es obligatorio.";
-/**
- * Clase que almacena todas las constantes utilizadas en las clases java.
- */
-public class Constantes {
 
     /**
      * Constantes de la API.
@@ -101,6 +94,7 @@ public class Constantes {
      */
     public static final String SUBMENU_INSERTAR = "Insertar";
     public static final String SUBMENU_LISTAR = "Listar";
+    public static final String SUBMENU_MODIFICAR = "Modificar";
 
     /**
      * Constantes de uso general.
@@ -114,8 +108,6 @@ public class Constantes {
      */
     public static final String ELIMINAR_ELEMENTO = "Eliminar datos";
     public static final String ESTAS_SEGURO_ELIMINAR = "¿Deseas realmente eliminar los datos?";
-    public static final String SI = "SI";
-    public static final String NO = "NO";
 
     public static final String INFORMACION = "Información";
     public static final String INFO_ALERTDIALOG_CREDENCIALES_INCORRECTOS_LOGIN = "Nombre de usuario o contraseña incorrectos.";
@@ -179,7 +171,6 @@ public class Constantes {
     public static final String DEBE_INGRESAR_EL_MODO_DE_ACCESO_A_LA_VIVIENDA = "Debe ingresar el modo de acceso a la vivienda";
     public static final String DEBE_INGRESAR_EL_NUMERO_DE_TERMINAL = "Debe ingresar el número de terminal";
     public static final String TERMINAL_INSERTADO_CORRECTAMENTE = "Terminal insertado correctamente";
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
     public static final String ERROR_INSERTANDO_TERMINAL = "Error insertando terminal";
 
     public static final String TERMINAL_MODIFICADA = "Terminal modificada";
@@ -213,18 +204,13 @@ public class Constantes {
     public static final String ERROR_AL_INSERTAR_PACIENTE = "Error al insertar paciente";
 
     /* Direcciones */
-    public static final String DIRECCION_WEBSOCKET = "ws://10.0.2.2:8000/ws/socket-server/";
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
-    //public static final String DIRECCION_WEBSOCKET = "ws://localhost:8000/ws/socket-server/";
-    //public static final String BASE_URL = "http://localhost:8000/";
+
 
     /* Constantes comunes */
-    public final static String BEARER_ESPACIO = "Bearer ";
     public static final String SI = "Sí";
     public static final String NO = "No";
     public static final String CERO = "0";
     public static final String OK = "OK";
-    public static final String FORMATO_FECHAS_RETROFIT = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String SIN_ASIGNAR = "Sin Asignar";
     public static final String MIS_ALARMAS = "Mis Alarmas";
 
@@ -286,13 +272,11 @@ public class Constantes {
     public static final String SALTO_LINEA = "\n";
 
     /* Nombres de los Modelos */
-    public final static String PERSONA = "Persona";
     public final static String RECURSO_COMUNITARIO = "RecursoComunitario";
     public final static String CENTRO_SANITARIO = "CentroSanitario";
-    public final static String TIPO_ALARMA = "TipoAlarma";
+    public final static String TIPOALARMA = "TipoAlarma";
     public final static String TELEOPERADOR = "Teleoperador";
     public final static String PACIENTE = "Paciente";
-    public final static String TERMINAL = "Terminal";
     public final static String AL_TIPO_ALARMA = "ArrayList<TipoAlarma>";
     public final static String AL_TERMINAL = "ArrayList<Terminal>";
     public final static String AL_PACIENTE = "ArrayList<Paciente>";
@@ -309,7 +293,6 @@ public class Constantes {
     public static final String RELACION_USUARIO_CENTRO = "ArrayList<RelacionUsuarioCentro>";
     public static final String AL_RELACION_TERMINAL_RECURSO_COMUNITARIO = "ArrayList<RelacionTerminalRecursoComunitario>";
     public static final String AL_RELACION_USUARIO_CENTRO = "ArrayList<RelacionUsuarioCentro>";
-    public static final String DIRECCION = "Direccion";
 
     /* Constantes Mensajes Peticiones */
     public final static String ALARMA_BORRADA = "Alarma borrada correctamente.";

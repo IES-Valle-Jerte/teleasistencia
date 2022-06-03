@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import okhttp3.internal.Util;
+
 /**
  * Clase POJO "Paciente" utilizada para parsear la respuesta JSON del servidor.
  */
@@ -119,4 +121,9 @@ public class Paciente implements Serializable {
         this.tipoModalidadPaciente = tipoModalidadPaciente;
     }
 
+    @Override
+    public String toString() {
+        Persona persona = (Persona) Utilidad.getObjeto(getPersona(), Constantes.PERSONA);
+        return persona.getNombre();
+    }
 }

@@ -18,6 +18,7 @@ import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.modelos.TipoCentroSanitario;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -106,7 +107,7 @@ public class TipoCentroSanitarioAdapter extends RecyclerView.Adapter<TipoCentroS
         private void borrarTipoCentroSanitario() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteTipoCentroSanitario(tipoCentroSanitario.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteTipoCentroSanitario(tipoCentroSanitario.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {

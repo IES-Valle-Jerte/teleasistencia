@@ -172,7 +172,7 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
      */
     private void cargarDatosTiposAlarmas(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getTiposAlarma(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getTiposAlarma(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
@@ -199,7 +199,7 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
      */
     private void cargarDatosTerminales(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getTerminales(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getTerminales(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
@@ -227,7 +227,7 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
      */
     private void cargarDatosPacientes(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getPacientes(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getPacientes(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
@@ -253,7 +253,7 @@ public class InsertarAlarmaFragment extends Fragment implements View.OnClickList
      */
     private void persistirAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Alarma> call = apiService.addAlarma(this.alarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Alarma> call = apiService.addAlarma(this.alarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Alarma>() {
             @Override
             public void onResponse(Call<Alarma> call, Response<Alarma> response) {

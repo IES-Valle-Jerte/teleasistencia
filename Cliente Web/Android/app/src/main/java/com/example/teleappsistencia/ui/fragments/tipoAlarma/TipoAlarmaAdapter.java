@@ -97,7 +97,7 @@ public class TipoAlarmaAdapter extends RecyclerView.Adapter<TipoAlarmaAdapter.Ti
          */
         private void borrarTipoAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteTipoAlarmabyId(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteTipoAlarmabyId(this.tipoAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

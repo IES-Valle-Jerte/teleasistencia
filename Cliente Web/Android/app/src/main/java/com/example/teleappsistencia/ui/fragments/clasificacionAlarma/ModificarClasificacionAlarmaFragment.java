@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -145,7 +146,7 @@ public class ModificarClasificacionAlarmaFragment extends Fragment implements Vi
      */
     private void persistirClasificacionAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarClasificacionAlarma(this.clasificacionAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.clasificacionAlarma);
+        Call<ResponseBody> call = apiService.actualizarClasificacionAlarma(this.clasificacionAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), this.clasificacionAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
