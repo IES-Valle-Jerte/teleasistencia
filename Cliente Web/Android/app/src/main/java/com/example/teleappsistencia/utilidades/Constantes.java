@@ -2,8 +2,7 @@ package com.example.teleappsistencia.utilidades;
 
 public class Constantes {
     /* Direcciones */
-    public static final String BASE_URL = "http://10.0.2.2:8000/";
-    public static final String DIRECCION_WEBSOCKET = "ws://10.0.2.2:8000/ws/socket-server/";
+    public static final String DIRECCION_WEBSOCKET = "ws://teleasistencia.iesvjp.es/ws/socket-server/";
 
     /* Constantes comunes */
     public final static String BEARER_ESPACIO = "Bearer ";
@@ -63,8 +62,12 @@ public class Constantes {
     /**
      * Constantes de la API.
      */
-    public static final String API_BASE_URL = "http://10.0.2.2:8000/";
-    // Se utiliza "http://localhost:8000/" con dispositivos físicos y con el emulador se ha de utilizar "http://10.0.2.2:8000/"
+
+    /* Se utiliza:
+         * "http://localhost:8000/" con dispositivos físicos
+         * con el emulador se ha de utilizar "http://10.0.2.2:8000/"
+         * En producción: https://teleasistencia.iesvjp.es/api-rest/ */
+    public static final String API_BASE_URL = "https://teleasistencia.iesvjp.es/api-rest/";
     public static final String TOKEN_BEARER = "Bearer ";
     public static final String FORMATEADOR_API = "yyyy-MM-dd'T'HH:mm:ssZ";
 

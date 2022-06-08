@@ -40,7 +40,7 @@ public class ClienteRetrofit {
 
     // Un constructor privado para evitar que se pueda crear una instancia de la clase desde fuera.
     private ClienteRetrofit() {
-        buildRetrofit(Constantes.BASE_URL);
+        buildRetrofit(Constantes.API_BASE_URL);
     }
 
 

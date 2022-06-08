@@ -240,9 +240,6 @@
     <string name="error_mensaje_eliminar_recurso_comunitario">Error al eliminar el recurso comunitario.</string>
     <string name="error_al_obtener_datos">Error al obtener los datos.</string>
 
-    <!-- API -->
-    <string name="api_base_url">http://10.0.2.2:8000/</string>
-
     <!-- Nombres de los menus -->
     <string name="menu_relacion_terminal_recurso_comunitario">Relación Terminal Recurso Comunitario</string>
     <string name="menu_terminal">Terminal</string>
