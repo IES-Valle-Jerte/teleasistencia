@@ -4,19 +4,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.example.teleappsistencia.modelos.Usuario;
+import com.example.teleappsistencia.servicios.APIService;
+import com.example.teleappsistencia.ui.fragments.alarma.InsertarAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasDeHoyFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasSinAsignarFragment;
+import com.example.teleappsistencia.ui.fragments.alarma.ListarMisAlarmasFragment;
+import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.InsertarCentroSanitarioEnAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.ListarCentrosSanitariosEnAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentInsertarCentroSanitario;
+import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentListarCentroSanitario;
+import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentModificarCentroSanitario;
+import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.InsertarClasificacionAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.ListarClasificacionAlarmaFragment;
 import com.example.teleappsistencia.ui.fragments.direccion.InsertarDireccionFragment;
 import com.example.teleappsistencia.ui.fragments.direccion.ListarDireccionFragment;
 import com.example.teleappsistencia.ui.fragments.dispositivos_aux.InsertarDispositivosAuxiliaresFragment;
@@ -25,8 +34,36 @@ import com.example.teleappsistencia.ui.fragments.grupos.InsertarGruposFragment;
 import com.example.teleappsistencia.ui.fragments.grupos.ListarGruposFragment;
 import com.example.teleappsistencia.ui.fragments.historico_tipo_situacion.InsertarHistoricoTipoSituacionFragment;
 import com.example.teleappsistencia.ui.fragments.historico_tipo_situacion.ListarHistoricoTipoSituacionFragment;
+import com.example.teleappsistencia.ui.fragments.paciente.InsertarPacienteFragment;
+import com.example.teleappsistencia.ui.fragments.paciente.ListarPacienteFragment;
 import com.example.teleappsistencia.ui.fragments.persona.InsertarPersonaFragment;
 import com.example.teleappsistencia.ui.fragments.persona.ListarPersonaFragment;
+import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.InsertarPersonaContactoEnAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.ListarPersonasContactoEnAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.recurso_comunitario.FragmentInsertarRecursoComunitario;
+import com.example.teleappsistencia.ui.fragments.recurso_comunitario.FragmentListarRecursoComunitario;
+import com.example.teleappsistencia.ui.fragments.recurso_comunitario.FragmentModificarRecursoComunitario;
+import com.example.teleappsistencia.ui.fragments.recursosComunitariosEnAlarma.InsertarRecursosComunitariosEnAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.recursosComunitariosEnAlarma.ListarRecursosComunitariosEnAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.InsertarRelacionPacientePersonaFragment;
+import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment;
+import com.example.teleappsistencia.ui.fragments.relacion_terminal_recurso_comunitario.InsertarRelacionTerminalRecursoComunitarioFragment;
+import com.example.teleappsistencia.ui.fragments.relacion_terminal_recurso_comunitario.ListarRelacionTerminalRecursoComunitarioFragment;
+import com.example.teleappsistencia.ui.fragments.relacion_usuario_centro.InsertarRelacionUsuarioCentroFragment;
+import com.example.teleappsistencia.ui.fragments.relacion_usuario_centro.ListarRelacionUsuarioCentroFragment;
+import com.example.teleappsistencia.ui.fragments.terminal.InsertarTerminalFragment;
+import com.example.teleappsistencia.ui.fragments.terminal.ListarTerminalFragment;
+import com.example.teleappsistencia.ui.fragments.tipoAlarma.InsertarTipoAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.tipoAlarma.ListarTipoAlarmaFragment;
+import com.example.teleappsistencia.ui.fragments.tipo_centro_sanitario.FragmentInsertarTipoCentroSanitario;
+import com.example.teleappsistencia.ui.fragments.tipo_centro_sanitario.FragmentListarTipoCentroSanitario;
+import com.example.teleappsistencia.ui.fragments.tipo_centro_sanitario.FragmentModificarTipoCentroSanitario;
+import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.FragmentInsertarTipoModalidadPaciente;
+import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.FragmentListarTipoModalidadPaciente;
+import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.FragmentModificarTipoModalidadPaciente;
+import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentInsertarTipoRecursoComunitario;
+import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentListarTipoRecursoComunitario;
+import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentModificarTipoRecursoComunitario;
 import com.example.teleappsistencia.ui.fragments.tipo_situacion.InsertarTipoSituacionFragment;
 import com.example.teleappsistencia.ui.fragments.tipo_situacion.ListarTipoSituacionFragment;
 import com.example.teleappsistencia.ui.fragments.tipo_vivienda.InsertarTipoViviendaFragment;
@@ -37,98 +74,12 @@ import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
 import com.example.teleappsistencia.ui.menu.MenuModel;
 import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-    
-import com.example.teleappsistencia.modelos.Token;
-import com.example.teleappsistencia.modelos.Usuario;
-import com.example.teleappsistencia.servicios.APIService;
-import com.example.teleappsistencia.ui.fragments.relacion_usuario_centro.InsertarRelacionUsuarioCentroFragment;
-import com.example.teleappsistencia.ui.fragments.relacion_usuario_centro.ListarRelacionUsuarioCentroFragment;
-import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.ListarRelacionPacientePersonaFragment;
-import com.example.teleappsistencia.ui.fragments.paciente.InsertarPacienteFragment;
-import com.example.teleappsistencia.ui.fragments.paciente.ListarPacienteFragment;
-import com.example.teleappsistencia.ui.fragments.relacion_paciente_persona.InsertarRelacionPacientePersonaFragment;
-import com.example.teleappsistencia.ui.fragments.terminal.InsertarTerminalFragment;
-import com.example.teleappsistencia.ui.fragments.terminal.ListarTerminalFragment;
-import com.example.teleappsistencia.ui.fragments.relacion_terminal_recurso_comunitario.InsertarRelacionTerminalRecursoComunitarioFragment;
-import com.example.teleappsistencia.ui.fragments.relacion_terminal_recurso_comunitario.ListarRelacionTerminalRecursoComunitarioFragment;
-import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
-import com.example.teleappsistencia.ui.menu.MenuModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import android.widget.ExpandableListView;
-import com.example.teleappsistencia.modelos.Token;
-import com.example.teleappsistencia.ui.fragments.alarma.InsertarAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasFragment;
-import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.InsertarCentroSanitarioEnAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.centroSanitarioEnAlarma.ListarCentrosSanitariosEnAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.InsertarClasificacionAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.clasificacionAlarma.ListarClasificacionAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasDeHoyFragment;
-import com.example.teleappsistencia.ui.fragments.alarma.ListarAlarmasSinAsignarFragment;
-import com.example.teleappsistencia.ui.fragments.alarma.ListarMisAlarmasFragment;
-import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.InsertarPersonaContactoEnAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.personaContactoEnAlarma.ListarPersonasContactoEnAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.recursosComunitariosEnAlarma.InsertarRecursosComunitariosEnAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.recursosComunitariosEnAlarma.ListarRecursosComunitariosEnAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.tipoAlarma.InsertarTipoAlarmaFragment;
-import com.example.teleappsistencia.ui.fragments.tipoAlarma.ListarTipoAlarmaFragment;
-import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
-import com.example.teleappsistencia.ui.menu.MenuModel;
-import com.example.teleappsistencia.utilidades.Constantes;
-import com.example.teleappsistencia.utilidades.Utilidad;
-import com.google.android.material.navigation.NavigationView;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentInsertarCentroSanitario;
-import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentListarCentroSanitario;
-import com.example.teleappsistencia.ui.fragments.centro_sanitario.FragmentModificarCentroSanitario;
-import com.example.teleappsistencia.ui.fragments.recurso_comunitario.FragmentInsertarRecursoComunitario;
-import com.example.teleappsistencia.ui.fragments.recurso_comunitario.FragmentListarRecursoComunitario;
-import com.example.teleappsistencia.ui.fragments.recurso_comunitario.FragmentModificarRecursoComunitario;
-import com.example.teleappsistencia.ui.fragments.tipo_centro_sanitario.FragmentInsertarTipoCentroSanitario;
-import com.example.teleappsistencia.ui.fragments.tipo_centro_sanitario.FragmentListarTipoCentroSanitario;
-import com.example.teleappsistencia.ui.fragments.tipo_centro_sanitario.FragmentModificarTipoCentroSanitario;
-import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.FragmentInsertarTipoModalidadPaciente;
-import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.FragmentListarTipoModalidadPaciente;
-import com.example.teleappsistencia.ui.fragments.tipo_modalidad_paciente.FragmentModificarTipoModalidadPaciente;
-import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentInsertarTipoRecursoComunitario;
-import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentListarTipoRecursoComunitario;
-import com.example.teleappsistencia.ui.fragments.tipo_recurso_comunitario.FragmentModificarTipoRecursoComunitario;
-import com.example.teleappsistencia.ui.menu.ExpandableListAdapter;
-import com.example.teleappsistencia.ui.menu.MenuModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,23 +119,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.token = (Token) getIntent().getExtras().get("token");
-
-        // Cargo el servicio que se encarga de realizar las peticiones.
-        loadApiService();
         // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
         loadMenuHeader();
 
 
-        /* Iniciamos el servicio de notificación de Alarmas
-        * TODO: evaluar el rol del Usuario, de momento queda mockeado. */
-        String rol = "Teleoperador";
-        if(rol.equals("Teleoperador")) {
+        /* Iniciamos el servicio de notificación de Alarmas. Sólo para usuarios no admin (Teleoperadores) */
+        if(!Utilidad.isAdmin()) {
             Utilidad.iniciarEscuchaAlarmas(this);
         }
-
-        //Iniciamos el token
-        Token.cargarToken("admin", "admin");
 
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
@@ -198,52 +140,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    
-
-    private void loadMenuHeader(){
-        String username = getIntent().getExtras().getString("usuario");
-        Call<List<Usuario>> call = apiService.getUserByUsername(username, "Bearer " + token.getAccess());
-        call.enqueue(new Callback<List<Usuario>>() {
-            @Override
-            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
-                if(response.isSuccessful()) {
-                    List<Usuario> usuariosList = response.body();
-                    Usuario usuario = usuariosList.get(0);
-                    TextView nombreUsuario = (TextView) findViewById(R.id.textView_nombre_usuario);
-                    TextView emailUsuario = (TextView) findViewById(R.id.textView_email_usuario);
-
-                    nombreUsuario.setText(usuario.getFirstName() + " " + usuario.getLastName());
-                    emailUsuario.setText(usuario.getEmail());
-                } else{
-                    System.out.println(response.raw());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Usuario>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
-
-        expandableListView = findViewById(R.id.expandableListView);
-        prepareMenuData();  // Preparo los datos que irán en la cabezera del menú.
-        populateExpandableList();
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-        // Realizo una petición a la API para cargar la cabecera del menu con los datos del usuario logueado.
-        loadMenuHeader();
     }
 
 
@@ -334,9 +230,139 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Método que se encarga de añadir las opciones y sub-opciones al menú.
      */
     private void prepareMenuData() {
-        String[] childNames = {Constantes.SUBMENU_INSERTAR, Constantes.SUBMENU_LISTAR}; // Nombres de las sub-opciones
+        String[] childNames = {Constantes.SUBMENU_INSERTAR, Constantes.SUBMENU_LISTAR, Constantes.SUBMENU_MODIFICAR}; // Nombres de las sub-opciones
         List<MenuModel> childModelsList; // Lista para las sub-opciones
         MenuModel menuModel; // Modelo de la opción.
+
+        // Menu Alarma.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
+        headerList.add(menuModel);
+
+        if(Utilidad.isAdmin()) {    // Si el usuario es admin se mostrarán esta opcion.
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));
+        }
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarAlarmasFragment()));
+        childModelsList.add(new MenuModel(Constantes.SIN_ASIGNAR, false, false, new ListarAlarmasSinAsignarFragment()));
+        childModelsList.add(new MenuModel(Constantes.MIS_ALARMAS, false, false, new ListarMisAlarmasFragment()));
+        childModelsList.add(new MenuModel(Constantes.ALARMAS_DE_HOY, false, false, new ListarAlarmasDeHoyFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
+
+        // Menu Centro_Sanitario.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_centroSanitario), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarCentroSanitario()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentModificarCentroSanitario()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentListarCentroSanitario()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else {
+            childList.put(menuModel, null);
+        }
+
+        // Menu Centro Sanitario en Alarma.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_centro_sanitario_en_alarma), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarCentroSanitarioEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarCentrosSanitariosEnAlarmaFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
+
+        // Menu Clasificacion Alarma.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_clasificacion_alarma), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarClasificacionAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarClasificacionAlarmaFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
+
+        // Menu Dirección.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_direccion), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarDireccionFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarDireccionFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else {
+            childList.put(menuModel, null);
+        }
+
+        // Menu Dispositivos Auxiliares.
+        if(Utilidad.isAdmin()) {    // Si el usuario es admin se mostrarán estas opciones.
+            childModelsList = new ArrayList<>();
+            menuModel = new MenuModel(getResources().getString(R.string.menu_dispositivos_auxiliares_terminal), true, true, null);
+            headerList.add(menuModel);
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarDispositivosAuxiliaresFragment()));
+            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarDispositivosAuxiliaresFragment()));
+
+            if (menuModel.hasChildren()) {
+                childList.put(menuModel, childModelsList);
+            } else {
+                childList.put(menuModel, null);
+            }
+        }
+
+        // Menu Grupos.
+        if(Utilidad.isAdmin()) {    // Si el usuario es admin se mostrarán estas opciones.
+            childModelsList = new ArrayList<>();
+            menuModel = new MenuModel(getResources().getString(R.string.menu_grupos), true, true, null);
+            headerList.add(menuModel);
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarGruposFragment()));
+            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarGruposFragment()));
+
+            if (menuModel.hasChildren()) {
+                childList.put(menuModel, childModelsList);
+            } else {
+                childList.put(menuModel, null);
+            }
+        }
+
+        // Menu Histórico Tipo Situación.
+        if(Utilidad.isAdmin()) {    // Si el usuario es admin se mostrarán estas opciones.
+            childModelsList = new ArrayList<>();
+            menuModel = new MenuModel(getResources().getString(R.string.menu_historico_tipo_situacion), true, true, null);
+            headerList.add(menuModel);
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarHistoricoTipoSituacionFragment()));
+            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarHistoricoTipoSituacionFragment()));
+
+            if (menuModel.hasChildren()) {
+                childList.put(menuModel, childModelsList);
+            } else {
+                childList.put(menuModel, null);
+            }
+        }
+
+        // Menu Paciente.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_paciente), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPacienteFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarPacienteFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
 
         // Menu Personas.
         childModelsList = new ArrayList<>();
@@ -348,7 +374,60 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuModel.hasChildren()) { // Si la opción principal tiene sub-opciones.
             childList.put(menuModel, childModelsList); // Se le añade al atributo con todas las opciones,
-                                                        // la opción principal y sus sub-opciones.
+            // la opción principal y sus sub-opciones.
+        } else{
+            childList.put(menuModel, null);
+        }
+
+        // Menu Persona de contacto en alarma.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_persona_de_contacto_en_alarma), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPersonaContactoEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarPersonasContactoEnAlarmaFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
+
+        // Menu Recurso_Comunitario.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_recursoComunitario), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarRecursoComunitario()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentModificarRecursoComunitario()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentListarRecursoComunitario()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else {
+            childList.put(menuModel, null);
+        }
+
+        // Menu Recursos Comunitarios en Alarma.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_recursos_comunitarios_en_alarma), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRecursosComunitariosEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarRecursosComunitariosEnAlarmaFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
+        } else{
+            childList.put(menuModel, null);
+        }
+
+        // Menu Relacion Paciente Persona.
+        childModelsList = new ArrayList<>();
+        menuModel = new MenuModel(getResources().getString(R.string.menu_relacion_paciente_persona), true, true, null);
+        headerList.add(menuModel);
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRelacionPacientePersonaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarRelacionPacientePersonaFragment()));
+
+        if (menuModel.hasChildren()) {
+            childList.put(menuModel, childModelsList);
         } else{
             childList.put(menuModel, null);
         }
@@ -366,20 +445,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, null);
         }
 
-        // Menu Alarma.
+        // Menu Relacion Usuario Centro.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_alarma), true, true, null);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_relacion_usuario_centro), true, true, null);
         headerList.add(menuModel);
-
-        // TODO: Evaluar el rol de usuario y si es Profesor, cargar este grupo. Mockeado.
-        String rol = "Profesor";
-        if(rol.equals("Profesor")) {
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarAlarmaFragment()));
-        }
-        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarAlarmasFragment()));
-        childModelsList.add(new MenuModel(Constantes.SIN_ASIGNAR, false, false, new ListarAlarmasSinAsignarFragment()));
-        childModelsList.add(new MenuModel(Constantes.MIS_ALARMAS, false, false, new ListarMisAlarmasFragment()));
-        childModelsList.add(new MenuModel(Constantes.ALARMAS_DE_HOY, false, false, new ListarAlarmasDeHoyFragment()));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRelacionUsuarioCentroFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarRelacionUsuarioCentroFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -405,91 +476,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_alarma), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarTipoAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarTipoAlarmaFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
-        }
-
-        // Menu Paciente.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_paciente), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPacienteFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarPacienteFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
-        }
-
-        // Menu Clasificacion Alarma.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_clasificacion_alarma), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarClasificacionAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarClasificacionAlarmaFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
-        }
-
-        // Menu Relacion Paciente Persona.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_relacion_paciente_persona), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRelacionPacientePersonaFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarRelacionPacientePersonaFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
-        }
-
-        // Menu Centro Sanitario en Alarma.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_centro_sanitario_en_alarma), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarCentroSanitarioEnAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarCentrosSanitariosEnAlarmaFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
-        }
-
-        // Menu Relacion Usuario Centro.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_relacion_usuario_centro), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRelacionUsuarioCentroFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarRelacionUsuarioCentroFragment()));
-        // Menu Recursos Comunitarios en Alarma.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_recursos_comunitarios_en_alarma), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarRecursosComunitariosEnAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarRecursosComunitariosEnAlarmaFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else{
-            childList.put(menuModel, null);
-        }
-
-        // Menu Persona de contacto en alarma.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_persona_de_contacto_en_alarma), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarPersonaContactoEnAlarmaFragment()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new ListarPersonasContactoEnAlarmaFragment()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarTipoAlarmaFragment()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -502,8 +489,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_tipoCentroSanitario), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarTipoCentroSanitario()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentModificarTipoCentroSanitario()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentListarTipoCentroSanitario()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentModificarTipoCentroSanitario()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentListarTipoCentroSanitario()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -511,87 +498,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, null);            // De lo contrario se le añade solo la opción principal.
         }
 
-        // Menu Dirección.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_direccion), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarDireccionFragment()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new ListarDireccionFragment()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else {
-            childList.put(menuModel, null);
-        }
-
-        // Menu Tipo_Modidalidad_Paciente.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_tipoModalidadPaciente), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarTipoModalidadPaciente()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentModificarTipoModalidadPaciente()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentListarTipoModalidadPaciente()));
-
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else {
-            childList.put(menuModel, null);
-        }
-
-        if(Utils.isAdmin()) {  // Si el usuario es admin se mostrarán todas las demás opciones.
-            // Menu Usuarios.
-            childModelsList = new ArrayList<>();
-            menuModel = new MenuModel(getResources().getString(R.string.menu_usuarios), true, true, null);
-            headerList.add(menuModel);
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarUsuariosFragment()));
-            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarUsuariosFragment()));
-
-            if (menuModel.hasChildren()) {
-                childList.put(menuModel, childModelsList);
-            } else {
-                childList.put(menuModel, null);
-            }
-
-            // Menu Grupos.
-            childModelsList = new ArrayList<>();
-            menuModel = new MenuModel(getResources().getString(R.string.menu_grupos), true, true, null);
-            headerList.add(menuModel);
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarGruposFragment()));
-            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarGruposFragment()));
-
-            if (menuModel.hasChildren()) {
-                childList.put(menuModel, childModelsList);
-            } else {
-                childList.put(menuModel, null);
-            }
-
-            // Menu Dispositivos Auxiliares.
-            childModelsList = new ArrayList<>();
-            menuModel = new MenuModel(getResources().getString(R.string.menu_dispositivos_auxiliares_terminal), true, true, null);
-            headerList.add(menuModel);
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarDispositivosAuxiliaresFragment()));
-            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarDispositivosAuxiliaresFragment()));
-
-            if (menuModel.hasChildren()) {
-                childList.put(menuModel, childModelsList);
-            } else {
-                childList.put(menuModel, null);
-            }
-
-            // Menu Tipo Vivienda.
-            childModelsList = new ArrayList<>();
-            menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_vivienda), true, true, null);
-            headerList.add(menuModel);
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarTipoViviendaFragment()));
-            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarTipoViviendaFragment()));
-
-            if (menuModel.hasChildren()) {
-                childList.put(menuModel, childModelsList);
-            } else {
-                childList.put(menuModel, null);
-            }
-
-            // Menu Tipo Situación.
+        // Menu Tipo Situación.
+        if(Utilidad.isAdmin()) {    // Si el usuario es admin se mostrarán estas opciones.
             childModelsList = new ArrayList<>();
             menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_situacion), true, true, null);
             headerList.add(menuModel);
@@ -603,13 +511,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 childList.put(menuModel, null);
             }
+        }
 
-            // Menu Histórico Tipo Situación.
+        // Menu Tipo Vivienda.
+        if(Utilidad.isAdmin()) {    // Si el usuario es admin se mostrarán estas opciones.
             childModelsList = new ArrayList<>();
-            menuModel = new MenuModel(getResources().getString(R.string.menu_historico_tipo_situacion), true, true, null);
+            menuModel = new MenuModel(getResources().getString(R.string.menu_tipo_vivienda), true, true, null);
             headerList.add(menuModel);
-            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarHistoricoTipoSituacionFragment()));
-            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarHistoricoTipoSituacionFragment()));
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarTipoViviendaFragment()));
+            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarTipoViviendaFragment()));
 
             if (menuModel.hasChildren()) {
                 childList.put(menuModel, childModelsList);
@@ -618,13 +528,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        // Menu Centro_Sanitario.
+        // Menu Tipo_Modidalidad_Paciente.
         childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_centroSanitario), true, true, null);
+        menuModel = new MenuModel(getResources().getString(R.string.menu_tipoModalidadPaciente), true, true, null);
         headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarCentroSanitario()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentModificarCentroSanitario()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentListarCentroSanitario()));
+        childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarTipoModalidadPaciente()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentModificarTipoModalidadPaciente()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentListarTipoModalidadPaciente()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -637,8 +547,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuModel = new MenuModel(getResources().getString(R.string.menu_tipoRecursoComunitario), true, true, null);
         headerList.add(menuModel);
         childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarTipoRecursoComunitario()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentModificarTipoRecursoComunitario()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentListarTipoRecursoComunitario()));
+        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentModificarTipoRecursoComunitario()));
+        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentListarTipoRecursoComunitario()));
 
         if (menuModel.hasChildren()) {
             childList.put(menuModel, childModelsList);
@@ -646,20 +556,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, null);
         }
 
-        // Menu Recurso_Comunitario.
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel(getResources().getString(R.string.menu_recursoComunitario), true, true, null);
-        headerList.add(menuModel);
-        childModelsList.add(new MenuModel(childNames[0], false, false, new FragmentInsertarRecursoComunitario()));
-        childModelsList.add(new MenuModel(childNames[1], false, false, new FragmentModificarRecursoComunitario()));
-        childModelsList.add(new MenuModel(childNames[2], false, false, new FragmentListarRecursoComunitario()));
+        // Menu Usuarios.
+        if(Utilidad.isAdmin()) {  // Si el usuario es admin se mostrarán estas opciones.
+            childModelsList = new ArrayList<>();
+            menuModel = new MenuModel(getResources().getString(R.string.menu_usuarios), true, true, null);
+            headerList.add(menuModel);
+            childModelsList.add(new MenuModel(childNames[0], false, false, new InsertarUsuariosFragment()));
+            childModelsList.add(new MenuModel(childNames[1], false, false, new ListarUsuariosFragment()));
 
-        if (menuModel.hasChildren()) {
-            childList.put(menuModel, childModelsList);
-        } else {
-            childList.put(menuModel, null);
+            if (menuModel.hasChildren()) {
+                childList.put(menuModel, childModelsList);
+            } else {
+                childList.put(menuModel, null);
+            }
+
         }
-
     }
 
     /**

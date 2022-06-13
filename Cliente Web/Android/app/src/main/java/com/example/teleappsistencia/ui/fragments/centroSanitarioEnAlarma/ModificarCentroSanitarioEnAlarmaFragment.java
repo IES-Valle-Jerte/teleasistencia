@@ -165,7 +165,7 @@ public class ModificarCentroSanitarioEnAlarmaFragment extends Fragment implement
      */
     private void persistirCentroSanitarioEnAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarCentroSanitarioEnAlarma(centroSanitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO+ Token.getToken().getAccess(), this.centroSanitarioEnAlarma);
+        Call<ResponseBody> call = apiService.actualizarCentroSanitarioEnAlarma(centroSanitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO+ Utilidad.getToken().getAccess(), this.centroSanitarioEnAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

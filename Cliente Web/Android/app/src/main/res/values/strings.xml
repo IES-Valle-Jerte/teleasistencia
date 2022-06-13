@@ -8,8 +8,6 @@
     <string name="action_settings">Settings</string>
 
     <!-- API -->
-    <!-- <string name="api_base_url">http://127.0.0.1:3333/</string>-->
-    <string name="api_base_url">http://10.0.2.2:8000/</string>
     <string name="bearer">Bearer </string>
 
     <!-- Nombres de los menus -->
@@ -40,7 +38,6 @@
     <!-- TextViews de uso general -->
     <string name="nombreUsuario">Nombre de usuario</string>
     <string name="password">Contraseña</string>
-    <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="email">Email</string>
     <string name="sexo">Sexo</string>
@@ -48,7 +45,6 @@
     <string name="sexo_femenimo">Mujer</string>
     <string name="id_direccion">ID de la dirección</string>
     <string name="id_historicoTipoSituacion">ID del histórico tipo de situación</string>
-    <string name="id_terminal">ID del terminal</string>
     <string name="id_tipoSituacion">ID del tipo de situación</string>
     <string name="id_dispositivoAuxiliar">ID del dispositivo auxiliar en terminal</string>
     <string name="id_tipoAlarma">ID del tipo de alarma</string>
@@ -244,19 +240,12 @@
     <string name="error_mensaje_eliminar_recurso_comunitario">Error al eliminar el recurso comunitario.</string>
     <string name="error_al_obtener_datos">Error al obtener los datos.</string>
 
-    <!-- API -->
-    <string name="api_base_url">http://10.0.2.2:8000/</string>
-
     <!-- Nombres de los menus -->
     <string name="menu_relacion_terminal_recurso_comunitario">Relación Terminal Recurso Comunitario</string>
     <string name="menu_terminal">Terminal</string>
     <string name="menu_paciente">Paciente</string>
     <string name="menu_relacion_paciente_persona">Relación Paciente Persona</string>
     <string name="menu_relacion_usuario_centro">Relación Usuario Centro</string>
-
-    <!-- Nombres de los submenus -->
-    <string name="insertar">Insertar</string>
-    <string name="listar">Listar</string>
 
     <!-- *** TextViews *** -->
 

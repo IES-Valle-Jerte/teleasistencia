@@ -18,8 +18,6 @@ public class HistoricoTipoSituacion implements Serializable {
     private String fecha;
     @SerializedName("id_tipo_situacion")
     private Object idTipoSituacion;
-    @SerializedName("tipo_situacion")
-    private Object tipoSituacion;
     @SerializedName("id_terminal")
     private Object terminal;
 
@@ -50,14 +48,6 @@ public class HistoricoTipoSituacion implements Serializable {
         this.idTipoSituacion = idTipoSituacion;
     }
 
-    public Object getTipoSituacion() {
-        return tipoSituacion;
-    }
-
-    public void setTipoSituacion(Object tipoSituacion) {
-        this.tipoSituacion = tipoSituacion;
-    }
-
     public Object getTerminal() {
         return terminal;
     }
@@ -76,7 +66,6 @@ public class HistoricoTipoSituacion implements Serializable {
                 "id=" + id +
                 ", fecha='" + fecha + '\'' +
                 ", idTipoSituacion=" + idTipoSituacion +
-                ", tipoSituacion=" + tipoSituacion +
                 ", terminal=" + terminal +
                 '}';
     }

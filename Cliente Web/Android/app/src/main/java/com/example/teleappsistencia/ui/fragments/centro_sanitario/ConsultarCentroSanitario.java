@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.modelos.CentroSanitario;
+import com.example.teleappsistencia.modelos.Direccion;
 import com.example.teleappsistencia.modelos.TipoCentroSanitario;
 import com.example.teleappsistencia.utilidades.Constantes;
 import com.example.teleappsistencia.utilidades.Utilidad;
@@ -80,14 +81,15 @@ public class ConsultarCentroSanitario extends Fragment {
 
         // Método que muestra los valores del centro sanitario.
         TipoCentroSanitario tipoCentroSanitario = (TipoCentroSanitario) Utilidad.getObjeto(centroSanitario, Constantes.TIPO_CENTRO_SANITARIO);
+        Direccion direccion = (Direccion) Utilidad.getObjeto(centroSanitario.getDireccion(), Constantes.DIRECCION);
 
         this.nombreCentroSanitario.setText(this.centroSanitario.getNombre());
         this.telefonoCentroSanitario.setText(this.centroSanitario.getTelefono());
         this.tipoCentroSanitarioCentroSanitario.setText(tipoCentroSanitario.getNombreTipoCentroSanitario());
-        this.localidadCentroSanitario.setText(this.centroSanitario.getDireccion().getLocalidad());
-        this.provinciaCentroSanitario.setText(this.centroSanitario.getDireccion().getProvincia());
-        this.direccionCentroSanitario.setText(this.centroSanitario.getDireccion().getDireccion());
-        this.codigoPostalCentroSanitario.setText(this.centroSanitario.getDireccion().getCodigoPostal());
+        this.localidadCentroSanitario.setText(direccion.getLocalidad());
+        this.provinciaCentroSanitario.setText(direccion.getProvincia());
+        this.direccionCentroSanitario.setText(direccion.getDireccion());
+        this.codigoPostalCentroSanitario.setText(direccion.getCodigoPostal());
 
         // Inflate the layout for this fragment
         return root;

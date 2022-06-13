@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.teleappsistencia.R;
+import com.example.teleappsistencia.modelos.Direccion;
 import com.example.teleappsistencia.modelos.RecursoComunitario;
 import com.example.teleappsistencia.modelos.TipoRecursoComunitario;
 import com.example.teleappsistencia.utilidades.Constantes;
@@ -80,14 +81,15 @@ public class ConsultarRecursoComunitario extends Fragment {
 
         // Método que muestra los valores del recurso comunitario.
         TipoRecursoComunitario tipoRecursoComunitario = (TipoRecursoComunitario) Utilidad.getObjeto(recursoComunitario, Constantes.TIPO_RECURSO_COMUNITARIO);
+        Direccion direccion = (Direccion) Utilidad.getObjeto(this.recursoComunitario.getDireccion(), Constantes.DIRECCION);
 
         this.nombreRecursoComunitario.setText(this.recursoComunitario.getNombre());
         this.telefonoRecursoComunitario.setText(this.recursoComunitario.getTelefono());
         this.tipoRecursoComunitarioRecursoComunitario.setText(tipoRecursoComunitario.getNombreTipoRecursoComunitario());
-        this.localidadRecursoComunitario.setText(this.recursoComunitario.getDireccion().getLocalidad());
-        this.provinciaRecursoComunitario.setText(this.recursoComunitario.getDireccion().getProvincia());
-        this.direccionRecursoComunitario.setText(this.recursoComunitario.getDireccion().getDireccion());
-        this.codigoPostalRecursoComunitario.setText(this.recursoComunitario.getDireccion().getCodigoPostal());
+        this.localidadRecursoComunitario.setText(direccion.getLocalidad());
+        this.provinciaRecursoComunitario.setText(direccion.getProvincia());
+        this.direccionRecursoComunitario.setText(direccion.getDireccion());
+        this.codigoPostalRecursoComunitario.setText(direccion.getCodigoPostal());
 
         // Inflate the layout for this fragment
         return root;

@@ -165,15 +165,15 @@ public class InfoGestionAlarmaFragment extends Fragment {
         if(this.alarma.getId_paciente_ucr() != null){
             this.color = getResources().getColor(R.color.azul, getActivity().getTheme());
             this.paciente = (Paciente) Utilidad.getObjeto(this.alarma.getId_paciente_ucr(), Constantes.PACIENTE);
-            this.terminal = (Terminal) Utilidad.getObjeto(paciente.getId_terminal(), Constantes.TERMINAL);
+            this.terminal = (Terminal) Utilidad.getObjeto(paciente.getTerminal(), Constantes.TERMINAL);
         }
         else{
             this.color = getResources().getColor(R.color.verde, getActivity().getTheme());
             this.terminal = (Terminal) Utilidad.getObjeto(this.alarma.getId_terminal(), Constantes.TERMINAL);
-            this.paciente = (Paciente) Utilidad.getObjeto(terminal.getId_titular(), Constantes.PACIENTE);
+            this.paciente = (Paciente) Utilidad.getObjeto(terminal.getTitular(), Constantes.PACIENTE);
         }
-        persona = (Persona) Utilidad.getObjeto(paciente.getId_persona(), Constantes.PERSONA);
-        tipoAlarma = (TipoAlarma) Utilidad.getObjeto(this.alarma.getId_tipo_alarma(), Constantes.TIPO_ALARMA);
+        persona = (Persona) Utilidad.getObjeto(paciente.getPersona(), Constantes.PERSONA);
+        tipoAlarma = (TipoAlarma) Utilidad.getObjeto(this.alarma.getId_tipo_alarma(), Constantes.TIPOALARMA);
         clasificacionAlarma = (ClasificacionAlarma) Utilidad.getObjeto(tipoAlarma.getClasificacionAlarma(), Constantes.CLASIFICACION_ALARMA);
 
         this.idAlarma = this.alarma.getId();
@@ -181,7 +181,7 @@ public class InfoGestionAlarmaFragment extends Fragment {
         this.clasificacionAlarma = clasificacionAlarma.getNombre() + Constantes.ESPACIO_PARENTESIS_AP + clasificacionAlarma.getCodigo() + Constantes.PARENTESIS_CIERRE;
         this.numTerminal = terminal.getId();
         this.nombrePaciente = persona.getNombre() + Constantes.ESPACIO + persona.getApellidos();
-        this.numeroTelefono = persona.getTelefono_movil() + Constantes.SLASH + persona.getTelefono_fijo();
+        this.numeroTelefono = persona.getTelefonoMovil() + Constantes.SLASH + persona.getTelefonoFijo();
         cargarDatos();
         extraerContactos(paciente.getId());
     }
@@ -210,7 +210,7 @@ public class InfoGestionAlarmaFragment extends Fragment {
      */
     private void extraerContactos(int idPaciente) {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getContactosbyIdPaciente(idPaciente, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getContactosbyIdPaciente(idPaciente, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {

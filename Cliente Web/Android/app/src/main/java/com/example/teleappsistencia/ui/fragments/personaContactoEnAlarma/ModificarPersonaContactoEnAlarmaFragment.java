@@ -160,7 +160,7 @@ public class ModificarPersonaContactoEnAlarmaFragment extends Fragment implement
      */
     private void persistirPersonaContactoEnAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarPersonaContactoEnAlarma(personaContactoEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.personaContactoEnAlarma);
+        Call<ResponseBody> call = apiService.actualizarPersonaContactoEnAlarma(personaContactoEnAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), this.personaContactoEnAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

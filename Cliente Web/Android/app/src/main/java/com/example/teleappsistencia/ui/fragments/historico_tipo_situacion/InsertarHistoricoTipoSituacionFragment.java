@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.teleappsistencia.modelos.TipoAlarma;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.R;
 import com.example.teleappsistencia.utilidades.Constantes;
@@ -28,6 +27,7 @@ import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoSituacion;
 import com.example.teleappsistencia.utilidades.dialogs.DatePickerFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -128,13 +128,14 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
     private void inicializarSpinnerTerminal(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Terminal>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
-        call.enqueue(new Callback<List<Terminal>>() {
+        Call<List<Object>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
+            public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if (response.isSuccessful()) {
-                    List<Terminal> terminalList = response.body();
-                    System.out.println(terminalList);
+                    List<Object> objectList = response.body(); // Recogo la lista de Terminales.
+                    // Creo el adapter y le asigno la lista.
+                    List<Terminal> terminalList = (ArrayList<Terminal>) Utilidad.getObjeto(objectList, Constantes.AL_TERMINAL);
                     ArrayAdapter<Terminal> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, terminalList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_terminal.setAdapter(adapter);
@@ -142,7 +143,7 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
@@ -187,7 +188,7 @@ public class InsertarHistoricoTipoSituacionFragment extends Fragment {
 
         HistoricoTipoSituacion historicoTipoSituacion = new HistoricoTipoSituacion();
         historicoTipoSituacion.setFecha(fecha);
-        historicoTipoSituacion.setTipoSituacion(tipoSituacion.getId());
+        historicoTipoSituacion.setIdTipoSituacion(tipoSituacion.getId());
         historicoTipoSituacion.setTerminal(terminal.getId());
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();

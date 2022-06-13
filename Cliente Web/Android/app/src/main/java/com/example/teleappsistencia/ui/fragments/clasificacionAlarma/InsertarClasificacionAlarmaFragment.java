@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -126,7 +127,7 @@ public class InsertarClasificacionAlarmaFragment extends Fragment implements Vie
      */
     private void persistirClasificacionAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ClasificacionAlarma> call = apiService.addClasificacionAlarma(this.clasificacionAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<ClasificacionAlarma> call = apiService.addClasificacionAlarma(this.clasificacionAlarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<ClasificacionAlarma>() {
             @Override
             public void onResponse(Call<ClasificacionAlarma> call, Response<ClasificacionAlarma> response) {

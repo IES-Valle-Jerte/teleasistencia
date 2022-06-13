@@ -27,6 +27,7 @@ import com.example.teleappsistencia.modelos.Terminal;
 import com.example.teleappsistencia.modelos.TipoSituacion;
 import com.example.teleappsistencia.utilidades.dialogs.DatePickerFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -153,12 +154,14 @@ public class ModificarHistoricoTipoSituacionFragment extends Fragment {
     private void inicializarSpinnerTerminal(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<Terminal>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
-        call.enqueue(new Callback<List<Terminal>>() {
+        Call<List<Object>> call = apiService.getTerminales(Constantes.TOKEN_BEARER + Utilidad.getToken().getAccess());
+        call.enqueue(new Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
+            public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if (response.isSuccessful()) {
-                    List<Terminal> terminalList = response.body();
+                    List<Object> objectList = response.body(); // Recogo la lista de Terminales.
+                    // Creo el adapter y le asigno la lista.
+                    List<Terminal> terminalList = (ArrayList<Terminal>) Utilidad.getObjeto(objectList, Constantes.AL_TERMINAL);
                     Terminal terminal = (Terminal) Utilidad.getObjeto(historicoTipoSituacion.getTerminal(), Constantes.TERMINAL);
                     if(terminal != null) {
                         terminalList.add(0, terminal);  // Asigno el terminal del historicoTipoSituacion en la posición 0.
@@ -169,7 +172,7 @@ public class ModificarHistoricoTipoSituacionFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
                 t.printStackTrace();
                 System.out.println(t.getMessage());
             }
@@ -189,7 +192,7 @@ public class ModificarHistoricoTipoSituacionFragment extends Fragment {
             public void onResponse(Call<List<TipoSituacion>> call, Response<List<TipoSituacion>> response) {
                 if (response.isSuccessful()) {
                     List<TipoSituacion> tipoSituacionList = response.body();
-                    TipoSituacion tipoSituacion = (TipoSituacion) Utilidad.getObjeto(historicoTipoSituacion.getTipoSituacion(), Constantes.TIPO_SITUACION);
+                    TipoSituacion tipoSituacion = (TipoSituacion) Utilidad.getObjeto(historicoTipoSituacion.getIdTipoSituacion(), Constantes.TIPO_SITUACION);
                     if(tipoSituacion != null){
                         tipoSituacionList.add(0, tipoSituacion); // Asigno el terminal del historicoTipoSituacion en la posición 0.
                     }
@@ -217,7 +220,7 @@ public class ModificarHistoricoTipoSituacionFragment extends Fragment {
 
         HistoricoTipoSituacion historicoTipoSituacion = new HistoricoTipoSituacion();
         historicoTipoSituacion.setFecha(fecha);
-        historicoTipoSituacion.setTipoSituacion(tipoSituacion.getId());
+        historicoTipoSituacion.setIdTipoSituacion(tipoSituacion.getId());
         historicoTipoSituacion.setTerminal(terminal.getId());
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();

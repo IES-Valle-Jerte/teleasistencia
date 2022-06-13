@@ -112,7 +112,7 @@ public class ListarRelacionUsuarioCentroFragment extends Fragment {
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<LinkedTreeMap>> call = apiService.getListadoRelacionUsuarioCentro(Constantes.BEARER + MainActivity.token.getAccess());
+        Call<List<LinkedTreeMap>> call = apiService.getListadoRelacionUsuarioCentro(Constantes.BEARER + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<LinkedTreeMap>>() {
             @Override
             public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {

@@ -20,6 +20,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,7 +89,7 @@ public class FragmentModificarTipoModalidadPaciente extends Fragment implements 
 
         // Si el objeto no es nulo, se muestran sus atributos en el layout.
         if (this.tipoModalidadPaciente != null) {
-            this.editTextPedirNombre.setText(this.tipoModalidadPaciente.getNombreTipoModalidadPaciente());
+            this.editTextPedirNombre.setText(this.tipoModalidadPaciente.getNombre());
         }
 
         // Se inicializan los listeners.
@@ -136,10 +137,10 @@ public class FragmentModificarTipoModalidadPaciente extends Fragment implements 
     private void modificarTipoModalidadPaciente() {
         String nombre = this.editTextPedirNombre.getText().toString();
 
-        this.tipoModalidadPaciente.setNombreTipoModalidadPaciente(nombre);
+        this.tipoModalidadPaciente.setNombre(nombre);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.putTipoModalidadPaciente(tipoModalidadPaciente.getId(), tipoModalidadPaciente, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Object> call = apiService.putTipoModalidadPaciente(tipoModalidadPaciente.getId(), tipoModalidadPaciente, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

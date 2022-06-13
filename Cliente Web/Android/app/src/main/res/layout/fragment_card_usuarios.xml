@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/textView_nombreUsuario_usuario"
-            android:layout_width="341dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nombre Usuario"
             android:textAppearance="?android:attr/textAppearanceLarge"
