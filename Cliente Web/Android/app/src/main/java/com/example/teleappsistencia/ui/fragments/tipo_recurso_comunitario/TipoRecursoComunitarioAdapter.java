@@ -18,6 +18,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -106,7 +107,7 @@ public class TipoRecursoComunitarioAdapter extends RecyclerView.Adapter<TipoRecu
         private void borrarTipoRecursoComunitario() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteTipoRecursoComunitario(tipoRecursoComunitario.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteTipoRecursoComunitario(tipoRecursoComunitario.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {

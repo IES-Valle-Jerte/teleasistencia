@@ -115,7 +115,7 @@ public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComun
         private void borrarRecursoComunitario() {
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-            Call<Response<String>> call = apiService.deleteRecursoComunitario(recursoComunitario.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<Response<String>> call = apiService.deleteRecursoComunitario(recursoComunitario.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, Response<Response<String>> response) {
@@ -194,7 +194,7 @@ public class RecursoComunitarioAdapter extends RecyclerView.Adapter<RecursoComun
 
         RecursoComunitario recursoComunitario = items.get(i);
         TipoRecursoComunitario tipoRecursoComunitario = (TipoRecursoComunitario) Utilidad.getObjeto(recursoComunitario, Constantes.TIPO_RECURSO_COMUNITARIO);
-        Direccion direccion = recursoComunitario.getDireccion();
+        Direccion direccion = (Direccion) Utilidad.getObjeto(recursoComunitario.getDireccion(), Constantes.DIRECCION);
 
         viewHolder.nombreRecursoComunitario.setText(items.get(i).getNombre());
         viewHolder.telefonoRecursoComunitario.setText(items.get(i).getTelefono());

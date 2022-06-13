@@ -118,9 +118,9 @@ public class ConsultarAlarmaFragment extends Fragment {
         }
         else{
             terminal = (Terminal) Utilidad.getObjeto(alarma.getId_terminal(), Constantes.TERMINAL);
-            paciente = (Paciente) Utilidad.getObjeto(terminal.getId_titular(), Constantes.PACIENTE);
+            paciente = (Paciente) Utilidad.getObjeto(terminal.getId(), Constantes.PACIENTE);
         }
-        persona = (Persona) Utilidad.getObjeto(paciente.getId_persona(), Constantes.PERSONA);
+        persona = (Persona) Utilidad.getObjeto(paciente.getPersona(), Constantes.PERSONA);
         this.textViewConsultarPacienteAlarma.setText(persona.getNombre() + Constantes.ESPACIO + persona.getApellidos());
     }
 }

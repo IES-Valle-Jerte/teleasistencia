@@ -106,7 +106,7 @@ public class AlarmaGestionAdapter extends RecyclerView.Adapter<AlarmaGestionAdap
          */
         private void comprobarAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<Alarma> callAlarma = apiService.getAlarmabyId(this.alarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<Alarma> callAlarma = apiService.getAlarmabyId(this.alarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             callAlarma.enqueue(new Callback<Alarma>() {
                 @Override
                 public void onResponse(Call<Alarma> callAlarma, Response<Alarma> response) {
@@ -143,7 +143,7 @@ public class AlarmaGestionAdapter extends RecyclerView.Adapter<AlarmaGestionAdap
             }else{
                 /* Si el teleoperador no es nulo, comprobamos si es nuestra alarma, para continuar directamente con la gestión.
                  * Esto se hace por si el Teleoperador ha teniddo algún problema y no cerró la alarma la primera vez. */
-                if(teleoperador.getId() == Teleoperador.id_teleoperador){ //TODO: el Id de teleoperador
+                if(teleoperador.getId() == Utilidad.getUserLogged().getPk()){
                     InfoGestionAlarmaFragment iGAF = InfoGestionAlarmaFragment.newInstance(alarmaRecibida);
                     activity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_fragment, iGAF)
@@ -161,14 +161,11 @@ public class AlarmaGestionAdapter extends RecyclerView.Adapter<AlarmaGestionAdap
          * @param alarmaRecibida
          */
         private void modificarAlarma(Alarma alarmaRecibida){
-            /* Cuando la aplicación funcione me imagino que ya habrá un usuario con su id al que se pueda accedr*/
-            /* TODO: Cuando tengamos la parte del Usuario, los roles etc., hay que arreglar esto */
-
             /* Siempre que hagamos un PUT tenemos que darle a la petición los datatos de la forma
                  que requiere. En este caso, idTeleoperador SIEMPRE tiene que ser un intger. */
-            alarmaRecibida.setId_teleoperador(Teleoperador.id_teleoperador);
+            alarmaRecibida.setId_teleoperador(Utilidad.getUserLogged().getPk());
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.actualizarAlarma(alarmaRecibida.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), alarmaRecibida);
+            Call<ResponseBody> call = apiService.actualizarAlarma(alarmaRecibida.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), alarmaRecibida);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -219,7 +216,7 @@ public class AlarmaGestionAdapter extends RecyclerView.Adapter<AlarmaGestionAdap
         // En el bind, le cargamos los atributos al layout de la tarjeta
         Alarma alarma = items.get(i);
         viewHolder.setAlarma(alarma);
-        TipoAlarma tipo = (TipoAlarma) Utilidad.getObjeto(alarma.getId_tipo_alarma(), Constantes.TIPO_ALARMA);
+        TipoAlarma tipo = (TipoAlarma) Utilidad.getObjeto(alarma.getId_tipo_alarma(), Constantes.TIPOALARMA);
         viewHolder.idAlarma.setText(Constantes.ID_ALARMA_DP_SP + String.valueOf(alarma.getId()));
         viewHolder.txtCardEstadoAlarma.setText(Constantes.ESTADO_DP_SP + alarma.getEstado_alarma());
         viewHolder.txtCardFechaRegistroAlarma.setText(Constantes.FECHA_DP_SP + alarma.getFecha_registro());

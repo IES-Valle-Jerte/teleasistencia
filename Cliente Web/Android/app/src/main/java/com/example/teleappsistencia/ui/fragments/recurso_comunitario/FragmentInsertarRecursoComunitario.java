@@ -24,6 +24,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 
@@ -120,7 +121,7 @@ public class FragmentInsertarRecursoComunitario extends Fragment implements View
     public void inicializarSpinnerTipoRecursoComunitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<TipoRecursoComunitario>> call = apiService.getTipoRecursoComunitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<TipoRecursoComunitario>> call = apiService.getTipoRecursoComunitario(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoRecursoComunitario>>() {
             @Override
             public void onResponse(Call<List<TipoRecursoComunitario>> call, Response<List<TipoRecursoComunitario>> response) {
@@ -195,7 +196,7 @@ public class FragmentInsertarRecursoComunitario extends Fragment implements View
         recursoComunitario.setDireccion(direccion);
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.postRecursoComunitario(recursoComunitario, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Object> call = apiService.postRecursoComunitario(recursoComunitario, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

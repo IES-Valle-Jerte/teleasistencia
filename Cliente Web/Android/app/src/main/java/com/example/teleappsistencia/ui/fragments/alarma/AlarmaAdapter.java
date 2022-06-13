@@ -96,7 +96,7 @@ public class AlarmaAdapter extends RecyclerView.Adapter<AlarmaAdapter.AlarmaView
          */
         private void borrarAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteAlarmabyId(this.alarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteAlarmabyId(this.alarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -153,7 +153,7 @@ public class AlarmaAdapter extends RecyclerView.Adapter<AlarmaAdapter.AlarmaView
         // En el bind, le cargamos los atributos al layout de la tarjeta
         Alarma alarma = items.get(i);
         viewHolder.setAlarma(alarma);
-        TipoAlarma tipo = (TipoAlarma) Utilidad.getObjeto(alarma.getId_tipo_alarma(), Constantes.TIPO_ALARMA);
+        TipoAlarma tipo = (TipoAlarma) Utilidad.getObjeto(alarma.getId_tipo_alarma(), Constantes.TIPOALARMA);
         viewHolder.idAlarma.setText(Constantes.ID_ALARMA_DP_SP + String.valueOf(alarma.getId()));
         viewHolder.txtCardEstadoAlarma.setText(Constantes.ESTADO_DP_SP + alarma.getEstado_alarma());
         viewHolder.txtCardFechaRegistroAlarma.setText(Constantes.FECHA_DP_SP + alarma.getFecha_registro());

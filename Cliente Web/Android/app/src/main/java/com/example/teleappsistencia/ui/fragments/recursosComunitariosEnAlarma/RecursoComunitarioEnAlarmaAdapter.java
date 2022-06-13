@@ -95,7 +95,7 @@ public class RecursoComunitarioEnAlarmaAdapter extends RecyclerView.Adapter<Recu
          */
         private void borrarRecursoComunitarioEnAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteRecursoComunitarioEnAlarmabyId(this.recursoComunitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteRecursoComunitarioEnAlarmabyId(this.recursoComunitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

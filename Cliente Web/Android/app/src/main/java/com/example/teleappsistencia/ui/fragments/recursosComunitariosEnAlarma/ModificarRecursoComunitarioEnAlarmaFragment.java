@@ -163,7 +163,7 @@ public class ModificarRecursoComunitarioEnAlarmaFragment extends Fragment implem
      */
     private void persistirRecursoComunitarioAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), this.recursoComunitarioEnAlarma);
+        Call<ResponseBody> call = apiService.actualizarRecursoComunitarioEnAlarma(recursoComunitarioEnAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), this.recursoComunitarioEnAlarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

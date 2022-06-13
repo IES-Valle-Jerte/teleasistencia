@@ -139,7 +139,7 @@ public class InsertarRecursosComunitariosEnAlarmaFragment extends Fragment imple
      */
     private void persistirRecursoComunitarioAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<RecursoComunitarioEnAlarma> call = apiService.addRecursoComunitarioEnAlarma(this.recursoComunitarioEnAlarma, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<RecursoComunitarioEnAlarma> call = apiService.addRecursoComunitarioEnAlarma(this.recursoComunitarioEnAlarma, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<RecursoComunitarioEnAlarma>() {
             @Override
             public void onResponse(Call<RecursoComunitarioEnAlarma> call, Response<RecursoComunitarioEnAlarma> response) {

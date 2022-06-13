@@ -16,7 +16,7 @@ public class Usuario implements Serializable{
      * Atributos de la clase
      */
 
-    @SerializedName("pk")
+    @SerializedName("id")
     private int pk;
     @SerializedName("url")
     private String url;

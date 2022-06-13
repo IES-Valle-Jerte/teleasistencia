@@ -15,6 +15,7 @@ import com.example.teleappsistencia.modelos.Token;
 import com.example.teleappsistencia.servicios.APIService;
 import com.example.teleappsistencia.servicios.ClienteRetrofit;
 import com.example.teleappsistencia.utilidades.Constantes;
+import com.example.teleappsistencia.utilidades.Utilidad;
 
 import java.util.List;
 import okhttp3.ResponseBody;
@@ -89,7 +90,7 @@ public class ClasificacionAlarmaAdapter extends RecyclerView.Adapter<Clasificaci
          */
         private void borrarClasificacionAlarma(){
             APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-            Call<ResponseBody> call = apiService.deleteClasificacionAlarmabyId(this.clasificacionAlarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+            Call<ResponseBody> call = apiService.deleteClasificacionAlarmabyId(this.clasificacionAlarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -65,7 +65,7 @@ public class ConsultarTipoModalidadPaciente extends Fragment {
         this.nombreTipoModalidadPaciente = (TextView) root.findViewById(R.id.nombreTipoModalidadPaciente);
 
         // Método que muestra los valores del tipo de modalidad de paciente.
-        this.nombreTipoModalidadPaciente.setText(this.tipoModalidadPaciente.getNombreTipoModalidadPaciente());
+        this.nombreTipoModalidadPaciente.setText(this.tipoModalidadPaciente.getNombre());
 
         // Inflate the layout for this fragment
         return root;

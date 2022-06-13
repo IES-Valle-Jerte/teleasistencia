@@ -95,7 +95,7 @@ public class ListarTipoAlarmaFragment extends Fragment {
      */
     private void cargarLista(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<Object>> call = apiService.getTiposAlarma(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<Object>> call = apiService.getTiposAlarma(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<Object>>() {
             @Override
             public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {

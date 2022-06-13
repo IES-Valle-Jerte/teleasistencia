@@ -218,16 +218,13 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
 
     private void inicializarSpinnerPaciente() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<LinkedTreeMap>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
-        call.enqueue(new retrofit2.Callback<List<LinkedTreeMap>>() {
+        Call<List<Object>> call = apiService.getPacientes(Constantes.BEARER + Utilidad.getToken().getAccess());
+        call.enqueue(new retrofit2.Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<List<LinkedTreeMap>> call, Response<List<LinkedTreeMap>> response) {
+            public void onResponse(Call<List<Object>> call, Response<List<Object>> response) {
                 if (response.isSuccessful()) {
-                    List<Paciente> listadoPacientes = new ArrayList<>();
-                    List<LinkedTreeMap> lPacientes = response.body();
-                    for (LinkedTreeMap lPaciente : lPacientes) {
-                        listadoPacientes.add((Paciente) Utilidad.getObjeto(lPaciente, "Paciente"));
-                    }
+                    List<Object> lPacientes = response.body();
+                    List<Paciente> listadoPacientes = (ArrayList<Paciente>) Utilidad.getObjeto(lPacientes, Constantes.AL_PACIENTE);
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, convertirListaPacientes(listadoPacientes));
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     Paciente paciente = (Paciente) Utilidad.getObjeto(relacionUsuarioCentro.getIdPaciente(), "Paciente");
@@ -241,7 +238,7 @@ public class ModificarRelacionUsuarioCentroFragment extends Fragment implements 
             }
 
             @Override
-            public void onFailure(Call<List<LinkedTreeMap>> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
                 Toast.makeText(getContext(), Constantes.ERROR_AL_OBTENER_LOS_DATOS, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }

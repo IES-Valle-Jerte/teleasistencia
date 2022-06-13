@@ -165,7 +165,7 @@ public class ModificarAlarmaFragment extends Fragment implements View.OnClickLis
      */
     private void persistirAlarma(){
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<ResponseBody> call = apiService.actualizarAlarma(alarma.getId(), Constantes.BEARER_ESPACIO + Token.getToken().getAccess(), alarma);
+        Call<ResponseBody> call = apiService.actualizarAlarma(alarma.getId(), Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess(), alarma);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

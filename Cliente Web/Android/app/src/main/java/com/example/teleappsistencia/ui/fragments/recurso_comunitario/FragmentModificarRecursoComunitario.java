@@ -118,9 +118,9 @@ public class FragmentModificarRecursoComunitario extends Fragment implements Vie
         this.buttonVolver.setOnClickListener(this);
 
         // Si el objeto no es nulo, se muestran sus atributos en el layout.
-        Direccion direccion = this.recursoComunitario.getDireccion();
 
         if (this.recursoComunitario != null) {
+            Direccion direccion = (Direccion) Utilidad.getObjeto(this.recursoComunitario.getDireccion(), Constantes.DIRECCION);
             this.editTextPedirNombre.setText(this.recursoComunitario.getNombre());
             this.editTextPhonePedirTelefono.setText(this.recursoComunitario.getTelefono());
             this.editTextPedirLocalidad.setText(direccion.getLocalidad());
@@ -146,7 +146,7 @@ public class FragmentModificarRecursoComunitario extends Fragment implements Vie
      */
     private void cargarSpinner() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<TipoRecursoComunitario>> call = apiService.getTipoRecursoComunitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<TipoRecursoComunitario>> call = apiService.getTipoRecursoComunitario(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoRecursoComunitario>>() {
             @Override
             public void onResponse(Call<List<TipoRecursoComunitario>> call, Response<List<TipoRecursoComunitario>> response) {
@@ -225,7 +225,7 @@ public class FragmentModificarRecursoComunitario extends Fragment implements Vie
      */
     private void modificarRecursoComunitario() {
         TipoRecursoComunitario tipoRecursoComunitario = (TipoRecursoComunitario) spinnerTipoRecursoComunitario.getSelectedItem();
-        Direccion direccionObjeto = this.recursoComunitario.getDireccion();
+        Direccion direccionObjeto = (Direccion) Utilidad.getObjeto(this.recursoComunitario.getDireccion(), Constantes.DIRECCION);
         String nombre = this.editTextPedirNombre.getText().toString();
         String telefono = this.editTextPhonePedirTelefono.getText().toString();
         String localidad = this.editTextPedirLocalidad.getText().toString();
@@ -244,7 +244,7 @@ public class FragmentModificarRecursoComunitario extends Fragment implements Vie
         this.recursoComunitario.setTipoRecursoComunitario(tipoRecursoComunitario.getId());
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.putRecursoComunitario(recursoComunitario.getId(), recursoComunitario, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Object> call = apiService.putRecursoComunitario(recursoComunitario.getId(), recursoComunitario, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

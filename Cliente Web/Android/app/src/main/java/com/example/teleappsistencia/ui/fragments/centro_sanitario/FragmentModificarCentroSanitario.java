@@ -118,9 +118,8 @@ public class FragmentModificarCentroSanitario extends Fragment implements View.O
         this.buttonVolver.setOnClickListener(this);
 
         // Si el objeto no es nulo, se muestran sus atributos en el layout.
-        Direccion direccion = this.centroSanitario.getDireccion();
-
         if (this.centroSanitario != null) {
+            Direccion direccion = (Direccion) Utilidad.getObjeto(centroSanitario.getDireccion(), Constantes.DIRECCION);
             this.editTextPedirNombre.setText(this.centroSanitario.getNombre());
             this.editTextPhonePedirTelefono.setText(this.centroSanitario.getTelefono());
             this.editTextPedirLocalidad.setText(direccion.getLocalidad());
@@ -144,7 +143,7 @@ public class FragmentModificarCentroSanitario extends Fragment implements View.O
      */
     private void cargarSpinner() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<List<TipoCentroSanitario>> call = apiService.getTipoCentroSanitario(Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<List<TipoCentroSanitario>> call = apiService.getTipoCentroSanitario(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<List<TipoCentroSanitario>>() {
             @Override
             public void onResponse(Call<List<TipoCentroSanitario>> call, Response<List<TipoCentroSanitario>> response) {
@@ -223,7 +222,7 @@ public class FragmentModificarCentroSanitario extends Fragment implements View.O
      */
     private void modificarCentroSanitario() {
         TipoCentroSanitario tipoCentroSanitario = (TipoCentroSanitario) spinnerTipoCentroSanitario.getSelectedItem();
-        Direccion direccionObjeto = this.centroSanitario.getDireccion();
+        Direccion direccionObjeto = (Direccion) Utilidad.getObjeto(centroSanitario.getDireccion(), Constantes.DIRECCION);
         String nombre = this.editTextPedirNombre.getText().toString();
         String telefono = this.editTextPhonePedirTelefono.getText().toString();
         String localidad = this.editTextPedirLocalidad.getText().toString();
@@ -242,7 +241,7 @@ public class FragmentModificarCentroSanitario extends Fragment implements View.O
         this.centroSanitario.setTipoCentroSanitario(tipoCentroSanitario.getId());
 
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
-        Call<Object> call = apiService.putCentroSanitario(centroSanitario.getId(), centroSanitario, Constantes.BEARER_ESPACIO + Token.getToken().getAccess());
+        Call<Object> call = apiService.putCentroSanitario(centroSanitario.getId(), centroSanitario, Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
