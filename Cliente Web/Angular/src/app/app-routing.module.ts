@@ -248,7 +248,7 @@ import { AgendaComponent } from './componentes/agenda/lista-agenda/agenda.compon
 
 const routes: Routes = [
   {path: 'login', component: PantallaLoginComponent},
-  {path: 'inicio', canActivate: [LoginGuard], component: HomeComponent},
+  {path: 'inicio', component: HomeComponent},
   {path: 'recurso-comunitarios-personales', canActivate: [LoginGuard], component: RecursosComunitariosPersonalesComponent},
 
   {
