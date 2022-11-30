@@ -4,11 +4,10 @@ django-rest-framework-social-oauth2==1.1.0
 djangorestframework==3.12.4
 django-extensions==3.1.3
 Werkzeug==2.0.2
-pyOpenSSL==21.0.0
+pyOpenSSL==22.1.0
 djangorestframework-simplejwt==5.0.0
-django-cors-headers
-channels
-redis
+django-cors-headers==3.13.0
+channels==3.0.4
+redis==4.3.3
 channels-redis
-Pillow
-
+Pillow==9.1.1
