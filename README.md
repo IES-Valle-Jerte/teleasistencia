@@ -1,4 +1,12 @@
 # teleasistencia
+Dado el crecimiento del proyecto y la cantidad de aplicaciones que engloba se ha redicido dividirlo en distintos proyectos GitHub correspondientes con cada aplicación:
+1. https://github.com/IES-Valle-Jerte/teleasistencia-servidor-django
+2. https://github.com/IES-Valle-Jerte/teleasistencia-cliente-angular
+3. https://github.com/IES-Valle-Jerte/teleasistencia-cliente-android
+4. https://github.com/IES-Valle-Jerte/teleasistencia-cliente-arduino-raspberrypi
+
+El siguiente contenido es anterior a la separación del proyecto.
+
 Este proyecto consiste en un desarrollo Web de un servicio de Teleasistencia para que los alumnos del FP de Atención Sociosanitaria puedan realizar prácticas en el aula como si de un entorno real se tratase.
 
 Para probar el proyecto, y antes de realizar la instalación, se recomienda que se sigan los pasos que aparecen en **Pasos para contribuir al proyecto**. 
