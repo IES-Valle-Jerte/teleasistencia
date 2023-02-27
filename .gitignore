@@ -11,7 +11,6 @@ venviorments/
 __pycache__
 db.sqlite3
 media
-desarrollador
 
 # Backup files #
 *.bak
@@ -126,10 +125,7 @@ GitHub.sublime-settings
 .idea/workspace.xml
 .idea/
 
-
-
 #img
 ./Server/teleasistencia/teleasistenciaApp/imagen_usuario
 /Server/teleasistencia/teleasistenciaApp/imagen_usuario/
 
-Server/teleasistencia/db.sqlite3

@@ -86,7 +86,12 @@ public class FragmentListarRecursoComunitario extends Fragment {
     private void listarRecursoComunitario() {
         APIService apiService = ClienteRetrofit.getInstance().getAPIService();
 
-        Call<List<RecursoComunitario>> call = apiService.getRecursoComunitario(Constantes.BEARER_ESPACIO + Utilidad.getToken().getAccess());
+        Call<List<RecursoComunitario>> call =
+                apiService.getRecursoComunitario(Constantes.BEARER_ESPACIO
+                        + Utilidad.getToken().getAccess());
+
+
+
         call.enqueue(new Callback<List<RecursoComunitario>>() {
             @Override
             public void onResponse(Call<List<RecursoComunitario>> call, Response<List<RecursoComunitario>> response) {
